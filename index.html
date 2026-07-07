@@ -35,7 +35,6 @@
             position: relative;
         }
 
-        /* --- TOP PROFILE SECTION (Bila Settings) --- */
         .top-profile {
             display: flex;
             align-items: center;
@@ -109,7 +108,6 @@
             transition: width 0.3s ease;
         }
 
-        /* --- TABS CONTENT MANAGEMENT --- */
         .tab-content {
             display: none;
             flex-direction: column;
@@ -123,7 +121,6 @@
             display: flex;
         }
 
-        /* --- TAB 1: EXCHANGE (MAIN CLICKER - Safi kabisa) --- */
         .balance-box {
             text-align: center;
             margin-bottom: 20px;
@@ -177,7 +174,6 @@
             transform: scale(0.95);
         }
 
-        /* Floating Text Anim */
         .floating-text {
             position: absolute;
             color: #ffffff;
@@ -216,7 +212,6 @@
             cursor: pointer;
         }
 
-        /* --- INFO CARDS & HISTORY --- */
         .tab-title {
             font-size: 24px;
             font-weight: bold;
@@ -270,7 +265,6 @@
             cursor: pointer;
         }
 
-        /* --- AIRDROP TAB --- */
         .airdrop-stats {
             background: rgba(243, 186, 47, 0.05);
             border: 1px solid #3a2b03;
@@ -325,12 +319,10 @@
             text-align: center;
         }
 
-        /* --- BOOST SECTION --- */
         .back-btn {
             margin-top: 15px; background: #222; color: #fff; border: 1px solid #444; padding: 8px 18px; border-radius: 10px; font-weight: bold; cursor: pointer;
         }
 
-        /* --- BOTTOM NAVIGATION BAR (Vifungo 5) --- */
         .bottom-nav {
             display: flex;
             justify-content: space-between;
@@ -484,9 +476,8 @@
 
     <script>
         const tg = window.Telegram.WebApp;
-        tg.expand();
+        try { tg.expand(); } catch (err) {}
 
-        // Salio na Data za Mchezaji (Hifadhi Isiyofutika)
         let score = parseInt(localStorage.getItem('global_coin_score')) || 0;
         let energy = parseInt(localStorage.getItem('global_coin_energy')) || 1500;
         let tapPower = parseInt(localStorage.getItem('global_coin_tappower')) || 1; 
@@ -496,14 +487,22 @@
         const scoreText = document.getElementById('score-text');
         const energyText = document.getElementById('energy-text');
         const clickerParent = document.getElementById('clicker-parent');
+        const avatarPreview = document.getElementById('avatar-preview');
 
-        // Kuchukua Jina la Telegram Moja kwa Moja
+        // Kutambua jina na picha kutoka Telegram kama ipo
         if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             const userObj = tg.initDataUnsafe.user;
             document.getElementById('username-display').textContent = (userObj.first_name || "CEO") + " (CEO)";
             document.getElementById('ref-link-text').textContent = "https://t.me/CoinBot?start=" + userObj.id;
+            if (userObj.photo_url && !localStorage.getItem('global_user_avatar')) {
+                avatarPreview.src = userObj.photo_url;
+            }
         } else {
             document.getElementById('username-display').textContent = "Christian (CEO)";
+        }
+
+        if (localStorage.getItem('global_user_avatar')) {
+            avatarPreview.src = localStorage.getItem('global_user_avatar');
         }
 
         refreshAllUI();
@@ -527,7 +526,6 @@
             document.getElementById('level-bar-fill').style.width = percentage + "%";
         }
 
-        // Sehemu ya Kubonyeza (Clicker)
         document.getElementById('coin-clicker').addEventListener('click', (e) => {
             if (energy >= tapPower) {
                 score += tapPower;
@@ -570,6 +568,7 @@
 
         function renderHistory() {
             const container = document.getElementById('history-container');
+            if(!container) return;
             container.innerHTML = '';
             if(historyData.length === 0) {
                 container.innerHTML = '<div class="history-item"><span>Hakuna historia bado.</span></div>';
@@ -588,28 +587,25 @@
             alert("Umeshinda 1,000 Coin!");
         }
 
-        // Kupakia Picha ya Profaili
         const imageLoader = document.getElementById('image-loader');
-        const avatarPreview = document.getElementById('avatar-preview');
-        if (localStorage.getItem('global_user_avatar')) avatarPreview.src = localStorage.getItem('global_user_avatar');
-
-        imageLoader.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                if (file.size > 2 * 1024 * 1024) {
-                    alert("Picha isiyozidi 2 MB inahitajika.");
-                    return;
+        if(imageLoader) {
+            imageLoader.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    if (file.size > 2 * 1024 * 1024) {
+                        alert("Picha isiyozidi 2 MB inahitajika.");
+                        return;
+                    }
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        avatarPreview.src = event.target.result;
+                        localStorage.setItem('global_user_avatar', event.target.result);
+                    }
+                    reader.readAsDataURL(file);
                 }
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    avatarPreview.src = event.target.result;
-                    localStorage.setItem('global_user_avatar', event.target.result);
-                }
-                reader.readAsDataURL(file);
-            }
-        });
+            });
+        }
 
-        // Navigation Switcher
         function switchTab(tabId, buttonElement) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
@@ -645,8 +641,10 @@
         }
 
         function updateBoostTabUI() {
-            document.getElementById('multitap-desc').textContent = "Level " + tapPower + " (+" + tapPower + " per tap)";
-            document.getElementById('boost-cost-text').textContent = boostCost.toLocaleString();
+            const desc = document.getElementById('multitap-desc');
+            const costText = document.getElementById('boost-cost-text');
+            if(desc) desc.textContent = "Level " + tapPower + " (+" + tapPower + " per tap)";
+            if(costText) costText.textContent = boostCost.toLocaleString();
         }
 
         function copyInviteLink() {
@@ -673,7 +671,7 @@
         setInterval(() => {
             if (energy < 1500) {
                 energy += 2; if (energy > 1500) energy = 1500;
-                energyText.textContent = energy;
+                if(energyText) energyText.textContent = energy;
                 saveData();
             }
         }, 1500);
@@ -688,7 +686,7 @@
         window.addEventListener('DOMContentLoaded', () => {
             if(localStorage.getItem("binance_wallet_status") === "connected") {
                 const b = document.getElementById('status-Binance');
-                b.textContent = "Connected ✔"; b.classList.add('connected');
+                if(b) { b.textContent = "Connected ✔"; b.classList.add('connected'); }
             }
         });
     </script>
