@@ -3,45 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Coin Coin - Admin Control Engine</title>
+    <title>ECoinbot - Tap to Earn</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <!-- Supabase Library -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; -webkit-user-select: none; user-select: none; }
         body { background-color: #000000; color: #ffffff; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
-        .app-container { width: 100%; max-width: 430px; height: 100vh; background: linear-gradient(180deg, #161001 0%, #000000 100%); display: flex; flex-direction: column; justify-content: space-between; padding: 15px; position: relative; }
-        .top-profile { display: flex; align-items: center; justify-content: space-between; background: rgba(30, 30, 30, 0.5); padding: 12px; border-radius: 16px; border: 1px solid #2d2002; }
-        .profile-left { display: flex; align-items: center; gap: 12px; }
-        .avatar-container { position: relative; width: 50px; height: 50px; }
-        .avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid #f3ba2f; background-color: #222; }
-        .user-meta h4 { font-size: 14px; font-weight: bold; color: #fff; }
-        .level-container { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
-        .level-title { font-size: 11px; color: #f3ba2f; font-weight: 600; }
-        .level-bar-container { width: 120px; height: 8px; background: #252525; border-radius: 6px; overflow: hidden; border: 1px solid #444; }
-        .level-bar-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #ffe066, #f3ba2f); transition: width 0.3s ease; }
-        .tab-content { display: none; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; width: 100%; padding: 20px 0; }
-        .tab-content.active { display: flex; }
-        .balance-box { text-align: center; margin-bottom: 25px; }
-        .coin-balance { font-size: 46px; font-weight: 800; color: #ffffff; display: flex; align-items: center; justify-content: center; gap: 12px; }
-        .gold-coin-icon { width: 40px; height: 40px; background: radial-gradient(circle, #ffe066 0%, #f3ba2f 70%, #947116 100%); border-radius: 50%; box-shadow: 0 0 12px rgba(243, 186, 47, 0.6); }
-        .clicker-container { position: relative; width: 250px; height: 250px; margin-bottom: 20px; }
-        .clicker-circle { width: 100%; height: 100%; background: radial-gradient(circle, #ffe066 0%, #f3ba2f 60%, #947116 100%); border-radius: 50%; border: 6px solid #ffe066; box-shadow: 0 0 40px rgba(243, 186, 47, 0.7); display: flex; justify-content: center; align-items: center; cursor: pointer; transition: transform 0.05s ease; }
-        .clicker-circle::after { content: "C"; font-size: 110px; font-weight: 900; color: #ffffff; }
-        .clicker-circle:active { transform: scale(0.95); }
-        .floating-text { position: absolute; color: #ffffff; font-size: 30px; font-weight: bold; pointer-events: none; animation: floatUp 0.6s ease-out forwards; text-shadow: 0 3px 6px rgba(0,0,0,0.9); }
-        @keyframes floatUp { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-90px); } }
-        .energy-boost-row { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0 15px; }
-        .energy-box { font-size: 16px; font-weight: bold; }
-        .tab-title { font-size: 26px; font-weight: bold; color: #f3ba2f; margin-bottom: 10px; }
-        .tab-subtitle { color: #aaa; font-size: 14px; text-align: center; margin-bottom: 25px; padding: 0 20px; }
-        .info-card { background: #141414; border: 1px solid #252525; border-radius: 16px; padding: 16px; width: 100%; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-        .task-btn { background: #f3ba2f; color: #000; border: none; padding: 10px 18px; border-radius: 12px; font-weight: bold; text-decoration: none; font-size: 14px; }
-        .bottom-nav { display: flex; justify-content: space-between; background: #121212; padding: 10px 6px; border-radius: 20px; border: 1px solid #222; width: 100%; }
-        .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; background: none; border: none; color: #666666; font-size: 11px; font-weight: 600; cursor: pointer; }
-        .nav-item.active { color: #ffffff; }
         
-        /* ADMIN PANEL INTERFACE */
+        .app-container { width: 100%; max-width: 430px; height: 100vh; background: #000000; display: flex; flex-direction: column; justify-content: space-between; padding: 15px 10px; position: relative; }
+        
+        /* TOP PROFILE AREA */
+        .top-profile { display: flex; align-items: center; justify-content: space-between; background: #1a1a1a; padding: 10px 15px; border-radius: 18px; margin-bottom: 20px; }
+        .profile-left { display: flex; align-items: center; gap: 12px; }
+        .avatar-img { width: 45px; height: 45px; border-radius: 12px; object-fit: cover; background: #f3ba2f; border: 1px solid #333; }
+        .user-meta { display: flex; flex-direction: column; gap: 3px; }
+        .user-meta h4 { font-size: 14px; font-weight: bold; color: #ffffff; }
+        .level-container { display: flex; align-items: center; gap: 8px; }
+        .level-title { font-size: 11px; color: #aaaaaa; }
+        .level-bar-container { width: 80px; height: 6px; background: #333; border-radius: 4px; overflow: hidden; }
+        .level-bar-fill { width: 25%; height: 100%; background: #f3ba2f; border-radius: 4px; }
+        .settings-gear { font-size: 22px; color: #aaaaaa; cursor: pointer; }
+        
+        /* TABS CONTENT */
+        .tab-content { display: none; flex-direction: column; align-items: center; justify-content: flex-start; flex-grow: 1; width: 100%; padding-top: 10px; }
+        .tab-content.active { display: flex; }
+        
+        /* BALANCE */
+        .coin-balance { font-size: 52px; font-weight: 800; color: #ffffff; display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 30px; }
+        .gold-coin-icon { width: 45px; height: 45px; background: radial-gradient(circle, #f9d423 0%, #ff4e50 100%); border-radius: 50%; box-shadow: 0 0 10px rgba(249, 212, 35, 0.5); }
+        
+        /* THE "E" COIN CLICKER */
+        .clicker-container { position: relative; width: 260px; height: 260px; display: flex; justify-content: center; align-items: center; border-radius: 50%; background: rgba(243, 186, 47, 0.1); border: 2px solid rgba(243, 186, 47, 0.3); margin-bottom: 30px; }
+        .clicker-circle { width: 220px; height: 220px; background: linear-gradient(145deg, #f3ba2f, #d68910); border-radius: 50%; border: 8px solid #ffcc00; box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 -5px 15px rgba(0,0,0,0.4), inset 0 5px 15px rgba(255,255,255,0.4); display: flex; justify-content: center; align-items: center; cursor: pointer; transition: transform 0.05s ease; }
+        .clicker-circle::after { content: "E"; font-size: 110px; font-weight: 900; color: #ffffff; text-shadow: 2px 4px 10px rgba(0,0,0,0.4); }
+        .clicker-circle:active { transform: scale(0.96); }
+        
+        /* FLOATING TEXT ANIMATION */
+        .floating-text { position: absolute; color: #ffffff; font-size: 35px; font-weight: bold; pointer-events: none; animation: floatUp 0.7s ease-out forwards; text-shadow: 0 3px 6px rgba(0,0,0,0.9); }
+        @keyframes floatUp { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-100px); } }
+        
+        /* ENERGY & BOOST */
+        .energy-boost-row { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0 20px; margin-bottom: 20px; }
+        .energy-box { font-size: 15px; font-weight: bold; color: #ffffff; }
+        .boost-box { font-size: 15px; font-weight: bold; color: #ffffff; cursor: pointer; }
+        
+        /* OTHER TABS STYLING */
+        .tab-title { font-size: 24px; font-weight: bold; color: #ffffff; margin-bottom: 20px; }
+        .info-card { background: #1a1a1a; border-radius: 16px; padding: 16px; width: 100%; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .task-btn { background: #f3ba2f; color: #000; border: none; padding: 10px 18px; border-radius: 12px; font-weight: bold; text-decoration: none; font-size: 14px; }
+        
+        /* BOTTOM NAVIGATION (5 SECTIONS) */
+        .bottom-nav { display: flex; justify-content: space-around; background: #1a1a1a; padding: 12px 5px; border-radius: 20px; width: 100%; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; background: none; border: none; color: #888888; font-size: 11px; font-weight: 500; cursor: pointer; }
+        .nav-item.active { color: #ffffff; }
+        .nav-icon { font-size: 22px; }
+        
+        /* ADMIN PANEL */
         .admin-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 2000; padding: 20px; overflow-y: auto; }
         .admin-input { width: 100%; background: #222; border: 1px solid #444; color: #fff; padding: 12px; border-radius: 10px; margin-bottom: 15px; font-size: 14px; }
         .admin-btn { width: 100%; background: #f3ba2f; color: #000; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; margin-bottom: 10px; }
@@ -51,131 +68,149 @@
 
     <div class="app-container">
         
-        <!-- PROFILE AREA -->
+        <!-- PROFILE & LEVEL BAR -->
         <div class="top-profile">
             <div class="profile-left">
-                <div class="avatar-container">
-                    <img id="avatar-preview" class="avatar-img" src="https://via.placeholder.com/150/222222/f3ba2f?text=Coin" alt="Profile">
-                </div>
+                <!-- Picha rahisi inayoonyesha herufi ya jina -->
+                <img id="avatar-preview" class="avatar-img" src="https://ui-avatars.com/api/?name=E&background=f3ba2f&color=000&bold=true" alt="Profile">
                 <div class="user-meta">
-                    <h4 id="username-display">Mchezaji (CEO)</h4>
+                    <h4 id="username-display">Esbon24 (CEO)</h4>
                     <div class="level-container">
-                        <span id="level-title-text" class="level-title">Level 0</span>
+                        <span id="level-title-text" class="level-title">Silver</span>
                         <div class="level-bar-container">
                             <div id="level-bar-fill" class="level-bar-fill"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Gia ya kuingia upande wa Admin password ikihitajika -->
-            <div style="font-size: 20px; color: #f3ba2f; cursor: pointer;" onclick="checkAdminPassword()">⚙️</div>
+            <div class="settings-gear" onclick="checkAdminPassword()">⚙️</div>
         </div>
 
-        <!-- TAB 1: EXCHANGE -->
+        <!-- 1. EXCHANGE TAB (MAIN GAME) -->
         <div id="tab-exchange" class="tab-content active">
-            <div class="balance-box">
-                <div class="coin-balance">
-                    <div class="gold-coin-icon"></div>
-                    <span id="score-text">0</span>
-                </div>
+            <div class="coin-balance">
+                <div class="gold-coin-icon"></div>
+                <span id="score-text">0</span>
             </div>
+            
             <div class="clicker-container">
                 <div id="coin-clicker" class="clicker-circle"></div>
             </div>
+            
             <div class="energy-boost-row">
                 <div class="energy-box">⚡ <span id="energy-text">1500</span>/1500</div>
-                <div style="color: #f3ba2f; font-weight: bold;">🌍 Global Verified</div>
+                <div class="boost-box">🚀 Boost</div>
             </div>
         </div>
 
-        <!-- TAB 2: TASKS (TIKTOK, YOUTUBE, WHATSAPP LINKS) -->
+        <!-- 2. MINE TAB -->
+        <div id="tab-mine" class="tab-content">
+            <p class="tab-title">⛏️ Mine Upgrades</p>
+            <p style="color:#aaa; text-align:center;">Hapa kutakuwa na sehemu ya kununua spidi ya kuchimba ukiwa haupo (Passive income).</p>
+        </div>
+
+        <!-- 3. FRIENDS TAB -->
+        <div id="tab-friends" class="tab-content">
+            <p class="tab-title">👥 Invite Friends</p>
+            <div class="info-card" style="justify-content: center;">
+                <button class="task-btn" onclick="alert('Link ya kualika itakuja hivi karibuni!')">Alika Rafiki +5,000</button>
+            </div>
+        </div>
+
+        <!-- 4. EARN TAB (TASKS KUTOKA SUPABASE) -->
         <div id="tab-earn" class="tab-content">
-            <p class="tab-title">🪙 Tasks Panel</p>
-            <p class="tab-subtitle">Kamilisha kazi hizi zilizowekwa na Admin kupata Coin Coin za bure.</p>
+            <p class="tab-title">🪙 Earn More</p>
             
             <div class="info-card">
-                <div><p style="font-weight: bold;">Follow TikTok wetu</p><p style="font-size:12px; color:#aaa;">+50,000 Coin</p></div>
-                <a id="link-tiktok" href="#" target="_blank" class="task-btn" onclick="claimTaskBonus(50000)">Fungua Link</a>
+                <div><p style="font-weight: bold; color: #fff;">Follow TikTok wetu</p><p style="font-size:12px; color:#aaa;">+50,000</p></div>
+                <a id="link-tiktok" href="#" target="_blank" class="task-btn" onclick="claimTaskBonus(50000)">Nenda</a>
             </div>
             <div class="info-card">
-                <div><p style="font-weight: bold;">Subscribe YouTube channel</p><p style="font-size:12px; color:#aaa;">+100,000 Coin</p></div>
-                <a id="link-youtube" href="#" target="_blank" class="task-btn" onclick="claimTaskBonus(100000)">Fungua Link</a>
+                <div><p style="font-weight: bold; color: #fff;">Subscribe YouTube</p><p style="font-size:12px; color:#aaa;">+100,000</p></div>
+                <a id="link-youtube" href="#" target="_blank" class="task-btn" onclick="claimTaskBonus(100000)">Nenda</a>
             </div>
             <div class="info-card">
-                <div><p style="font-weight: bold;">Jiunge na WhatsApp Group</p><p style="font-size:12px; color:#aaa;">+20,000 Coin</p></div>
-                <a id="link-whatsapp" href="#" target="_blank" class="task-btn" onclick="claimTaskBonus(20000)">Jiunge Sasa</a>
+                <div><p style="font-weight: bold; color: #fff;">Jiunge WhatsApp</p><p style="font-size:12px; color:#aaa;">+20,000</p></div>
+                <a id="link-whatsapp" href="#" target="_blank" class="task-btn" onclick="claimTaskBonus(20000)">Nenda</a>
             </div>
         </div>
 
-        <!-- TAB 3: AIRDROP -->
+        <!-- 5. AIRDROP TAB -->
         <div id="tab-airdrop" class="tab-content">
-            <div style="font-size: 45px; margin-bottom: 10px;">💰</div>
-            <p class="tab-title">Binance Airdrop</p>
-            <p class="tab-subtitle">Data zako ziko salama kwenye seva kuu.</p>
-            <div class="info-card" style="justify-content: center; text-align: center;">
-                <div>
-                    <p style="font-size:12px; color:#aaa;">Airdrop Program Status:</p>
-                    <h3 id="airdrop-status-label" style="color:#00ffcc; margin-top:5px;">October 2026 Snapshot</h3>
-                </div>
+            <p class="tab-title">💰 Airdrop</p>
+            <div class="info-card" style="justify-content: center; text-align: center; flex-direction: column; padding: 30px;">
+                <p style="font-size:13px; color:#aaa; margin-bottom: 10px;">Hali ya Airdrop:</p>
+                <h3 id="airdrop-status-label" style="color:#f3ba2f; font-size: 20px;">Kupakia...</h3>
             </div>
         </div>
 
-        <!-- BOTTOM NAV -->
+        <!-- BOTTOM NAV BAR - SECTIONS 5 -->
         <div class="bottom-nav">
-            <button class="nav-item active" onclick="switchTab('tab-exchange', this)"><span>🪙</span><span>Exchange</span></button>
-            <button class="nav-item" onclick="switchTab('tab-earn', this)"><span>📊</span><span>Tasks</span></button>
-            <button class="nav-item" onclick="switchTab('tab-airdrop', this)"><span>💰</span><span>Airdrop</span></button>
+            <button class="nav-item active" onclick="switchTab('tab-exchange', this)">
+                <span class="nav-icon">🪙</span>
+                <span>Exchange</span>
+            </button>
+            <button class="nav-item" onclick="switchTab('tab-mine', this)">
+                <span class="nav-icon">⛏️</span>
+                <span>Mine</span>
+            </button>
+            <button class="nav-item" onclick="switchTab('tab-friends', this)">
+                <span class="nav-icon">👥</span>
+                <span>Friends</span>
+            </button>
+            <button class="nav-item" onclick="switchTab('tab-earn', this)">
+                <span class="nav-icon">📋</span>
+                <span>Earn</span>
+            </button>
+            <button class="nav-item" onclick="switchTab('tab-airdrop', this)">
+                <span class="nav-icon">💰</span>
+                <span>Airdrop</span>
+            </button>
         </div>
     </div>
 
-    <!-- REAL TIME ADMIN CONTROL SYSTEM PANEL -->
+    <!-- ADMIN PANEL YAKO -->
     <div id="adminPanel" class="admin-modal">
-        <h2 style="color:#f3ba2f; margin-bottom:20px; text-align:center;">Christian's Central Command</h2>
+        <h2 style="color:#f3ba2f; margin-bottom:20px; text-align:center;">Admin Dashboard</h2>
+        <p style="color:#00ffcc; font-weight:bold; margin-bottom:15px;">📊 Wachezaji: <span id="admin-total-users">Kupakia...</span></p>
         
-        <p style="color:#00ffcc; font-weight:bold; margin-bottom:15px;">📊 Wachezaji Wote Duniani: <span id="admin-total-users">Kupakia...</span></p>
+        <label style="font-size:12px; color:#aaa;">Link ya TikTok:</label>
+        <input type="text" id="input-tiktok" class="admin-input">
         
-        <label style="font-size:12px; color:#aaa;">Badilisha Link ya TikTok:</label>
-        <input type="text" id="input-tiktok" class="admin-input" placeholder="https://tiktok.com/@jina_lako">
+        <label style="font-size:12px; color:#aaa;">Link ya YouTube:</label>
+        <input type="text" id="input-youtube" class="admin-input">
         
-        <label style="font-size:12px; color:#aaa;">Badilisha Link ya YouTube:</label>
-        <input type="text" id="input-youtube" class="admin-input" placeholder="https://youtube.com/c/chaneli_yako">
+        <label style="font-size:12px; color:#aaa;">Link ya WhatsApp:</label>
+        <input type="text" id="input-whatsapp" class="admin-input">
         
-        <label style="font-size:12px; color:#aaa;">Badilisha Link ya WhatsApp:</label>
-        <input type="text" id="input-whatsapp" class="admin-input" placeholder="https://chat.whatsapp.com/...">
-        
-        <label style="font-size:12px; color:#aaa;">Badilisha Hali ya Airdrop (Oktoba):</label>
-        <input type="text" id="input-airdrop" class="admin-input" placeholder="Mfano: Airdrop is LIVE sasa hivi!">
+        <label style="font-size:12px; color:#aaa;">Maneno ya Airdrop:</label>
+        <input type="text" id="input-airdrop" class="admin-input">
 
-        <button class="admin-btn" onclick="saveAdminSettingsToDatabase()">Hifadhi Mabadiliko Duniani Kote 🌍</button>
-        <button class="admin-btn" style="background:#444; color:#fff;" onclick="closeAdminPanel()">Funga Panel</button>
+        <button class="admin-btn" onclick="saveAdminSettingsToDatabase()">Hifadhi Mabadiliko 🌍</button>
+        <button class="admin-btn" style="background:#444; color:#fff;" onclick="closeAdminPanel()">Funga</button>
     </div>
 
     <script>
-        // --- DATA ZAKO HALISI ZA SUPABASE ZILIZOUNGANISHWA ---
         const SUPABASE_URL = "https://egttycdzxiwvtxtnxvpp.supabase.co";
         const SUPABASE_ANON_KEY = "EyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVndHR5Y2R6eGl3dnR4dG54dnBwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM0NTE2NjAsImV4cCI6MjA5OTAyNzY2MH0.mmEwqHtKKDB9hSxLH3KUPhzenpDyTuulPKzk_DEEROc";
-        
         const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        let userId = (tg.initDataUnsafe && tg.initDataUnsafe.user) ? String(tg.initDataUnsafe.user.id) : "test_local_user";
-        let username = (tg.initDataUnsafe && tg.initDataUnsafe.user) ? tg.initDataUnsafe.user.first_name : "Mchezaji Global";
+        let userId = (tg.initDataUnsafe && tg.initDataUnsafe.user) ? String(tg.initDataUnsafe.user.id) : "test_user_01";
+        let username = (tg.initDataUnsafe && tg.initDataUnsafe.user) ? tg.initDataUnsafe.user.first_name : "CEO";
         
         document.getElementById('username-display').textContent = username + " (CEO)";
 
         let localScore = 0;
         let localEnergy = 1500;
 
-        // TAFUTA AU INGIZA MTU KWENYE DATABASE
         async function loadPlayerData() {
             let { data, error } = await supabase.from('players').select('*').eq('id', userId).single();
             if (error && error.code === 'PGRST116') {
-                // Mchezaji mpya, muingize kwenye mfumo
-                const { data: newPlayer } = await supabase.from('players').insert([{ id: userId, username: username, score: 0, energy: 1500 }]).select().single();
+                await supabase.from('players').insert([{ id: userId, username: username, score: 0, energy: 1500 }]);
                 localScore = 0; localEnergy = 1500;
-                // Ongeza hesabu ya watu kwenye mfumo wa admin
                 await supabase.rpc('increment_users');
             } else if (data) {
                 localScore = data.score;
@@ -184,7 +219,6 @@
             refreshUI();
         }
 
-        // PATA SETTINGS NA LINK KUTOKA KWA DATABASE YAKO
         async function loadGlobalSettings() {
             let { data } = await supabase.from('admin_settings').select('*').eq('id', 1).single();
             if (data) {
@@ -193,7 +227,6 @@
                 document.getElementById('link-whatsapp').href = data.whatsapp_link;
                 document.getElementById('airdrop-status-label').textContent = data.airdrop_status;
                 
-                // Set maadili kwenye fomu ya admin
                 document.getElementById('input-tiktok').value = data.tiktok_link;
                 document.getElementById('input-youtube').value = data.youtube_link;
                 document.getElementById('input-whatsapp').value = data.whatsapp_link;
@@ -205,20 +238,18 @@
             document.getElementById('score-text').textContent = localScore.toLocaleString();
             document.getElementById('energy-text').textContent = localEnergy;
             
-            // Level Progression Engine
-            let maxVal = 10000;
-            let percentage = (localScore / maxVal) * 100;
+            // Silver Level Logic Basic
+            let percentage = (localScore / 10000) * 100;
             if (percentage > 100) percentage = 100;
-            document.getElementById('level-bar-fill').style.width = percentage + "%";
+            document.getElementById('level-bar-fill').style.width = (percentage > 10 ? percentage : 10) + "%";
         }
 
-        document.getElementById('coin-clicker').addEventListener('click', async (e) => {
+        document.getElementById('coin-clicker').addEventListener('click', (e) => {
             if (localEnergy > 0) {
                 localScore += 1;
                 localEnergy -= 1;
                 createFloatingText(e, "+1");
                 refreshUI();
-                
                 debouncedSave();
             }
         });
@@ -234,57 +265,18 @@
         function createFloatingText(e, text) {
             const el = document.createElement('div'); el.className = 'floating-text'; el.textContent = text;
             const rect = document.querySelector('.clicker-container').getBoundingClientRect();
-            el.style.left = (e.clientX - rect.left) + "px"; el.style.top = (e.clientY - rect.top) + "px";
+            // Centering logic for the text
+            el.style.left = (e.clientX - rect.left - 15) + "px"; 
+            el.style.top = (e.clientY - rect.top - 20) + "px";
             document.querySelector('.clicker-container').appendChild(el);
-            setTimeout(() => el.remove(), 600);
+            setTimeout(() => el.remove(), 700);
         }
 
         async function claimTaskBonus(amt) {
             localScore += amt;
             refreshUI();
             await supabase.from('players').update({ score: localScore }).eq('id', userId);
-            alert("Bonasi ya " + amt.toLocaleString() + " Coin imeongezwa kwenye akaunti yako!");
-        }
-
-        // --- PASSWORD YA ADMIN ---
-        function checkAdminPassword() {
-            let pass = prompt("Weka Password ya Admin (Christian):");
-            if (pass === "Christian2026") { 
-                openAdminPanel();
-            } else {
-                alert("Password sio sahihi! Wewe sio Admin.");
-            }
-        }
-
-        async function openAdminPanel() {
-            document.getElementById('adminPanel').style.display = 'block';
-            let { count } = await supabase.from('players').select('*', { count: 'exact', head: true });
-            document.getElementById('admin-total-users').textContent = count + " Wachezaji Waliojiunga";
-        }
-
-        function closeAdminPanel() { document.getElementById('adminPanel').style.display = 'none'; }
-
-        // ADMIN KUHIFADHI LINK MPYA
-        async function saveAdminSettingsToDatabase() {
-            const tk = document.getElementById('input-tiktok').value;
-            const yt = document.getElementById('input-youtube').value;
-            const wa = document.getElementById('input-whatsapp').value;
-            const air = document.getElementById('input-airdrop').value;
-
-            const { error } = await supabase.from('admin_settings').update({
-                tiktok_link: tk,
-                youtube_link: yt,
-                whatsapp_link: wa,
-                airdrop_status: air
-            }).eq('id', 1);
-
-            if(!error) {
-                alert("Mabadiliko yamefanikiwa! Watu wote duniani wataona link hizi mpya sasa hivi.");
-                loadGlobalSettings();
-                closeAdminPanel();
-            } else {
-                alert("Imeshindwa kuhifadhi: " + error.message);
-            }
+            alert("Hongera! Bonasi imeongezwa.");
         }
 
         function switchTab(tabId, btn) {
@@ -292,6 +284,35 @@
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             btn.classList.add('active');
+        }
+
+        // Admin Security
+        function checkAdminPassword() {
+            let pass = prompt("Weka Password:");
+            if (pass === "Christian2026") { openAdminPanel(); } else { alert("Nenosiri sio sahihi."); }
+        }
+
+        async function openAdminPanel() {
+            document.getElementById('adminPanel').style.display = 'block';
+            let { count } = await supabase.from('players').select('*', { count: 'exact', head: true });
+            document.getElementById('admin-total-users').textContent = count;
+        }
+
+        function closeAdminPanel() { document.getElementById('adminPanel').style.display = 'none'; }
+
+        async function saveAdminSettingsToDatabase() {
+            const { error } = await supabase.from('admin_settings').update({
+                tiktok_link: document.getElementById('input-tiktok').value,
+                youtube_link: document.getElementById('input-youtube').value,
+                whatsapp_link: document.getElementById('input-whatsapp').value,
+                airdrop_status: document.getElementById('input-airdrop').value
+            }).eq('id', 1);
+
+            if(!error) {
+                alert("Mabadiliko Yamehifadhiwa.");
+                loadGlobalSettings();
+                closeAdminPanel();
+            }
         }
 
         loadPlayerData();
