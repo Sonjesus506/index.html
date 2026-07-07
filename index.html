@@ -2,8 +2,8 @@
 <html lang="sw">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Coin Coin - Official Global Platform</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>E-Coin - Official Global Platform</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * {
@@ -164,7 +164,7 @@
             transition: transform 0.05s ease;
         }
         .clicker-circle::after {
-            content: "C";
+            content: "E";
             font-size: 105px;
             font-weight: 900;
             color: #ffffff;
@@ -489,7 +489,6 @@
         const clickerParent = document.getElementById('clicker-parent');
         const avatarPreview = document.getElementById('avatar-preview');
 
-        // Kutambua jina na picha kutoka Telegram kama ipo
         if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             const userObj = tg.initDataUnsafe.user;
             document.getElementById('username-display').textContent = (userObj.first_name || "CEO") + " (CEO)";
