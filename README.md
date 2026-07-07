@@ -1,6 +1,4 @@
-# index.html
-Earn free crypto coins 
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="sw">
 <head>
     <meta charset="UTF-8">
