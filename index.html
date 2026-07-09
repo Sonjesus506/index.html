@@ -27,16 +27,15 @@
             background: #12100d;
             display: flex;
             flex-direction: column;
-            padding: 10px 12px 8px;
+            padding: 8px 10px 6px;
             overflow: hidden;
             position: relative;
         }
-        /* Header */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             flex-shrink: 0;
         }
         .user-info {
@@ -44,9 +43,10 @@
             align-items: center;
             gap: 6px;
             background: #1a1610;
-            padding: 3px 12px 3px 5px;
+            padding: 2px 10px 2px 4px;
             border-radius: 40px;
             border: 1px solid #3d321f;
+            cursor: pointer;
         }
         .avatar {
             width: 28px;
@@ -59,41 +59,45 @@
             font-weight: 700;
             color: #0e0c07;
             font-size: 12px;
+            overflow: hidden;
+        }
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         .user-info span {
             font-weight: 500;
-            font-size: 12px;
+            font-size: 11px;
             color: #e5d6b0;
         }
         .badge {
             background: #2f2a1a;
             color: #f3ba2f;
-            padding: 3px 10px;
+            padding: 2px 8px;
             border-radius: 30px;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 600;
             border: 1px solid #4f3d1f;
         }
-
-        /* Balance */
         .balance-card {
             background: #1a1610;
-            border-radius: 18px;
-            padding: 10px 12px 8px;
+            border-radius: 16px;
+            padding: 8px 10px 6px;
             text-align: center;
             border: 1px solid #2f281c;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             flex-shrink: 0;
             box-shadow: inset 0 4px 12px rgba(0,0,0,0.6);
         }
         .balance-card .label {
-            font-size: 9px;
+            font-size: 8px;
             color: #b0945a;
             letter-spacing: 2px;
             text-transform: uppercase;
         }
         .balance-card .amount {
-            font-size: 2.4rem;
+            font-size: 2.2rem;
             font-weight: 700;
             color: #fad974;
             line-height: 1.1;
@@ -103,32 +107,30 @@
         .balance-card .stats {
             display: flex;
             justify-content: center;
-            gap: 14px;
-            margin-top: 3px;
-            font-size: 11px;
+            gap: 10px;
+            margin-top: 2px;
+            font-size: 10px;
             color: #bdaa7a;
         }
         .balance-card .stats span {
             background: #0e0c07;
-            padding: 1px 12px;
+            padding: 1px 10px;
             border-radius: 40px;
             border: 1px solid #2f281c;
         }
-
-        /* Level */
         .level-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             background: #1a1610;
             border-radius: 30px;
-            padding: 3px 12px 3px 14px;
+            padding: 2px 10px 2px 12px;
             border: 1px solid #2f281c;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             flex-shrink: 0;
         }
         .level-row .level-badge {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             color: #f3ba2f;
         }
@@ -137,22 +139,20 @@
             font-weight: 400;
         }
         .level-row .next-level {
-            font-size: 10px;
+            font-size: 9px;
             color: #8a7a54;
         }
-
-        /* Timer Grid - Daily Tasks */
         .timer-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 4px;
-            margin-bottom: 6px;
+            gap: 3px;
+            margin-bottom: 4px;
             flex-shrink: 0;
         }
         .timer-item {
             background: #19150f;
-            border-radius: 12px;
-            padding: 6px 4px;
+            border-radius: 10px;
+            padding: 4px 2px;
             text-align: center;
             border: 1px solid #2d2417;
             cursor: pointer;
@@ -162,40 +162,38 @@
             background: #2a2215;
         }
         .timer-item .value {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 700;
             color: #f3ba2f;
         }
         .timer-item .desc {
-            font-size: 7px;
+            font-size: 6px;
             text-transform: uppercase;
             color: #8a7a54;
             letter-spacing: 0.3px;
             margin-top: 1px;
         }
-
-        /* Progress */
         .progress-row {
             background: #1a1610;
             border-radius: 40px;
-            padding: 4px 14px 4px 10px;
+            padding: 3px 12px 3px 8px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             border: 1px solid #2f281c;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             flex-shrink: 0;
         }
         .progress-row .left {
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 11px;
+            gap: 4px;
+            font-size: 10px;
             flex: 1;
         }
         .progress-row .left .fill {
             flex: 1;
-            height: 4px;
+            height: 3px;
             background: #2a2215;
             border-radius: 10px;
             overflow: hidden;
@@ -210,9 +208,9 @@
             background: #f3ba2f;
             color: #0e0c07;
             font-weight: 700;
-            padding: 3px 14px;
+            padding: 2px 12px;
             border-radius: 30px;
-            font-size: 11px;
+            font-size: 10px;
             cursor: pointer;
             transition: 0.08s;
             box-shadow: 0 3px 0 #876a1a;
@@ -223,8 +221,6 @@
             transform: translateY(2px);
             box-shadow: 0 1px 0 #876a1a;
         }
-
-        /* Coin wrapper with floating texts */
         .coin-wrapper {
             display: flex;
             justify-content: center;
@@ -234,32 +230,24 @@
             position: relative;
             margin: 2px 0;
             overflow: visible;
+            touch-action: none;
         }
         .coin {
-            width: 180px;
-            height: 180px;
+            width: 160px;
+            height: 160px;
             background: radial-gradient(circle at 35% 30%, #fce181, #d49c1a 50%, #b8860b 75%, #8a6b0e);
             border-radius: 50%;
             border: 8px solid #f9d342;
             box-shadow: 0 0 0 3px #6b4f0e, 0 12px 40px rgba(243, 186, 47, 0.4), inset 0 -10px 30px rgba(0,0,0,0.5), inset 0 10px 30px rgba(255,215,0,0.2);
             cursor: pointer;
             transition: transform 0.06s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            touch-action: manipulation;
+            touch-action: none;
             position: relative;
             z-index: 2;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 5rem;
-            font-weight: 900;
-            color: #8a6b0e;
-            text-shadow: 0 2px 10px rgba(255,215,0,0.3), 0 -2px 10px rgba(139,107,14,0.3);
-            letter-spacing: -2px;
         }
-        .coin:active {
-            transform: scale(0.88);
-        }
-        /* Inner rim for realistic coin look */
         .coin::before {
             content: '';
             position: absolute;
@@ -275,17 +263,18 @@
             content: 'E';
             position: relative;
             z-index: 1;
-            font-size: 5.5rem;
+            font-size: 5rem;
             font-weight: 900;
             color: #7a5f0e;
             text-shadow: 0 2px 4px rgba(255,215,0,0.2), 0 -2px 4px rgba(0,0,0,0.3);
             font-family: 'Georgia', serif;
         }
-
-        /* Floating +N effect */
+        .coin:active {
+            transform: scale(0.88);
+        }
         .float-text {
             position: absolute;
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 800;
             color: #f3ba2f;
             text-shadow: 0 0 20px #f3ba2f, 0 0 40px #f3ba2f80, 0 0 60px #f3ba2f40;
@@ -297,22 +286,21 @@
         @keyframes floatUp {
             0% { opacity: 1; transform: translateY(0) scale(0.8); }
             30% { opacity: 1; transform: translateY(-20px) scale(1.1); }
-            100% { opacity: 0; transform: translateY(-140px) scale(1.3); }
+            100% { opacity: 0; transform: translateY(-130px) scale(1.3); }
         }
-
         .coin-label {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 4px;
             flex-shrink: 0;
-            margin-top: 2px;
+            margin-top: 1px;
         }
         .ceo-tag {
             background: #1f1a0f;
-            padding: 2px 14px 2px 10px;
+            padding: 2px 12px 2px 8px;
             border-radius: 40px;
-            font-size: 11px;
+            font-size: 10px;
             border: 1px solid #3d321f;
             color: #d4bb7a;
             cursor: pointer;
@@ -322,26 +310,24 @@
             font-weight: 600;
         }
         .small-balance {
-            font-size: 12px;
+            font-size: 11px;
             color: #8a7a54;
         }
-
-        /* Action Grid - Exchange, Friends, Airdrop */
         .action-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 5px;
-            margin-bottom: 6px;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 3px;
+            margin-bottom: 4px;
             flex-shrink: 0;
         }
         .action-btn {
             background: #1a1610;
             border: 1px solid #2f281c;
             border-radius: 30px;
-            padding: 8px 0;
+            padding: 5px 0;
             text-align: center;
             font-weight: 600;
-            font-size: 11px;
+            font-size: 9px;
             color: #e5d6b0;
             cursor: pointer;
             transition: 0.08s;
@@ -361,36 +347,34 @@
         .action-btn.gold:active {
             background: #dbaa24;
         }
-
-        /* Bottom Nav */
         .bottom-nav {
             display: flex;
             justify-content: space-around;
             background: #14110d;
             border-radius: 40px;
-            padding: 3px 6px;
+            padding: 2px 4px;
             border: 1px solid #2f281c;
             flex-shrink: 0;
-            margin-top: 3px;
+            margin-top: 2px;
         }
         .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 4px 6px;
+            padding: 3px 4px;
             border-radius: 30px;
-            font-size: 9px;
+            font-size: 8px;
             color: #7a6a4a;
             cursor: pointer;
             background: transparent;
             border: none;
             font-weight: 500;
-            gap: 1px;
+            gap: 0px;
             transition: 0.1s;
             flex: 1;
         }
         .nav-item .icon {
-            font-size: 16px;
+            font-size: 14px;
             line-height: 1;
         }
         .nav-item.active {
@@ -400,26 +384,23 @@
         .nav-item:active {
             opacity: 0.6;
         }
-
         .footer-airdrop {
             text-align: center;
-            font-size: 9px;
+            font-size: 8px;
             color: #4d3f28;
             letter-spacing: 1px;
             border-top: 1px solid #1f1a10;
-            padding-top: 4px;
+            padding-top: 3px;
             flex-shrink: 0;
-            margin-top: 3px;
+            margin-top: 2px;
         }
         .footer-airdrop span {
             background: #1a1610;
-            padding: 2px 16px;
+            padding: 1px 14px;
             border-radius: 40px;
             border: 1px solid #2f281c;
             color: #f3ba2f;
         }
-
-        /* Modal */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -438,7 +419,7 @@
             background: #1a1610;
             border: 1px solid #3d321f;
             border-radius: 30px;
-            padding: 24px 20px 20px;
+            padding: 20px 16px 16px;
             max-width: 340px;
             width: 100%;
             max-height: 80vh;
@@ -446,62 +427,62 @@
         }
         .modal-box h2 {
             color: #f3ba2f;
-            font-size: 1.3rem;
-            margin-bottom: 14px;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
             text-align: center;
         }
         .modal-box p {
             color: #bdaa7a;
-            font-size: 13px;
-            margin-bottom: 10px;
+            font-size: 12px;
+            margin-bottom: 8px;
             text-align: center;
         }
         .modal-box .close-btn {
             background: #f3ba2f;
             border: none;
-            padding: 10px;
+            padding: 8px;
             border-radius: 40px;
             font-weight: 700;
             color: #0e0c07;
             width: 100%;
-            font-size: 15px;
+            font-size: 14px;
             cursor: pointer;
-            margin-top: 8px;
+            margin-top: 6px;
         }
         .modal-box .invite-link {
             background: #0e0c07;
-            padding: 10px;
-            border-radius: 16px;
+            padding: 8px;
+            border-radius: 14px;
             border: 1px solid #2f281c;
             color: #f3ba2f;
-            font-size: 13px;
+            font-size: 12px;
             word-break: break-all;
-            margin: 10px 0;
+            margin: 8px 0;
             text-align: center;
         }
         .modal-box .copy-btn {
             background: #2f281c;
             border: none;
-            padding: 6px 18px;
+            padding: 5px 14px;
             border-radius: 30px;
             color: #f3ba2f;
             font-weight: 600;
             cursor: pointer;
-            margin: 4px auto;
+            margin: 3px auto;
             display: block;
         }
         .modal-box .airdrop-info {
             background: #0e0c07;
-            padding: 14px;
-            border-radius: 16px;
+            padding: 12px;
+            border-radius: 14px;
             border: 1px solid #2f281c;
-            margin: 8px 0;
+            margin: 6px 0;
         }
         .modal-box .airdrop-info .row {
             display: flex;
             justify-content: space-between;
-            padding: 3px 0;
-            font-size: 13px;
+            padding: 2px 0;
+            font-size: 12px;
         }
         .modal-box .airdrop-info .row .label {
             color: #8a7a54;
@@ -512,10 +493,10 @@
         }
         .modal-box .boost-option {
             background: #0e0c07;
-            padding: 10px 14px;
-            border-radius: 14px;
+            padding: 8px 12px;
+            border-radius: 12px;
             border: 1px solid #2f281c;
-            margin: 6px 0;
+            margin: 4px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -523,105 +504,180 @@
         .modal-box .boost-option button {
             background: #f3ba2f;
             border: none;
-            padding: 5px 14px;
+            padding: 4px 12px;
             border-radius: 30px;
             font-weight: 600;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 11px;
         }
         .modal-box .boost-option .cost {
             color: #8a7a54;
+            font-size: 10px;
+        }
+        .modal-box .referral-bonus {
+            background: linear-gradient(135deg, #2f281c, #1a1610);
+            border: 1px solid #f3ba2f40;
+            border-radius: 14px;
+            padding: 10px;
+            margin: 6px 0;
+            text-align: center;
+        }
+        .modal-box .referral-bonus .big {
+            font-size: 1.6rem;
+            color: #f3ba2f;
+            font-weight: 700;
+        }
+        .modal-box .referral-bonus .sub {
+            font-size: 10px;
+            color: #8a7a54;
+        }
+        .modal-box .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 8px 0;
+            flex-wrap: wrap;
+        }
+        .modal-box .social-links a {
+            color: #f3ba2f;
+            text-decoration: none;
+            font-size: 18px;
+            background: #0e0c07;
+            padding: 5px 10px;
+            border-radius: 30px;
+            border: 1px solid #2f281c;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
             font-size: 11px;
         }
-        .modal-box .task-item {
+        .modal-box .social-links a:hover {
+            background: #2f281c;
+        }
+        .modal-box .social-links a .icon {
+            font-size: 16px;
+        }
+        .modal-box .ai-chat {
             background: #0e0c07;
-            padding: 10px 14px;
+            padding: 10px;
             border-radius: 14px;
             border: 1px solid #2f281c;
             margin: 6px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            max-height: 200px;
+            overflow-y: auto;
         }
-        .modal-box .task-item .task-name {
-            color: #e5d6b0;
-            font-size: 13px;
-        }
-        .modal-box .task-item .task-reward {
-            color: #f3ba2f;
+        .modal-box .ai-chat .message {
+            padding: 5px 10px;
+            margin: 3px 0;
+            border-radius: 12px;
             font-size: 12px;
-            font-weight: 600;
+            max-width: 85%;
         }
-        .modal-box .task-item button {
-            background: #f3ba2f;
-            border: none;
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 11px;
+        .modal-box .ai-chat .user-msg {
+            background: #2f281c;
+            color: #e5d6b0;
+            margin-left: auto;
         }
-        .modal-box .social-link {
-            color: #f3ba2f;
-            text-decoration: underline;
-            word-break: break-all;
-        }
-        .modal-box .verify-btn {
-            background: #f3ba2f;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-weight: 700;
-            cursor: pointer;
-            margin: 6px auto;
-            display: block;
-            font-size: 14px;
-        }
-        .tap-power-display {
-            background: #0e0c07;
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-size: 10px;
+        .modal-box .ai-chat .ai-msg {
+            background: #1a1610;
             color: #f3ba2f;
             border: 1px solid #2f281c;
         }
-
-        /* Mobile responsive */
+        .modal-box .ai-input {
+            display: flex;
+            gap: 6px;
+            margin-top: 6px;
+        }
+        .modal-box .ai-input input {
+            flex: 1;
+            padding: 5px 10px;
+            border-radius: 30px;
+            border: 1px solid #2f281c;
+            background: #0e0c07;
+            color: #e5d6b0;
+            font-size: 12px;
+            outline: none;
+        }
+        .modal-box .ai-input input:focus {
+            border-color: #f3ba2f;
+        }
+        .modal-box .ai-input button {
+            background: #f3ba2f;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .modal-box .admin-badge {
+            background: #f3ba2f;
+            color: #0e0c07;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 10px;
+            font-weight: 700;
+            display: inline-block;
+            margin: 4px auto;
+        }
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 0;
+        }
+        .user-profile .avatar-lg {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f3ba2f, #d49c1a);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        .user-profile .avatar-lg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .user-profile .info {
+            flex: 1;
+        }
+        .user-profile .info .name {
+            color: #f3ba2f;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .user-profile .info .handle {
+            color: #8a7a54;
+            font-size: 11px;
+        }
         @media (max-width: 420px) {
-            .coin {
-                width: 150px;
-                height: 150px;
-                font-size: 4rem;
-            }
-            .coin::after {
-                font-size: 4.5rem;
-            }
+            .coin { width: 140px; height: 140px; }
+            .coin::after { font-size: 4.2rem; }
+            .balance-card .amount { font-size: 2rem; }
         }
         @media (max-width: 360px) {
-            .coin {
-                width: 130px;
-                height: 130px;
-                font-size: 3.5rem;
-            }
-            .coin::after {
-                font-size: 4rem;
-            }
+            .coin { width: 120px; height: 120px; }
+            .coin::after { font-size: 3.6rem; }
+            .balance-card .amount { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 <div class="app" id="app">
 
-    <!-- Header -->
     <div class="header">
-        <div class="user-info">
-            <div class="avatar">👩</div>
-            <span>Jane <span style="color:#b0945a;font-weight:300;">(CEO)</span></span>
+        <div class="user-info" id="userInfo">
+            <div class="avatar" id="avatarDisplay">👩</div>
+            <span id="userNameDisplay">Jane (CEO)</span>
         </div>
         <div class="badge">Silver ▾</div>
     </div>
 
-    <!-- Balance -->
     <div class="balance-card">
         <div class="label">💰 BALANCE</div>
         <div class="amount" id="balanceDisplay">0</div>
@@ -631,13 +687,11 @@
         </div>
     </div>
 
-    <!-- Level -->
     <div class="level-row">
         <div class="level-badge">🏆 Level <span id="levelDisplay">1</span></div>
         <div class="next-level" id="nextLevelDisplay">Next: 1,000 coins</div>
     </div>
 
-    <!-- Timer Grid - Daily Tasks -->
     <div class="timer-grid">
         <div class="timer-item" onclick="claimDaily()">
             <div class="value" id="dailyTimer">05:35</div>
@@ -653,7 +707,6 @@
         </div>
     </div>
 
-    <!-- Progress -->
     <div class="progress-row">
         <div class="left">
             <span>$</span>
@@ -662,38 +715,22 @@
         <button class="right" id="boostBtn">Boost</button>
     </div>
 
-    <!-- Coin -->
     <div class="coin-wrapper" id="coinWrapper">
         <div class="coin" id="mainCoin" role="button" aria-label="Tap to earn"></div>
     </div>
 
-    <!-- CEO & Balance -->
     <div class="coin-label">
         <div class="ceo-tag" id="ceoTag">👑 (CEO) <span id="ceoCoinCount">0</span></div>
         <div class="small-balance">🪙 <span id="balanceSmall">0</span></div>
     </div>
 
-    <!-- Action Grid - Exchange, Friends, Airdrop -->
     <div class="action-grid">
         <button class="action-btn gold" id="exchangeBtn">Exchange</button>
         <button class="action-btn" id="friendsBtn">👥 Friends</button>
-        <button class="action-btn" id="airdropBtn">🎯 Airdrop</button>
+        <button class="action-btn" id="airdropBtn">Airdrop</button>
+        <button class="action-btn" id="aiBtn">🤖 AI</button>
     </div>
 
-    <!-- Bottom Nav -->
-    <div class="bottom-nav">
-        <button class="nav-item active"><span class="icon">🏠</span>Home</button>
-        <button class="nav-item"><span class="icon">🔍</span>Search</button>
-        <button class="nav-item"><span class="icon">🔔</span>Notif.</button>
-        <button class="nav-item"><span class="icon">⚡</span>Activity</button>
-    </div>
-
-    <div class="footer-airdrop">
-        <span>✦ Airdrop active ✦</span>
-    </div>
-</div>
-
-<!-- Modal -->
 <div class="modal-overlay" id="modalOverlay">
     <div class="modal-box" id="modalBox">
         <h2 id="modalTitle">Modal</h2>
@@ -720,10 +757,14 @@
         const levelDisplay = document.getElementById('levelDisplay');
         const nextLevelDisplay = document.getElementById('nextLevelDisplay');
         const ceoTag = document.getElementById('ceoTag');
+        const userNameDisplay = document.getElementById('userNameDisplay');
+        const avatarDisplay = document.getElementById('avatarDisplay');
+        const userInfo = document.getElementById('userInfo');
 
         const exchangeBtn = document.getElementById('exchangeBtn');
         const friendsBtn = document.getElementById('friendsBtn');
         const airdropBtn = document.getElementById('airdropBtn');
+        const aiBtn = document.getElementById('aiBtn');
 
         const modalOverlay = document.getElementById('modalOverlay');
         const modalBox = document.getElementById('modalBox');
@@ -732,7 +773,7 @@
         const modalClose = document.getElementById('modalClose');
 
         // --- PERSISTENT STORAGE ---
-        const STORAGE_KEY = 'eco_app_data_v4';
+        const STORAGE_KEY = 'eco_app_data_v8';
 
         function loadData() {
             try {
@@ -761,11 +802,33 @@
         let dailyClaimed = saved?.dailyClaimed || false;
         let cipherClaimed = saved?.cipherClaimed || false;
         let comboClaimed = saved?.comboClaimed || false;
-        let facebookFollowed = saved?.facebookFollowed || false;
-        let twitterFollowed = saved?.twitterFollowed || false;
-        let telegramJoined = saved?.telegramJoined || false;
+        let referrals = saved?.referrals || 0;
+        let userName = saved?.userName || 'Jane';
         const maxProgress = 1500;
 
+        // --- TELEGRAM AUTO-LOGIN ---
+        function initTelegramUser() {
+            try {
+                if (window.Telegram && window.Telegram.WebApp) {
+                    const tg = window.Telegram.WebApp;
+                    const user = tg.initDataUnsafe?.user;
+                    if (user) {
+                        userName = user.first_name || user.username || 'User';
+                        if (user.photo_url) {
+                            avatarDisplay.innerHTML = `<img src="${user.photo_url}" alt="avatar" />`;
+                        } else {
+                            avatarDisplay.textContent = user.first_name?.charAt(0) || '👤';
+                        }
+                        userNameDisplay.textContent = userName + ' (CEO)';
+                        saveState();
+                        return true;
+                    }
+                }
+            } catch (e) {}
+            return false;
+        }
+
+        // --- FUNCTIONS ---
         function getLevel(coins) {
             if (coins < 1000) return 1;
             return Math.floor(coins / 1000) + 1;
@@ -790,9 +853,8 @@
                 dailyClaimed: dailyClaimed,
                 cipherClaimed: cipherClaimed,
                 comboClaimed: comboClaimed,
-                facebookFollowed: facebookFollowed,
-                twitterFollowed: twitterFollowed,
-                telegramJoined: telegramJoined
+                referrals: referrals,
+                userName: userName
             });
         }
 
@@ -813,20 +875,7 @@
             saveState();
         }
 
-        // --- FLOATING +N TEXT ---
-        function createFloatText(x, y, amount) {
-            const el = document.createElement('div');
-            el.className = 'float-text';
-            el.textContent = `+${amount}`;
-            el.style.left = (x - 25) + 'px';
-            el.style.top = (y - 15) + 'px';
-            const offsetX = (Math.random() - 0.5) * 30;
-            el.style.transform = `translateX(${offsetX}px)`;
-            coinWrapper.appendChild(el);
-            setTimeout(() => el.remove(), 900);
-        }
-
-        // --- TAP ---
+        // --- MULTI-TOUCH SUPPORT ---
         function handleTap(e) {
             e.preventDefault?.();
             const amount = tapPower;
@@ -841,11 +890,41 @@
             const wrapperRect = coinWrapper.getBoundingClientRect();
             const cx = rect.left - wrapperRect.left + rect.width / 2;
             const cy = rect.top - wrapperRect.top + 10;
-            createFloatText(cx, cy, amount);
+
+            if (e.touches) {
+                for (let i = 0; i < Math.min(e.touches.length, 3); i++) {
+                    const touch = e.touches[i];
+                    const tx = touch.clientX - wrapperRect.left;
+                    const ty = touch.clientY - wrapperRect.top;
+                    createFloatText(tx, ty, amount);
+                }
+            } else {
+                createFloatText(cx, cy, amount);
+            }
 
             coinEl.style.transform = 'scale(0.86)';
             setTimeout(() => coinEl.style.transform = '', 80);
         }
+
+        function createFloatText(x, y, amount) {
+            const el = document.createElement('div');
+            el.className = 'float-text';
+            el.textContent = `+${amount}`;
+            el.style.left = (x - 20) + 'px';
+            el.style.top = (y - 10) + 'px';
+            const offsetX = (Math.random() - 0.5) * 30;
+            el.style.transform = `translateX(${offsetX}px)`;
+            coinWrapper.appendChild(el);
+            setTimeout(() => el.remove(), 900);
+        }
+
+        // --- COIN EVENTS ---
+        coinEl.addEventListener('click', (e) => handleTap(e));
+        coinEl.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            handleTap(e);
+        }, { passive: false });
+        coinEl.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
 
         // --- TIMERS ---
         function updateTimers() {
@@ -920,124 +999,6 @@
         window.claimCipher = claimCipher;
         window.claimCombo = claimCombo;
 
-        // --- SOCIAL TASKS ---
-        function showSocialTasks() {
-            let html = `
-                <p>Complete social tasks to earn free coins!</p>
-                <div class="task-item">
-                    <div>
-                        <div class="task-name">📘 Follow Facebook</div>
-                        <div class="task-reward">+200 coins</div>
-                    </div>
-                    ${facebookFollowed ? '<span style="color:#4CAF50;">✅ Done</span>' : `<button onclick="startFacebookTask()">Follow</button>`}
-                </div>
-                <div class="task-item">
-                    <div>
-                        <div class="task-name">🐦 Follow Twitter</div>
-                        <div class="task-reward">+150 coins</div>
-                    </div>
-                    ${twitterFollowed ? '<span style="color:#4CAF50;">✅ Done</span>' : `<button onclick="startTwitterTask()">Follow</button>`}
-                </div>
-                <div class="task-item">
-                    <div>
-                        <div class="task-name">💬 Join Telegram</div>
-                        <div class="task-reward">+100 coins</div>
-                    </div>
-                    ${telegramJoined ? '<span style="color:#4CAF50;">✅ Done</span>' : `<button onclick="startTelegramTask()">Join</button>`}
-                </div>
-                <p style="font-size:11px;color:#8a7a54;margin-top:8px;">Complete all tasks to earn bonus rewards!</p>
-            `;
-            openModal('📱 Social Tasks', html);
-        }
-
-        function startFacebookTask() {
-            const fbLink = 'https://facebook.com/ecoin.official';
-            openModal('📘 Follow Facebook', `
-                <p>Follow our Facebook page to earn <strong>200 coins</strong>!</p>
-                <p style="font-size:14px;margin:12px 0;">
-                    <a href="${fbLink}" target="_blank" class="social-link">${fbLink}</a>
-                </p>
-                <button class="verify-btn" onclick="verifyFacebook()">✅ I've Followed</button>
-                <p style="font-size:11px;color:#8a7a54;">Make sure you're logged in and follow the page</p>
-            `);
-        }
-
-        function verifyFacebook() {
-            if (facebookFollowed) {
-                alert('✅ Already verified!');
-                return;
-            }
-            facebookFollowed = true;
-            const reward = 200;
-            balance += reward;
-            ceoCoins += reward;
-            updateUI();
-            closeModal();
-            alert(`🎉 Facebook follow verified! +${reward} coins`);
-            showSocialTasks();
-        }
-
-        function startTwitterTask() {
-            const twitterLink = 'https://twitter.com/ecoin_official';
-            openModal('🐦 Follow Twitter', `
-                <p>Follow our Twitter page to earn <strong>150 coins</strong>!</p>
-                <p style="font-size:14px;margin:12px 0;">
-                    <a href="${twitterLink}" target="_blank" class="social-link">${twitterLink}</a>
-                </p>
-                <button class="verify-btn" onclick="verifyTwitter()">✅ I've Followed</button>
-                <p style="font-size:11px;color:#8a7a54;">Make sure you're logged in and follow the page</p>
-            `);
-        }
-
-        function verifyTwitter() {
-            if (twitterFollowed) {
-                alert('✅ Already verified!');
-                return;
-            }
-            twitterFollowed = true;
-            const reward = 150;
-            balance += reward;
-            ceoCoins += reward;
-            updateUI();
-            closeModal();
-            alert(`🎉 Twitter follow verified! +${reward} coins`);
-            showSocialTasks();
-        }
-
-        function startTelegramTask() {
-            const telegramLink = 'https://t.me/ecoin_official';
-            openModal('💬 Join Telegram', `
-                <p>Join our Telegram group to earn <strong>100 coins</strong>!</p>
-                <p style="font-size:14px;margin:12px 0;">
-                    <a href="${telegramLink}" target="_blank" class="social-link">${telegramLink}</a>
-                </p>
-                <button class="verify-btn" onclick="verifyTelegram()">✅ I've Joined</button>
-                <p style="font-size:11px;color:#8a7a54;">Make sure you're logged in and join the group</p>
-            `);
-        }
-
-        function verifyTelegram() {
-            if (telegramJoined) {
-                alert('✅ Already verified!');
-                return;
-            }
-            telegramJoined = true;
-            const reward = 100;
-            balance += reward;
-            ceoCoins += reward;
-            updateUI();
-            closeModal();
-            alert(`🎉 Telegram join verified! +${reward} coins`);
-            showSocialTasks();
-        }
-
-        window.startFacebookTask = startFacebookTask;
-        window.verifyFacebook = verifyFacebook;
-        window.startTwitterTask = startTwitterTask;
-        window.verifyTwitter = verifyTwitter;
-        window.startTelegramTask = startTelegramTask;
-        window.verifyTelegram = verifyTelegram;
-
         // --- BOOST ---
         function handleBoost() {
             const cost = getBoostCost();
@@ -1056,14 +1017,14 @@
                     <div class="row"><span class="label">Your coins</span><span class="value">${balance.toLocaleString()}</span></div>
                     <div class="row"><span class="label">Boost Level</span><span class="value">${boostLevel}</span></div>
                 </div>
-                <p style="font-size:11px;color:#8a7a54;">Cost doubles each upgrade: 500 → 1,000 → 2,000 → 4,000...</p>
+                <p style="font-size:10px;color:#8a7a54;">Cost doubles each upgrade: 500 → 1,000 → 2,000 → 4,000...</p>
             `);
         }
 
         function upgradeBoost() {
             const cost = getBoostCost();
             if (balance < cost) {
-                alert(`❌ Not enough coins! You need ${cost.toLocaleString()} coins.`);
+                alert(` Not enough coins! You need ${cost.toLocaleString()} coins.`);
                 return;
             }
             balance -= cost;
@@ -1089,17 +1050,33 @@
 
         window.closeModal = closeModal;
 
-        // --- FRIENDS / INVITE ---
+        // --- FRIENDS / REFERRALS ---
         function handleFriends() {
             const inviteLink = 'https://e-coin.app/invite/' + Math.random().toString(36).substring(2, 10);
             openModal('👥 Invite Friends', `
                 <p>Invite your friends and earn <strong>100 coins</strong> for each invite!</p>
+                <div class="referral-bonus">
+                    <div class="big">👥 ${referrals}</div>
+                    <div class="sub">Total Referrals</div>
+                </div>
                 <div class="invite-link">${inviteLink}</div>
                 <button class="copy-btn" onclick="navigator.clipboard?.writeText('${inviteLink}') && alert('Link copied!')">📋 Copy Link</button>
-                <p style="margin-top:10px;font-size:11px;color:#8a7a54;">Share this link with your friends</p>
-                <button class="verify-btn" onclick="showSocialTasks()" style="margin-top:8px;">📱 Social Tasks</button>
+                <button class="verify-btn" onclick="simulateReferral()" style="margin-top:6px;background:#f3ba2f;border:none;padding:6px 16px;border-radius:30px;font-weight:700;cursor:pointer;margin:4px auto;display:block;font-size:13px;">➕ Simulate Referral</button>
+                <p style="margin-top:6px;font-size:10px;color:#8a7a54;">Share this link with your friends</p>
             `);
         }
+
+        function simulateReferral() {
+            referrals += 1;
+            const reward = 100;
+            balance += reward;
+            ceoCoins += reward;
+            updateUI();
+            alert(`🎉 New referral! +${reward} coins bonus! Total referrals: ${referrals}`);
+            handleFriends();
+        }
+
+        window.simulateReferral = simulateReferral;
 
         // --- AIRDROP ---
         function handleAirdrop() {
@@ -1111,11 +1088,10 @@
                     <div class="row"><span class="label">Rate</span><span class="value">1 coin = $0.001</span></div>
                     <div class="row"><span class="label">Min. Withdraw</span><span class="value">1,000 coins</span></div>
                 </div>
-                <p style="font-size:11px;color:#8a7a54;">Connect your Binance wallet to withdraw</p>
-                <button style="background:#f3ba2f;border:none;padding:10px;border-radius:40px;font-weight:700;width:100%;cursor:pointer;margin-top:6px;" onclick="connectBinance()">
+                <p style="font-size:10px;color:#8a7a54;">Connect your Binance wallet to withdraw</p>
+                <button style="background:#f3ba2f;border:none;padding:8px;border-radius:40px;font-weight:700;width:100%;cursor:pointer;margin-top:4px;" onclick="connectBinance()">
                     🔗 Connect Binance Wallet
                 </button>
-                <button class="verify-btn" onclick="showSocialTasks()" style="margin-top:8px;">📱 Social Tasks</button>
             `);
         }
 
@@ -1123,7 +1099,7 @@
             alert('🔗 Binance Wallet connecting...\n\n✅ Wallet connected successfully!\n🎁 You received 50 bonus coins!');
             balance += 50;
             ceoCoins += 50;
-            updateUI();
+            updateUI(1);
             closeModal();
         }
 
@@ -1137,31 +1113,155 @@
                     <div class="row"><span class="label">Coins</span><span class="value">${balance.toLocaleString()}</span></div>
                     <div class="row"><span class="label">Exchange Rate</span><span class="value">1 coin = 0.001 ETH</span></div>
                 </div>
-                <button style="background:#f3ba2f;border:none;padding:10px;border-radius:40px;font-weight:700;width:100%;cursor:pointer;margin-top:6px;" onclick="alert('Exchange feature coming soon!')">
+                <button style="background:#f3ba2f;border:none;padding:8px;border-radius:40px;font-weight:700;width:100%;cursor:pointer;margin-top:4px;" onclick="alert('Exchange feature coming soon!')">
                     Exchange Now
                 </button>
-                <button class="verify-btn" onclick="showSocialTasks()" style="margin-top:8px;">📱 Social Tasks</button>
             `);
         }
 
-        // --- EVENTS ---
-        coinEl.addEventListener('click', handleTap);
-        coinEl.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            handleTap(e);
-        }, { passive: false });
+        // --- AI ASSISTANT ---
+        let aiChatHistory = [];
 
+        function handleAI() {
+            aiChatHistory = [
+                { role: 'ai', content: '👋 Hello! I\'m E-Coin AI Assistant. How can I help you today?' }
+            ];
+            openModal('🤖 E-Coin AI Assistant', generateAIChatHTML());
+            // Focus input after modal opens
+            setTimeout(() => {
+                const input = document.getElementById('aiInput');
+                if (input) input.focus();
+            }, 300);
+        }
+
+        function generateAIChatHTML() {
+            let chatHTML = '<div class="ai-chat" id="aiChatContainer">';
+            aiChatHistory.forEach(msg => {
+                const cls = msg.role === 'user' ? 'user-msg' : 'ai-msg';
+                chatHTML += `<div class="message ${cls}">${msg.content}</div>`;
+            });
+            chatHTML += `</div>
+                <div class="ai-input">
+                    <input type="text" id="aiInput" placeholder="Ask me anything..." onkeydown="if(event.key==='Enter') sendAIMessage()" />
+                    <button onclick="sendAIMessage()">Send</button>
+                </div>
+                <div style="margin-top:6px;text-align:center;font-size:10px;color:#8a7a54;">
+                    <span class="admin-badge">ADMIN</span> E-Coin AI v1.0
+                </div>`;
+            return chatHTML;
+        }
+
+        function sendAIMessage() {
+            const input = document.getElementById('aiInput');
+            if (!input) return;
+            const question = input.value.trim();
+            if (!question) return;
+
+            // Add user message
+            aiChatHistory.push({ role: 'user', content: question });
+            input.value = '';
+
+            // Generate AI response
+            const response = generateAIResponse(question);
+            aiChatHistory.push({ role: 'ai', content: response });
+
+            // Update chat
+            const chatContainer = document.getElementById('aiChatContainer');
+            if (chatContainer) {
+                let chatHTML = '';
+                aiChatHistory.forEach(msg => {
+                    const cls = msg.role === 'user' ? 'user-msg' : 'ai-msg';
+                    chatHTML += `<div class="message ${cls}">${msg.content}</div>`;
+                });
+                chatContainer.innerHTML = chatHTML;
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+
+            // Keep modal content updated
+            const modalContent = document.getElementById('modalContent');
+            if (modalContent) {
+                modalContent.innerHTML = generateAIChatHTML();
+                // Re-focus input
+                setTimeout(() => {
+                    const newInput = document.getElementById('aiInput');
+                    if (newInput) newInput.focus();
+                }, 100);
+            }
+        }
+
+        function generateAIResponse(question) {
+            const q = question.toLowerCase();
+
+            // Coin-related responses
+            if (q.includes('coin') || q.includes('balance') || q.includes('earn')) {
+                return `💰 You currently have <strong>${balance.toLocaleString()}</strong> coins! Keep tapping the E-Coin to earn more. Each tap gives you +${tapPower} coins.`;
+            }
+            if (q.includes('boost') || q.includes('tap') || q.includes('power')) {
+                return `⚡ Your tap power is <strong>+${tapPower}</strong> per tap. Level ${boostLevel}. Next upgrade costs ${getBoostCost().toLocaleString()} coins.`;
+            }
+            if (q.includes('level') || q.includes('rank')) {
+                return `🏆 You are Level <strong>${getLevel(balance)}</strong>. Need ${getNextLevelThreshold(balance).toLocaleString()} coins for next level!`;
+            }
+            if (q.includes('referral') || q.includes('friend') || q.includes('invite')) {
+                return `👥 You have invited <strong>${referrals}</strong> friends! Each referral gives you 100 coins. Share your invite link to earn more!`;
+            }
+            if (q.includes('airdrop') || q.includes('withdraw') || q.includes('binance')) {
+                const value = (balance / 1000).toFixed(2);
+                return `🎯 Your coins are worth <strong>$${value}</strong> USD. Connect your Binance wallet to withdraw when you have at least 1,000 coins.`;
+            }
+            if (q.includes('hello') || q.includes('hi') || q.includes('hey')) {
+                return `👋 Hello ${userName}! How can I help you with E-Coin today?`;
+            }
+            if (q.includes('help') || q.includes('support')) {
+                return `🆘 I'm here to help! You can ask me about:\n• Your coins and balance\n• Tap power and boost\n• Your level and progress\n• Referrals and invites\n• Airdrop and withdrawals\n• General questions about E-Coin`;
+            }
+            if (q.includes('admin') || q.includes('owner') || q.includes('ceo')) {
+                return `👑 ${userName} is the CEO and Admin of E-Coin. All decisions are made by the admin team.`;
+            }
+            if (q.includes('telegram') || q.includes('tg')) {
+                return `📱 Join our Telegram: https://t.me/OneWinTokenBot/start?startapp=refId8467180571`;
+            }
+            if (q.includes('tiktok')) {
+                return `🎵 Follow us on TikTok: https://www.tiktok.com/@esl9151`;
+            }
+            if (q.includes('instagram') || q.includes('ig')) {
+                return `📸 Follow us on Instagram: https://instagram.com/ecoin.official`;
+            }
+            if (q.includes('facebook') || q.includes('fb')) {
+                return `📘 Like our Facebook: https://facebook.com/ecoin.official`;
+            }
+            if (q.includes('thanks') || q.includes('thank you')) {
+                return `🙏 You're welcome, ${userName}! Keep tapping and earning those coins! 🪙`;
+            }
+
+            // Default response
+            return `🤔 I'm not sure about that. Here are some things you can ask me about:
+• Your coin balance
+• Tap power and boost
+• Level and progress
+• Referrals
+• Airdrop
+• Social media links
+• General help
+
+What would you like to know?`;
+        }
+
+        window.sendAIMessage = sendAIMessage;
+
+        // --- EVENTS ---
         boostBtn.addEventListener('click', handleBoost);
         friendsBtn.addEventListener('click', handleFriends);
         airdropBtn.addEventListener('click', handleAirdrop);
         exchangeBtn.addEventListener('click', handleExchange);
+        aiBtn.addEventListener('click', handleAI);
 
         modalClose.addEventListener('click', closeModal);
         modalOverlay.addEventListener('click', (e) => {
             if (e.target === modalOverlay) closeModal();
         });
 
-        // Nav items
+        // --- NAV ---
         document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', function() {
                 document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -1169,7 +1269,7 @@
             });
         });
 
-        // Double click CEO for bonus
+        // --- CEO DOUBLE CLICK ---
         ceoTag.addEventListener('dblclick', function() {
             ceoCoins += 500;
             balance += 100;
@@ -1178,7 +1278,36 @@
             setTimeout(() => this.style.color = '', 300);
         });
 
+        // --- USER CLICK FOR PROFILE ---
+        userInfo.addEventListener('click', function() {
+            openModal('👤 Admin Profile', `
+                <div class="user-profile">
+                    <div class="avatar-lg">${avatarDisplay.innerHTML || '👩'}</div>
+                    <div class="info">
+                        <div class="name">${userName} <span class="admin-badge">ADMIN</span></div>
+                        <div class="handle">@${userName.toLowerCase().replace(' ', '_')}</div>
+                    </div>
+                </div>
+                <div class="airdrop-info">
+                    <div class="row"><span class="label">Coins</span><span class="value">${balance.toLocaleString()}</span></div>
+                    <div class="row"><span class="label">Level</span><span class="value">${getLevel(balance)}</span></div>
+                    <div class="row"><span class="label">Referrals</span><span class="value">${referrals}</span></div>
+                    <div class="row"><span class="label">Tap Power</span><span class="value">+${tapPower}</span></div>
+                </div>
+                <div class="social-links">
+                    <a href="https://t.me/OneWinTokenBot/start?startapp=refId8467180571" target="_blank"><span class="icon">📱</span> Telegram</a>
+                    <a href="https://www.tiktok.com/@esl9151" target="_blank"><span class="icon">🎵</span> TikTok</a>
+                    <a href="https://instagram.com/ecoin.official" target="_blank"><span class="icon">📸</span> IG</a>
+                    <a href="https://facebook.com/ecoin.official" target="_blank"><span class="icon">📘</span> FB</a>
+                </div>
+                <p style="font-size:10px;color:#8a7a54;">Follow us on social media for updates and bonuses!</p>
+                <button class="verify-btn" onclick="closeModal()" style="margin-top:6px;">Close</button>
+            `);
+        });
+
         // --- INIT ---
+        initTelegramUser();
+
         const today = new Date().toDateString();
         const lastDate = localStorage.getItem('eco_last_date');
         if (!lastDate || lastDate !== today) {
@@ -1201,9 +1330,9 @@
         }, 2000);
 
         console.log('💰 E-Coin loaded! Tap power:', tapPower);
+        console.log('👥 Referrals:', referrals);
+        console.log('👤 User:', userName);
         console.log('💾 Data saved in localStorage with key:', STORAGE_KEY);
-        console.log('📱 Social tasks:', { facebookFollowed, twitterFollowed, telegramJoined });
-        console.log('⚡ Boost level:', boostLevel, 'Next cost:', getBoostCost());
     })();
 </script>
 </body>
