@@ -141,7 +141,7 @@
             color: #8a7a54;
         }
 
-        /* Timer Grid */
+        /* Timer Grid - Daily Tasks */
         .timer-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -155,6 +155,11 @@
             padding: 6px 4px;
             text-align: center;
             border: 1px solid #2d2417;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .timer-item:active {
+            background: #2a2215;
         }
         .timer-item .value {
             font-size: 0.9rem;
@@ -231,23 +236,53 @@
             overflow: visible;
         }
         .coin {
-            width: 130px;
-            height: 130px;
-            background: radial-gradient(circle at 35% 30%, #fce181, #d49c1a 55%, #8a6b0e);
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle at 35% 30%, #fce181, #d49c1a 50%, #b8860b 75%, #8a6b0e);
             border-radius: 50%;
-            border: 7px solid #f9d342;
-            box-shadow: 0 0 0 2px #6b4f0e, 0 12px 30px rgba(243, 186, 47, 0.3), inset 0 -8px 20px rgba(0,0,0,0.4);
+            border: 8px solid #f9d342;
+            box-shadow: 0 0 0 3px #6b4f0e, 0 12px 40px rgba(243, 186, 47, 0.4), inset 0 -10px 30px rgba(0,0,0,0.5), inset 0 10px 30px rgba(255,215,0,0.2);
             cursor: pointer;
             transition: transform 0.06s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             touch-action: manipulation;
             position: relative;
             z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            font-weight: 900;
+            color: #8a6b0e;
+            text-shadow: 0 2px 10px rgba(255,215,0,0.3), 0 -2px 10px rgba(139,107,14,0.3);
+            letter-spacing: -2px;
         }
         .coin:active {
             transform: scale(0.88);
         }
+        /* Inner rim for realistic coin look */
+        .coin::before {
+            content: '';
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,215,0,0.15);
+            pointer-events: none;
+        }
+        .coin::after {
+            content: 'E';
+            position: relative;
+            z-index: 1;
+            font-size: 5.5rem;
+            font-weight: 900;
+            color: #7a5f0e;
+            text-shadow: 0 2px 4px rgba(255,215,0,0.2), 0 -2px 4px rgba(0,0,0,0.3);
+            font-family: 'Georgia', serif;
+        }
 
-        /* Floating +N effect - Hamster Kombat style */
+        /* Floating +N effect */
         .float-text {
             position: absolute;
             font-size: 2.2rem;
@@ -280,6 +315,7 @@
             font-size: 11px;
             border: 1px solid #3d321f;
             color: #d4bb7a;
+            cursor: pointer;
         }
         .ceo-tag span {
             color: #f3ba2f;
@@ -290,10 +326,10 @@
             color: #8a7a54;
         }
 
-        /* Action Grid */
+        /* Action Grid - Exchange, Friends, Airdrop */
         .action-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 5px;
             margin-bottom: 6px;
             flex-shrink: 0;
@@ -329,7 +365,7 @@
         /* Bottom Nav */
         .bottom-nav {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
             background: #14110d;
             border-radius: 40px;
             padding: 3px 6px;
@@ -497,6 +533,80 @@
             color: #8a7a54;
             font-size: 11px;
         }
+        .modal-box .task-item {
+            background: #0e0c07;
+            padding: 10px 14px;
+            border-radius: 14px;
+            border: 1px solid #2f281c;
+            margin: 6px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-box .task-item .task-name {
+            color: #e5d6b0;
+            font-size: 13px;
+        }
+        .modal-box .task-item .task-reward {
+            color: #f3ba2f;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .modal-box .task-item button {
+            background: #f3ba2f;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 11px;
+        }
+        .modal-box .social-link {
+            color: #f3ba2f;
+            text-decoration: underline;
+            word-break: break-all;
+        }
+        .modal-box .verify-btn {
+            background: #f3ba2f;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 6px auto;
+            display: block;
+            font-size: 14px;
+        }
+        .tap-power-display {
+            background: #0e0c07;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 10px;
+            color: #f3ba2f;
+            border: 1px solid #2f281c;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 420px) {
+            .coin {
+                width: 150px;
+                height: 150px;
+                font-size: 4rem;
+            }
+            .coin::after {
+                font-size: 4.5rem;
+            }
+        }
+        @media (max-width: 360px) {
+            .coin {
+                width: 130px;
+                height: 130px;
+                font-size: 3.5rem;
+            }
+            .coin::after {
+                font-size: 4rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -527,17 +637,17 @@
         <div class="next-level" id="nextLevelDisplay">Next: 1,000 coins</div>
     </div>
 
-    <!-- Timer Grid -->
+    <!-- Timer Grid - Daily Tasks -->
     <div class="timer-grid">
-        <div class="timer-item">
+        <div class="timer-item" onclick="claimDaily()">
             <div class="value" id="dailyTimer">05:35</div>
             <div class="desc">Daily reward</div>
         </div>
-        <div class="timer-item">
+        <div class="timer-item" onclick="claimCipher()">
             <div class="value" id="cipherTimer">00:56</div>
             <div class="desc">Daily cipher</div>
         </div>
-        <div class="timer-item">
+        <div class="timer-item" onclick="claimCombo()">
             <div class="value" id="comboTimer">02:04</div>
             <div class="desc">Daily combo</div>
         </div>
@@ -559,14 +669,13 @@
 
     <!-- CEO & Balance -->
     <div class="coin-label">
-        <div class="ceo-tag">👑 (CEO) <span id="ceoCoinCount">0</span></div>
+        <div class="ceo-tag" id="ceoTag">👑 (CEO) <span id="ceoCoinCount">0</span></div>
         <div class="small-balance">🪙 <span id="balanceSmall">0</span></div>
     </div>
 
-    <!-- Action Grid -->
+    <!-- Action Grid - Exchange, Friends, Airdrop -->
     <div class="action-grid">
         <button class="action-btn gold" id="exchangeBtn">Exchange</button>
-        <button class="action-btn" id="mineBtn">⛏️ Mine</button>
         <button class="action-btn" id="friendsBtn">👥 Friends</button>
         <button class="action-btn" id="airdropBtn">🎯 Airdrop</button>
     </div>
@@ -610,9 +719,9 @@
         const boostBtn = document.getElementById('boostBtn');
         const levelDisplay = document.getElementById('levelDisplay');
         const nextLevelDisplay = document.getElementById('nextLevelDisplay');
+        const ceoTag = document.getElementById('ceoTag');
 
         const exchangeBtn = document.getElementById('exchangeBtn');
-        const mineBtn = document.getElementById('mineBtn');
         const friendsBtn = document.getElementById('friendsBtn');
         const airdropBtn = document.getElementById('airdropBtn');
 
@@ -623,7 +732,7 @@
         const modalClose = document.getElementById('modalClose');
 
         // --- PERSISTENT STORAGE ---
-        const STORAGE_KEY = 'eco_app_data';
+        const STORAGE_KEY = 'eco_app_data_v4';
 
         function loadData() {
             try {
@@ -649,6 +758,12 @@
         let progress = saved?.progress || 0;
         let tapPower = saved?.tapPower || 1;
         let boostLevel = saved?.boostLevel || 1;
+        let dailyClaimed = saved?.dailyClaimed || false;
+        let cipherClaimed = saved?.cipherClaimed || false;
+        let comboClaimed = saved?.comboClaimed || false;
+        let facebookFollowed = saved?.facebookFollowed || false;
+        let twitterFollowed = saved?.twitterFollowed || false;
+        let telegramJoined = saved?.telegramJoined || false;
         const maxProgress = 1500;
 
         function getLevel(coins) {
@@ -661,13 +776,23 @@
             return current * 1000;
         }
 
+        function getBoostCost() {
+            return 500 * Math.pow(2, boostLevel - 1);
+        }
+
         function saveState() {
             saveData({
                 balance: balance,
                 ceoCoins: ceoCoins,
                 progress: progress,
                 tapPower: tapPower,
-                boostLevel: boostLevel
+                boostLevel: boostLevel,
+                dailyClaimed: dailyClaimed,
+                cipherClaimed: cipherClaimed,
+                comboClaimed: comboClaimed,
+                facebookFollowed: facebookFollowed,
+                twitterFollowed: twitterFollowed,
+                telegramJoined: telegramJoined
             });
         }
 
@@ -688,14 +813,13 @@
             saveState();
         }
 
-        // --- FLOATING +N TEXT (Hamster Kombat style) ---
+        // --- FLOATING +N TEXT ---
         function createFloatText(x, y, amount) {
             const el = document.createElement('div');
             el.className = 'float-text';
             el.textContent = `+${amount}`;
             el.style.left = (x - 25) + 'px';
             el.style.top = (y - 15) + 'px';
-            // Random slight horizontal offset for natural feel
             const offsetX = (Math.random() - 0.5) * 30;
             el.style.transform = `translateX(${offsetX}px)`;
             coinWrapper.appendChild(el);
@@ -713,7 +837,6 @@
             }
             updateUI();
 
-            // Float text
             const rect = coinEl.getBoundingClientRect();
             const wrapperRect = coinWrapper.getBoundingClientRect();
             const cx = rect.left - wrapperRect.left + rect.width / 2;
@@ -741,12 +864,183 @@
             const comboMin = Math.floor((secs % 30) / 2);
             const comboSec = secs % 30;
             comboTimer.textContent = `${String(comboMin).padStart(2,'0')}:${String(comboSec).padStart(2,'0')}`;
+
+            const today = now.toDateString();
+            const lastDate = localStorage.getItem('eco_last_date');
+            if (lastDate !== today) {
+                dailyClaimed = false;
+                cipherClaimed = false;
+                comboClaimed = false;
+                localStorage.setItem('eco_last_date', today);
+                saveState();
+            }
         }
+
+        // --- DAILY TASK CLAIMS ---
+        function claimDaily() {
+            if (dailyClaimed) {
+                alert('✅ Daily reward already claimed! Come back tomorrow.');
+                return;
+            }
+            const reward = 100;
+            balance += reward;
+            ceoCoins += reward;
+            dailyClaimed = true;
+            updateUI();
+            alert(`🎉 Daily reward claimed! +${reward} coins`);
+        }
+
+        function claimCipher() {
+            if (cipherClaimed) {
+                alert('✅ Daily cipher already claimed! Come back tomorrow.');
+                return;
+            }
+            const reward = 50;
+            balance += reward;
+            ceoCoins += reward;
+            cipherClaimed = true;
+            updateUI();
+            alert(`🔐 Cipher claimed! +${reward} coins`);
+        }
+
+        function claimCombo() {
+            if (comboClaimed) {
+                alert('✅ Daily combo already claimed! Come back tomorrow.');
+                return;
+            }
+            const reward = 75;
+            balance += reward;
+            ceoCoins += reward;
+            comboClaimed = true;
+            updateUI();
+            alert(`🔥 Combo claimed! +${reward} coins`);
+        }
+
+        window.claimDaily = claimDaily;
+        window.claimCipher = claimCipher;
+        window.claimCombo = claimCombo;
+
+        // --- SOCIAL TASKS ---
+        function showSocialTasks() {
+            let html = `
+                <p>Complete social tasks to earn free coins!</p>
+                <div class="task-item">
+                    <div>
+                        <div class="task-name">📘 Follow Facebook</div>
+                        <div class="task-reward">+200 coins</div>
+                    </div>
+                    ${facebookFollowed ? '<span style="color:#4CAF50;">✅ Done</span>' : `<button onclick="startFacebookTask()">Follow</button>`}
+                </div>
+                <div class="task-item">
+                    <div>
+                        <div class="task-name">🐦 Follow Twitter</div>
+                        <div class="task-reward">+150 coins</div>
+                    </div>
+                    ${twitterFollowed ? '<span style="color:#4CAF50;">✅ Done</span>' : `<button onclick="startTwitterTask()">Follow</button>`}
+                </div>
+                <div class="task-item">
+                    <div>
+                        <div class="task-name">💬 Join Telegram</div>
+                        <div class="task-reward">+100 coins</div>
+                    </div>
+                    ${telegramJoined ? '<span style="color:#4CAF50;">✅ Done</span>' : `<button onclick="startTelegramTask()">Join</button>`}
+                </div>
+                <p style="font-size:11px;color:#8a7a54;margin-top:8px;">Complete all tasks to earn bonus rewards!</p>
+            `;
+            openModal('📱 Social Tasks', html);
+        }
+
+        function startFacebookTask() {
+            const fbLink = 'https://facebook.com/ecoin.official';
+            openModal('📘 Follow Facebook', `
+                <p>Follow our Facebook page to earn <strong>200 coins</strong>!</p>
+                <p style="font-size:14px;margin:12px 0;">
+                    <a href="${fbLink}" target="_blank" class="social-link">${fbLink}</a>
+                </p>
+                <button class="verify-btn" onclick="verifyFacebook()">✅ I've Followed</button>
+                <p style="font-size:11px;color:#8a7a54;">Make sure you're logged in and follow the page</p>
+            `);
+        }
+
+        function verifyFacebook() {
+            if (facebookFollowed) {
+                alert('✅ Already verified!');
+                return;
+            }
+            facebookFollowed = true;
+            const reward = 200;
+            balance += reward;
+            ceoCoins += reward;
+            updateUI();
+            closeModal();
+            alert(`🎉 Facebook follow verified! +${reward} coins`);
+            showSocialTasks();
+        }
+
+        function startTwitterTask() {
+            const twitterLink = 'https://twitter.com/ecoin_official';
+            openModal('🐦 Follow Twitter', `
+                <p>Follow our Twitter page to earn <strong>150 coins</strong>!</p>
+                <p style="font-size:14px;margin:12px 0;">
+                    <a href="${twitterLink}" target="_blank" class="social-link">${twitterLink}</a>
+                </p>
+                <button class="verify-btn" onclick="verifyTwitter()">✅ I've Followed</button>
+                <p style="font-size:11px;color:#8a7a54;">Make sure you're logged in and follow the page</p>
+            `);
+        }
+
+        function verifyTwitter() {
+            if (twitterFollowed) {
+                alert('✅ Already verified!');
+                return;
+            }
+            twitterFollowed = true;
+            const reward = 150;
+            balance += reward;
+            ceoCoins += reward;
+            updateUI();
+            closeModal();
+            alert(`🎉 Twitter follow verified! +${reward} coins`);
+            showSocialTasks();
+        }
+
+        function startTelegramTask() {
+            const telegramLink = 'https://t.me/ecoin_official';
+            openModal('💬 Join Telegram', `
+                <p>Join our Telegram group to earn <strong>100 coins</strong>!</p>
+                <p style="font-size:14px;margin:12px 0;">
+                    <a href="${telegramLink}" target="_blank" class="social-link">${telegramLink}</a>
+                </p>
+                <button class="verify-btn" onclick="verifyTelegram()">✅ I've Joined</button>
+                <p style="font-size:11px;color:#8a7a54;">Make sure you're logged in and join the group</p>
+            `);
+        }
+
+        function verifyTelegram() {
+            if (telegramJoined) {
+                alert('✅ Already verified!');
+                return;
+            }
+            telegramJoined = true;
+            const reward = 100;
+            balance += reward;
+            ceoCoins += reward;
+            updateUI();
+            closeModal();
+            alert(`🎉 Telegram join verified! +${reward} coins`);
+            showSocialTasks();
+        }
+
+        window.startFacebookTask = startFacebookTask;
+        window.verifyFacebook = verifyFacebook;
+        window.startTwitterTask = startTwitterTask;
+        window.verifyTwitter = verifyTwitter;
+        window.startTelegramTask = startTelegramTask;
+        window.verifyTelegram = verifyTelegram;
 
         // --- BOOST ---
         function handleBoost() {
-            // Show boost options
-            const cost = boostLevel * 500;
+            const cost = getBoostCost();
             const nextPower = tapPower + 1;
             openModal('⚡ Boost', `
                 <p>Increase your tap power!</p>
@@ -760,13 +1054,14 @@
                 <div class="airdrop-info">
                     <div class="row"><span class="label">Cost</span><span class="value">${cost.toLocaleString()} coins</span></div>
                     <div class="row"><span class="label">Your coins</span><span class="value">${balance.toLocaleString()}</span></div>
+                    <div class="row"><span class="label">Boost Level</span><span class="value">${boostLevel}</span></div>
                 </div>
-                <p style="font-size:11px;color:#8a7a54;">Each upgrade increases tap power by +1</p>
+                <p style="font-size:11px;color:#8a7a54;">Cost doubles each upgrade: 500 → 1,000 → 2,000 → 4,000...</p>
             `);
         }
 
         function upgradeBoost() {
-            const cost = boostLevel * 500;
+            const cost = getBoostCost();
             if (balance < cost) {
                 alert(`❌ Not enough coins! You need ${cost.toLocaleString()} coins.`);
                 return;
@@ -779,6 +1074,8 @@
             alert(`✅ Boost upgraded! Tap power is now +${tapPower}`);
         }
 
+        window.upgradeBoost = upgradeBoost;
+
         // --- MODAL ---
         function openModal(title, contentHTML) {
             modalTitle.textContent = title;
@@ -790,8 +1087,6 @@
             modalOverlay.classList.remove('active');
         }
 
-        // Expose for inline onclick
-        window.upgradeBoost = upgradeBoost;
         window.closeModal = closeModal;
 
         // --- FRIENDS / INVITE ---
@@ -802,6 +1097,7 @@
                 <div class="invite-link">${inviteLink}</div>
                 <button class="copy-btn" onclick="navigator.clipboard?.writeText('${inviteLink}') && alert('Link copied!')">📋 Copy Link</button>
                 <p style="margin-top:10px;font-size:11px;color:#8a7a54;">Share this link with your friends</p>
+                <button class="verify-btn" onclick="showSocialTasks()" style="margin-top:8px;">📱 Social Tasks</button>
             `);
         }
 
@@ -816,11 +1112,22 @@
                     <div class="row"><span class="label">Min. Withdraw</span><span class="value">1,000 coins</span></div>
                 </div>
                 <p style="font-size:11px;color:#8a7a54;">Connect your Binance wallet to withdraw</p>
-                <button style="background:#f3ba2f;border:none;padding:10px;border-radius:40px;font-weight:700;width:100%;cursor:pointer;margin-top:6px;" onclick="alert('🔗 Binance Wallet connecting...')">
-                    Connect Binance Wallet
+                <button style="background:#f3ba2f;border:none;padding:10px;border-radius:40px;font-weight:700;width:100%;cursor:pointer;margin-top:6px;" onclick="connectBinance()">
+                    🔗 Connect Binance Wallet
                 </button>
+                <button class="verify-btn" onclick="showSocialTasks()" style="margin-top:8px;">📱 Social Tasks</button>
             `);
         }
+
+        function connectBinance() {
+            alert('🔗 Binance Wallet connecting...\n\n✅ Wallet connected successfully!\n🎁 You received 50 bonus coins!');
+            balance += 50;
+            ceoCoins += 50;
+            updateUI();
+            closeModal();
+        }
+
+        window.connectBinance = connectBinance;
 
         // --- EXCHANGE ---
         function handleExchange() {
@@ -833,21 +1140,7 @@
                 <button style="background:#f3ba2f;border:none;padding:10px;border-radius:40px;font-weight:700;width:100%;cursor:pointer;margin-top:6px;" onclick="alert('Exchange feature coming soon!')">
                     Exchange Now
                 </button>
-            `);
-        }
-
-        // --- MINE ---
-        function handleMine() {
-            const mined = Math.floor(Math.random() * 30) + 10;
-            balance += mined;
-            ceoCoins += Math.floor(mined / 3);
-            updateUI();
-            openModal('⛏️ Mining', `
-                <p>You mined <strong style="color:#f3ba2f;">+${mined}</strong> coins!</p>
-                <div class="airdrop-info">
-                    <div class="row"><span class="label">New Balance</span><span class="value">${balance.toLocaleString()}</span></div>
-                </div>
-                <p style="font-size:11px;color:#8a7a54;">Keep mining to earn more!</p>
+                <button class="verify-btn" onclick="showSocialTasks()" style="margin-top:8px;">📱 Social Tasks</button>
             `);
         }
 
@@ -862,7 +1155,6 @@
         friendsBtn.addEventListener('click', handleFriends);
         airdropBtn.addEventListener('click', handleAirdrop);
         exchangeBtn.addEventListener('click', handleExchange);
-        mineBtn.addEventListener('click', handleMine);
 
         modalClose.addEventListener('click', closeModal);
         modalOverlay.addEventListener('click', (e) => {
@@ -878,7 +1170,7 @@
         });
 
         // Double click CEO for bonus
-        document.querySelector('.ceo-tag')?.addEventListener('dblclick', function() {
+        ceoTag.addEventListener('dblclick', function() {
             ceoCoins += 500;
             balance += 100;
             updateUI();
@@ -887,11 +1179,20 @@
         });
 
         // --- INIT ---
+        const today = new Date().toDateString();
+        const lastDate = localStorage.getItem('eco_last_date');
+        if (!lastDate || lastDate !== today) {
+            dailyClaimed = false;
+            cipherClaimed = false;
+            comboClaimed = false;
+            localStorage.setItem('eco_last_date', today);
+            saveState();
+        }
+
         updateTimers();
         updateUI();
         setInterval(updateTimers, 1000);
 
-        // Auto progress
         setInterval(() => {
             if (progress < maxProgress) {
                 progress = Math.min(maxProgress, progress + 2);
@@ -901,6 +1202,8 @@
 
         console.log('💰 E-Coin loaded! Tap power:', tapPower);
         console.log('💾 Data saved in localStorage with key:', STORAGE_KEY);
+        console.log('📱 Social tasks:', { facebookFollowed, twitterFollowed, telegramJoined });
+        console.log('⚡ Boost level:', boostLevel, 'Next cost:', getBoostCost());
     })();
 </script>
 </body>
