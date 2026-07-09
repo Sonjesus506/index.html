@@ -233,8 +233,8 @@
             touch-action: none;
         }
         .coin {
-            width: 160px;
-            height: 160px;
+            width: 200px;
+            height: 200px;
             background: radial-gradient(circle at 35% 30%, #fce181, #d49c1a 50%, #b8860b 75%, #8a6b0e);
             border-radius: 50%;
             border: 8px solid #f9d342;
@@ -263,7 +263,7 @@
             content: 'E';
             position: relative;
             z-index: 1;
-            font-size: 5rem;
+            font-size: 5.5rem;
             font-weight: 900;
             color: #7a5f0e;
             text-shadow: 0 2px 4px rgba(255,215,0,0.2), 0 -2px 4px rgba(0,0,0,0.3);
@@ -271,6 +271,10 @@
         }
         .coin:active {
             transform: scale(0.88);
+        }
+        .coin.disabled {
+            opacity: 0.5;
+            pointer-events: none;
         }
         .float-text {
             position: absolute;
@@ -282,6 +286,16 @@
             z-index: 10;
             animation: floatUp 0.9s ease-out forwards;
             font-family: 'Segoe UI', sans-serif;
+        }
+        .float-text.super {
+            color: #ff6b6b;
+            text-shadow: 0 0 20px #ff6b6b, 0 0 40px #ff6b6b80, 0 0 60px #ff6b6b40;
+            font-size: 2.8rem;
+        }
+        .float-text.tap-limit {
+            color: #ffd93d;
+            text-shadow: 0 0 20px #ffd93d, 0 0 40px #ffd93d80;
+            font-size: 1.8rem;
         }
         @keyframes floatUp {
             0% { opacity: 1; transform: translateY(0) scale(0.8); }
@@ -507,7 +521,7 @@
             padding: 4px 12px;
             border-radius: 30px;
             font-weight: 600;
-            cursor: pointer;
+            cursor: pointer; 
             font-size: 11px;
         }
         .modal-box .boost-option .cost {
@@ -558,59 +572,6 @@
         .modal-box .social-links a .icon {
             font-size: 16px;
         }
-        .modal-box .ai-chat {
-            background: #0e0c07;
-            padding: 10px;
-            border-radius: 14px;
-            border: 1px solid #2f281c;
-            margin: 6px 0;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-        .modal-box .ai-chat .message {
-            padding: 5px 10px;
-            margin: 3px 0;
-            border-radius: 12px;
-            font-size: 12px;
-            max-width: 85%;
-        }
-        .modal-box .ai-chat .user-msg {
-            background: #2f281c;
-            color: #e5d6b0;
-            margin-left: auto;
-        }
-        .modal-box .ai-chat .ai-msg {
-            background: #1a1610;
-            color: #f3ba2f;
-            border: 1px solid #2f281c;
-        }
-        .modal-box .ai-input {
-            display: flex;
-            gap: 6px;
-            margin-top: 6px;
-        }
-        .modal-box .ai-input input {
-            flex: 1;
-            padding: 5px 10px;
-            border-radius: 30px;
-            border: 1px solid #2f281c;
-            background: #0e0c07;
-            color: #e5d6b0;
-            font-size: 12px;
-            outline: none;
-        }
-        .modal-box .ai-input input:focus {
-            border-color: #f3ba2f;
-        }
-        .modal-box .ai-input button {
-            background: #f3ba2f;
-            border: none;
-            padding: 5px 12px;
-            border-radius: 30px;
-            font-weight: 700;
-            cursor: pointer;
-            font-size: 12px;
-        }
         .modal-box .admin-badge {
             background: #f3ba2f;
             color: #0e0c07;
@@ -655,14 +616,47 @@
             color: #8a7a54;
             font-size: 11px;
         }
+        .tap-limit-bar {
+            background: #0e0c07;
+            border-radius: 30px;
+            padding: 2px 10px;
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #2f281c;
+            flex-shrink: 0;
+        }
+        .tap-limit-bar .label {
+            font-size: 8px;
+            color: #8a7a54;
+        }
+        .tap-limit-bar .value {
+            font-size: 10px;
+            font-weight: 700;
+            color: #f3ba2f;
+        }
+        .tap-limit-bar .fill {
+            width: 80px;
+            height: 4px;
+            background: #2a2215;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .tap-limit-bar .fill .bar {
+            height: 100%;
+            background: linear-gradient(90deg, #f3ba2f, #ff6b6b);
+            border-radius: 10px;
+            transition: width 0.5s;
+        }
         @media (max-width: 420px) {
-            .coin { width: 140px; height: 140px; }
-            .coin::after { font-size: 4.2rem; }
+            .coin { width: 170px; height: 170px; }
+            .coin::after { font-size: 4.5rem; }
             .balance-card .amount { font-size: 2rem; }
         }
         @media (max-width: 360px) {
-            .coin { width: 120px; height: 120px; }
-            .coin::after { font-size: 3.6rem; }
+            .coin { width: 150px; height: 150px; }
+            .coin::after { font-size: 4rem; }
             .balance-card .amount { font-size: 1.8rem; }
         }
     </style>
@@ -673,7 +667,7 @@
     <div class="header">
         <div class="user-info" id="userInfo">
             <div class="avatar" id="avatarDisplay">👩</div>
-            <span id="userNameDisplay">Jane (CEO)</span>
+            <span id="userNameDisplay">Jane </span>
         </div>
         <div class="badge">Silver ▾</div>
     </div>
@@ -682,7 +676,7 @@
         <div class="label">💰 BALANCE</div>
         <div class="amount" id="balanceDisplay">0</div>
         <div class="stats">
-            <span>2 / 11</span>
+    
             <span>⚡ +207 /h</span>
         </div>
     </div>
@@ -707,6 +701,13 @@
         </div>
     </div>
 
+    <!-- Tap Limit Bar -->
+    <div class="tap-limit-bar">
+        <span class="label">🔋 Taps Left</span>
+        <div class="fill"><div class="bar" id="tapLimitBar" style="width:100%"></div></div>
+        <span class="value" id="tapLimitDisplay">1,500</span>
+    </div>
+
     <div class="progress-row">
         <div class="left">
             <span>$</span>
@@ -720,7 +721,7 @@
     </div>
 
     <div class="coin-label">
-        <div class="ceo-tag" id="ceoTag">👑 (CEO) <span id="ceoCoinCount">0</span></div>
+        <div class="ceo-tag" id="ceoTag">👑  <span id="ceoCoinCount">0</span></div>
         <div class="small-balance">🪙 <span id="balanceSmall">0</span></div>
     </div>
 
@@ -760,6 +761,8 @@
         const userNameDisplay = document.getElementById('userNameDisplay');
         const avatarDisplay = document.getElementById('avatarDisplay');
         const userInfo = document.getElementById('userInfo');
+        const tapLimitBar = document.getElementById('tapLimitBar');
+        const tapLimitDisplay = document.getElementById('tapLimitDisplay');
 
         const exchangeBtn = document.getElementById('exchangeBtn');
         const friendsBtn = document.getElementById('friendsBtn');
@@ -773,7 +776,7 @@
         const modalClose = document.getElementById('modalClose');
 
         // --- PERSISTENT STORAGE ---
-        const STORAGE_KEY = 'eco_app_data_v8';
+        const STORAGE_KEY = 'eco_app_data_v9';
 
         function loadData() {
             try {
@@ -793,6 +796,7 @@
         }
 
         // --- STATE ---
+        const MAX_TAPS = 1500;
         let saved = loadData();
         let balance = saved?.balance || 0;
         let ceoCoins = saved?.ceoCoins || 0;
@@ -804,29 +808,11 @@
         let comboClaimed = saved?.comboClaimed || false;
         let referrals = saved?.referrals || 0;
         let userName = saved?.userName || 'Jane';
+        let tapsRemaining = saved?.tapsRemaining !== undefined ? saved.tapsRemaining : MAX_TAPS;
+        let lastTapTime = saved?.lastTapTime || 0;
+        let superTapActive = saved?.superTapActive || false;
+        let superTapMultiplier = saved?.superTapMultiplier || 1;
         const maxProgress = 1500;
-
-        // --- TELEGRAM AUTO-LOGIN ---
-        function initTelegramUser() {
-            try {
-                if (window.Telegram && window.Telegram.WebApp) {
-                    const tg = window.Telegram.WebApp;
-                    const user = tg.initDataUnsafe?.user;
-                    if (user) {
-                        userName = user.first_name || user.username || 'User';
-                        if (user.photo_url) {
-                            avatarDisplay.innerHTML = `<img src="${user.photo_url}" alt="avatar" />`;
-                        } else {
-                            avatarDisplay.textContent = user.first_name?.charAt(0) || '👤';
-                        }
-                        userNameDisplay.textContent = userName + ' (CEO)';
-                        saveState();
-                        return true;
-                    }
-                }
-            } catch (e) {}
-            return false;
-        }
 
         // --- FUNCTIONS ---
         function getLevel(coins) {
@@ -843,6 +829,11 @@
             return 500 * Math.pow(2, boostLevel - 1);
         }
 
+        function getTapRegenRate() {
+            // Regenerate 1 tap every 0.4 seconds (1500 taps in 10 minutes)
+            return 0.4;
+        }
+
         function saveState() {
             saveData({
                 balance: balance,
@@ -854,7 +845,11 @@
                 cipherClaimed: cipherClaimed,
                 comboClaimed: comboClaimed,
                 referrals: referrals,
-                userName: userName
+                userName: userName,
+                tapsRemaining: tapsRemaining,
+                lastTapTime: lastTapTime,
+                superTapActive: superTapActive,
+                superTapMultiplier: superTapMultiplier
             });
         }
 
@@ -872,20 +867,75 @@
             const nextThreshold = getNextLevelThreshold(balance);
             nextLevelDisplay.textContent = `Next: ${nextThreshold.toLocaleString()} coins`;
 
+            // Update tap limit
+            const tapPct = Math.min(100, (tapsRemaining / MAX_TAPS) * 100);
+            tapLimitBar.style.width = tapPct + '%';
+            tapLimitDisplay.textContent = Math.floor(tapsRemaining).toLocaleString();
+
+            // Enable/disable coin
+            if (tapsRemaining <= 0) {
+                coinEl.classList.add('disabled');
+            } else {
+                coinEl.classList.remove('disabled');
+            }
+
             saveState();
+        }
+
+        // --- TAP REGENERATION ---
+        function regenerateTaps() {
+            const now = Date.now();
+            const timeSinceLastTap = (now - lastTapTime) / 1000; // seconds
+            const regenRate = getTapRegenRate();
+            const tapsToAdd = Math.floor(timeSinceLastTap / regenRate);
+            
+            if (tapsToAdd > 0 && tapsRemaining < MAX_TAPS) {
+                tapsRemaining = Math.min(MAX_TAPS, tapsRemaining + tapsToAdd);
+                lastTapTime = now - (timeSinceLastTap % regenRate * 1000);
+                updateUI();
+            }
         }
 
         // --- MULTI-TOUCH SUPPORT ---
         function handleTap(e) {
             e.preventDefault?.();
-            const amount = tapPower;
+            
+            // Regenerate taps first
+            regenerateTaps();
+            
+            if (tapsRemaining <= 0) {
+                showTapLimitMessage();
+                return;
+            }
+
+            let amount = tapPower;
+            let isSuper = false;
+            
+            // Check if super tap is active
+            if (superTapActive) {
+                amount = tapPower * superTapMultiplier;
+                isSuper = true;
+                // Super tap uses more taps
+                const tapCost = Math.ceil(superTapMultiplier / 2);
+                if (tapsRemaining < tapCost) {
+                    showTapLimitMessage();
+                    return;
+                }
+                tapsRemaining -= tapCost;
+            } else {
+                tapsRemaining -= 1;
+            }
+
             balance += amount;
             ceoCoins += amount;
             if (progress < maxProgress) {
                 progress = Math.min(maxProgress, progress + amount);
             }
+            
+            lastTapTime = Date.now();
             updateUI();
 
+            // Show floating text
             const rect = coinEl.getBoundingClientRect();
             const wrapperRect = coinWrapper.getBoundingClientRect();
             const cx = rect.left - wrapperRect.left + rect.width / 2;
@@ -896,20 +946,34 @@
                     const touch = e.touches[i];
                     const tx = touch.clientX - wrapperRect.left;
                     const ty = touch.clientY - wrapperRect.top;
-                    createFloatText(tx, ty, amount);
+                    createFloatText(tx, ty, amount, isSuper);
                 }
             } else {
-                createFloatText(cx, cy, amount);
+                createFloatText(cx, cy, amount, isSuper);
             }
 
             coinEl.style.transform = 'scale(0.86)';
             setTimeout(() => coinEl.style.transform = '', 80);
         }
 
-        function createFloatText(x, y, amount) {
+        function showTapLimitMessage() {
+            // Show "Wait" message
+            const wrapperRect = coinWrapper.getBoundingClientRect();
+            const cx = wrapperRect.width / 2;
+            const cy = 20;
             const el = document.createElement('div');
-            el.className = 'float-text';
-            el.textContent = `+${amount}`;
+            el.className = 'float-text tap-limit';
+            el.textContent = '⏳ Wait...';
+            el.style.left = (cx - 30) + 'px';
+            el.style.top = (cy) + 'px';
+            coinWrapper.appendChild(el);
+            setTimeout(() => el.remove(), 1200);
+        }
+
+        function createFloatText(x, y, amount, isSuper) {
+            const el = document.createElement('div');
+            el.className = 'float-text' + (isSuper ? ' super' : '');
+            el.textContent = isSuper ? `×${amount}` : `+${amount}`;
             el.style.left = (x - 20) + 'px';
             el.style.top = (y - 10) + 'px';
             const offsetX = (Math.random() - 0.5) * 30;
@@ -925,6 +989,11 @@
             handleTap(e);
         }, { passive: false });
         coinEl.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+
+        // --- TAP REGENERATION INTERVAL ---
+        setInterval(() => {
+            regenerateTaps();
+        }, 1000);
 
         // --- TIMERS ---
         function updateTimers() {
@@ -951,7 +1020,10 @@
                 cipherClaimed = false;
                 comboClaimed = false;
                 localStorage.setItem('eco_last_date', today);
+                // Reset taps daily
+                tapsRemaining = MAX_TAPS;
                 saveState();
+                updateUI();
             }
         }
 
@@ -964,9 +1036,11 @@
             const reward = 100;
             balance += reward;
             ceoCoins += reward;
+            // Add bonus taps
+            tapsRemaining = Math.min(MAX_TAPS, tapsRemaining + 200);
             dailyClaimed = true;
             updateUI();
-            alert(`🎉 Daily reward claimed! +${reward} coins`);
+            alert(`🎉 Daily reward claimed! +${reward} coins and +200 taps!`);
         }
 
         function claimCipher() {
@@ -977,9 +1051,10 @@
             const reward = 50;
             balance += reward;
             ceoCoins += reward;
+            tapsRemaining = Math.min(MAX_TAPS, tapsRemaining + 100);
             cipherClaimed = true;
             updateUI();
-            alert(`🔐 Cipher claimed! +${reward} coins`);
+            alert(`🔐 Cipher claimed! +${reward} coins and +100 taps!`);
         }
 
         function claimCombo() {
@@ -990,41 +1065,56 @@
             const reward = 75;
             balance += reward;
             ceoCoins += reward;
+            tapsRemaining = Math.min(MAX_TAPS, tapsRemaining + 150);
             comboClaimed = true;
             updateUI();
-            alert(`🔥 Combo claimed! +${reward} coins`);
+            alert(`🔥 Combo claimed! +${reward} coins and +150 taps!`);
         }
 
         window.claimDaily = claimDaily;
         window.claimCipher = claimCipher;
         window.claimCombo = claimCombo;
 
-        // --- BOOST ---
+        // --- BOOST / SUPER TAPS ---
         function handleBoost() {
             const cost = getBoostCost();
             const nextPower = tapPower + 1;
-            openModal('⚡ Boost', `
-                <p>Increase your tap power!</p>
+            const superCost = 300;
+            const superMult = 10;
+            
+            openModal('⚡ Boost & Super Taps', `
+                <p>Upgrade your tap power or buy super taps!</p>
+                
                 <div class="boost-option">
                     <div>
-                        <strong style="color:#f3ba2f;">Current: +${tapPower} per tap</strong>
-                        <div class="cost">Next level: +${nextPower} per tap</div>
+                        <strong style="color:#f3ba2f;">Tap Power: +${tapPower}</strong>
+                        <div class="cost">Next: +${nextPower}</div>
                     </div>
-                    <button onclick="upgradeBoost()">Upgrade</button>
+                    <button onclick="upgradeBoost()">${cost.toLocaleString()} coins</button>
                 </div>
+                
+                <div class="boost-option" style="border-color: #ff6b6b40;">
+                    <div>
+                        <strong style="color:#ff6b6b;">🔥 Super Taps</strong>
+                        <div class="cost">${superTapActive ? 'ACTIVE! ×' + superTapMultiplier : '×10 for 30 taps'}</div>
+                    </div>
+                    <button onclick="buySuperTaps()">${superCost} coins</button>
+                </div>
+                
                 <div class="airdrop-info">
-                    <div class="row"><span class="label">Cost</span><span class="value">${cost.toLocaleString()} coins</span></div>
                     <div class="row"><span class="label">Your coins</span><span class="value">${balance.toLocaleString()}</span></div>
+                    <div class="row"><span class="label">Taps remaining</span><span class="value">${Math.floor(tapsRemaining).toLocaleString()}</span></div>
                     <div class="row"><span class="label">Boost Level</span><span class="value">${boostLevel}</span></div>
                 </div>
-                <p style="font-size:10px;color:#8a7a54;">Cost doubles each upgrade: 500 → 1,000 → 2,000 → 4,000...</p>
+                <p style="font-size:10px;color:#8a7a54;">Tap power costs double each upgrade: 500 → 1,000 → 2,000...</p>
+                <p style="font-size:10px;color:#8a7a54;">Super Taps: ×10 power for 30 taps (uses 15 taps)</p>
             `);
         }
 
         function upgradeBoost() {
             const cost = getBoostCost();
             if (balance < cost) {
-                alert(` Not enough coins! You need ${cost.toLocaleString()} coins.`);
+                alert(`❌ Not enough coins! You need ${cost.toLocaleString()} coins.`);
                 return;
             }
             balance -= cost;
@@ -1033,9 +1123,33 @@
             updateUI();
             closeModal();
             alert(`✅ Boost upgraded! Tap power is now +${tapPower}`);
+            handleBoost();
+        }
+
+        function buySuperTaps() {
+            const cost = 300;
+            if (balance < cost) {
+                alert(`❌ ${cost} coins.`);
+                return;
+            }
+            balance -= cost;
+            superTapActive = true;
+            superTapMultiplier = 10;
+            // Super taps last for 30 taps
+            setTimeout(() => {
+                superTapActive = false;
+                superTapMultiplier = 1;
+                updateUI();
+                alert('🔥 Super Taps expired!');
+            }, 30000); // 30 seconds
+            updateUI();
+            closeModal();
+            alert(`🔥 Super Taps activated! ×10 power for 30 taps!`);
+            handleBoost();
         }
 
         window.upgradeBoost = upgradeBoost;
+        window.buySuperTaps = buySuperTaps;
 
         // --- MODAL ---
         function openModal(title, contentHTML) {
@@ -1071,8 +1185,9 @@
             const reward = 100;
             balance += reward;
             ceoCoins += reward;
+            tapsRemaining = Math.min(MAX_TAPS, tapsRemaining + 50);
             updateUI();
-            alert(`🎉 New referral! +${reward} coins bonus! Total referrals: ${referrals}`);
+            alert(`🎉 New referral! +${reward} coins and +50 taps! Total referrals: ${referrals}`);
             handleFriends();
         }
 
@@ -1099,7 +1214,7 @@
             alert('🔗 Binance Wallet connecting...\n\n✅ Wallet connected successfully!\n🎁 You received 50 bonus coins!');
             balance += 50;
             ceoCoins += 50;
-            updateUI(1);
+            updateUI();
             closeModal();
         }
 
@@ -1120,134 +1235,75 @@
         }
 
         // --- AI ASSISTANT ---
-        let aiChatHistory = [];
-
         function handleAI() {
-            aiChatHistory = [
-                { role: 'ai', content: '👋 Hello! I\'m E-Coin AI Assistant. How can I help you today?' }
-            ];
-            openModal('🤖 E-Coin AI Assistant', generateAIChatHTML());
-            // Focus input after modal opens
+            openModal('🤖 E-Coin AI', `
+                <p>I'm your E-Coin AI Assistant! Ask me anything.</p>
+                <div style="background:#0e0c07;padding:10px;border-radius:14px;border:1px solid #2f281c;margin:6px 0;max-height:150px;overflow-y:auto;">
+                    <div style="color:#f3ba2f;font-size:12px;">👋 Hello! How can I help you today?</div>
+                </div>
+                <div style="display:flex;gap:6px;margin-top:6px;">
+                    <input type="text" id="aiInput" placeholder="Ask me..." style="flex:1;padding:5px 10px;border-radius:30px;border:1px solid #2f281c;background:#0e0c07;color:#e5d6b0;font-size:12px;outline:none;" onkeydown="if(event.key==='Enter') askAI()" />
+                    <button onclick="askAI()" style="background:#f3ba2f;border:none;padding:5px 12px;border-radius:30px;font-weight:700;cursor:pointer;font-size:12px;">Ask</button>
+                </div>
+                <div style="margin-top:6px;text-align:center;font-size:10px;color:#8a7a54;">
+                    <span class="admin-badge">ADMIN</span> E-Coin AI v1.0
+                </div>
+            `);
             setTimeout(() => {
                 const input = document.getElementById('aiInput');
                 if (input) input.focus();
             }, 300);
         }
 
-        function generateAIChatHTML() {
-            let chatHTML = '<div class="ai-chat" id="aiChatContainer">';
-            aiChatHistory.forEach(msg => {
-                const cls = msg.role === 'user' ? 'user-msg' : 'ai-msg';
-                chatHTML += `<div class="message ${cls}">${msg.content}</div>`;
-            });
-            chatHTML += `</div>
-                <div class="ai-input">
-                    <input type="text" id="aiInput" placeholder="Ask me anything..." onkeydown="if(event.key==='Enter') sendAIMessage()" />
-                    <button onclick="sendAIMessage()">Send</button>
-                </div>
-                <div style="margin-top:6px;text-align:center;font-size:10px;color:#8a7a54;">
-                    <span class="admin-badge">ADMIN</span> E-Coin AI v1.0
-                </div>`;
-            return chatHTML;
-        }
-
-        function sendAIMessage() {
+        window.askAI = function() {
             const input = document.getElementById('aiInput');
             if (!input) return;
-            const question = input.value.trim();
-            if (!question) return;
-
-            // Add user message
-            aiChatHistory.push({ role: 'user', content: question });
+            const q = input.value.trim();
+            if (!q) return;
+            const response = generateAIResponse(q);
+            const chatDiv = document.querySelector('#modalContent div:first-child');
+            if (chatDiv) {
+                chatDiv.innerHTML += `<div style="color:#e5d6b0;font-size:12px;margin-top:4px;">You: ${q}</div>`;
+                chatDiv.innerHTML += `<div style="color:#f3ba2f;font-size:12px;margin-top:4px;">AI: ${response}</div>`;
+                chatDiv.scrollTop = chatDiv.scrollHeight;
+            }
             input.value = '';
-
-            // Generate AI response
-            const response = generateAIResponse(question);
-            aiChatHistory.push({ role: 'ai', content: response });
-
-            // Update chat
-            const chatContainer = document.getElementById('aiChatContainer');
-            if (chatContainer) {
-                let chatHTML = '';
-                aiChatHistory.forEach(msg => {
-                    const cls = msg.role === 'user' ? 'user-msg' : 'ai-msg';
-                    chatHTML += `<div class="message ${cls}">${msg.content}</div>`;
-                });
-                chatContainer.innerHTML = chatHTML;
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-            }
-
-            // Keep modal content updated
-            const modalContent = document.getElementById('modalContent');
-            if (modalContent) {
-                modalContent.innerHTML = generateAIChatHTML();
-                // Re-focus input
-                setTimeout(() => {
-                    const newInput = document.getElementById('aiInput');
-                    if (newInput) newInput.focus();
-                }, 100);
-            }
-        }
+        };
 
         function generateAIResponse(question) {
             const q = question.toLowerCase();
-
-            // Coin-related responses
-            if (q.includes('coin') || q.includes('balance') || q.includes('earn')) {
-                return `💰 You currently have <strong>${balance.toLocaleString()}</strong> coins! Keep tapping the E-Coin to earn more. Each tap gives you +${tapPower} coins.`;
+            if (q.includes('balance') || q.includes('coin')) {
+                return `💰 You have ${balance.toLocaleString()} coins! Keep tapping!`;
             }
-            if (q.includes('boost') || q.includes('tap') || q.includes('power')) {
-                return `⚡ Your tap power is <strong>+${tapPower}</strong> per tap. Level ${boostLevel}. Next upgrade costs ${getBoostCost().toLocaleString()} coins.`;
+            if (q.includes('tap') || q.includes('power')) {
+                return `⚡ Tap power: +${tapPower} per tap. Boost level: ${boostLevel}`;
             }
-            if (q.includes('level') || q.includes('rank')) {
-                return `🏆 You are Level <strong>${getLevel(balance)}</strong>. Need ${getNextLevelThreshold(balance).toLocaleString()} coins for next level!`;
+            if (q.includes('level')) {
+                return `🏆 Level ${getLevel(balance)}. Need ${getNextLevelThreshold(balance).toLocaleString()} coins for next level.`;
             }
-            if (q.includes('referral') || q.includes('friend') || q.includes('invite')) {
-                return `👥 You have invited <strong>${referrals}</strong> friends! Each referral gives you 100 coins. Share your invite link to earn more!`;
+            if (q.includes('referral') || q.includes('friend')) {
+                return `👥 You have ${referrals} referrals! Each gives 100 coins.`;
             }
-            if (q.includes('airdrop') || q.includes('withdraw') || q.includes('binance')) {
-                const value = (balance / 1000).toFixed(2);
-                return `🎯 Your coins are worth <strong>$${value}</strong> USD. Connect your Binance wallet to withdraw when you have at least 1,000 coins.`;
+            if (q.includes('super')) {
+                return `🔥 Super Taps ${superTapActive ? 'ACTIVE! ×' + superTapMultiplier : 'inactive'}. Buy for 300 coins in Boost!`;
             }
-            if (q.includes('hello') || q.includes('hi') || q.includes('hey')) {
-                return `👋 Hello ${userName}! How can I help you with E-Coin today?`;
+            if (q.includes('help')) {
+                return `🆘 Ask about: balance, tap power, level, referrals, super taps, airdrop, or social links.`;
             }
-            if (q.includes('help') || q.includes('support')) {
-                return `🆘 I'm here to help! You can ask me about:\n• Your coins and balance\n• Tap power and boost\n• Your level and progress\n• Referrals and invites\n• Airdrop and withdrawals\n• General questions about E-Coin`;
-            }
-            if (q.includes('admin') || q.includes('owner') || q.includes('ceo')) {
-                return `👑 ${userName} is the CEO and Admin of E-Coin. All decisions are made by the admin team.`;
-            }
-            if (q.includes('telegram') || q.includes('tg')) {
-                return `📱 Join our Telegram: https://t.me/OneWinTokenBot/start?startapp=refId8467180571`;
+            if (q.includes('telegram')) {
+                return `📱 Join Telegram: https://t.me/OneWinTokenBot/start?startapp=refId8467180571`;
             }
             if (q.includes('tiktok')) {
-                return `🎵 Follow us on TikTok: https://www.tiktok.com/@esl9151`;
+                return `🎵 TikTok: https://www.tiktok.com/@esl9151`;
             }
             if (q.includes('instagram') || q.includes('ig')) {
-                return `📸 Follow us on Instagram: https://instagram.com/ecoin.official`;
+                return `📸 Instagram: https://instagram.com/ecoin.official`;
             }
             if (q.includes('facebook') || q.includes('fb')) {
-                return `📘 Like our Facebook: https://facebook.com/ecoin.official`;
+                return `📘 Facebook: https://facebook.com/ecoin.official`;
             }
-            if (q.includes('thanks') || q.includes('thank you')) {
-                return `🙏 You're welcome, ${userName}! Keep tapping and earning those coins! 🪙`;
-            }
-
-            // Default response
-            return `🤔 I'm not sure about that. Here are some things you can ask me about:
-• Your coin balance
-• Tap power and boost
-• Level and progress
-• Referrals
-• Airdrop
-• Social media links
-• General help
-
-What would you like to know?`;
+            return `🤔 Not sure about that. Try asking about: balance, tap power, level, referrals, super taps, or social links.`;
         }
-
-        window.sendAIMessage = sendAIMessage;
 
         // --- EVENTS ---
         boostBtn.addEventListener('click', handleBoost);
@@ -1273,6 +1329,7 @@ What would you like to know?`;
         ceoTag.addEventListener('dblclick', function() {
             ceoCoins += 500;
             balance += 100;
+            tapsRemaining = Math.min(MAX_TAPS, tapsRemaining + 100);
             updateUI();
             this.style.color = '#f3ba2f';
             setTimeout(() => this.style.color = '', 300);
@@ -1293,6 +1350,8 @@ What would you like to know?`;
                     <div class="row"><span class="label">Level</span><span class="value">${getLevel(balance)}</span></div>
                     <div class="row"><span class="label">Referrals</span><span class="value">${referrals}</span></div>
                     <div class="row"><span class="label">Tap Power</span><span class="value">+${tapPower}</span></div>
+                    <div class="row"><span class="label">Taps Left</span><span class="value">${Math.floor(tapsRemaining).toLocaleString()}</span></div>
+                    <div class="row"><span class="label">Super Taps</span><span class="value">${superTapActive ? '✅ ACTIVE ×' + superTapMultiplier : '❌ Inactive'}</span></div>
                 </div>
                 <div class="social-links">
                     <a href="https://t.me/OneWinTokenBot/start?startapp=refId8467180571" target="_blank"><span class="icon">📱</span> Telegram</a>
@@ -1306,14 +1365,13 @@ What would you like to know?`;
         });
 
         // --- INIT ---
-        initTelegramUser();
-
         const today = new Date().toDateString();
         const lastDate = localStorage.getItem('eco_last_date');
         if (!lastDate || lastDate !== today) {
             dailyClaimed = false;
             cipherClaimed = false;
             comboClaimed = false;
+            tapsRemaining = MAX_TAPS;
             localStorage.setItem('eco_last_date', today);
             saveState();
         }
@@ -1325,13 +1383,15 @@ What would you like to know?`;
         setInterval(() => {
             if (progress < maxProgress) {
                 progress = Math.min(maxProgress, progress + 2);
-                updateUI();
+                updateUI(1.);
             }
         }, 2000);
 
-        console.log('💰 E-Coin loaded! Tap power:', tapPower);
+        console.log('💰 E-Coin loaded!');
+        console.log('⚡ Tap power:', tapPower);
+        console.log('🔋 Taps remaining:', tapsRemaining);
         console.log('👥 Referrals:', referrals);
-        console.log('👤 User:', userName);
+        console.log('🔥 Super Taps:', superTapActive ? 'ACTIVE' : 'Inactive');
         console.log('💾 Data saved in localStorage with key:', STORAGE_KEY);
     })();
 </script>
