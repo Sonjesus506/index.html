@@ -2,91 +2,312 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Coin Airdrop Platform</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>E-Coin Pro</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { background: #000; color: #fff; font-family: Arial, sans-serif; margin: 0; padding: 20px; }
-        .coin { width: 200px; height: 200px; background: radial-gradient(#f3ba2f, #947116); border-radius: 50%; margin: 20px auto; border: 8px solid #ffe066; box-shadow: 0 0 50px rgba(243, 186, 47, 0.5); cursor: pointer; transition: transform 0.1s; }
-        .coin:active { transform: scale(0.95); }
-        .countdown { font-size: 20px; color: #f3ba2f; margin: 20px; text-align: center; }
-        .nav-grid { display: flex; justify-content: space-around; margin-top: 30px; }
-        .task-card { background: #1a1a1a; padding: 15px; border-radius: 10px; margin: 10px 0; display: flex; justify-content: space-between; align-items: center; }
-        .btn-claim { background: #f3ba2f; border: none; padding: 10px; border-radius: 5px; cursor: pointer; }
+        /* CSS inabaki ile ile lakini imeongezewa touch support */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+        body { background: #000; color: #fff; overflow: hidden; height: 100vh; }
+        .app-container { width: 100vw; height: 100vh; display: flex; flex-direction: column; padding: 20px; }
+        .clicker-circle { width: 250px; height: 250px; background: radial-gradient(#f3ba2f, #947116); border-radius: 50%; margin: 40px auto; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 80px; font-weight: bold; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .boost-item { background: #222; padding: 15px; margin: 10px 0; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; }
     </style>
 </head>
 <body>
-
-    <!-- Countdown Section -->
-    <div class="countdown" id="timer">Loading Airdrop...</div>
-
-    <!-- Main Coin -->
-    <div class="coin" id="main-coin"></div>
-    <div style="text-align: center; font-size: 24px;">Coins: <span id="balance">0</span></div>
-
-    <!-- Daily Task & Social Tasks -->
-    <div id="tasks">
-        <h3>Daily Rewards</h3>
-        <div class="task-card">
-            <span>Daily Login Bonus</span>
-            <button class="btn-claim" onclick="claimDaily()">Claim</button>
+    <div class="app-container">
+        <div id="tab-exchange" class="tab-content active">
+            <h2 id="score-display">Coins: 0</h2>
+            <div id="coin-clicker" class="clicker-circle">E</div>
+            <p>Energy: <span id="energy-display">1500</span>/1500</p>
         </div>
-        <h3>Social Tasks</h3>
-        <div class="task-card">
-            <span>Follow on Instagram (+500)</span>
-            <button class="btn-claim" onclick="completeTask(500)">Follow</button>
-        </div>
-    </div>
 
-    <!-- Binance Airdrop Tab -->
-    <div style="margin-top:40px; border-top: 1px solid #333; padding-top: 20px;">
-        <h2>Binance Airdrop</h2>
-        <button style="width: 100%; padding: 15px; background: #000; border: 2px solid #f3ba2f; color: #f3ba2f;" onclick="connectWallet()">Connect Binance Wallet</button>
+        <div id="tab-boost" class="tab-content">
+            <h2>Boost Shop</h2>
+            <div class="boost-item">
+                <span>Multitap (Level <span id="lvl-tap">1</span>)</span>
+                <button onclick="buyUpgrade('tap')">Buy (100 coins)</button>
+            </div>
+            <div class="boost-item">
+                <span>Energy Limit (Level <span id="lvl-limit">1</span>)</span>
+                <button onclick="buyUpgrade('limit')">Buy (200 coins)</button>
+            </div>
+            <div class="boost-item">
+                <span>Auto-Regen (Level <span id="lvl-regen">1</span>)</span>
+                <button onclick="buyUpgrade('regen')">Buy (300 coins)</button>
+            </div>
+        </div>
+
+        <button onclick="switchTab('tab-exchange')">Exchange</button>
+        <button onclick="switchTab('tab-boost')">Boost</button>
     </div>
 
     <script>
-        // 1. Countdown to November
-        const countdownDate = new Date("Nov 1, 2026 00:00:00").getTime();
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        // Game Data
+        let score = parseInt(localStorage.getItem('score')) || 0;
+        let energy = parseInt(localStorage.getItem('energy')) || 1500;
+        let maxEnergy = 1500;
+        let tapValue = 1;
+        let regenRate = 1; // Energy per second
+
+        // Auto-Regen Logic (Hii inafanya kazi hata ukitoka)
         setInterval(() => {
-            const now = new Date().getTime();
-            const distance = countdownDate - now;
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            document.getElementById("timer").innerHTML = `Airdrop in: ${days} days`;
+            let lastUpdate = localStorage.getItem('lastUpdate') || Date.now();
+            let timePassed = (Date.now() - lastUpdate) / 1000;
+            energy = Math.min(maxEnergy, energy + (timePassed * regenRate));
+            localStorage.setItem('energy', Math.floor(energy));
+            localStorage.setItem('lastUpdate', Date.now());
+            document.getElementById('energy-display').innerText = Math.floor(energy);
         }, 1000);
 
-        // 2. Logic za Coins
-        let score = parseInt(localStorage.getItem('balance')) || 0;
-        document.getElementById('balance').innerText = score;
-
-        document.getElementById('main-coin').addEventListener('touchstart', (e) => {
-            score += 1;
-            document.getElementById('balance').innerText = score;
-            localStorage.setItem('balance', score);
+        // Clicker na Multi-touch
+        document.getElementById('coin-clicker').addEventListener('touchstart', (e) => {
+            // E inaruhusu kugusa kwa vidole vingi
+            for (let i = 0; i < e.touches.length; i++) {
+                if (energy >= tapValue) {
+                    score += tapValue;
+                    energy -= tapValue;
+                    updateUI();
+                }
+            }
         });
 
-        // 3. Daily Task Logic
-        let dailyStreak = parseInt(localStorage.getItem('streak')) || 0;
+        function updateUI() {
+            document.getElementById('score-display').innerText = "Coins: " + score;
+            document.getElementById('energy-display').innerText = Math.floor(energy);
+            localStorage.setItem('score', score);
+        }
+
+        function buyUpgrade(type) {
+            if(type === 'tap' && score >= 100) { tapValue++; score -= 100; }
+            if(type === 'limit' && score >= 200) { maxEnergy += 500; score -= 200; }
+            if(type === 'regen' && score >= 300) { regenRate++; score -= 300; }
+            updateUI();
+        }
+
+        function switchTab(id) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>E-Coin - Official Global Platform</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; -webkit-user-select: none; user-select: none; }
+        body { background-color: #000000; color: #ffffff; width: 100vw; height: 100vh; overflow: hidden; position: fixed; }
+        .app-container { width: 100vw; height: 100vh; background: linear-gradient(180deg, #161001 0%, #000000 100%); display: flex; flex-direction: column; justify-content: space-between; padding: 15px; position: absolute; top: 0; left: 0; overflow-y: auto; }
+        .top-profile { display: flex; align-items: center; justify-content: space-between; background: rgba(30, 30, 30, 0.5); padding: 12px; border-radius: 16px; border: 1px solid #2d2002; }
+        .profile-left { display: flex; align-items: center; gap: 12px; width: 100%; }
+        .avatar-container { position: relative; width: 50px; height: 50px; flex-shrink: 0; }
+        .avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid #f3ba2f; background-color: #222; }
+        .file-input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+        .user-meta { width: 100%; }
+        .user-meta h4 { font-size: 14px; font-weight: bold; color: #fff; }
+        .level-container { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
+        .level-title { font-size: 11px; color: #f3ba2f; font-weight: 600; }
+        .level-bar-container { width: 100%; max-width: 120px; height: 8px; background: #252525; border-radius: 6px; overflow: hidden; border: 1px solid #444; }
+        .level-bar-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #ffe066, #f3ba2f); transition: width 0.3s ease; }
+        .tab-content { display: none; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; width: 100%; padding: 10px 0; }
+        .tab-content.active { display: flex; }
+        .balance-box { text-align: center; margin-bottom: 20px; }
+        .coin-balance { font-size: 46px; font-weight: 800; color: #ffffff; display: flex; align-items: center; justify-content: center; gap: 12px; }
+        .gold-coin-icon { width: 40px; height: 40px; background: radial-gradient(circle, #ffe066 0%, #f3ba2f 70%, #947116 100%); border-radius: 50%; box-shadow: 0 0 12px rgba(243, 186, 47, 0.6); }
+        .clicker-container { position: relative; width: 240px; height: 240px; margin-bottom: 20px; display: flex; justify-content: center; align-items: center; }
+        .clicker-circle { width: 210px; height: 210px; background: radial-gradient(circle, #ffe066 0%, #f3ba2f 60%, #947116 100%); border-radius: 50%; border: 6px solid #ffe066; box-shadow: 0 0 35px rgba(243, 186, 47, 0.7); display: flex; justify-content: center; align-items: center; cursor: pointer; transition: transform 0.05s ease; }
+        .clicker-circle::after { content: "E"; font-size: 105px; font-weight: 900; color: #ffffff; text-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); }
+        .clicker-circle:active { transform: scale(0.95); }
+        .floating-text { position: absolute; color: #ffffff; font-size: 28px; font-weight: bold; pointer-events: none; animation: floatUp 0.6s ease-out forwards; text-shadow: 0 3px 6px rgba(0,0,0,0.9); z-index: 50; }
+        @keyframes floatUp { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-80px) scale(1.2); } }
+        .energy-boost-row { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0 15px; }
+        .energy-box { font-size: 16px; font-weight: bold; display: flex; align-items: center; gap: 5px; }
+        .boost-link { background: none; border: none; color: #f3ba2f; font-size: 16px; font-weight: bold; cursor: pointer; }
+        .tab-title { font-size: 24px; font-weight: bold; color: #f3ba2f; margin-bottom: 8px; text-align: center; }
+        .info-card { background: #141414; border: 1px solid #252525; border-radius: 16px; padding: 14px; width: 100%; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .history-list { width: 100%; max-height: 220px; overflow-y: auto; background: #0c0c0c; border-radius: 12px; padding: 10px; border: 1px solid #222; }
+        .history-item { font-size: 12px; color: #ccc; padding: 7px 0; border-bottom: 1px solid #1a1a1a; display: flex; justify-content: space-between; }
+        .upgrade-btn { background: #f3ba2f; color: #000; border: none; padding: 8px 14px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        .airdrop-stats { background: rgba(243, 186, 47, 0.05); border: 1px solid #3a2b03; border-radius: 16px; padding: 15px; width: 100%; text-align: center; margin-bottom: 15px; }
+        .airdrop-coins { font-size: 28px; font-weight: 800; color: #fff; margin-bottom: 5px; }
+        .airdrop-usd { font-size: 16px; color: #00ffcc; font-weight: bold; }
+        .wallet-btn { width: 100%; background: #111; border: 2px solid #f3ba2f; border-radius: 14px; padding: 14px; color: #fff; font-size: 15px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; }
+        .bottom-nav { display: flex; justify-content: space-between; background: #121212; padding: 10px 6px; border-radius: 20px; border: 1px solid #222; width: 100%; }
+        .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; background: none; border: none; color: #666666; font-size: 11px; font-weight: 600; cursor: pointer; }
+        .nav-item.active { color: #ffffff; }
+        .back-btn { margin-top: 15px; background: #222; color: #fff; border: 1px solid #444; padding: 8px 18px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="top-profile">
+            <div class="profile-left">
+                <div class="avatar-container">
+                    <img id="avatar-preview" class="avatar-img" src="https://ui-avatars.com/api/?name=CEO&background=222222&color=f3ba2f" alt="Profile">
+                    <input type="file" id="image-loader" class="file-input" accept="image/*">
+                </div>
+                <div class="user-meta">
+                    <h4 id="username-display">Ezbon (CEO)</h4>
+                    <div class="level-container">
+                        <span id="level-title-text" class="level-title">Level 1</span>
+                        <div class="level-bar-container"><div id="level-bar-fill" class="level-bar-fill" style="width: 25%;"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-exchange" class="tab-content active">
+            <div class="balance-box">
+                <div class="coin-balance">
+                    <div class="gold-coin-icon"></div>
+                    <span id="score-text">0</span>
+                </div>
+            </div>
+            <div class="clicker-container" id="clicker-parent">
+                <div id="coin-clicker" class="clicker-circle"></div>
+            </div>
+            <div class="energy-boost-row">
+                <div class="energy-box">⚡ <span id="energy-text">1500</span>/1500</div>
+                <button class="boost-link" onclick="openBoostSection()">🚀 Boost</button>
+            </div>
+        </div>
+
+        <div id="tab-mine" class="tab-content">
+            <p class="tab-title">Coin History</p>
+            <div class="history-list" id="history-container">
+                <div class="history-item"><span>Account Initialized</span><span>+0 E-Coin</span></div>
+            </div>
+        </div>
+
+        <div id="tab-mine-friends" class="tab-content">
+            <p class="tab-title">👥 Invite Friends</p>
+            <div class="info-card" style="flex-direction: column; gap: 10px;">
+                <p id="ref-link-text" style="font-size: 12px; color: #aaa; word-break: break-all;">https://t.me/ECoinBot?start=ref12345</p>
+                <button onclick="copyInviteLink()" class="upgrade-btn">📋 Copy Invite Link</button>
+            </div>
+        </div>
+
+        <div id="tab-earn" class="tab-content">
+            <p class="tab-title">🪙 Earn Coins</p>
+            <div class="info-card"><p>Daily Reward</p><button class="upgrade-btn" onclick="claimDaily()">Claim</button></div>
+        </div>
+
+        <div id="tab-airdrop" class="tab-content">
+            <p class="tab-title">Binance Airdrop</p>
+            <div class="airdrop-stats">
+                <div class="airdrop-coins">🪙 <span id="airdrop-score-display">0</span></div>
+                <div class="airdrop-usd">Value: $<span id="airdrop-usd-display">0.00</span></div>
+            </div>
+            <button class="wallet-btn" onclick="connectBinanceWalletOnly()">🔶 Connect Wallet</button>
+        </div>
+
+        <div id="tab-boost-section" class="tab-content">
+            <p class="tab-title">🚀 Multitap Boost</p>
+            <div class="info-card">
+                <div><p>Multitap Upgrade</p><p id="multitap-desc" style="font-size: 11px; color: #888;">Increase coins per click</p></div>
+                <button id="btn-buy-boost" class="upgrade-btn" onclick="buyMultitapUpgrade()">💰 100</button>
+            </div>
+            <button class="back-btn" onclick="goBackToExchange()">◀ Back</button>
+        </div>
+        
+        <div class="bottom-nav">
+            <button class="nav-item active" onclick="switchTab('tab-exchange', this)">🪙 Exchange</button>
+            <button class="nav-item" onclick="switchTab('tab-mine', this)">📊 History</button>
+            <button class="nav-item" onclick="switchTab('tab-mine-friends', this)">👥 Friends</button>
+            <button class="nav-item" onclick="switchTab('tab-earn', this)">🪙 Earn</button>
+            <button class="nav-item" onclick="switchTab('tab-airdrop', this)">💰 Airdrop</button>
+        </div>
+    </div>
+
+    <script>
+        // Telegram Web App Full Screen Configuration
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+        tg.expand();
+        tg.disableVerticalSwipes();
+
+        // Game State & Logic
+        let score = parseInt(localStorage.getItem('e_coin_score')) || 0;
+        let energy = 1500;
+        const scoreText = document.getElementById('score-text');
+        const airdropScoreDisplay = document.getElementById('airdrop-score-display');
+        const energyText = document.getElementById('energy-text');
+
+        scoreText.textContent = score;
+        airdropScoreDisplay.textContent = score;
+
+        // Clicker Event Handler with floating animation
+        document.getElementById('coin-clicker').addEventListener('click', (e) => {
+            if (energy > 0) {
+                score += 1;
+                energy -= 1;
+                scoreText.textContent = score;
+                airdropScoreDisplay.textContent = score;
+                energyText.textContent = energy;
+                localStorage.setItem('e_coin_score', score);
+
+                // Floating text effect
+                const clickerParent = document.getElementById('clicker-parent');
+                const rect = clickerParent.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const floatEl = document.createElement('div');
+                floatEl.className = 'floating-text';
+                floatEl.textContent = '+1';
+                floatEl.style.left = `${x}px`;
+                floatEl.style.top = `${y}px`;
+                clickerParent.appendChild(floatEl);
+
+                setTimeout(() => floatEl.remove(), 600);
+            }
+        });
+
+        // Tab Navigation Logic
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        function openBoostSection() {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.getElementById('tab-boost-section').classList.add('active');
+        }
+
+        function goBackToExchange() {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.getElementById('tab-exchange').classList.add('active');
+        }
+
         function claimDaily() {
-            let reward = (dailyStreak + 1) * 100;
-            score += reward;
-            dailyStreak++;
-            localStorage.setItem('balance', score);
-            localStorage.setItem('streak', dailyStreak);
-            alert("Umevuna " + reward + " coins!");
-            location.reload();
+            score += 50;
+            scoreText.textContent = score;
+            alert('Daily reward claimed successfully!');
         }
 
-        // 4. Social Task Logic
-        function completeTask(amount) {
-            score += amount;
-            localStorage.setItem('balance', score);
-            alert("Task imekamilika! Umeongezewa " + amount + " coins.");
-            location.reload();
+        function copyInviteLink() {
+            navigator.clipboard.writeText(document.getElementById('ref-link-text').textContent);
+            alert('Invite link copied to clipboard!');
         }
 
-        // 5. Binance Connection
-        function connectWallet() {
-            alert("Binance Web3 Wallet Inajaribu kuunganisha...");
-            // Hapa utaongeza link ya API yako ya wallet
+        function connectBinanceWalletOnly() {
+            alert('Binance Web3 Wallet connection initiated.');
+        }
+
+        function buyMultitapUpgrade() {
+            alert('Multitap upgrade processed.');
         }
     </script>
 </body>
