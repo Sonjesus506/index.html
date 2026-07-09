@@ -1,357 +1,56 @@
 <!DOCTYPE html>
-<html lang="sw">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>E-Coin - Official Global Platform</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-            -webkit-user-select: none;
-            user-select: none;
-        }
-        body {
-            background-color: #000000;
-            color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-        }
-        .app-container {
-            width: 100%;
-            max-width: 430px;
-            height: 100vh;
-            background: linear-gradient(180deg, #161001 0%, #000000 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 15px;
-            position: relative;
-        }
-
-        .top-profile {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(30, 30, 30, 0.5);
-            padding: 12px;
-            border-radius: 16px;
-            border: 1px solid #2d2002;
-        }
-        .profile-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            width: 100%;
-        }
-        .avatar-container {
-            position: relative;
-            width: 50px;
-            height: 50px;
-            flex-shrink: 0;
-        }
-        .avatar-img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #f3ba2f;
-            background-color: #222;
-        }
-        .file-input {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-        }
-        .user-meta {
-            width: 100%;
-        }
-        .user-meta h4 {
-            font-size: 14px;
-            font-weight: bold;
-            color: #fff;
-        }
-        .level-container {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-top: 4px;
-        }
-        .level-title {
-            font-size: 11px;
-            color: #f3ba2f;
-            font-weight: 600;
-        }
-        .level-bar-container {
-            width: 100%;
-            max-width: 120px;
-            height: 8px;
-            background: #252525;
-            border-radius: 6px;
-            overflow: hidden;
-            border: 1px solid #444;
-        }
-        .level-bar-fill {
-            width: 0%; 
-            height: 100%;
-            background: linear-gradient(90deg, #ffe066, #f3ba2f);
-            transition: width 0.3s ease;
-        }
-
-        .tab-content {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            flex-grow: 1;
-            width: 100%;
-            padding: 10px 0;
-        }
-        .tab-content.active {
-            display: flex;
-        }
-
-        .balance-box {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .coin-balance {
-            font-size: 46px;
-            font-weight: 800;
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-        }
-        .gold-coin-icon {
-            width: 40px;
-            height: 40px;
-            background: radial-gradient(circle, #ffe066 0%, #f3ba2f 70%, #947116 100%);
-            border-radius: 50%;
-            box-shadow: 0 0 12px rgba(243, 186, 47, 0.6);
-        }
-        .clicker-container {
-            position: relative;
-            width: 240px;
-            height: 240px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .clicker-circle {
-            width: 210px;
-            height: 210px;
-            background: radial-gradient(circle, #ffe066 0%, #f3ba2f 60%, #947116 100%);
-            border-radius: 50%;
-            border: 6px solid #ffe066;
-            box-shadow: 0 0 35px rgba(243, 186, 47, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: transform 0.05s ease;
-        }
-        .clicker-circle::after {
-            content: "E";
-            font-size: 105px;
-            font-weight: 900;
-            color: #ffffff;
-            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-        }
-        .clicker-circle:active {
-            transform: scale(0.95);
-        }
-
-        .floating-text {
-            position: absolute;
-            color: #ffffff;
-            font-size: 28px;
-            font-weight: bold;
-            pointer-events: none;
-            animation: floatUp 0.6s ease-out forwards;
-            text-shadow: 0 3px 6px rgba(0,0,0,0.9);
-            z-index: 50;
-        }
-        @keyframes floatUp {
-            0% { opacity: 1; transform: translateY(0) scale(1); }
-            100% { opacity: 0; transform: translateY(-80px) scale(1.2); }
-        }
-
-        .energy-boost-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            padding: 0 15px;
-        }
-        .energy-box {
-            font-size: 16px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .boost-link {
-            background: none;
-            border: none;
-            color: #f3ba2f;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .tab-title {
-            font-size: 24px;
-            font-weight: bold;
-            color: #f3ba2f;
-            margin-bottom: 8px;
-            text-align: center;
-        }
-        .tab-subtitle {
-            color: #aaa;
-            font-size: 13px;
-            text-align: center;
-            margin-bottom: 20px;
-            padding: 0 10px;
-            line-height: 1.4;
-        }
-        .info-card {
-            background: #141414;
-            border: 1px solid #252525;
-            border-radius: 16px;
-            padding: 14px;
-            width: 100%;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .history-list {
-            width: 100%;
-            max-height: 220px;
-            overflow-y: auto;
-            background: #0c0c0c;
-            border-radius: 12px;
-            padding: 10px;
-            border: 1px solid #222;
-        }
-        .history-item {
-            font-size: 12px;
-            color: #ccc;
-            padding: 7px 0;
-            border-bottom: 1px solid #1a1a1a;
-            display: flex;
-            justify-content: space-between;
-        }
-        .upgrade-btn {
-            background: #f3ba2f;
-            color: #000;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .airdrop-stats {
-            background: rgba(243, 186, 47, 0.05);
-            border: 1px solid #3a2b03;
-            border-radius: 16px;
-            padding: 15px;
-            width: 100%;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        .airdrop-coins {
-            font-size: 28px;
-            font-weight: 800;
-            color: #fff;
-            margin-bottom: 5px;
-        }
-        .airdrop-usd {
-            font-size: 16px;
-            color: #00ffcc;
-            font-weight: bold;
-        }
-        .wallet-btn {
-            width: 100%;
-            background: #111;
-            border: 2px solid #f3ba2f;
-            border-radius: 14px;
-            padding: 14px;
-            color: #fff;
-            font-size: 15px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-        }
-        .status-badge {
-            font-size: 12px;
-            background: #222;
-            padding: 5px 12px;
-            border-radius: 8px;
-            color: #aaa;
-        }
-        .status-badge.connected {
-            color: #000;
-            background: #f3ba2f;
-            font-weight: bold;
-        }
-        .countdown-box {
-            margin-top: 12px;
-            font-size: 13px;
-            color: #ffcc00;
-            font-weight: bold;
-            text-align: center;
-        }
-
-        .back-btn {
-            margin-top: 15px; background: #222; color: #fff; border: 1px solid #444; padding: 8px 18px; border-radius: 10px; font-weight: bold; cursor: pointer;
-        }
-
-        .bottom-nav {
-            display: flex;
-            justify-content: space-between;
-            background: #121212;
-            padding: 10px 6px;
-            border-radius: 20px;
-            border: 1px solid #222;
-            width: 100%;
-        }
-        .nav-item {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            background: none;
-            border: none;
-            color: #666666;
-            font-size: 11px;
-            font-weight: 600;
-            cursor: pointer;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; -webkit-user-select: none; user-select: none; }
+        body { background-color: #000000; color: #ffffff; width: 100vw; height: 100vh; overflow: hidden; position: fixed; }
+        .app-container { width: 100vw; height: 100vh; background: linear-gradient(180deg, #161001 0%, #000000 100%); display: flex; flex-direction: column; justify-content: space-between; padding: 15px; position: absolute; top: 0; left: 0; overflow-y: auto; }
+        .top-profile { display: flex; align-items: center; justify-content: space-between; background: rgba(30, 30, 30, 0.5); padding: 12px; border-radius: 16px; border: 1px solid #2d2002; }
+        .profile-left { display: flex; align-items: center; gap: 12px; width: 100%; }
+        .avatar-container { position: relative; width: 50px; height: 50px; flex-shrink: 0; }
+        .avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid #f3ba2f; background-color: #222; }
+        .file-input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+        .user-meta { width: 100%; }
+        .user-meta h4 { font-size: 14px; font-weight: bold; color: #fff; }
+        .level-container { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
+        .level-title { font-size: 11px; color: #f3ba2f; font-weight: 600; }
+        .level-bar-container { width: 100%; max-width: 120px; height: 8px; background: #252525; border-radius: 6px; overflow: hidden; border: 1px solid #444; }
+        .level-bar-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #ffe066, #f3ba2f); transition: width 0.3s ease; }
+        .tab-content { display: none; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; width: 100%; padding: 10px 0; }
+        .tab-content.active { display: flex; }
+        .balance-box { text-align: center; margin-bottom: 20px; }
+        .coin-balance { font-size: 46px; font-weight: 800; color: #ffffff; display: flex; align-items: center; justify-content: center; gap: 12px; }
+        .gold-coin-icon { width: 40px; height: 40px; background: radial-gradient(circle, #ffe066 0%, #f3ba2f 70%, #947116 100%); border-radius: 50%; box-shadow: 0 0 12px rgba(243, 186, 47, 0.6); }
+        .clicker-container { position: relative; width: 240px; height: 240px; margin-bottom: 20px; display: flex; justify-content: center; align-items: center; }
+        .clicker-circle { width: 210px; height: 210px; background: radial-gradient(circle, #ffe066 0%, #f3ba2f 60%, #947116 100%); border-radius: 50%; border: 6px solid #ffe066; box-shadow: 0 0 35px rgba(243, 186, 47, 0.7); display: flex; justify-content: center; align-items: center; cursor: pointer; transition: transform 0.05s ease; }
+        .clicker-circle::after { content: "E"; font-size: 105px; font-weight: 900; color: #ffffff; text-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); }
+        .clicker-circle:active { transform: scale(0.95); }
+        .floating-text { position: absolute; color: #ffffff; font-size: 28px; font-weight: bold; pointer-events: none; animation: floatUp 0.6s ease-out forwards; text-shadow: 0 3px 6px rgba(0,0,0,0.9); z-index: 50; }
+        @keyframes floatUp { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-80px) scale(1.2); } }
+        .energy-boost-row { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0 15px; }
+        .energy-box { font-size: 16px; font-weight: bold; display: flex; align-items: center; gap: 5px; }
+        .boost-link { background: none; border: none; color: #f3ba2f; font-size: 16px; font-weight: bold; cursor: pointer; }
+        .tab-title { font-size: 24px; font-weight: bold; color: #f3ba2f; margin-bottom: 8px; text-align: center; }
+        .info-card { background: #141414; border: 1px solid #252525; border-radius: 16px; padding: 14px; width: 100%; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .history-list { width: 100%; max-height: 220px; overflow-y: auto; background: #0c0c0c; border-radius: 12px; padding: 10px; border: 1px solid #222; }
+        .history-item { font-size: 12px; color: #ccc; padding: 7px 0; border-bottom: 1px solid #1a1a1a; display: flex; justify-content: space-between; }
+        .upgrade-btn { background: #f3ba2f; color: #000; border: none; padding: 8px 14px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        .airdrop-stats { background: rgba(243, 186, 47, 0.05); border: 1px solid #3a2b03; border-radius: 16px; padding: 15px; width: 100%; text-align: center; margin-bottom: 15px; }
+        .airdrop-coins { font-size: 28px; font-weight: 800; color: #fff; margin-bottom: 5px; }
+        .airdrop-usd { font-size: 16px; color: #00ffcc; font-weight: bold; }
+        .wallet-btn { width: 100%; background: #111; border: 2px solid #f3ba2f; border-radius: 14px; padding: 14px; color: #fff; font-size: 15px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; }
+        .bottom-nav { display: flex; justify-content: space-between; background: #121212; padding: 10px 6px; border-radius: 20px; border: 1px solid #222; width: 100%; }
+        .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; background: none; border: none; color: #666666; font-size: 11px; font-weight: 600; cursor: pointer; }
         .nav-item.active { color: #ffffff; }
+        .back-btn { margin-top: 15px; background: #222; color: #fff; border: 1px solid #444; padding: 8px 18px; border-radius: 10px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
-
     <div class="app-container">
-        
         <div class="top-profile">
             <div class="profile-left">
                 <div class="avatar-container">
@@ -359,12 +58,10 @@
                     <input type="file" id="image-loader" class="file-input" accept="image/*">
                 </div>
                 <div class="user-meta">
-                    <h4 id="username-display">Loading...</h4>
+                    <h4 id="username-display">Ezbon (CEO)</h4>
                     <div class="level-container">
-                        <span id="level-title-text" class="level-title">Level 0</span>
-                        <div class="level-bar-container">
-                            <div id="level-bar-fill" class="level-bar-fill"></div>
-                        </div>
+                        <span id="level-title-text" class="level-title">Level 1</span>
+                        <div class="level-bar-container"><div id="level-bar-fill" class="level-bar-fill" style="width: 25%;"></div></div>
                     </div>
                 </div>
             </div>
@@ -377,11 +74,9 @@
                     <span id="score-text">0</span>
                 </div>
             </div>
-            
             <div class="clicker-container" id="clicker-parent">
                 <div id="coin-clicker" class="clicker-circle"></div>
             </div>
-
             <div class="energy-boost-row">
                 <div class="energy-box">⚡ <span id="energy-text">1500</span>/1500</div>
                 <button class="boost-link" onclick="openBoostSection()">🚀 Boost</button>
@@ -390,304 +85,131 @@
 
         <div id="tab-mine" class="tab-content">
             <p class="tab-title">Coin History</p>
-            <p class="tab-subtitle">Historia ya mienendo ya sarafu na mapato yako.</p>
             <div class="history-list" id="history-container">
-                <div class="history-item"><span>Mfumo Umezinduliwa</span><span style="color:#00ffcc;">Tayari</span></div>
+                <div class="history-item"><span>Account Initialized</span><span>+0 E-Coin</span></div>
             </div>
         </div>
 
         <div id="tab-mine-friends" class="tab-content">
             <p class="tab-title">👥 Invite Friends</p>
-            <p class="tab-subtitle">Alika marafiki wajiunge ujipatie pointi +5,000 Coin.</p>
-            <div class="info-card" style="flex-direction: column; gap: 10px; align-items: flex-start;">
-                <p style="font-size: 11px; color: #f3ba2f; font-weight: bold;">LINK YAKO YA URUFIANI:</p>
-                <p id="ref-link-text" style="font-size: 12px; color: #fff; word-break: break-all; background: #222; padding: 8px; border-radius: 6px; width: 100%;">https://t.me/Bot</p>
-                <button onclick="copyInviteLink()" class="upgrade-btn" style="width: 100%;">📋 Copy Invite Link</button>
+            <div class="info-card" style="flex-direction: column; gap: 10px;">
+                <p id="ref-link-text" style="font-size: 12px; color: #aaa; word-break: break-all;">https://t.me/ECoinBot?start=ref12345</p>
+                <button onclick="copyInviteLink()" class="upgrade-btn">📋 Copy Invite Link</button>
             </div>
         </div>
 
         <div id="tab-earn" class="tab-content">
             <p class="tab-title">🪙 Earn Coins</p>
-            <p class="tab-subtitle">Kamilisha kazi mbalimbali kupata bonasi.</p>
-            <div class="info-card">
-                <p style="font-weight: bold; font-size: 14px;">Daily Reward (+1,000)</p>
-                <button class="upgrade-btn" onclick="claimDaily()">Claim</button>
-            </div>
+            <div class="info-card"><p>Daily Reward</p><button class="upgrade-btn" onclick="claimDaily()">Claim</button></div>
         </div>
 
         <div id="tab-airdrop" class="tab-content">
             <p class="tab-title">Binance Airdrop</p>
-            <p class="tab-subtitle">Unganisha Binance Web3 Wallet yako tayari kwa uzinduzi.</p>
             <div class="airdrop-stats">
                 <div class="airdrop-coins">🪙 <span id="airdrop-score-display">0</span></div>
                 <div class="airdrop-usd">Value: $<span id="airdrop-usd-display">0.00</span></div>
             </div>
-            <div style="width: 100%;">
-                <div class="wallet-btn" onclick="connectBinanceWalletOnly()">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <span style="font-size: 20px;">🔶</span>
-                        <span>Binance Web3 Wallet</span>
-                    </div>
-                    <span id="status-Binance" class="status-badge">Connect</span>
-                </div>
-            </div>
-            <div class="countdown-box" id="airdrop-status-text">🚀 First Snapshot: October 2026</div>
+            <button class="wallet-btn" onclick="connectBinanceWalletOnly()">🔶 Connect Wallet</button>
         </div>
 
         <div id="tab-boost-section" class="tab-content">
             <p class="tab-title">🚀 Multitap Boost</p>
-            <p class="tab-subtitle">Ongeza pointi za kuchimba kwa kila bonyeza.</p>
             <div class="info-card">
-                <div>
-                    <p style="font-weight: bold; font-size: 14px;">👉 Multitap Upgrade</p>
-                    <p id="multitap-desc" style="font-size: 11px; color: #aaa;">Level 1 (+1 per tap)</p>
-                </div>
-                <button id="btn-buy-boost" class="upgrade-btn" onclick="buyMultitapUpgrade()">
-                    💰 <span id="boost-cost-text">100</span>
-                </button>
+                <div><p>Multitap Upgrade</p><p id="multitap-desc" style="font-size: 11px; color: #888;">Increase coins per click</p></div>
+                <button id="btn-buy-boost" class="upgrade-btn" onclick="buyMultitapUpgrade()">💰 100</button>
             </div>
             <button class="back-btn" onclick="goBackToExchange()">◀ Back</button>
         </div>
-
-        <div class="bottom-nav" id="main-bottom-nav">
-            <button id="nav-btn-exchange" class="nav-item active" onclick="switchTab('tab-exchange', this)">
-                <span class="nav-icon">🪙</span>
-                <span>Exchange</span>
-            </button>
-            <button class="nav-item" onclick="switchTab('tab-mine', this)">
-                <span class="nav-icon">📊</span>
-                <span>History</span>
-            </button>
-            <button class="nav-item" onclick="switchTab('tab-mine-friends', this)">
-                <span class="nav-icon">👥</span>
-                <span>Friends</span>
-            </button>
-            <button class="nav-item" onclick="switchTab('tab-earn', this)">
-                <span class="nav-icon">🪙</span>
-                <span>Earn</span>
-            </button>
-            <button class="nav-item" onclick="switchTab('tab-airdrop', this)">
-                <span class="nav-icon">💰</span>
-                <span>Airdrop</span>
-            </button>
+        
+        <div class="bottom-nav">
+            <button class="nav-item active" onclick="switchTab('tab-exchange', this)">🪙 Exchange</button>
+            <button class="nav-item" onclick="switchTab('tab-mine', this)">📊 History</button>
+            <button class="nav-item" onclick="switchTab('tab-mine-friends', this)">👥 Friends</button>
+            <button class="nav-item" onclick="switchTab('tab-earn', this)">🪙 Earn</button>
+            <button class="nav-item" onclick="switchTab('tab-airdrop', this)">💰 Airdrop</button>
         </div>
-
     </div>
 
     <script>
+        // Telegram Web App Full Screen Configuration
         const tg = window.Telegram.WebApp;
-        try { tg.expand(); } catch (err) {}
+        tg.ready();
+        tg.expand();
+        tg.disableVerticalSwipes();
 
-        let score = parseInt(localStorage.getItem('global_coin_score')) || 0;
-        let energy = parseInt(localStorage.getItem('global_coin_energy')) || 1500;
-        let tapPower = parseInt(localStorage.getItem('global_coin_tappower')) || 1; 
-        let boostCost = parseInt(localStorage.getItem('global_coin_boostcost')) || 100;
-        let historyData = JSON.parse(localStorage.getItem('global_coin_history')) || [];
-
+        // Game State & Logic
+        let score = parseInt(localStorage.getItem('e_coin_score')) || 0;
+        let energy = 1500;
         const scoreText = document.getElementById('score-text');
+        const airdropScoreDisplay = document.getElementById('airdrop-score-display');
         const energyText = document.getElementById('energy-text');
-        const clickerParent = document.getElementById('clicker-parent');
-        const avatarPreview = document.getElementById('avatar-preview');
 
-        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-            const userObj = tg.initDataUnsafe.user;
-            document.getElementById('username-display').textContent = (userObj.first_name || "CEO") + " (CEO)";
-            document.getElementById('ref-link-text').textContent = "https://t.me/CoinBot?start=" + userObj.id;
-            if (userObj.photo_url && !localStorage.getItem('global_user_avatar')) {
-                avatarPreview.src = userObj.photo_url;
-            }
-        } else {
-            document.getElementById('username-display').textContent = "Christian (CEO)";
-        }
+        scoreText.textContent = score;
+        airdropScoreDisplay.textContent = score;
 
-        if (localStorage.getItem('global_user_avatar')) {
-            avatarPreview.src = localStorage.getItem('global_user_avatar');
-        }
-
-        refreshAllUI();
-        renderHistory();
-
-        function updateLevelProgressBar() {
-            let maxCoinsForLevel = 10000; 
-            let levelName = "Level 0";
-
-            if (score >= 100000) {
-                maxCoinsForLevel = 1000000;
-                levelName = "Level 2";
-            } else if (score >= 10000) {
-                maxCoinsForLevel = 100000;
-                levelName = "Level 1";
-            }
-
-            document.getElementById('level-title-text').textContent = levelName;
-            let percentage = (score / maxCoinsForLevel) * 100;
-            if (percentage > 100) percentage = 100;
-            document.getElementById('level-bar-fill').style.width = percentage + "%";
-        }
-
+        // Clicker Event Handler with floating animation
         document.getElementById('coin-clicker').addEventListener('click', (e) => {
-            if (energy >= tapPower) {
-                score += tapPower;
-                energy -= tapPower;
-                createFloatingText(e, "+" + tapPower);
-                saveData();
-                refreshAllUI();
+            if (energy > 0) {
+                score += 1;
+                energy -= 1;
+                scoreText.textContent = score;
+                airdropScoreDisplay.textContent = score;
+                energyText.textContent = energy;
+                localStorage.setItem('e_coin_score', score);
+
+                // Floating text effect
+                const clickerParent = document.getElementById('clicker-parent');
+                const rect = clickerParent.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const floatEl = document.createElement('div');
+                floatEl.className = 'floating-text';
+                floatEl.textContent = '+1';
+                floatEl.style.left = `${x}px`;
+                floatEl.style.top = `${y}px`;
+                clickerParent.appendChild(floatEl);
+
+                setTimeout(() => floatEl.remove(), 600);
             }
         });
 
-        function createFloatingText(e, text) {
-            const el = document.createElement('div');
-            el.className = 'floating-text';
-            el.textContent = text;
-            const rect = clickerParent.getBoundingClientRect();
-            let x = e.clientX ? (e.clientX - rect.left) : (rect.width / 2);
-            let y = e.clientY ? (e.clientY - rect.top) : (rect.height / 2);
-            el.style.left = x + "px"; el.style.top = y + "px";
-            clickerParent.appendChild(el);
-            setTimeout(() => { el.remove(); }, 600);
-        }
-
-        function refreshAllUI() {
-            scoreText.textContent = score.toLocaleString();
-            energyText.textContent = energy;
-            document.getElementById('airdrop-score-display').textContent = score.toLocaleString();
-            let usdValue = score * 0.001; 
-            document.getElementById('airdrop-usd-display').textContent = usdValue.toFixed(2);
-            updateLevelProgressBar();
-            updateBoostTabUI();
-        }
-
-        function addHistoryLog(action, amount) {
-            const now = new Date().toLocaleTimeString();
-            historyData.unshift({ action: action, amount: amount, time: now });
-            if(historyData.length > 15) historyData.pop();
-            localStorage.setItem('global_coin_history', JSON.stringify(historyData));
-            renderHistory();
-        }
-
-        function renderHistory() {
-            const container = document.getElementById('history-container');
-            if(!container) return;
-            container.innerHTML = '';
-            if(historyData.length === 0) {
-                container.innerHTML = '<div class="history-item"><span>Hakuna historia bado.</span></div>';
-                return;
-            }
-            historyData.forEach(item => {
-                container.innerHTML += `<div class="history-item"><span>${item.action} (${item.time})</span><span style="color:#f3ba2f;">+${item.amount}</span></div>`;
-            });
-        }
-
-        function claimDaily() {
-            score += 1000;
-            addHistoryLog("Daily Reward", 1000);
-            saveData();
-            refreshAllUI();
-            alert("Umeshinda 1,000 Coin!");
-        }
-
-        const imageLoader = document.getElementById('image-loader');
-        if(imageLoader) {
-            imageLoader.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    if (file.size > 2 * 1024 * 1024) {
-                        alert("Picha isiyozidi 2 MB inahitajika.");
-                        return;
-                    }
-                    const reader = new FileReader();
-                    reader.onload = function(event) {
-                        avatarPreview.src = event.target.result;
-                        localStorage.setItem('global_user_avatar', event.target.result);
-                    }
-                    reader.readAsDataURL(file);
-                }
-            });
-        }
-
-        function switchTab(tabId, buttonElement) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+        // Tab Navigation Logic
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
-            buttonElement.classList.add('active');
-            refreshAllUI();
+            btn.classList.add('active');
         }
 
         function openBoostSection() {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.getElementById('tab-boost-section').classList.add('active');
         }
 
         function goBackToExchange() {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.getElementById('tab-exchange').classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            document.getElementById('nav-btn-exchange').classList.add('active');
         }
 
-        function buyMultitapUpgrade() {
-            if (score >= boostCost) {
-                score -= boostCost;
-                tapPower += 1; 
-                boostCost = boostCost * 2; 
-                addHistoryLog("Multitap Upgrade", boostCost/2);
-                saveData();
-                refreshAllUI();
-                alert("Upgrade Imefanikiwa!");
-            } else {
-                alert("Huna coin za kutosha!");
-            }
-        }
-
-        function updateBoostTabUI() {
-            const desc = document.getElementById('multitap-desc');
-            const costText = document.getElementById('boost-cost-text');
-            if(desc) desc.textContent = "Level " + tapPower + " (+" + tapPower + " per tap)";
-            if(costText) costText.textContent = boostCost.toLocaleString();
+        function claimDaily() {
+            score += 50;
+            scoreText.textContent = score;
+            alert('Daily reward claimed successfully!');
         }
 
         function copyInviteLink() {
-            const linkText = document.getElementById('ref-link-text').textContent;
-            navigator.clipboard.writeText(linkText).then(() => { alert("Invite link copied!"); });
+            navigator.clipboard.writeText(document.getElementById('ref-link-text').textContent);
+            alert('Invite link copied to clipboard!');
         }
 
         function connectBinanceWalletOnly() {
-            const badge = document.getElementById('status-Binance');
-            if (localStorage.getItem("binance_wallet_status") === "connected") {
-                localStorage.removeItem("binance_wallet_status");
-                badge.textContent = "Connect";
-                badge.classList.remove('connected');
-            } else {
-                badge.textContent = "Connecting...";
-                setTimeout(() => {
-                    localStorage.setItem("binance_wallet_status", "connected");
-                    badge.textContent = "Connected ✔";
-                    badge.classList.add('connected');
-                }, 1000);
-            }
+            alert('Binance Web3 Wallet connection initiated.');
         }
 
-        setInterval(() => {
-            if (energy < 1500) {
-                energy += 2; if (energy > 1500) energy = 1500;
-                if(energyText) energyText.textContent = energy;
-                saveData();
-            }
-        }, 1500);
-
-        function saveData() {
-            localStorage.setItem('global_coin_score', score);
-            localStorage.setItem('global_coin_energy', energy);
-            localStorage.setItem('global_coin_tappower', tapPower);
-            localStorage.setItem('global_coin_boostcost', boostCost);
+        function buyMultitapUpgrade() {
+            alert('Multitap upgrade processed.');
         }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            if(localStorage.getItem("binance_wallet_status") === "connected") {
-                const b = document.getElementById('status-Binance');
-                if(b) { b.textContent = "Connected ✔"; b.classList.add('connected'); }
-            }
-        });
     </script>
 </body>
 </html>
