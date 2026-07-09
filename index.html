@@ -1,469 +1,535 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>E-Coin · Airdrop</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            user-select: none;
-        }
-        body {
-            background: #0b0b0b;
-            background-image: radial-gradient(circle at 20% 20%, #1f1a0a 0%, #0a0804 100%);
-            color: #f0e6d0;
-            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
-            margin: 0;
-            min-height: 100vh;
-            padding: 18px 16px 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .app-container {
-            max-width: 440px;
-            width: 100%;
-        }
-        .countdown {
-            background: rgba(255, 215, 0, 0.08);
-            backdrop-filter: blur(4px);
-            border: 1px solid #f3ba2f40;
-            border-radius: 60px;
-            padding: 12px 20px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #f8d25c;
-            text-align: center;
-            letter-spacing: 1px;
-            box-shadow: 0 0 20px #f3ba2f15;
-            margin-bottom: 20px;
-            width: 100%;
-        }
-        .coin-wrapper {
-            display: flex;
-            justify-content: center;
-            margin: 8px 0 12px;
-            position: relative;
-        }
-        .coin {
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle at 30% 30%, #fce181, #d49c1a 70%, #8a6b0e);
-            border-radius: 50%;
-            border: 8px solid #f9d342;
-            box-shadow: 0 0 0 2px #6b4f0e, 0 12px 40px rgba(243, 186, 47, 0.6), inset 0 -10px 30px rgba(0,0,0,0.5);
-            cursor: pointer;
-            transition: transform 0.12s cubic-bezier(0.2, 0.9, 0.4, 1.1), box-shadow 0.15s;
-            touch-action: manipulation;
-            will-change: transform;
-        }
-        .coin:active {
-            transform: scale(0.92);
-            box-shadow: 0 0 0 2px #b8860b, 0 8px 25px #f3ba2f;
-        }
-        .balance-card {
-            background: #14100a;
-            border: 1px solid #3d2e14;
-            border-radius: 60px;
-            padding: 14px 28px;
-            margin: 16px 0 18px;
-            text-align: center;
-            font-size: 2rem;
-            font-weight: 700;
-            color: #fad974;
-            letter-spacing: 2px;
-            box-shadow: inset 0 4px 10px #00000055, 0 6px 12px #00000030;
-            backdrop-filter: blur(4px);
-            width: 100%;
-        }
-        .balance-card span {
-            background: #1f1a0f;
-            padding: 0 18px;
-            border-radius: 40px;
-            display: inline-block;
-            color: #ffe68f;
-        }
-        .section-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin: 28px 0 12px 6px;
-            color: #eace7a;
-            border-left: 6px solid #f3ba2f;
-            padding-left: 14px;
-            letter-spacing: -0.2px;
-        }
-        .task-card {
-            background: #18130c;
-            border: 1px solid #302614;
-            border-radius: 18px;
-            padding: 14px 18px;
-            margin: 10px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(2px);
-            transition: background 0.2s;
-            box-shadow: 0 6px 12px #00000030;
-        }
-        .task-card:hover {
-            background: #221d13;
-        }
-        .task-card span {
-            font-weight: 500;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .task-card span small {
-            color: #b8943a;
-            font-weight: 400;
-            font-size: 0.8rem;
-            background: #1d160c;
-            padding: 2px 12px;
-            border-radius: 30px;
-            margin-left: 8px;
-        }
-        .btn-claim {
-            background: #f3ba2f;
-            border: none;
-            padding: 10px 22px;
-            border-radius: 40px;
-            font-weight: 700;
-            color: #0f0c06;
-            font-size: 0.9rem;
-            cursor: pointer;
-            box-shadow: 0 4px 0 #876a1a, 0 6px 14px #00000055;
-            transition: all 0.08s linear;
-            touch-action: manipulation;
-            letter-spacing: 0.3px;
-        }
-        .btn-claim:active {
-            transform: translateY(4px);
-            box-shadow: 0 0px 0 #876a1a, 0 6px 14px #00000044;
-        }
-        .btn-claim.secondary {
-            background: #2f281a;
-            color: #dbbd5c;
-            box-shadow: 0 4px 0 #1a150c;
-        }
-        .binance-box {
-            margin-top: 36px;
-            border-top: 1px solid #3a2d18;
-            padding-top: 28px;
-            width: 100%;
-        }
-        .binance-box h2 {
-            font-weight: 500;
-            font-size: 1.5rem;
-            color: #f3ba2f;
-            letter-spacing: 1px;
-            margin: 0 0 16px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .binance-box h2::before {
-            content: "◈";
-            font-size: 1.6rem;
-            color: #f3ba2f;
-        }
-        .btn-wallet {
-            width: 100%;
-            padding: 18px 10px;
-            background: #0e0c07;
-            border: 2px solid #f3ba2f;
-            border-radius: 60px;
-            color: #f3ba2f;
-            font-weight: 700;
-            font-size: 1.2rem;
-            letter-spacing: 1.5px;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 0 20px #f3ba2f10;
-            touch-action: manipulation;
-        }
-        .btn-wallet:active {
-            background: #f3ba2f;
-            color: #0f0c06;
-            transform: scale(0.98);
-        }
-        .footer-note {
-            margin-top: 30px;
-            font-size: 0.7rem;
-            color: #5f4f2a;
-            text-align: center;
-            border-top: 1px solid #211b0f;
-            padding-top: 22px;
-            width: 100%;
-        }
-        .streak-badge {
-            background: #1f180e;
-            padding: 4px 14px;
-            border-radius: 40px;
-            font-size: 0.8rem;
-            color: #dbb75a;
-            margin-left: 12px;
-            border: 1px solid #3d2f15;
-        }
-        /* small tap optimization */
-        @media (max-width: 480px) {
-            .coin { width: 170px; height: 170px; }
-            .balance-card { font-size: 1.7rem; padding: 12px 16px; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>E-Coin · Airdrop</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    body {
+      background: #0b0a08;
+      color: #ece4d7;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 12px;
+    }
+    .app {
+      max-width: 400px;
+      width: 100%;
+      background: #13110e;
+      border-radius: 36px;
+      padding: 20px 16px 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 0 1px #2f281c;
+      position: relative;
+    }
+    /* header */
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .top-row .user {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #1e1a14;
+      padding: 6px 16px 6px 10px;
+      border-radius: 40px;
+      border: 1px solid #3d321f;
+    }
+    .user .avatar {
+      width: 32px;
+      height: 32px;
+      background: #f3ba2f;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #0e0c07;
+      font-size: 14px;
+    }
+    .user span {
+      font-weight: 500;
+      font-size: 14px;
+      color: #e5d6b0;
+    }
+    .badge {
+      background: #2f2a1a;
+      color: #f3ba2f;
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid #4f3d1f;
+      letter-spacing: 0.3px;
+    }
+    /* main balance */
+    .balance-hero {
+      background: #1a1610;
+      border-radius: 28px;
+      padding: 18px 16px 14px;
+      text-align: center;
+      border: 1px solid #2f281c;
+      margin-bottom: 16px;
+      box-shadow: inset 0 4px 12px rgba(0,0,0,0.6);
+    }
+    .balance-hero .label {
+      font-size: 13px;
+      color: #b0945a;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .balance-hero .amount {
+      font-size: 3.2rem;
+      font-weight: 700;
+      color: #fad974;
+      line-height: 1.2;
+      text-shadow: 0 0 20px #f3ba2f20;
+      letter-spacing: 1px;
+    }
+    .balance-hero .sub {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 6px;
+      font-size: 14px;
+      color: #bdaa7a;
+    }
+    .balance-hero .sub span {
+      background: #0e0c07;
+      padding: 2px 14px;
+      border-radius: 40px;
+      border: 1px solid #2f281c;
+    }
+    /* timer grid */
+    .timer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .timer-item {
+      background: #19150f;
+      border-radius: 18px;
+      padding: 12px 4px;
+      text-align: center;
+      border: 1px solid #2d2417;
+    }
+    .timer-item .value {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #f3ba2f;
+    }
+    .timer-item .desc {
+      font-size: 10px;
+      text-transform: uppercase;
+      color: #8a7a54;
+      letter-spacing: 0.6px;
+      margin-top: 2px;
+    }
+
+    /* progress row */
+    .progress-row {
+      background: #1a1610;
+      border-radius: 40px;
+      padding: 8px 16px 8px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid #2f281c;
+      margin-bottom: 18px;
+    }
+    .progress-row .left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+    }
+    .progress-row .left .fill {
+      width: 70px;
+      height: 6px;
+      background: #2a2215;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .progress-row .left .fill .bar {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, #f3ba2f, #d49c1a);
+      border-radius: 10px;
+    }
+    .progress-row .right {
+      background: #f3ba2f;
+      color: #0e0c07;
+      font-weight: 700;
+      padding: 4px 16px;
+      border-radius: 30px;
+      font-size: 13px;
+    }
+
+    /* boost row */
+    .boost-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .boost-btn {
+      flex: 1;
+      background: #1a1610;
+      border: 1px solid #2f281c;
+      border-radius: 40px;
+      padding: 12px 0;
+      text-align: center;
+      font-weight: 600;
+      font-size: 15px;
+      color: #e5d6b0;
+      transition: all 0.1s;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #0a0806;
+    }
+    .boost-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #0a0806;
+    }
+    .boost-btn.gold {
+      background: #f3ba2f;
+      border-color: #f3ba2f;
+      color: #0b0a08;
+      box-shadow: 0 4px 0 #876a1a;
+    }
+    .boost-btn.gold:active {
+      background: #dbaa24;
+    }
+
+    /* bottom nav */
+    .bottom-nav {
+      display: flex;
+      justify-content: space-between;
+      background: #14110d;
+      border-radius: 40px;
+      padding: 6px 10px;
+      border: 1px solid #2f281c;
+      margin-top: 20px;
+    }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 6px 8px;
+      border-radius: 30px;
+      font-size: 11px;
+      color: #7a6a4a;
+      transition: 0.1s;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      font-weight: 500;
+      gap: 2px;
+    }
+    .nav-item .icon {
+      font-size: 20px;
+      line-height: 1;
+    }
+    .nav-item.active {
+      color: #f3ba2f;
+      background: #1e1a12;
+    }
+    .nav-item:active { opacity: 0.6; }
+
+    /* coin (tap) */
+    .coin-tap-area {
+      display: flex;
+      justify-content: center;
+      margin: 8px 0 6px;
+    }
+    .coin {
+      width: 140px;
+      height: 140px;
+      background: radial-gradient(circle at 35% 30%, #fce181, #d49c1a 60%, #8a6b0e);
+      border-radius: 50%;
+      border: 8px solid #f9d342;
+      box-shadow: 0 0 0 2px #6b4f0e, 0 12px 30px rgba(243, 186, 47, 0.3), inset 0 -8px 20px rgba(0,0,0,0.4);
+      cursor: pointer;
+      transition: transform 0.1s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      touch-action: manipulation;
+    }
+    .coin:active {
+      transform: scale(0.92);
+    }
+
+    /* ceo tag */
+    .ceo-tag {
+      display: inline-block;
+      background: #1f1a0f;
+      padding: 2px 16px 2px 12px;
+      border-radius: 40px;
+      font-size: 13px;
+      border: 1px solid #3d321f;
+      color: #d4bb7a;
+      margin: 2px 0 10px;
+    }
+
+    /* misc */
+    .flex { display: flex; align-items: center; gap: 8px; }
+    .mt-1 { margin-top: 4px; }
+    .text-gold { color: #f3ba2f; }
+  </style>
 </head>
 <body>
-<div class="app-container">
+<div class="app">
 
-    <!-- Countdown -->
-    <div class="countdown" id="timer">⏳ Loading airdrop...</div>
+  <!-- top row: Jane + Silver -->
+  <div class="top-row">
+    <div class="user">
+      <div class="avatar">👩</div>
+      <span>Jane <span style="color:#b0945a;font-weight:300;">(CEO)</span></span>
+    </div>
+    <div class="badge">Silver ▾</div>
+  </div>
 
-    <!-- Main Coin -->
-    <div class="coin-wrapper">
-        <div class="coin" id="main-coin" role="button" aria-label="Tap to earn coins"></div>
+  <!-- balance hero -->
+  <div class="balance-hero">
+    <div class="label">Balance</div>
+    <div class="amount" id="balanceDisplay">3,200</div>
+    <div class="sub">
+      <span>2 / 11</span>
+      <span>⚡ +207 /h</span>
     </div>
+  </div>
 
-    <!-- Balance -->
-    <div class="balance-card">
-        🪙 <span id="balance">0</span>
+  <!-- timer grid: daily reward, cipher, combo -->
+  <div class="timer-grid">
+    <div class="timer-item">
+      <div class="value" id="dailyTimer">13:38</div>
+      <div class="desc">Daily reward</div>
     </div>
+    <div class="timer-item">
+      <div class="value" id="cipherTimer">08:38</div>
+      <div class="desc">Daily cipher</div>
+    </div>
+    <div class="timer-item">
+      <div class="value" id="comboTimer">01:38</div>
+      <div class="desc">Daily combo</div>
+    </div>
+  </div>
 
-    <!-- Daily Tasks -->
-    <div class="section-title">📅 Daily streak</div>
-    <div class="task-card">
-        <span>Daily login <small>streak</small> <span class="streak-badge" id="streakDisplay">0</span></span>
-        <button class="btn-claim" id="dailyClaimBtn">Claim</button>
+  <!-- progress: 1500/1500 + boost -->
+  <div class="progress-row">
+    <div class="left">
+      <span>$</span>
+      <span id="progressLabel">1500 / 1500</span>
+      <div class="fill"><div class="bar" id="progressBar" style="width:100%"></div></div>
     </div>
+    <div class="right" id="boostBtn">Boost</div>
+  </div>
 
-    <!-- Social Tasks -->
-    <div class="section-title">📱 Social bounty</div>
-    <div class="task-card">
-        <span>📸 Follow Instagram <small>+500</small></span>
-        <button class="btn-claim secondary" data-social="500">Follow</button>
-    </div>
-    <div class="task-card">
-        <span>🐦 Share on X <small>+300</small></span>
-        <button class="btn-claim secondary" data-social="300">Share</button>
-    </div>
-    <div class="task-card">
-        <span>💬 Join Telegram <small>+200</small></span>
-        <button class="btn-claim secondary" data-social="200">Join</button>
-    </div>
+  <!-- coin tap -->
+  <div class="coin-tap-area">
+    <div class="coin" id="mainCoin" role="button" aria-label="Tap to earn"></div>
+  </div>
 
-    <!-- Binance Airdrop -->
-    <div class="binance-box">
-        <h2>Binance Airdrop</h2>
-        <button class="btn-wallet" id="connectWalletBtn">⟡ Connect Binance Wallet</button>
-        <div style="margin-top: 12px; font-size: 0.85rem; color: #b8943a; text-align: center; opacity: 0.8;">⚡ Bonus rewards for wallet holders</div>
-    </div>
+  <!-- ceo & coin count -->
+  <div style="display:flex; justify-content:space-between; align-items:center; margin: 4px 0 8px;">
+    <span class="ceo-tag">👑 (CEO) <span id="ceoCoinCount">30,157</span></span>
+    <span style="font-size:13px; color:#8a7a54;">🪙 <span id="balanceSmall">3,200</span></span>
+  </div>
 
-    <div class="footer-note">E-Coin · tap & earn · 2026</div>
+  <!-- boost row: Exchange, Mine, Friends -->
+  <div class="boost-row">
+    <div class="boost-btn gold" id="exchangeBtn">Exchange</div>
+    <div class="boost-btn" id="mineBtn">⛏️ Mine</div>
+    <div class="boost-btn" id="friendsBtn">👥 Friends</div>
+  </div>
+
+  <!-- bottom navigation -->
+  <div class="bottom-nav">
+    <button class="nav-item active"><span class="icon">🏠</span>Home</button>
+    <button class="nav-item"><span class="icon">🔍</span>Search</button>
+    <button class="nav-item"><span class="icon">🔔</span>Notif.</button>
+    <button class="nav-item"><span class="icon">⚡</span>Activity</button>
+  </div>
+
+  <!-- hidden airdrop placeholder (visual) -->
+  <div style="margin-top:12px; text-align:center; font-size:11px; color:#4d3f28; letter-spacing:1px; border-top:1px solid #1f1a10; padding-top:12px;">
+    <span style="background:#1a1610; padding:4px 20px; border-radius:40px; border:1px solid #2f281c;">✦ Airdrop active ✦</span>
+  </div>
 </div>
 
 <script>
-    (function() {
-        "use strict";
+  (function() {
+    "use strict";
 
-        // ---------- ELEMENTS ----------
-        const balanceEl = document.getElementById('balance');
-        const coinEl = document.getElementById('main-coin');
-        const timerEl = document.getElementById('timer');
-        const dailyBtn = document.getElementById('dailyClaimBtn');
-        const streakDisplay = document.getElementById('streakDisplay');
+    // DOM elements
+    const balanceDisplay = document.getElementById('balanceDisplay');
+    const balanceSmall = document.getElementById('balanceSmall');
+    const ceoCoinCount = document.getElementById('ceoCoinCount');
+    const coinEl = document.getElementById('mainCoin');
+    const dailyTimer = document.getElementById('dailyTimer');
+    const cipherTimer = document.getElementById('cipherTimer');
+    const comboTimer = document.getElementById('comboTimer');
+    const progressLabel = document.getElementById('progressLabel');
+    const progressBar = document.getElementById('progressBar');
+    const boostBtn = document.getElementById('boostBtn');
+    const exchangeBtn = document.getElementById('exchangeBtn');
+    const mineBtn = document.getElementById('mineBtn');
+    const friendsBtn = document.getElementById('friendsBtn');
 
-        // ---------- LOCAL STORAGE KEYS ----------
-        const STORAGE_BALANCE = 'eco_balance';
-        const STORAGE_STREAK = 'eco_streak';
-        const STORAGE_LAST_CLAIM = 'eco_last_claim'; // timestamp of last daily claim
+    // --- state ---
+    let balance = 3200;
+    let ceoCoins = 30157;
+    let progress = 1500;
+    const maxProgress = 1500;
 
-        // ---------- HELPERS ----------
-        function getStorage(key, fallback) {
-            try {
-                const val = localStorage.getItem(key);
-                return val !== null ? JSON.parse(val) : fallback;
-            } catch { return fallback; }
-        }
-        function setStorage(key, value) {
-            localStorage.setItem(key, JSON.stringify(value));
-        }
+    // --- helper to update UI ---
+    function updateUI() {
+      const formatted = balance.toLocaleString();
+      balanceDisplay.textContent = formatted;
+      balanceSmall.textContent = formatted;
+      ceoCoinCount.textContent = ceoCoins.toLocaleString();
 
-        // ---------- STATE ----------
-        let balance = getStorage(STORAGE_BALANCE, 0);
-        let streak = getStorage(STORAGE_STREAK, 0);
-        let lastClaimDate = getStorage(STORAGE_LAST_CLAIM, null); // ISO date string
+      // progress
+      const pct = Math.min(100, (progress / maxProgress) * 100);
+      progressBar.style.width = pct + '%';
+      progressLabel.textContent = `${Math.floor(progress)} / ${maxProgress}`;
+    }
 
-        // ---------- UI UPDATE ----------
-        function updateUI() {
-            balanceEl.textContent = balance;
-            streakDisplay.textContent = streak;
-            // Daily button state
-            const canClaim = checkDailyAvailable();
-            dailyBtn.disabled = !canClaim;
-            dailyBtn.style.opacity = canClaim ? '1' : '0.5';
-            dailyBtn.textContent = canClaim ? 'Claim' : '✓ Done';
-        }
+    // --- coin tap ---
+    function handleTap(e) {
+      e.preventDefault?.();
+      balance += 1;
+      // ceo coins also increase a bit for flavor
+      ceoCoins += 1;
+      updateUI();
+      // haptic feedback
+      coinEl.style.transform = 'scale(0.90)';
+      setTimeout(() => coinEl.style.transform = '', 100);
+      // progress increment (simulate)
+      if (progress < maxProgress) {
+        progress = Math.min(maxProgress, progress + 1);
+        updateUI();
+      }
+    }
 
-        // ---------- DAILY LOGIC ----------
-        function checkDailyAvailable() {
-            if (!lastClaimDate) return true;
-            const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
-            return lastClaimDate !== today;
-        }
+    // --- timer countdown (simulate dynamic timers) ---
+    function updateTimers() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2,'0');
+      const m = String(now.getMinutes()).padStart(2,'0');
+      const s = String(now.getSeconds()).padStart(2,'0');
 
-        function claimDaily() {
-            if (!checkDailyAvailable()) {
-                alert('✨ You already claimed today! Come back tomorrow.');
-                return false;
-            }
-            // reward = (streak + 1) * 100
-            const reward = (streak + 1) * 100;
-            balance += reward;
-            streak += 1;
-            // update storage
-            setStorage(STORAGE_BALANCE, balance);
-            setStorage(STORAGE_STREAK, streak);
-            const today = new Date().toISOString().slice(0, 10);
-            setStorage(STORAGE_LAST_CLAIM, today);
-            lastClaimDate = today;
+      // daily reward: countdown to midnight
+      const midnight = new Date(now);
+      midnight.setHours(24,0,0,0);
+      let diff = Math.max(0, (midnight - now) / 1000);
+      const dh = Math.floor(diff / 3600);
+      const dm = Math.floor((diff % 3600) / 60);
+      const ds = Math.floor(diff % 60);
+      dailyTimer.textContent = `${String(dh).padStart(2,'0')}:${String(dm).padStart(2,'0')}`;
 
-            updateUI();
-            // haptic feedback (optional)
-            dailyBtn.style.transform = 'scale(0.95)';
-            setTimeout(() => dailyBtn.style.transform = '', 100);
-            return true;
-        }
+      // cipher: 08:38 style (fixed countdown for demo)
+      // we'll show a fake decreasing timer
+      const secs = (now.getSeconds() % 60);
+      const fakeCipher = 60 - secs;
+      const cMin = Math.floor(fakeCipher / 60);
+      const cSec = fakeCipher % 60;
+      cipherTimer.textContent = `00:${String(cSec).padStart(2,'0')}`;
 
-        // ---------- SOCIAL TASKS ----------
-        function completeSocialTask(amount) {
-            balance += amount;
-            setStorage(STORAGE_BALANCE, balance);
-            updateUI();
-            // small feedback
-            const msg = `✅ +${amount} coins!`;
-            const old = balanceEl.textContent;
-            balanceEl.textContent = balance;
-            // visual pulse
-            balanceEl.style.color = '#fad974';
-            setTimeout(() => balanceEl.style.color = '', 300);
-            return true;
-        }
+      // combo: 01:38 style
+      const comboMin = Math.floor((now.getSeconds() % 30) / 2);
+      const comboSec = (now.getSeconds() % 30);
+      comboTimer.textContent = `${String(comboMin).padStart(2,'0')}:${String(comboSec).padStart(2,'0')}`;
+    }
 
-        // ---------- COIN TAP ----------
-        function handleCoinTap(e) {
-            e.preventDefault?.();
-            balance += 1;
-            setStorage(STORAGE_BALANCE, balance);
-            updateUI();
-            // micro feedback
-            coinEl.style.transform = 'scale(0.92)';
-            setTimeout(() => coinEl.style.transform = '', 90);
-        }
+    // --- boost action ---
+    function handleBoost() {
+      if (progress >= maxProgress) {
+        alert('✨ Progress full! Claim your reward.');
+        return;
+      }
+      const add = 50;
+      progress = Math.min(maxProgress, progress + add);
+      // also give some coins
+      balance += 20;
+      ceoCoins += 5;
+      updateUI();
+      boostBtn.style.transform = 'scale(0.95)';
+      setTimeout(() => boostBtn.style.transform = '', 100);
+    }
 
-        // ---------- BINANCE WALLET (demo) ----------
-        function connectWallet() {
-            alert('🔗 Binance Wallet connection initiated.\n(API integration ready — add your Web3 provider)');
-            // placeholder: you can extend with window.BinanceChain or custom logic
-        }
+    // --- exchange / mine / friends (demo) ---
+    function handleExchange() {
+      alert('📈 Exchange view: trade your coins for perks.');
+    }
+    function handleMine() {
+      alert('⛏️ Mining: +15 coins per second (simulated)');
+      balance += 15;
+      ceoCoins += 2;
+      updateUI();
+    }
+    function handleFriends() {
+      alert('👥 Invite friends and earn 100 coins each!');
+      balance += 100;
+      ceoCoins += 10;
+      updateUI();
+    }
 
-        // ---------- COUNTDOWN (Nov 1, 2026) ----------
-        function updateCountdown() {
-            const target = new Date('2026-11-01T00:00:00').getTime();
-            const now = Date.now();
-            let diff = target - now;
-            if (diff < 0) diff = 0;
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            let display = `⏳ Airdrop in ${days}d ${hours}h ${mins}m`;
-            if (diff === 0) display = '🚀 Airdrop live!';
-            timerEl.textContent = display;
-        }
+    // --- event binding ---
+    coinEl.addEventListener('click', handleTap);
+    coinEl.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      handleTap(e);
+    }, { passive: false });
 
-        // ---------- INIT ----------
-        function init() {
-            // set initial balance
-            if (typeof balance === 'number' && !isNaN(balance)) {
-                balanceEl.textContent = balance;
-            } else {
-                balance = 0;
-                setStorage(STORAGE_BALANCE, 0);
-            }
-            if (typeof streak !== 'number' || isNaN(streak)) {
-                streak = 0;
-                setStorage(STORAGE_STREAK, 0);
-            }
-            // ensure lastClaimDate is valid
-            if (lastClaimDate && typeof lastClaimDate !== 'string') {
-                lastClaimDate = null;
-                setStorage(STORAGE_LAST_CLAIM, null);
-            }
-            updateUI();
-            updateCountdown();
-            setInterval(updateCountdown, 30000);
+    boostBtn.addEventListener('click', handleBoost);
 
-            // ---- EVENT BINDING ----
-            // Coin tap (touch + mouse)
-            coinEl.addEventListener('click', handleCoinTap);
-            coinEl.addEventListener('touchstart', (e) => {
-                e.preventDefault(); // prevent double-tap zoom
-                handleCoinTap(e);
-            }, { passive: false });
+    exchangeBtn.addEventListener('click', handleExchange);
+    mineBtn.addEventListener('click', handleMine);
+    friendsBtn.addEventListener('click', handleFriends);
 
-            // Daily claim
-            dailyBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                const claimed = claimDaily();
-                if (claimed) {
-                    // Optional: show notification
-                }
-            });
+    // nav items (visual only)
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', function() {
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
 
-            // Social tasks (using data-social attribute)
-            document.querySelectorAll('[data-social]').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    const amount = parseInt(this.getAttribute('data-social'), 10);
-                    if (!isNaN(amount) && amount > 0) {
-                        completeSocialTask(amount);
-                        // Disable button briefly (cosmetic)
-                        this.textContent = '✓ Done';
-                        this.disabled = true;
-                        this.style.opacity = '0.5';
-                        setTimeout(() => {
-                            this.textContent = amount >= 500 ? 'Follow' : (amount >= 300 ? 'Share' : 'Join');
-                            this.disabled = false;
-                            this.style.opacity = '1';
-                        }, 800);
-                    }
-                });
-            });
+    // init timers & UI
+    updateTimers();
+    updateUI();
+    setInterval(updateTimers, 1000);
 
-            // Binance connect
-            document.getElementById('connectWalletBtn').addEventListener('click', connectWallet);
+    // extra: simulate progress increment over time
+    setInterval(() => {
+      if (progress < maxProgress) {
+        progress = Math.min(maxProgress, progress + 1);
+        updateUI();
+      }
+    }, 4000);
 
-            // extra: keyboard shortcut for accessibility
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' && document.activeElement === coinEl) {
-                    handleCoinTap(e);
-                }
-            });
+    // on load, set progress to 1500/1500 (as shown in screenshot)
+    progress = 1500;
+    updateUI();
 
-            // if balance changes from another tab, sync (optional)
-            window.addEventListener('storage', (e) => {
-                if (e.key === STORAGE_BALANCE) {
-                    const newBal = JSON.parse(e.newValue);
-                    if (typeof newBal === 'number') {
-                        balance = newBal;
-                        updateUI();
-                    }
-                }
-            });
-        }
+    // add a small easter egg: double tap on ceo tag
+    document.querySelector('.ceo-tag')?.addEventListener('dblclick', function() {
+      ceoCoins += 500;
+      balance += 100;
+      updateUI();
+      this.style.color = '#f3ba2f';
+      setTimeout(() => this.style.color = '', 300);
+    });
 
-        // go
-        init();
-    })();
+  })();
 </script>
 </body>
 </html>
