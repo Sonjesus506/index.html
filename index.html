@@ -1,535 +1,553 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>E-Coin · Airdrop</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
-    body {
-      background: #0b0a08;
-      color: #ece4d7;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 12px;
-    }
-    .app {
-      max-width: 400px;
-      width: 100%;
-      background: #13110e;
-      border-radius: 36px;
-      padding: 20px 16px 16px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 0 1px #2f281c;
-      position: relative;
-    }
-    /* header */
-    .top-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-    .top-row .user {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: #1e1a14;
-      padding: 6px 16px 6px 10px;
-      border-radius: 40px;
-      border: 1px solid #3d321f;
-    }
-    .user .avatar {
-      width: 32px;
-      height: 32px;
-      background: #f3ba2f;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      color: #0e0c07;
-      font-size: 14px;
-    }
-    .user span {
-      font-weight: 500;
-      font-size: 14px;
-      color: #e5d6b0;
-    }
-    .badge {
-      background: #2f2a1a;
-      color: #f3ba2f;
-      padding: 4px 12px;
-      border-radius: 30px;
-      font-size: 12px;
-      font-weight: 600;
-      border: 1px solid #4f3d1f;
-      letter-spacing: 0.3px;
-    }
-    /* main balance */
-    .balance-hero {
-      background: #1a1610;
-      border-radius: 28px;
-      padding: 18px 16px 14px;
-      text-align: center;
-      border: 1px solid #2f281c;
-      margin-bottom: 16px;
-      box-shadow: inset 0 4px 12px rgba(0,0,0,0.6);
-    }
-    .balance-hero .label {
-      font-size: 13px;
-      color: #b0945a;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-    .balance-hero .amount {
-      font-size: 3.2rem;
-      font-weight: 700;
-      color: #fad974;
-      line-height: 1.2;
-      text-shadow: 0 0 20px #f3ba2f20;
-      letter-spacing: 1px;
-    }
-    .balance-hero .sub {
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      margin-top: 6px;
-      font-size: 14px;
-      color: #bdaa7a;
-    }
-    .balance-hero .sub span {
-      background: #0e0c07;
-      padding: 2px 14px;
-      border-radius: 40px;
-      border: 1px solid #2f281c;
-    }
-    /* timer grid */
-    .timer-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 18px;
-    }
-    .timer-item {
-      background: #19150f;
-      border-radius: 18px;
-      padding: 12px 4px;
-      text-align: center;
-      border: 1px solid #2d2417;
-    }
-    .timer-item .value {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: #f3ba2f;
-    }
-    .timer-item .desc {
-      font-size: 10px;
-      text-transform: uppercase;
-      color: #8a7a54;
-      letter-spacing: 0.6px;
-      margin-top: 2px;
-    }
-
-    /* progress row */
-    .progress-row {
-      background: #1a1610;
-      border-radius: 40px;
-      padding: 8px 16px 8px 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border: 1px solid #2f281c;
-      margin-bottom: 18px;
-    }
-    .progress-row .left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 14px;
-    }
-    .progress-row .left .fill {
-      width: 70px;
-      height: 6px;
-      background: #2a2215;
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    .progress-row .left .fill .bar {
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, #f3ba2f, #d49c1a);
-      border-radius: 10px;
-    }
-    .progress-row .right {
-      background: #f3ba2f;
-      color: #0e0c07;
-      font-weight: 700;
-      padding: 4px 16px;
-      border-radius: 30px;
-      font-size: 13px;
-    }
-
-    /* boost row */
-    .boost-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 22px;
-    }
-    .boost-btn {
-      flex: 1;
-      background: #1a1610;
-      border: 1px solid #2f281c;
-      border-radius: 40px;
-      padding: 12px 0;
-      text-align: center;
-      font-weight: 600;
-      font-size: 15px;
-      color: #e5d6b0;
-      transition: all 0.1s;
-      cursor: pointer;
-      box-shadow: 0 4px 0 #0a0806;
-    }
-    .boost-btn:active {
-      transform: translateY(2px);
-      box-shadow: 0 1px 0 #0a0806;
-    }
-    .boost-btn.gold {
-      background: #f3ba2f;
-      border-color: #f3ba2f;
-      color: #0b0a08;
-      box-shadow: 0 4px 0 #876a1a;
-    }
-    .boost-btn.gold:active {
-      background: #dbaa24;
-    }
-
-    /* bottom nav */
-    .bottom-nav {
-      display: flex;
-      justify-content: space-between;
-      background: #14110d;
-      border-radius: 40px;
-      padding: 6px 10px;
-      border: 1px solid #2f281c;
-      margin-top: 20px;
-    }
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 6px 8px;
-      border-radius: 30px;
-      font-size: 11px;
-      color: #7a6a4a;
-      transition: 0.1s;
-      cursor: pointer;
-      background: transparent;
-      border: none;
-      font-weight: 500;
-      gap: 2px;
-    }
-    .nav-item .icon {
-      font-size: 20px;
-      line-height: 1;
-    }
-    .nav-item.active {
-      color: #f3ba2f;
-      background: #1e1a12;
-    }
-    .nav-item:active { opacity: 0.6; }
-
-    /* coin (tap) */
-    .coin-tap-area {
-      display: flex;
-      justify-content: center;
-      margin: 8px 0 6px;
-    }
-    .coin {
-      width: 140px;
-      height: 140px;
-      background: radial-gradient(circle at 35% 30%, #fce181, #d49c1a 60%, #8a6b0e);
-      border-radius: 50%;
-      border: 8px solid #f9d342;
-      box-shadow: 0 0 0 2px #6b4f0e, 0 12px 30px rgba(243, 186, 47, 0.3), inset 0 -8px 20px rgba(0,0,0,0.4);
-      cursor: pointer;
-      transition: transform 0.1s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      touch-action: manipulation;
-    }
-    .coin:active {
-      transform: scale(0.92);
-    }
-
-    /* ceo tag */
-    .ceo-tag {
-      display: inline-block;
-      background: #1f1a0f;
-      padding: 2px 16px 2px 12px;
-      border-radius: 40px;
-      font-size: 13px;
-      border: 1px solid #3d321f;
-      color: #d4bb7a;
-      margin: 2px 0 10px;
-    }
-
-    /* misc */
-    .flex { display: flex; align-items: center; gap: 8px; }
-    .mt-1 { margin-top: 4px; }
-    .text-gold { color: #f3ba2f; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>E-Coin · Hamster Combat Style</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, 'Segoe UI', Roboto, system-ui, sans-serif;
+            user-select: none;
+        }
+        body {
+            background: #0a0a0a;
+            color: #f0e6d0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 8px;
+        }
+        .app {
+            max-width: 420px;
+            width: 100%;
+            background: #12100d;
+            border-radius: 32px;
+            padding: 16px 14px 14px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.9), 0 0 0 1px #2a241a;
+            position: relative;
+        }
+        /* header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #1a1610;
+            padding: 4px 14px 4px 6px;
+            border-radius: 40px;
+            border: 1px solid #3d321f;
+        }
+        .avatar {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #f3ba2f, #d49c1a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #0e0c07;
+            font-size: 14px;
+        }
+        .user-info span {
+            font-weight: 500;
+            font-size: 13px;
+            color: #e5d6b0;
+        }
+        .badge {
+            background: #2f2a1a;
+            color: #f3ba2f;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 600;
+            border: 1px solid #4f3d1f;
+        }
+        /* balance card */
+        .balance-card {
+            background: #1a1610;
+            border-radius: 24px;
+            padding: 16px 12px 12px;
+            text-align: center;
+            border: 1px solid #2f281c;
+            margin-bottom: 12px;
+            box-shadow: inset 0 4px 12px rgba(0,0,0,0.6);
+        }
+        .balance-card .label {
+            font-size: 11px;
+            color: #b0945a;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .balance-card .amount {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: #fad974;
+            line-height: 1.2;
+            text-shadow: 0 0 30px #f3ba2f20;
+            letter-spacing: 1px;
+        }
+        .balance-card .stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 6px;
+            font-size: 13px;
+            color: #bdaa7a;
+        }
+        .balance-card .stats span {
+            background: #0e0c07;
+            padding: 2px 16px;
+            border-radius: 40px;
+            border: 1px solid #2f281c;
+        }
+        /* timer grid */
+        .timer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+        .timer-item {
+            background: #19150f;
+            border-radius: 16px;
+            padding: 10px 4px;
+            text-align: center;
+            border: 1px solid #2d2417;
+        }
+        .timer-item .value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #f3ba2f;
+        }
+        .timer-item .desc {
+            font-size: 9px;
+            text-transform: uppercase;
+            color: #8a7a54;
+            letter-spacing: 0.4px;
+            margin-top: 2px;
+        }
+        /* progress */
+        .progress-row {
+            background: #1a1610;
+            border-radius: 40px;
+            padding: 8px 16px 8px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #2f281c;
+            margin-bottom: 14px;
+        }
+        .progress-row .left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+        .progress-row .left .fill {
+            width: 70px;
+            height: 6px;
+            background: #2a2215;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-row .left .fill .bar {
+            height: 100%;
+            background: linear-gradient(90deg, #f3ba2f, #d49c1a);
+            border-radius: 10px;
+            transition: width 0.2s;
+        }
+        .progress-row .right {
+            background: #f3ba2f;
+            color: #0e0c07;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 30px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.08s;
+            box-shadow: 0 3px 0 #876a1a;
+            border: none;
+        }
+        .progress-row .right:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 0 #876a1a;
+        }
+        /* coin */
+        .coin-wrapper {
+            display: flex;
+            justify-content: center;
+            margin: 4px 0 10px;
+        }
+        .coin {
+            width: 130px;
+            height: 130px;
+            background: radial-gradient(circle at 35% 30%, #fce181, #d49c1a 55%, #8a6b0e);
+            border-radius: 50%;
+            border: 8px solid #f9d342;
+            box-shadow: 0 0 0 2px #6b4f0e, 0 12px 30px rgba(243, 186, 47, 0.3), inset 0 -8px 20px rgba(0,0,0,0.4);
+            cursor: pointer;
+            transition: transform 0.08s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            touch-action: manipulation;
+            position: relative;
+        }
+        .coin:active {
+            transform: scale(0.90);
+        }
+        .coin-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2px 0 10px;
+            padding: 0 4px;
+        }
+        .ceo-tag {
+            background: #1f1a0f;
+            padding: 2px 16px 2px 12px;
+            border-radius: 40px;
+            font-size: 12px;
+            border: 1px solid #3d321f;
+            color: #d4bb7a;
+        }
+        .ceo-tag span {
+            color: #f3ba2f;
+            font-weight: 600;
+        }
+        .small-balance {
+            font-size: 13px;
+            color: #8a7a54;
+        }
+        /* action grid */
+        .action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+        .action-btn {
+            background: #1a1610;
+            border: 1px solid #2f281c;
+            border-radius: 30px;
+            padding: 10px 0;
+            text-align: center;
+            font-weight: 600;
+            font-size: 12px;
+            color: #e5d6b0;
+            cursor: pointer;
+            transition: 0.08s;
+            box-shadow: 0 3px 0 #0a0806;
+        }
+        .action-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 0 #0a0806;
+        }
+        .action-btn.gold {
+            background: #f3ba2f;
+            border-color: #f3ba2f;
+            color: #0b0a08;
+            box-shadow: 0 3px 0 #876a1a;
+        }
+        .action-btn.gold:active {
+            background: #dbaa24;
+        }
+        /* bottom nav */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            background: #14110d;
+            border-radius: 40px;
+            padding: 4px 8px;
+            border: 1px solid #2f281c;
+            margin-top: 6px;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 6px 8px;
+            border-radius: 30px;
+            font-size: 10px;
+            color: #7a6a4a;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            font-weight: 500;
+            gap: 1px;
+            transition: 0.1s;
+        }
+        .nav-item .icon {
+            font-size: 18px;
+            line-height: 1;
+        }
+        .nav-item.active {
+            color: #f3ba2f;
+            background: #1e1a12;
+        }
+        .nav-item:active {
+            opacity: 0.6;
+        }
+        .footer-airdrop {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 10px;
+            color: #4d3f28;
+            letter-spacing: 1px;
+            border-top: 1px solid #1f1a10;
+            padding-top: 10px;
+        }
+        .footer-airdrop span {
+            background: #1a1610;
+            padding: 4px 20px;
+            border-radius: 40px;
+            border: 1px solid #2f281c;
+            color: #f3ba2f;
+        }
+    </style>
 </head>
 <body>
 <div class="app">
 
-  <!-- top row: Jane + Silver -->
-  <div class="top-row">
-    <div class="user">
-      <div class="avatar">👩</div>
-      <span>Jane <span style="color:#b0945a;font-weight:300;">(CEO)</span></span>
+    <!-- Header -->
+    <div class="header">
+        <div class="user-info">
+            <div class="avatar">👩</div>
+            <span>Jane <span style="color:#b0945a;font-weight:300;">(CEO)</span></span>
+        </div>
+        <div class="badge">Silver ▾</div>
     </div>
-    <div class="badge">Silver ▾</div>
-  </div>
 
-  <!-- balance hero -->
-  <div class="balance-hero">
-    <div class="label">Balance</div>
-    <div class="amount" id="balanceDisplay">3,200</div>
-    <div class="sub">
-      <span>2 / 11</span>
-      <span>⚡ +207 /h</span>
+    <!-- Balance -->
+    <div class="balance-card">
+        <div class="label">💰 Balance</div>
+        <div class="amount" id="balanceDisplay">3,200</div>
+        <div class="stats">
+            <span>2 / 11</span>
+            <span>⚡ +207 /h</span>
+        </div>
     </div>
-  </div>
 
-  <!-- timer grid: daily reward, cipher, combo -->
-  <div class="timer-grid">
-    <div class="timer-item">
-      <div class="value" id="dailyTimer">13:38</div>
-      <div class="desc">Daily reward</div>
+    <!-- Timer Grid -->
+    <div class="timer-grid">
+        <div class="timer-item">
+            <div class="value" id="dailyTimer">13:38</div>
+            <div class="desc">Daily reward</div>
+        </div>
+        <div class="timer-item">
+            <div class="value" id="cipherTimer">08:38</div>
+            <div class="desc">Daily cipher</div>
+        </div>
+        <div class="timer-item">
+            <div class="value" id="comboTimer">01:38</div>
+            <div class="desc">Daily combo</div>
+        </div>
     </div>
-    <div class="timer-item">
-      <div class="value" id="cipherTimer">08:38</div>
-      <div class="desc">Daily cipher</div>
+
+    <!-- Progress -->
+    <div class="progress-row">
+        <div class="left">
+            <span>$</span>
+            <span id="progressLabel">1500 / 1500</span>
+            <div class="fill"><div class="bar" id="progressBar" style="width:100%"></div></div>
+        </div>
+        <button class="right" id="boostBtn">Boost</button>
     </div>
-    <div class="timer-item">
-      <div class="value" id="comboTimer">01:38</div>
-      <div class="desc">Daily combo</div>
+
+    <!-- Coin -->
+    <div class="coin-wrapper">
+        <div class="coin" id="mainCoin" role="button" aria-label="Tap to earn"></div>
     </div>
-  </div>
 
-  <!-- progress: 1500/1500 + boost -->
-  <div class="progress-row">
-    <div class="left">
-      <span>$</span>
-      <span id="progressLabel">1500 / 1500</span>
-      <div class="fill"><div class="bar" id="progressBar" style="width:100%"></div></div>
+    <!-- CEO & Balance -->
+    <div class="coin-label">
+        <div class="ceo-tag">👑 (CEO) <span id="ceoCoinCount">30,157</span></div>
+        <div class="small-balance">🪙 <span id="balanceSmall">3,200</span></div>
     </div>
-    <div class="right" id="boostBtn">Boost</div>
-  </div>
 
-  <!-- coin tap -->
-  <div class="coin-tap-area">
-    <div class="coin" id="mainCoin" role="button" aria-label="Tap to earn"></div>
-  </div>
+    <!-- Action Grid -->
+    <div class="action-grid">
+        <button class="action-btn gold" id="exchangeBtn">Exchange</button>
+        <button class="action-btn" id="mineBtn">⛏️ Mine</button>
+        <button class="action-btn" id="friendsBtn">👥 Friends</button>
+        <button class="action-btn" id="earnBtn">🎯 Earn</button>
+    </div>
 
-  <!-- ceo & coin count -->
-  <div style="display:flex; justify-content:space-between; align-items:center; margin: 4px 0 8px;">
-    <span class="ceo-tag">👑 (CEO) <span id="ceoCoinCount">30,157</span></span>
-    <span style="font-size:13px; color:#8a7a54;">🪙 <span id="balanceSmall">3,200</span></span>
-  </div>
+    <!-- Bottom Nav -->
+    <div class="bottom-nav">
+        <button class="nav-item active"><span class="icon">🏠</span>Home</button>
+        <button class="nav-item"><span class="icon">🔍</span>Search</button>
+        <button class="nav-item"><span class="icon">🔔</span>Notif.</button>
+        <button class="nav-item"><span class="icon">⚡</span>Activity</button>
+    </div>
 
-  <!-- boost row: Exchange, Mine, Friends -->
-  <div class="boost-row">
-    <div class="boost-btn gold" id="exchangeBtn">Exchange</div>
-    <div class="boost-btn" id="mineBtn">⛏️ Mine</div>
-    <div class="boost-btn" id="friendsBtn">👥 Friends</div>
-  </div>
-
-  <!-- bottom navigation -->
-  <div class="bottom-nav">
-    <button class="nav-item active"><span class="icon">🏠</span>Home</button>
-    <button class="nav-item"><span class="icon">🔍</span>Search</button>
-    <button class="nav-item"><span class="icon">🔔</span>Notif.</button>
-    <button class="nav-item"><span class="icon">⚡</span>Activity</button>
-  </div>
-
-  <!-- hidden airdrop placeholder (visual) -->
-  <div style="margin-top:12px; text-align:center; font-size:11px; color:#4d3f28; letter-spacing:1px; border-top:1px solid #1f1a10; padding-top:12px;">
-    <span style="background:#1a1610; padding:4px 20px; border-radius:40px; border:1px solid #2f281c;">✦ Airdrop active ✦</span>
-  </div>
+    <!-- Footer -->
+    <div class="footer-airdrop">
+        <span>✦ Airdrop active ✦</span>
+    </div>
 </div>
 
 <script>
-  (function() {
-    "use strict";
+    (function() {
+        "use strict";
 
-    // DOM elements
-    const balanceDisplay = document.getElementById('balanceDisplay');
-    const balanceSmall = document.getElementById('balanceSmall');
-    const ceoCoinCount = document.getElementById('ceoCoinCount');
-    const coinEl = document.getElementById('mainCoin');
-    const dailyTimer = document.getElementById('dailyTimer');
-    const cipherTimer = document.getElementById('cipherTimer');
-    const comboTimer = document.getElementById('comboTimer');
-    const progressLabel = document.getElementById('progressLabel');
-    const progressBar = document.getElementById('progressBar');
-    const boostBtn = document.getElementById('boostBtn');
-    const exchangeBtn = document.getElementById('exchangeBtn');
-    const mineBtn = document.getElementById('mineBtn');
-    const friendsBtn = document.getElementById('friendsBtn');
+        // DOM Elements
+        const balanceDisplay = document.getElementById('balanceDisplay');
+        const balanceSmall = document.getElementById('balanceSmall');
+        const ceoCoinCount = document.getElementById('ceoCoinCount');
+        const coinEl = document.getElementById('mainCoin');
+        const dailyTimer = document.getElementById('dailyTimer');
+        const cipherTimer = document.getElementById('cipherTimer');
+        const comboTimer = document.getElementById('comboTimer');
+        const progressLabel = document.getElementById('progressLabel');
+        const progressBar = document.getElementById('progressBar');
+        const boostBtn = document.getElementById('boostBtn');
+        const exchangeBtn = document.getElementById('exchangeBtn');
+        const mineBtn = document.getElementById('mineBtn');
+        const friendsBtn = document.getElementById('friendsBtn');
+        const earnBtn = document.getElementById('earnBtn');
 
-    // --- state ---
-    let balance = 3200;
-    let ceoCoins = 30157;
-    let progress = 1500;
-    const maxProgress = 1500;
+        // State
+        let balance = 3200;
+        let ceoCoins = 30157;
+        let progress = 1500;
+        const maxProgress = 1500;
 
-    // --- helper to update UI ---
-    function updateUI() {
-      const formatted = balance.toLocaleString();
-      balanceDisplay.textContent = formatted;
-      balanceSmall.textContent = formatted;
-      ceoCoinCount.textContent = ceoCoins.toLocaleString();
+        // Update UI
+        function updateUI() {
+            const formatted = balance.toLocaleString();
+            balanceDisplay.textContent = formatted;
+            balanceSmall.textContent = formatted;
+            ceoCoinCount.textContent = ceoCoins.toLocaleString();
 
-      // progress
-      const pct = Math.min(100, (progress / maxProgress) * 100);
-      progressBar.style.width = pct + '%';
-      progressLabel.textContent = `${Math.floor(progress)} / ${maxProgress}`;
-    }
+            const pct = Math.min(100, (progress / maxProgress) * 100);
+            progressBar.style.width = pct + '%';
+            progressLabel.textContent = `${Math.floor(progress)} / ${maxProgress}`;
+        }
 
-    // --- coin tap ---
-    function handleTap(e) {
-      e.preventDefault?.();
-      balance += 1;
-      // ceo coins also increase a bit for flavor
-      ceoCoins += 1;
-      updateUI();
-      // haptic feedback
-      coinEl.style.transform = 'scale(0.90)';
-      setTimeout(() => coinEl.style.transform = '', 100);
-      // progress increment (simulate)
-      if (progress < maxProgress) {
-        progress = Math.min(maxProgress, progress + 1);
+        // Coin tap
+        function handleTap(e) {
+            e.preventDefault?.();
+            balance += 1;
+            ceoCoins += 1;
+            if (progress < maxProgress) {
+                progress = Math.min(maxProgress, progress + 1);
+            }
+            updateUI();
+            coinEl.style.transform = 'scale(0.88)';
+            setTimeout(() => coinEl.style.transform = '', 100);
+        }
+
+        // Timers
+        function updateTimers() {
+            const now = new Date();
+            const midnight = new Date(now);
+            midnight.setHours(24, 0, 0, 0);
+            let diff = Math.max(0, (midnight - now) / 1000);
+            const dh = Math.floor(diff / 3600);
+            const dm = Math.floor((diff % 3600) / 60);
+            dailyTimer.textContent = `${String(dh).padStart(2,'0')}:${String(dm).padStart(2,'0')}`;
+
+            const secs = now.getSeconds();
+            const fakeCipher = 60 - (secs % 60);
+            cipherTimer.textContent = `00:${String(fakeCipher).padStart(2,'0')}`;
+
+            const comboMin = Math.floor((secs % 30) / 2);
+            const comboSec = secs % 30;
+            comboTimer.textContent = `${String(comboMin).padStart(2,'0')}:${String(comboSec).padStart(2,'0')}`;
+        }
+
+        // Boost
+        function handleBoost() {
+            if (progress >= maxProgress) {
+                alert('✨ Full! Claim your reward.');
+                return;
+            }
+            const add = 50;
+            progress = Math.min(maxProgress, progress + add);
+            balance += 20;
+            ceoCoins += 5;
+            updateUI();
+            boostBtn.style.transform = 'scale(0.95)';
+            setTimeout(() => boostBtn.style.transform = '', 100);
+        }
+
+        // Actions
+        function handleExchange() {
+            alert('📈 Exchange: trade coins for perks.');
+            balance += 10;
+            updateUI();
+        }
+        function handleMine() {
+            alert('⛏️ Mining: +25 coins!');
+            balance += 25;
+            ceoCoins += 3;
+            updateUI();
+        }
+        function handleFriends() {
+            alert('👥 Invite friends: +100 coins each!');
+            balance += 100;
+            ceoCoins += 10;
+            updateUI();
+        }
+        function handleEarn() {
+            alert('🎯 Complete tasks to earn extra coins!');
+            balance += 50;
+            ceoCoins += 5;
+            updateUI();
+        }
+
+        // Event listeners
+        coinEl.addEventListener('click', handleTap);
+        coinEl.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            handleTap(e);
+        }, { passive: false });
+
+        boostBtn.addEventListener('click', handleBoost);
+        exchangeBtn.addEventListener('click', handleExchange);
+        mineBtn.addEventListener('click', handleMine);
+        friendsBtn.addEventListener('click', handleFriends);
+        earnBtn.addEventListener('click', handleEarn);
+
+        // Nav items
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Init
+        updateTimers();
         updateUI();
-      }
-    }
+        setInterval(updateTimers, 1000);
 
-    // --- timer countdown (simulate dynamic timers) ---
-    function updateTimers() {
-      const now = new Date();
-      const h = String(now.getHours()).padStart(2,'0');
-      const m = String(now.getMinutes()).padStart(2,'0');
-      const s = String(now.getSeconds()).padStart(2,'0');
+        // Auto progress
+        setInterval(() => {
+            if (progress < maxProgress) {
+                progress = Math.min(maxProgress, progress + 1);
+                updateUI();
+            }
+        }, 3000);
 
-      // daily reward: countdown to midnight
-      const midnight = new Date(now);
-      midnight.setHours(24,0,0,0);
-      let diff = Math.max(0, (midnight - now) / 1000);
-      const dh = Math.floor(diff / 3600);
-      const dm = Math.floor((diff % 3600) / 60);
-      const ds = Math.floor(diff % 60);
-      dailyTimer.textContent = `${String(dh).padStart(2,'0')}:${String(dm).padStart(2,'0')}`;
+        // Double click CEO tag for bonus
+        document.querySelector('.ceo-tag')?.addEventListener('dblclick', function() {
+            ceoCoins += 500;
+            balance += 100;
+            updateUI();
+            this.style.color = '#f3ba2f';
+            setTimeout(() => this.style.color = '', 300);
+        });
 
-      // cipher: 08:38 style (fixed countdown for demo)
-      // we'll show a fake decreasing timer
-      const secs = (now.getSeconds() % 60);
-      const fakeCipher = 60 - secs;
-      const cMin = Math.floor(fakeCipher / 60);
-      const cSec = fakeCipher % 60;
-      cipherTimer.textContent = `00:${String(cSec).padStart(2,'0')}`;
-
-      // combo: 01:38 style
-      const comboMin = Math.floor((now.getSeconds() % 30) / 2);
-      const comboSec = (now.getSeconds() % 30);
-      comboTimer.textContent = `${String(comboMin).padStart(2,'0')}:${String(comboSec).padStart(2,'0')}`;
-    }
-
-    // --- boost action ---
-    function handleBoost() {
-      if (progress >= maxProgress) {
-        alert('✨ Progress full! Claim your reward.');
-        return;
-      }
-      const add = 50;
-      progress = Math.min(maxProgress, progress + add);
-      // also give some coins
-      balance += 20;
-      ceoCoins += 5;
-      updateUI();
-      boostBtn.style.transform = 'scale(0.95)';
-      setTimeout(() => boostBtn.style.transform = '', 100);
-    }
-
-    // --- exchange / mine / friends (demo) ---
-    function handleExchange() {
-      alert('📈 Exchange view: trade your coins for perks.');
-    }
-    function handleMine() {
-      alert('⛏️ Mining: +15 coins per second (simulated)');
-      balance += 15;
-      ceoCoins += 2;
-      updateUI();
-    }
-    function handleFriends() {
-      alert('👥 Invite friends and earn 100 coins each!');
-      balance += 100;
-      ceoCoins += 10;
-      updateUI();
-    }
-
-    // --- event binding ---
-    coinEl.addEventListener('click', handleTap);
-    coinEl.addEventListener('touchstart', (e) => {
-      e.preventDefault();
-      handleTap(e);
-    }, { passive: false });
-
-    boostBtn.addEventListener('click', handleBoost);
-
-    exchangeBtn.addEventListener('click', handleExchange);
-    mineBtn.addEventListener('click', handleMine);
-    friendsBtn.addEventListener('click', handleFriends);
-
-    // nav items (visual only)
-    document.querySelectorAll('.nav-item').forEach(item => {
-      item.addEventListener('click', function() {
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        this.classList.add('active');
-      });
-    });
-
-    // init timers & UI
-    updateTimers();
-    updateUI();
-    setInterval(updateTimers, 1000);
-
-    // extra: simulate progress increment over time
-    setInterval(() => {
-      if (progress < maxProgress) {
-        progress = Math.min(maxProgress, progress + 1);
-        updateUI();
-      }
-    }, 4000);
-
-    // on load, set progress to 1500/1500 (as shown in screenshot)
-    progress = 1500;
-    updateUI();
-
-    // add a small easter egg: double tap on ceo tag
-    document.querySelector('.ceo-tag')?.addEventListener('dblclick', function() {
-      ceoCoins += 500;
-      balance += 100;
-      updateUI();
-      this.style.color = '#f3ba2f';
-      setTimeout(() => this.style.color = '', 300);
-    });
-
-  })();
+    })();
 </script>
 </body>
 </html>
