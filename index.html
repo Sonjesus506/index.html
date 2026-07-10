@@ -24,37 +24,52 @@
         .app {
             width: 100%;
             height: 100%;
-            background: #12100d;
+            background: linear-gradient(180deg, #12100d 0%, #1a1610 40%, #0e0c07 100%);
             display: flex;
             flex-direction: column;
-            padding: 6px 8px 4px;
+            padding: 8px 12px 6px;
             overflow: hidden;
             position: relative;
+        }
+        /* Glow effects */
+        .app::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 50% 20%, rgba(243, 186, 47, 0.05) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
         }
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 3px;
+            margin-bottom: 6px;
             flex-shrink: 0;
+            position: relative;
+            z-index: 1;
         }
         .user-info {
             display: flex;
             align-items: center;
-            gap: 5px;
-            background: #1a1610;
-            padding: 2px 8px 2px 3px;
+            gap: 8px;
+            background: rgba(26, 22, 16, 0.8);
+            padding: 4px 14px 4px 6px;
             border-radius: 40px;
-            border: 1px solid #3d321f;
+            border: 1px solid rgba(243, 186, 47, 0.3);
             cursor: pointer;
-            transition: 0.1s;
+            transition: 0.2s;
+            backdrop-filter: blur(10px);
         }
         .user-info:active {
             transform: scale(0.95);
         }
         .avatar {
-            width: 26px;
-            height: 26px;
+            width: 30px;
+            height: 30px;
             background: linear-gradient(135deg, #f3ba2f, #d49c1a);
             border-radius: 50%;
             display: flex;
@@ -62,8 +77,9 @@
             justify-content: center;
             font-weight: 700;
             color: #0e0c07;
-            font-size: 11px;
+            font-size: 13px;
             overflow: hidden;
+            border: 2px solid rgba(243, 186, 47, 0.3);
         }
         .avatar img {
             width: 100%;
@@ -71,70 +87,78 @@
             object-fit: cover;
         }
         .user-info span {
-            font-weight: 500;
-            font-size: 10px;
+            font-weight: 600;
+            font-size: 12px;
             color: #e5d6b0;
         }
         .badge {
-            background: #2f2a1a;
+            background: linear-gradient(135deg, #2f2a1a, #1f1a0f);
             color: #f3ba2f;
-            padding: 1px 6px;
+            padding: 3px 12px;
             border-radius: 30px;
-            font-size: 8px;
+            font-size: 10px;
             font-weight: 600;
-            border: 1px solid #4f3d1f;
+            border: 1px solid rgba(243, 186, 47, 0.2);
         }
         .balance-card {
-            background: #1a1610;
-            border-radius: 14px;
-            padding: 6px 8px 4px;
+            background: linear-gradient(135deg, #1a1610, #221d15);
+            border-radius: 20px;
+            padding: 12px 14px 10px;
             text-align: center;
-            border: 1px solid #2f281c;
-            margin-bottom: 3px;
+            border: 1px solid rgba(243, 186, 47, 0.15);
+            margin-bottom: 6px;
             flex-shrink: 0;
-            box-shadow: inset 0 4px 12px rgba(0,0,0,0.6);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(243, 186, 47, 0.05);
+            position: relative;
+            z-index: 1;
         }
         .balance-card .label {
-            font-size: 7px;
+            font-size: 9px;
             color: #b0945a;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-transform: uppercase;
+            font-weight: 600;
         }
         .balance-card .amount {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #fad974;
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fad974, #f3ba2f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             line-height: 1.1;
-            text-shadow: 0 0 30px #f3ba2f20;
+            text-shadow: 0 0 60px rgba(243, 186, 47, 0.15);
             letter-spacing: 1px;
         }
         .balance-card .stats {
             display: flex;
             justify-content: center;
-            gap: 8px;
-            margin-top: 1px;
-            font-size: 9px;
+            gap: 16px;
+            margin-top: 4px;
+            font-size: 10px;
             color: #bdaa7a;
         }
         .balance-card .stats span {
-            background: #0e0c07;
-            padding: 0 8px;
+            background: rgba(14, 12, 7, 0.6);
+            padding: 2px 14px;
             border-radius: 40px;
-            border: 1px solid #2f281c;
+            border: 1px solid rgba(47, 40, 28, 0.5);
         }
         .level-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #1a1610;
+            background: rgba(26, 22, 16, 0.6);
             border-radius: 30px;
-            padding: 2px 8px 2px 10px;
-            border: 1px solid #2f281c;
-            margin-bottom: 3px;
+            padding: 4px 14px 4px 16px;
+            border: 1px solid rgba(243, 186, 47, 0.1);
+            margin-bottom: 6px;
             flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
         }
         .level-row .level-badge {
-            font-size: 10px;
+            font-size: 12px;
             font-weight: 600;
             color: #f3ba2f;
         }
@@ -143,64 +167,75 @@
             font-weight: 400;
         }
         .level-row .next-level {
-            font-size: 8px;
+            font-size: 10px;
             color: #8a7a54;
         }
         .timer-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 3px;
-            margin-bottom: 3px;
+            gap: 6px;
+            margin-bottom: 6px;
             flex-shrink: 0;
+            position: relative;
+            z-index: 1;
         }
         .timer-item {
-            background: #19150f;
-            border-radius: 8px;
-            padding: 3px 2px;
+            background: rgba(25, 21, 15, 0.7);
+            border-radius: 14px;
+            padding: 8px 4px;
             text-align: center;
-            border: 1px solid #2d2417;
+            border: 1px solid rgba(45, 36, 23, 0.5);
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.2s;
+            backdrop-filter: blur(10px);
         }
         .timer-item:active {
-            background: #2a2215;
+            background: rgba(42, 34, 21, 0.8);
+            transform: scale(0.96);
         }
         .timer-item .value {
-            font-size: 0.7rem;
+            font-size: 1rem;
             font-weight: 700;
-            color: #f3ba2f;
+            background: linear-gradient(135deg, #f3ba2f, #d49c1a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         .timer-item .desc {
-            font-size: 5px;
+            font-size: 7px;
             text-transform: uppercase;
             color: #8a7a54;
-            letter-spacing: 0.3px;
-            margin-top: 0px;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+            font-weight: 600;
         }
         .tap-limit-bar {
-            background: #0e0c07;
+            background: rgba(14, 12, 7, 0.6);
             border-radius: 30px;
-            padding: 2px 8px;
-            margin-bottom: 3px;
+            padding: 4px 12px;
+            margin-bottom: 6px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid #2f281c;
+            border: 1px solid rgba(47, 40, 28, 0.3);
             flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
         }
         .tap-limit-bar .label {
-            font-size: 7px;
+            font-size: 8px;
             color: #8a7a54;
+            font-weight: 600;
         }
         .tap-limit-bar .value {
-            font-size: 9px;
+            font-size: 11px;
             font-weight: 700;
             color: #f3ba2f;
         }
         .tap-limit-bar .fill {
-            width: 60px;
-            height: 3px;
-            background: #2a2215;
+            width: 80px;
+            height: 4px;
+            background: rgba(42, 34, 21, 0.6);
             border-radius: 10px;
             overflow: hidden;
         }
@@ -211,27 +246,31 @@
             transition: width 0.5s;
         }
         .progress-row {
-            background: #1a1610;
+            background: rgba(26, 22, 16, 0.6);
             border-radius: 40px;
-            padding: 2px 10px 2px 6px;
+            padding: 4px 14px 4px 10px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border: 1px solid #2f281c;
-            margin-bottom: 3px;
+            border: 1px solid rgba(47, 40, 28, 0.3);
+            margin-bottom: 6px;
             flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
         }
         .progress-row .left {
             display: flex;
             align-items: center;
-            gap: 3px;
-            font-size: 9px;
+            gap: 6px;
+            font-size: 10px;
             flex: 1;
+            color: #8a7a54;
         }
         .progress-row .left .fill {
             flex: 1;
-            height: 3px;
-            background: #2a2215;
+            height: 4px;
+            background: rgba(42, 34, 21, 0.6);
             border-radius: 10px;
             overflow: hidden;
         }
@@ -239,24 +278,24 @@
             height: 100%;
             background: linear-gradient(90deg, #f3ba2f, #d49c1a);
             border-radius: 10px;
-            transition: width 0.2s;
+            transition: width 0.3s;
         }
         .progress-row .right {
-            background: #f3ba2f;
+            background: linear-gradient(135deg, #f3ba2f, #d49c1a);
             color: #0e0c07;
             font-weight: 700;
-            padding: 1px 10px;
+            padding: 3px 16px;
             border-radius: 30px;
-            font-size: 9px;
+            font-size: 10px;
             cursor: pointer;
             transition: 0.08s;
-            box-shadow: 0 2px 0 #876a1a;
+            box-shadow: 0 3px 0 #876a1a;
             border: none;
             flex-shrink: 0;
         }
         .progress-row .right:active {
             transform: translateY(2px);
-            box-shadow: 0 0px 0 #876a1a;
+            box-shadow: 0 1px 0 #876a1a;
         }
         .coin-wrapper {
             display: flex;
@@ -265,17 +304,18 @@
             flex: 1;
             min-height: 0;
             position: relative;
-            margin: 1px 0;
+            margin: 2px 0;
             overflow: visible;
             touch-action: none;
+            z-index: 1;
         }
         .coin {
             width: 200px;
             height: 200px;
-            background: radial-gradient(circle at 35% 30%, #fce181, #d49c1a 50%, #b8860b 75%, #8a6b0e);
+            background: radial-gradient(circle at 35% 30%, #fce181, #d49c1a 45%, #b8860b 70%, #8a6b0e);
             border-radius: 50%;
             border: 8px solid #f9d342;
-            box-shadow: 0 0 0 3px #6b4f0e, 0 12px 40px rgba(243, 186, 47, 0.4), inset 0 -10px 30px rgba(0,0,0,0.5), inset 0 10px 30px rgba(255,215,0,0.2);
+            box-shadow: 0 0 0 3px rgba(107, 79, 14, 0.5), 0 12px 60px rgba(243, 186, 47, 0.3), inset 0 -10px 30px rgba(0,0,0,0.5), inset 0 10px 30px rgba(255,215,0,0.15);
             cursor: pointer;
             transition: transform 0.06s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             touch-action: none;
@@ -293,7 +333,7 @@
             right: 12px;
             bottom: 12px;
             border-radius: 50%;
-            border: 2px solid rgba(255,215,0,0.15);
+            border: 2px solid rgba(255,215,0,0.1);
             pointer-events: none;
         }
         .coin::after {
@@ -310,12 +350,12 @@
             transform: scale(0.88);
         }
         .coin.disabled {
-            opacity: 0.5;
+            opacity: 0.4;
             pointer-events: none;
         }
         .float-text {
             position: absolute;
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 800;
             color: #f3ba2f;
             text-shadow: 0 0 20px #f3ba2f, 0 0 40px #f3ba2f80, 0 0 60px #f3ba2f40;
@@ -327,7 +367,7 @@
         .float-text.super {
             color: #ff6b6b;
             text-shadow: 0 0 20px #ff6b6b, 0 0 40px #ff6b6b80, 0 0 60px #ff6b6b40;
-            font-size: 2.8rem;
+            font-size: 3rem;
         }
         .float-text.tap-limit {
             color: #ffd93d;
@@ -335,9 +375,9 @@
             font-size: 1.8rem;
         }
         @keyframes floatUp {
-            0% { opacity: 1; transform: translateY(0) scale(0.8); }
-            30% { opacity: 1; transform: translateY(-20px) scale(1.1); }
-            100% { opacity: 0; transform: translateY(-130px) scale(1.3); }
+            0% { opacity: 1; transform: translateY(0) scale(0.8) rotate(-5deg); }
+            30% { opacity: 1; transform: translateY(-20px) scale(1.1) rotate(3deg); }
+            100% { opacity: 0; transform: translateY(-140px) scale(1.3) rotate(0deg); }
         }
         .coin-label {
             display: flex;
@@ -345,113 +385,127 @@
             align-items: center;
             padding: 0 4px;
             flex-shrink: 0;
-            margin-top: 1px;
+            margin-top: 2px;
+            position: relative;
+            z-index: 1;
         }
         .ceo-tag {
-            background: #1f1a0f;
-            padding: 1px 10px 1px 6px;
+            background: rgba(31, 26, 15, 0.8);
+            padding: 2px 14px 2px 10px;
             border-radius: 40px;
-            font-size: 9px;
-            border: 1px solid #3d321f;
+            font-size: 10px;
+            border: 1px solid rgba(61, 50, 31, 0.4);
             color: #d4bb7a;
             cursor: pointer;
+            backdrop-filter: blur(10px);
         }
         .ceo-tag span {
             color: #f3ba2f;
             font-weight: 600;
         }
         .small-balance {
-            font-size: 10px;
+            font-size: 11px;
             color: #8a7a54;
+            font-weight: 600;
         }
         .action-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 3px;
-            margin-bottom: 3px;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            gap: 4px;
+            margin-bottom: 6px;
             flex-shrink: 0;
+            position: relative;
+            z-index: 1;
         }
         .action-btn {
-            background: #1a1610;
-            border: 1px solid #2f281c;
+            background: rgba(26, 22, 16, 0.6);
+            border: 1px solid rgba(47, 40, 28, 0.3);
             border-radius: 30px;
-            padding: 4px 0;
+            padding: 6px 0;
             text-align: center;
-            font-weight: 600;
-            font-size: 8px;
+            font-weight: 700;
+            font-size: 9px;
             color: #e5d6b0;
             cursor: pointer;
             transition: 0.08s;
-            box-shadow: 0 2px 0 #0a0806;
+            box-shadow: 0 2px 0 rgba(10, 8, 6, 0.3);
             border: none;
+            backdrop-filter: blur(10px);
         }
         .action-btn:active {
             transform: translateY(2px);
-            box-shadow: 0 0px 0 #0a0806;
+            box-shadow: 0 0px 0 rgba(10, 8, 6, 0.3);
         }
         .action-btn.gold {
-            background: #f3ba2f;
-            border-color: #f3ba2f;
+            background: linear-gradient(135deg, #f3ba2f, #d49c1a);
             color: #0b0a08;
             box-shadow: 0 2px 0 #876a1a;
         }
         .action-btn.gold:active {
-            background: #dbaa24;
+            background: linear-gradient(135deg, #dbaa24, #b8860b);
         }
         .bottom-nav {
             display: flex;
             justify-content: space-around;
-            background: #14110d;
+            background: rgba(20, 17, 13, 0.8);
             border-radius: 40px;
-            padding: 2px 4px;
-            border: 1px solid #2f281c;
+            padding: 4px 6px;
+            border: 1px solid rgba(47, 40, 28, 0.3);
             flex-shrink: 0;
             margin-top: 2px;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
         }
         .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 2px 4px;
+            padding: 3px 6px;
             border-radius: 30px;
-            font-size: 7px;
+            font-size: 8px;
             color: #7a6a4a;
             cursor: pointer;
             background: transparent;
             border: none;
-            font-weight: 500;
+            font-weight: 600;
             gap: 0px;
             transition: 0.1s;
             flex: 1;
         }
         .nav-item .icon {
-            font-size: 12px;
+            font-size: 14px;
             line-height: 1;
         }
         .nav-item.active {
             color: #f3ba2f;
-            background: #1e1a12;
+            background: rgba(30, 26, 18, 0.6);
         }
         .nav-item:active {
             opacity: 0.6;
         }
         .footer-airdrop {
             text-align: center;
-            font-size: 7px;
+            font-size: 8px;
             color: #4d3f28;
             letter-spacing: 1px;
-            border-top: 1px solid #1f1a10;
-            padding-top: 2px;
+            border-top: 1px solid rgba(31, 26, 16, 0.3);
+            padding-top: 3px;
             flex-shrink: 0;
             margin-top: 2px;
+            position: relative;
+            z-index: 1;
         }
         .footer-airdrop span {
-            background: #1a1610;
-            padding: 0 12px;
+            background: rgba(26, 22, 16, 0.6);
+            padding: 1px 16px;
             border-radius: 40px;
-            border: 1px solid #2f281c;
+            border: 1px solid rgba(47, 40, 28, 0.2);
             color: #f3ba2f;
+            backdrop-filter: blur(10px);
         }
+
+        /* Modal */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -461,79 +515,82 @@
             align-items: center;
             z-index: 100;
             padding: 20px;
-            backdrop-filter: blur(6px);
+            backdrop-filter: blur(10px);
         }
         .modal-overlay.active {
             display: flex;
         }
         .modal-box {
-            background: #1a1610;
-            border: 1px solid #3d321f;
+            background: linear-gradient(145deg, #1a1610, #12100d);
+            border: 1px solid rgba(61, 50, 31, 0.4);
             border-radius: 30px;
-            padding: 18px 14px 14px;
-            max-width: 340px;
+            padding: 20px 16px 16px;
+            max-width: 360px;
             width: 100%;
-            max-height: 80vh;
+            max-height: 85vh;
             overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
         }
         .modal-box h2 {
-            color: #f3ba2f;
-            font-size: 1.1rem;
-            margin-bottom: 10px;
+            background: linear-gradient(135deg, #f3ba2f, #d49c1a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
             text-align: center;
         }
         .modal-box p {
             color: #bdaa7a;
-            font-size: 11px;
-            margin-bottom: 6px;
+            font-size: 12px;
+            margin-bottom: 8px;
             text-align: center;
         }
         .modal-box .close-btn {
-            background: #f3ba2f;
+            background: linear-gradient(135deg, #f3ba2f, #d49c1a);
             border: none;
-            padding: 6px;
+            padding: 8px;
             border-radius: 40px;
             font-weight: 700;
             color: #0e0c07;
             width: 100%;
-            font-size: 13px;
+            font-size: 14px;
             cursor: pointer;
-            margin-top: 6px;
+            margin-top: 8px;
         }
         .modal-box .invite-link {
-            background: #0e0c07;
-            padding: 6px;
-            border-radius: 12px;
-            border: 1px solid #2f281c;
+            background: rgba(14, 12, 7, 0.6);
+            padding: 8px;
+            border-radius: 14px;
+            border: 1px solid rgba(47, 40, 28, 0.3);
             color: #f3ba2f;
-            font-size: 11px;
+            font-size: 12px;
             word-break: break-all;
-            margin: 6px 0;
+            margin: 8px 0;
             text-align: center;
         }
         .modal-box .copy-btn {
-            background: #2f281c;
+            background: rgba(47, 40, 28, 0.6);
             border: none;
-            padding: 4px 12px;
+            padding: 5px 16px;
             border-radius: 30px;
             color: #f3ba2f;
             font-weight: 600;
             cursor: pointer;
-            margin: 3px auto;
+            margin: 4px auto;
             display: block;
         }
         .modal-box .airdrop-info {
-            background: #0e0c07;
-            padding: 10px;
-            border-radius: 12px;
-            border: 1px solid #2f281c;
-            margin: 4px 0;
+            background: rgba(14, 12, 7, 0.6);
+            padding: 12px;
+            border-radius: 14px;
+            border: 1px solid rgba(47, 40, 28, 0.3);
+            margin: 6px 0;
         }
         .modal-box .airdrop-info .row {
             display: flex;
             justify-content: space-between;
-            padding: 2px 0;
-            font-size: 11px;
+            padding: 3px 0;
+            font-size: 12px;
         }
         .modal-box .airdrop-info .row .label {
             color: #8a7a54;
@@ -543,94 +600,96 @@
             font-weight: 600;
         }
         .modal-box .boost-option {
-            background: #0e0c07;
-            padding: 6px 10px;
-            border-radius: 10px;
-            border: 1px solid #2f281c;
-            margin: 3px 0;
+            background: rgba(14, 12, 7, 0.6);
+            padding: 8px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(47, 40, 28, 0.3);
+            margin: 4px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         .modal-box .boost-option button {
-            background: #f3ba2f;
+            background: linear-gradient(135deg, #f3ba2f, #d49c1a);
             border: none;
-            padding: 3px 10px;
+            padding: 4px 14px;
             border-radius: 30px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            font-size: 10px;
+            font-size: 11px;
+            color: #0e0c07;
         }
         .modal-box .boost-option .cost {
             color: #8a7a54;
-            font-size: 9px;
+            font-size: 10px;
         }
         .modal-box .referral-bonus {
-            background: linear-gradient(135deg, #2f281c, #1a1610);
-            border: 1px solid #f3ba2f40;
-            border-radius: 12px;
-            padding: 8px;
-            margin: 4px 0;
+            background: linear-gradient(135deg, rgba(47, 40, 28, 0.4), rgba(26, 22, 16, 0.6));
+            border: 1px solid rgba(243, 186, 47, 0.15);
+            border-radius: 14px;
+            padding: 10px;
+            margin: 6px 0;
             text-align: center;
         }
         .modal-box .referral-bonus .big {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             color: #f3ba2f;
             font-weight: 700;
         }
         .modal-box .referral-bonus .sub {
-            font-size: 9px;
+            font-size: 10px;
             color: #8a7a54;
         }
         .modal-box .social-links {
             display: flex;
             justify-content: center;
-            gap: 6px;
-            margin: 6px 0;
+            gap: 8px;
+            margin: 8px 0;
             flex-wrap: wrap;
         }
         .modal-box .social-links a {
             color: #f3ba2f;
             text-decoration: none;
-            background: #0e0c07;
-            padding: 4px 8px;
+            background: rgba(14, 12, 7, 0.6);
+            padding: 5px 12px;
             border-radius: 30px;
-            border: 1px solid #2f281c;
+            border: 1px solid rgba(47, 40, 28, 0.3);
             transition: 0.2s;
             display: flex;
             align-items: center;
-            gap: 3px;
-            font-size: 10px;
+            gap: 4px;
+            font-size: 11px;
         }
         .modal-box .social-links a:hover {
-            background: #2f281c;
+            background: rgba(47, 40, 28, 0.4);
         }
         .modal-box .admin-badge {
-            background: #f3ba2f;
+            background: linear-gradient(135deg, #f3ba2f, #d49c1a);
             color: #0e0c07;
-            padding: 1px 8px;
+            padding: 2px 12px;
             border-radius: 30px;
-            font-size: 9px;
+            font-size: 10px;
             font-weight: 700;
             display: inline-block;
-            margin: 3px auto;
+            margin: 4px auto;
         }
         .user-profile {
             display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 3px 0;
+            gap: 8px;
+            padding: 4px 0;
         }
         .user-profile .avatar-lg {
-            width: 36px;
-            height: 36px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             background: linear-gradient(135deg, #f3ba2f, #d49c1a);
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 22px;
+            border: 2px solid rgba(243, 186, 47, 0.2);
         }
         .user-profile .avatar-lg img {
             width: 100%;
@@ -642,33 +701,78 @@
         }
         .user-profile .info .name {
             color: #f3ba2f;
-            font-weight: 600;
-            font-size: 13px;
+            font-weight: 700;
+            font-size: 15px;
         }
         .user-profile .info .handle {
             color: #8a7a54;
-            font-size: 10px;
+            font-size: 11px;
         }
         .modal-box .verify-btn {
-            background: #f3ba2f;
+            background: linear-gradient(135deg, #f3ba2f, #d49c1a);
             border: none;
-            padding: 5px 14px;
+            padding: 6px 18px;
             border-radius: 30px;
             font-weight: 700;
             cursor: pointer;
-            margin: 4px auto;
+            margin: 6px auto;
             display: block;
-            font-size: 12px;
+            font-size: 13px;
+            color: #0e0c07;
+        }
+        .modal-box .settings-group {
+            background: rgba(14, 12, 7, 0.6);
+            padding: 10px;
+            border-radius: 14px;
+            border: 1px solid rgba(47, 40, 28, 0.3);
+            margin: 6px 0;
+        }
+        .modal-box .settings-group .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(47, 40, 28, 0.2);
+        }
+        .modal-box .settings-group .setting-item:last-child {
+            border-bottom: none;
+        }
+        .modal-box .settings-group .setting-item .label {
+            color: #e5d6b0;
+            font-size: 11px;
+        }
+        .modal-box .settings-group .setting-item input {
+            background: rgba(14, 12, 7, 0.6);
+            border: 1px solid rgba(47, 40, 28, 0.3);
+            border-radius: 30px;
+            padding: 3px 10px;
+            color: #f0e6d0;
+            font-size: 10px;
+            width: 180px;
+            outline: none;
+        }
+        .modal-box .settings-group .setting-item input:focus {
+            border-color: #f3ba2f;
+        }
+        .modal-box .settings-group .setting-item button {
+            background: linear-gradient(135deg, #f3ba2f, #d49c1a);
+            border: none;
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 10px;
+            color: #0e0c07;
         }
         @media (max-width: 420px) {
             .coin { width: 170px; height: 170px; }
             .coin::after { font-size: 4.5rem; }
-            .balance-card .amount { font-size: 1.8rem; }
+            .balance-card .amount { font-size: 2.4rem; }
         }
         @media (max-width: 360px) {
             .coin { width: 150px; height: 150px; }
             .coin::after { font-size: 4rem; }
-            .balance-card .amount { font-size: 1.6rem; }
+            .balance-card .amount { font-size: 2rem; }
         }
     </style>
 </head>
@@ -687,8 +791,8 @@
         <div class="label">💰 BALANCE</div>
         <div class="amount" id="balanceDisplay">0</div>
         <div class="stats">
-            
-            <span>⚡ +200 /h</span>
+            <span>2 / 11</span>
+            <span>⚡ +207 /h</span>
         </div>
     </div>
 
@@ -697,16 +801,17 @@
         <div class="next-level" id="nextLevelDisplay">Next: 1,000 coins</div>
     </div>
 
-    <div class="on-grid">
-        <div class=  onclick="claimTask()">
-            <div class="desc">Task</div>
+    <div class="timer-grid">
+        <div class="timer-item" onclick="claimDaily()">
+            <div class="value" id="dailyTimer">13:38</div>
+            <div class="desc">Daily reward</div>
         </div>
-        <div class="timer-item" onclick="claimClaim()">
-            <div class="value" id="cipherTimer">24:00</div>
-            <div class="desc">Daily bonus</div>
+        <div class="timer-item" onclick="claimCipher()">
+            <div class="value" id="cipherTimer">08:38</div>
+            <div class="desc">Daily cipher</div>
         </div>
         <div class="timer-item" onclick="claimCombo()">
-            <div class="value" id="comboTimer">24:00</div>
+            <div class="value" id="comboTimer">01:38</div>
             <div class="desc">Daily combo</div>
         </div>
     </div>
@@ -720,7 +825,7 @@
     <div class="progress-row">
         <div class="left">
             <span>$</span>
-            <div class="fill"><div class="bar" id="progressBar" style="width:0%"></div></div>
+            <div class="fill"><div class="bar" id="progressBar" style="width:100%"></div></div>
         </div>
         <button class="right" id="boostBtn">Boost</button>
     </div>
@@ -736,10 +841,23 @@
 
     <div class="action-grid">
         <button class="action-btn gold" id="exchangeBtn">Exchange</button>
+        <button class="action-btn" id="mineBtn">⛏️ Mine</button>
         <button class="action-btn" id="friendsBtn">👥 Friends</button>
+        <button class="action-btn" id="earnBtn">🎯 Earn</button>
         <button class="action-btn" id="airdropBtn">Airdrop</button>
-        <button class="action-btn" id="aiBtn">🤖 AI</button>
     </div>
+
+    <div class="bottom-nav">
+        <button class="nav-item active"><span class="icon">🏠</span>Home</button>
+        <button class="nav-item" onclick="openSettings()"><span class="icon">⚙️</span>Settings</button>
+        <button class="nav-item"><span class="icon">🔔</span>Notif.</button>
+        <button class="nav-item"><span class="icon">⚡</span>Activity</button>
+    </div>
+
+    <div class="footer-airdrop">
+        <span>✦ Airdrop active ✦</span>
+    </div>
+</div>
 
 <div class="modal-overlay" id="modalOverlay">
     <div class="modal-box" id="modalBox">
@@ -774,9 +892,10 @@
         const tapLimitDisplay = document.getElementById('tapLimitDisplay');
 
         const exchangeBtn = document.getElementById('exchangeBtn');
+        const mineBtn = document.getElementById('mineBtn');
         const friendsBtn = document.getElementById('friendsBtn');
+        const earnBtn = document.getElementById('earnBtn');
         const airdropBtn = document.getElementById('airdropBtn');
-        const aiBtn = document.getElementById('aiBtn');
 
         const modalOverlay = document.getElementById('modalOverlay');
         const modalBox = document.getElementById('modalBox');
@@ -785,7 +904,7 @@
         const modalClose = document.getElementById('modalClose');
 
         // --- PERSISTENT STORAGE ---
-        const STORAGE_KEY = 'eco_app_data_v10';
+        const STORAGE_KEY = 'eco_app_data_v12';
 
         function loadData() {
             try {
@@ -809,7 +928,7 @@
         let saved = loadData();
         let balance = saved?.balance || 0;
         let ceoCoins = saved?.ceoCoins || 0;
-        let progress = saved?.progress || 0;
+        let progress = saved?.progress || 1500;
         let tapPower = saved?.tapPower || 1;
         let boostLevel = saved?.boostLevel || 1;
         let dailyClaimed = saved?.dailyClaimed || false;
@@ -822,29 +941,9 @@
         let superTapActive = saved?.superTapActive || false;
         let superTapMultiplier = saved?.superTapMultiplier || 1;
         let superTapRemaining = saved?.superTapRemaining || 0;
+        let customLinks = saved?.customLinks || [];
+        let customTasks = saved?.customTasks || [];
         const maxProgress = 1500;
-
-        // --- TELEGRAM AUTO-LOGIN ---
-        function initTelegramUser() {
-            try {
-                if (window.Telegram && window.Telegram.WebApp) {
-                    const tg = window.Telegram.WebApp;
-                    const user = tg.initDataUnsafe?.user;
-                    if (user) {
-                        userName = user.first_name || user.username || 'User';
-                        if (user.photo_url) {
-                            avatarDisplay.innerHTML = `<img src="${user.photo_url}" alt="avatar" />`;
-                        } else {
-                            avatarDisplay.textContent = user.first_name?.charAt(0) || '👤';
-                        }
-                        userNameDisplay.textContent = userName +
-                        saveState();
-                        return true;
-                    }
-                }
-            } catch (e) {}
-            return false;
-        }
 
         // --- FUNCTIONS ---
         function getLevel(coins) {
@@ -881,7 +980,9 @@
                 lastTapTime: lastTapTime,
                 superTapActive: superTapActive,
                 superTapMultiplier: superTapMultiplier,
-                superTapRemaining: superTapRemaining
+                superTapRemaining: superTapRemaining,
+                customLinks: customLinks,
+                customTasks: customTasks
             });
         }
 
@@ -1061,7 +1162,7 @@
         }
 
         // --- DAILY TASK CLAIMS ---
-        function claimTask() {
+        function claimDaily() {
             if (dailyClaimed) {
                 alert('✅ Daily reward already claimed! Come back tomorrow.');
                 return;
@@ -1075,9 +1176,9 @@
             alert(`🎉 Daily reward claimed! +${reward} coins and +200 taps!`);
         }
 
-        function claimClaim() {
+        function claimCipher() {
             if (cipherClaimed) {
-                alert('✅ Daily bonus  already claimed! Come back tomorrow.');
+                alert('✅ Daily cipher already claimed! Come back tomorrow.');
                 return;
             }
             const reward = 50;
@@ -1097,14 +1198,14 @@
             const reward = 75;
             balance += reward;
             ceoCoins += reward;
-            tapsRemaining = Math.min(MAX_TAPS, tapsRemaining + 1M);
+            tapsRemaining = Math.min(MAX_TAPS, tapsRemaining + 150);
             comboClaimed = true;
             updateUI();
-            alert(`🔥 Combo claimed! +${reward} coins and +1M taps!`);
+            alert(`🔥 Combo claimed! +${reward} coins and +150 taps!`);
         }
 
-        window.claimTask = claimTask;
-        window.claimClaim = claimClaim;
+        window.claimDaily = claimDaily;
+        window.claimCipher = claimCipher;
         window.claimCombo = claimCombo;
 
         // --- BOOST / SUPER TAPS ---
@@ -1115,7 +1216,6 @@
             
             openModal('⚡ Boost & Super Taps', `
                 <p>Upgrade your tap power or buy super taps!</p>
-                
                 <div class="boost-option">
                     <div>
                         <strong style="color:#f3ba2f;">Tap Power: +${tapPower}</strong>
@@ -1123,7 +1223,6 @@
                     </div>
                     <button onclick="upgradeBoost()">${cost.toLocaleString()} coins</button>
                 </div>
-                
                 <div class="boost-option" style="border-color: #ff6b6b40;">
                     <div>
                         <strong style="color:#ff6b6b;">🔥 Super Taps</strong>
@@ -1131,7 +1230,6 @@
                     </div>
                     <button onclick="buySuperTaps()">${superCost} coins</button>
                 </div>
-                
                 <div class="airdrop-info">
                     <div class="row"><span class="label">Your coins</span><span class="value">${balance.toLocaleString()}</span></div>
                     <div class="row"><span class="label">Taps remaining</span><span class="value">${Math.floor(tapsRemaining).toLocaleString()}</span></div>
@@ -1145,7 +1243,7 @@
         function upgradeBoost() {
             const cost = getBoostCost();
             if (balance < cost) {
-                alert(`❌  ${cost.toLocaleString()} coins.`);
+                alert(`❌ Not enough coins! You need ${cost.toLocaleString()} coins.`);
                 return;
             }
             balance -= cost;
@@ -1158,18 +1256,18 @@
         }
 
         function buySuperTaps() {
-            const cost = getBoostCost();
+            const cost = 300;
             if (balance < cost) {
-                alert(`❌  ${cost} coins.`);
+                alert(`❌ Not enough coins! You need ${cost} coins.`);
                 return;
             }
             balance -= cost;
             superTapActive = true;
             superTapMultiplier = 10;
-            superTapRemaining = 0:60
+            superTapRemaining = 30;
             updateUI();
             closeModal();
-            alert(`🔥 Super Taps activated! ×10 power for 0:60 taps!`);
+            alert(`🔥 Super Taps activated! ×10 power for 30 taps!`);
             handleBoost();
         }
 
@@ -1205,7 +1303,83 @@
             `);
         }
 
+        function simulateReferral() {
+            referrals += 1;
+            const reward = 100;
+            balance += reward;
+            ceoCoins += reward;
+            tapsRemaining = Math.min(MAX_TAPS, tapsRemaining + 50);
+            updateUI();
+            alert(`🎉 New referral! +${reward} coins and +50 taps! Total referrals: ${referrals}`);
+            handleFriends();
+        }
+
         window.simulateReferral = simulateReferral;
+
+        // --- MINE ---
+        function handleMine() {
+            const mined = Math.floor(Math.random() * 30) + 10;
+            balance += mined;
+            ceoCoins += Math.floor(mined / 3);
+            tapsRemaining = Math.min(MAX_TAPS, tapsRemaining + 20);
+            updateUI();
+            openModal('⛏️ Mining', `
+                <p>You mined <strong style="color:#f3ba2f;">+${mined}</strong> coins!</p>
+                <div class="airdrop-info">
+                    <div class="row"><span class="label">New Balance</span><span class="value">${balance.toLocaleString()}</span></div>
+                    <div class="row"><span class="label">Taps Bonus</span><span class="value">+20 taps</span></div>
+                </div>
+                <p style="font-size:9px;color:#8a7a54;">Keep mining to earn more!</p>
+                <button class="verify-btn" onclick="closeModal()">Close</button>
+            `);
+        }
+
+        // --- EARN ---
+        function handleEarn() {
+            let tasksHTML = '';
+            if (customTasks.length > 0) {
+                customTasks.forEach((task, index) => {
+                    tasksHTML += `
+                        <div class="boost-option">
+                            <div>
+                                <strong style="color:#e5d6b0;">${task.question}</strong>
+                                <div class="cost">Reward: ${task.reward.toLocaleString()} coins</div>
+                            </div>
+                            <button onclick="completeTask(${index})">Answer</button>
+                        </div>
+                    `;
+                });
+            } else {
+                tasksHTML = `<p style="color:#8a7a54;font-size:10px;">No custom tasks yet. Add them in Settings!</p>`;
+            }
+
+            openModal('🎯 Earn Tasks', `
+                <p>Complete tasks to earn extra coins!</p>
+                <div class="airdrop-info">
+                    <div class="row"><span class="label">Your Coins</span><span class="value">${balance.toLocaleString()}</span></div>
+                </div>
+                ${tasksHTML}
+                <p style="font-size:9px;color:#8a7a54;margin-top:6px;">Complete tasks to earn big rewards!</p>
+                <button class="verify-btn" onclick="closeModal()">Close</button>
+            `);
+        }
+
+        function completeTask(index) {
+            const task = customTasks[index];
+            if (!task) return;
+            const answer = prompt(`Question: ${task.question}\n\nType your answer:`);
+            if (answer && answer.toLowerCase().trim() === task.answer.toLowerCase().trim()) {
+                balance += task.reward;
+                ceoCoins += task.reward;
+                updateUI();
+                alert(`🎉 Correct! You earned ${task.reward.toLocaleString()} coins!`);
+                handleEarn();
+            } else if (answer !== null) {
+                alert('❌ Wrong answer! Try again.');
+            }
+        }
+
+        window.completeTask = completeTask;
 
         // --- AIRDROP ---
         function handleAirdrop() {
@@ -1218,7 +1392,7 @@
                     <div class="row"><span class="label">Min. Withdraw</span><span class="value">1,000 coins</span></div>
                 </div>
                 <p style="font-size:9px;color:#8a7a54;">Connect your Binance wallet to withdraw</p>
-                <button style="background:#f3ba2f;border:none;padding:6px;border-radius:40px;font-weight:700;width:100%;cursor:pointer;margin-top:4px;" onclick="connectBinance()">
+                <button style="background:linear-gradient(135deg,#f3ba2f,#d49c1a);border:none;padding:8px;border-radius:40px;font-weight:700;width:100%;cursor:pointer;margin-top:4px;color:#0e0c07;" onclick="connectBinance()">
                     🔗 Connect Binance Wallet
                 </button>
             `);
@@ -1242,89 +1416,175 @@
                     <div class="row"><span class="label">Coins</span><span class="value">${balance.toLocaleString()}</span></div>
                     <div class="row"><span class="label">Exchange Rate</span><span class="value">1 coin = 0.001 ETH</span></div>
                 </div>
-                <button style="background:#f3ba2f;border:none;padding:6px;border-radius:40px;font-weight:700;width:100%;cursor:pointer;margin-top:4px;" onclick="alert('Exchange feature coming soon!')">
+                <button style="background:linear-gradient(135deg,#f3ba2f,#d49c1a);border:none;padding:8px;border-radius:40px;font-weight:700;width:100%;cursor:pointer;margin-top:4px;color:#0e0c07;" onclick="alert('Exchange feature coming soon!')">
                     Exchange Now
                 </button>
             `);
         }
 
-        // --- AI ASSISTANT ---
-        function handleAI() {
-            openModal('🤖 E-Coin AI', `
-                <p>I'm your E-Coin AI Assistant! Ask me anything.</p>
-                <div style="background:#0e0c07;padding:8px;border-radius:12px;border:1px solid #2f281c;margin:4px 0;max-height:120px;overflow-y:auto;">
-                    <div style="color:#f3ba2f;font-size:11px;">👋 Hello! How can I help you today?</div>
+        // --- SETTINGS ---
+        function openSettings() {
+            let linksHTML = '';
+            if (customLinks.length > 0) {
+                customLinks.forEach((link, index) => {
+                    linksHTML += `
+                        <div class="setting-item">
+                            <span class="label">${link.name}</span>
+                            <div>
+                                <span style="color:#8a7a54;font-size:9px;">${link.url.substring(0,20)}...</span>
+                                <button onclick="removeLink(${index})">✕</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                linksHTML = `<p style="color:#8a7a54;font-size:10px;text-align:center;">No custom links yet.</p>`;
+            }
+
+            let tasksHTML = '';
+            if (customTasks.length > 0) {
+                customTasks.forEach((task, index) => {
+                    tasksHTML += `
+                        <div class="setting-item">
+                            <span class="label">${task.question.substring(0,20)}...</span>
+                            <div>
+                                <span style="color:#8a7a54;font-size:9px;">${task.reward.toLocaleString()} coins</span>
+                                <button onclick="removeTask(${index})">✕</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                tasksHTML = `<p style="color:#8a7a54;font-size:10px;text-align:center;">No custom tasks yet.</p>`;
+            }
+
+            openModal('⚙️ Settings', `
+                <p>Customize your E-Coin experience</p>
+                
+                <div class="settings-group">
+                    <h3 style="color:#f3ba2f;font-size:11px;margin-bottom:6px;">📎 Custom Links</h3>
+                    ${linksHTML}
+                    <div class="setting-item">
+                        <input type="text" id="linkName" placeholder="Link name" style="width:80px;" />
+                        <input type="text" id="linkUrl" placeholder="https://..." style="width:120px;" />
+                        <button onclick="addLink()">Add</button>
+                    </div>
                 </div>
-                <div style="display:flex;gap:4px;margin-top:4px;">
-                    <input type="text" id="aiInput" placeholder="Ask me..." style="flex:1;padding:4px 8px;border-radius:30px;border:1px solid #2f281c;background:#0e0c07;color:#e5d6b0;font-size:11px;outline:none;" onkeydown="if(event.key==='Enter') askAI()" />
-                    <button onclick="askAI()" style="background:#f3ba2f;border:none;padding:4px 10px;border-radius:30px;font-weight:700;cursor:pointer;font-size:11px;">Ask</button>
+                
+                <div class="settings-group">
+                    <h3 style="color:#f3ba2f;font-size:11px;margin-bottom:6px;">📝 Custom Tasks</h3>
+                    ${tasksHTML}
+                    <div class="setting-item" style="flex-wrap:wrap;gap:4px;">
+                        <input type="text" id="taskQuestion" placeholder="Question" style="width:100%;margin-bottom:4px;" />
+                        <input type="text" id="taskAnswer" placeholder="Answer" style="width:45%;" />
+                        <input type="number" id="taskReward" placeholder="Reward" style="width:35%;" />
+                        <button onclick="addTask()" style="width:100%;margin-top:4px;">Add Task</button>
+                    </div>
                 </div>
-                <div style="margin-top:4px;text-align:center;font-size:9px;color:#8a7a54;">
-                    <span class="admin-badge">ADMIN</span> E-Coin AI v1.0
+                
+                <div class="settings-group">
+                    <h3 style="color:#f3ba2f;font-size:11px;margin-bottom:6px;">👤 Profile</h3>
+                    <div class="setting-item">
+                        <span class="label">Username</span>
+                        <input type="text" id="usernameInput" value="${userName}" style="width:140px;" />
+                        <button onclick="updateUsername()">Save</button>
+                    </div>
                 </div>
+                
+                <div class="settings-group">
+                    <h3 style="color:#f3ba2f;font-size:11px;margin-bottom:6px;">🔗 Social Links</h3>
+                    <div class="social-links" style="justify-content:center;">
+                        <a href="https://t.me/OneWinTokenBot/start?startapp=refId8467180571" target="_blank">📱 Telegram</a>
+                        <a href="https://www.tiktok.com/@esl9151" target="_blank">🎵 TikTok</a>
+                        <a href="https://instagram.com/ecoin.official" target="_blank">📸 IG</a>
+                        <a href="https://facebook.com/ecoin.official" target="_blank">📘 FB</a>
+                    </div>
+                    ${customLinks.map(link => `<a href="${link.url}" target="_blank" style="color:#f3ba2f;font-size:10px;display:inline-block;margin:2px 6px;">🔗 ${link.name}</a>`).join('')}
+                </div>
+                
+                <div class="airdrop-info">
+                    <div class="row"><span class="label">Total Coins</span><span class="value">${balance.toLocaleString()}</span></div>
+                    <div class="row"><span class="label">Level</span><span class="value">${getLevel(balance)}</span></div>
+                    <div class="row"><span class="label">Referrals</span><span class="value">${referrals}</span></div>
+                    <div class="row"><span class="label">Tap Power</span><span class="value">+${tapPower}</span></div>
+                </div>
+                <button class="verify-btn" onclick="closeModal()">Close</button>
             `);
-            setTimeout(() => {
-                const input = document.getElementById('aiInput');
-                if (input) input.focus();
-            }, 300);
         }
 
-        window.askAI = function() {
-            const input = document.getElementById('aiInput');
+        function addLink() {
+            const nameInput = document.getElementById('linkName');
+            const urlInput = document.getElementById('linkUrl');
+            if (!nameInput || !urlInput) return;
+            const name = nameInput.value.trim();
+            const url = urlInput.value.trim();
+            if (!name || !url) {
+                alert('Please enter both name and URL.');
+                return;
+            }
+            customLinks.push({ name, url });
+            saveState();
+            openSettings();
+        }
+
+        function removeLink(index) {
+            customLinks.splice(index, 1);
+            saveState();
+            openSettings();
+        }
+
+        function addTask() {
+            const questionInput = document.getElementById('taskQuestion');
+            const answerInput = document.getElementById('taskAnswer');
+            const rewardInput = document.getElementById('taskReward');
+            if (!questionInput || !answerInput || !rewardInput) return;
+            const question = questionInput.value.trim();
+            const answer = answerInput.value.trim();
+            const reward = parseInt(rewardInput.value);
+            if (!question || !answer || !reward) {
+                alert('Please fill all fields.');
+                return;
+            }
+            customTasks.push({ question, answer, reward });
+            saveState();
+            openSettings();
+        }
+
+        function removeTask(index) {
+            customTasks.splice(index, 1);
+            saveState();
+            openSettings();
+        }
+
+        function updateUsername() {
+            const input = document.getElementById('usernameInput');
             if (!input) return;
-            const q = input.value.trim();
-            if (!q) return;
-            const response = generateAIResponse(q);
-            const chatDiv = document.querySelector('#modalContent div:first-child');
-            if (chatDiv) {
-                chatDiv.innerHTML += `<div style="color:#e5d6b0;font-size:11px;margin-top:3px;">You: ${q}</div>`;
-                chatDiv.innerHTML += `<div style="color:#f3ba2f;font-size:11px;margin-top:3px;">AI: ${response}</div>`;
-                chatDiv.scrollTop = chatDiv.scrollHeight;
+            const name = input.value.trim();
+            if (!name) {
+                alert('Please enter a username.');
+                return;
             }
-            input.value = '';
-        };
-
-        function generateAIResponse(question) {
-            const q = question.toLowerCase();
-            if (q.includes('balance') || q.includes('coin')) {
-                return `💰 You have ${balance.toLocaleString()} coins! Keep tapping!`;
-            }
-            if (q.includes('tap') || q.includes('power')) {
-                return `⚡ Tap power: +${tapPower} per tap. Boost level: ${boostLevel}`;
-            }
-            if (q.includes('level')) {
-                return `🏆 Level ${getLevel(balance)}. Need ${getNextLevelThreshold(balance).toLocaleString()} coins for next level.`;
-            }
-            if (q.includes('referral') || q.includes('friend')) {
-                return `👥 You have ${referrals} referrals! Each gives 100 coins.`;
-            }
-            if (q.includes('super')) {
-                return `🔥 Super Taps ${superTapActive ? 'ACTIVE! ×' + superTapMultiplier + ' (' + superTapRemaining + ' left)' : 'inactive'}. Buy for 300 coins in Boost!`;
-            }
-            if (q.includes('help')) {
-                return `🆘 Ask about: balance, tap power, level, referrals, super taps, airdrop, or social links.`;
-            }
-            if (q.includes('telegram')) {
-                return `📱 Join Telegram: `;
-            }
-            if (q.includes('tiktok')) {
-                return `🎵 TikTok: https://www.tiktok.com/@esl9151`;
-            }
-            if (q.includes('instagram') || q.includes('ig')) {
-                return `📸 Instagram: `;
-            }
-            if (q.includes('facebook') || q.includes('fb')) {
-                return `📘 Facebook: `;
-            }
-            return `🤔 Not sure about that. Try asking about: balance, tap power, level, referrals, super taps, or social links.`;
+            userName = name;
+            userNameDisplay.textContent = userName + ' (CEO)';
+            saveState();
+            openSettings();
+            updateUI();
         }
+
+        window.openSettings = openSettings;
+        window.addLink = addLink;
+        window.removeLink = removeLink;
+        window.addTask = addTask;
+        window.removeTask = removeTask;
+        window.updateUsername = updateUsername;
 
         // --- EVENTS ---
         boostBtn.addEventListener('click', handleBoost);
         friendsBtn.addEventListener('click', handleFriends);
         airdropBtn.addEventListener('click', handleAirdrop);
         exchangeBtn.addEventListener('click', handleExchange);
-        aiBtn.addEventListener('click', handleAI);
+        mineBtn.addEventListener('click', handleMine);
+        earnBtn.addEventListener('click', handleEarn);
 
         modalClose.addEventListener('click', closeModal);
         modalOverlay.addEventListener('click', (e) => {
@@ -1352,7 +1612,8 @@
         // --- USER CLICK FOR PROFILE ---
         userInfo.addEventListener('click', function() {
             const tgLink = 'https://t.me/OneWinTokenBot/start?startapp=refId8467180571';
-            openModal('👤 Admin Profile', `
+            let customLinksHTML = customLinks.map(link => `<a href="${link.url}" target="_blank" style="color:#f3ba2f;font-size:10px;display:inline-block;margin:2px 6px;">🔗 ${link.name}</a>`).join('');
+            openModal('👤 Profile', `
                 <div class="user-profile">
                     <div class="avatar-lg">${avatarDisplay.innerHTML || '👩'}</div>
                     <div class="info">
@@ -1369,21 +1630,18 @@
                     <div class="row"><span class="label">Super Taps</span><span class="value">${superTapActive ? '✅ ACTIVE ×' + superTapMultiplier : '❌ Inactive'}</span></div>
                 </div>
                 <div class="social-links">
-                    <a href="${tgLink}" target="_blank"><span>📱</span> Telegram</a>
-                    <a href="https://www.tiktok.com/@esl9151" target="_blank"><span>🎵</span> TikTok</a>
-                    <a href="https://instagram.com/ecoin.official" target="_blank"><span>📸</span> IG</a>
-                    <a href="https://facebook.com/ecoin.official" target="_blank"><span>📘</span> FB</a>
-                    <a href="https://youtube.com/@ecoin" target="_blank"><span>▶️</span> YouTube</a>
+                    <a href="${tgLink}" target="_blank">📱 Telegram</a>
+                    <a href="https://www.tiktok.com/@esl9151" target="_blank">🎵 TikTok</a>
+                    <a href="https://instagram.com/ecoin.official" target="_blank">📸 IG</a>
+                    <a href="https://facebook.com/ecoin.official" target="_blank">📘 FB</a>
                 </div>
+                ${customLinksHTML}
                 <p style="font-size:9px;color:#8a7a54;">Follow us on social media for updates and bonuses!</p>
-                <p style="font-size:8px;color:#4d3f28;margin-top:4px;">🔗 Telegram: ${tgLink}</p>
                 <button class="verify-btn" onclick="closeModal()">Close</button>
             `);
         });
 
         // --- INIT ---
-        initTelegramUser();
-
         const today = new Date().toDateString();
         const lastDate = localStorage.getItem('eco_last_date');
         if (!lastDate || lastDate !== today) {
@@ -1410,9 +1668,8 @@
         console.log('⚡ Tap power:', tapPower);
         console.log('🔋 Taps remaining:', tapsRemaining);
         console.log('👥 Referrals:', referrals);
-        console.log('🔥 Super Taps:', superTapActive ? 'ACTIVE' : 'Inactive');
-        console.log('👤 User:', userName);
-        console.log('💾 Data saved with key:', STORAGE_KEY);
+        console.log('📝 Custom tasks:', customTasks.length);
+        console.log('🔗 Custom links:', customLinks.length);
     })();
 </script>
 </body>
