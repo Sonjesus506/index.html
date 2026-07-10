@@ -26,33 +26,62 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            padding: 10px 14px 8px;
+            padding: 8px 12px 6px;
             overflow: hidden;
             position: relative;
             transition: background 0.4s;
+            background: linear-gradient(180deg, #1a1410 0%, #0e0a08 30%, #0a0806 60%, #060404 100%);
         }
-        /* Themes */
-        .theme-dark { background: linear-gradient(180deg, #12100d 0%, #1a1610 50%, #0e0c07 100%); }
-        .theme-blue { background: linear-gradient(180deg, #0d121e 0%, #161a2a 50%, #0a0e18 100%); }
-        .theme-green { background: linear-gradient(180deg, #0d1a0d 0%, #1a2a16 50%, #0a180a 100%); }
-        .theme-purple { background: linear-gradient(180deg, #140d1a 0%, #1a162a 50%, #0e0a18 100%); }
-        .theme-red { background: linear-gradient(180deg, #1a0d0d 0%, #2a1616 50%, #180a0a 100%); }
-        .theme-orange { background: linear-gradient(180deg, #1a0f0d 0%, #2a1a16 50%, #180a0a 100%); }
-        .theme-teal { background: linear-gradient(180deg, #0d1a1a 0%, #162a2a 50%, #0a1818 100%); }
-
+        /* Crypto mining background overlay */
         .app::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(ellipse at 50% 20%, rgba(243, 186, 47, 0.05) 0%, transparent 60%);
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 80%, rgba(243, 186, 47, 0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(243, 186, 47, 0.03) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(243, 186, 47, 0.02) 0%, transparent 70%);
             pointer-events: none;
             z-index: 0;
         }
+        /* Animated particles */
+        .app::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                radial-gradient(2px 2px at 20px 30px, rgba(243,186,47,0.15), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(243,186,47,0.1), transparent),
+                radial-gradient(2px 2px at 50px 160px, rgba(243,186,47,0.12), transparent),
+                radial-gradient(2px 2px at 90px 40px, rgba(243,186,47,0.08), transparent),
+                radial-gradient(2px 2px at 130px 80px, rgba(243,186,47,0.1), transparent),
+                radial-gradient(2px 2px at 160px 30px, rgba(243,186,47,0.06), transparent);
+            background-size: 200px 200px;
+            pointer-events: none;
+            z-index: 0;
+            animation: particles 60s linear infinite;
+        }
+        @keyframes particles {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-200px); }
+        }
 
-        /* Header - Settings top right */
+        /* Themes */
+        .theme-dark { --header-bg: rgba(26, 20, 16, 0.85); --nav-bg: rgba(20, 17, 13, 0.9); }
+        .theme-blue { --header-bg: rgba(13, 18, 30, 0.85); --nav-bg: rgba(10, 14, 24, 0.9); }
+        .theme-green { --header-bg: rgba(13, 26, 13, 0.85); --nav-bg: rgba(10, 24, 10, 0.9); }
+        .theme-purple { --header-bg: rgba(20, 13, 26, 0.85); --nav-bg: rgba(14, 10, 24, 0.9); }
+        .theme-red { --header-bg: rgba(26, 13, 13, 0.85); --nav-bg: rgba(24, 10, 10, 0.9); }
+        .theme-orange { --header-bg: rgba(26, 15, 13, 0.85); --nav-bg: rgba(24, 14, 10, 0.9); }
+        .theme-teal { --header-bg: rgba(13, 26, 26, 0.85); --nav-bg: rgba(10, 24, 24, 0.9); }
+
+        /* Header - Brown-Pinkish/Mauve */
         .header {
             display: flex;
             justify-content: space-between;
@@ -61,23 +90,24 @@
             flex-shrink: 0;
             position: relative;
             z-index: 1;
+            background: linear-gradient(135deg, rgba(120, 80, 70, 0.3), rgba(180, 120, 100, 0.15));
+            padding: 6px 12px 6px 8px;
+            border-radius: 50px;
+            border: 1px solid rgba(200, 150, 130, 0.15);
+            backdrop-filter: blur(10px);
         }
         .user-info {
             display: flex;
             align-items: center;
             gap: 10px;
-            background: rgba(26, 22, 16, 0.7);
-            padding: 5px 14px 5px 6px;
-            border-radius: 40px;
-            border: 1px solid rgba(243, 186, 47, 0.2);
             cursor: pointer;
             transition: 0.2s;
-            backdrop-filter: blur(10px);
+            flex: 1;
         }
         .user-info:active { transform: scale(0.95); }
         .avatar {
-            width: 34px;
-            height: 34px;
+            width: 36px;
+            height: 36px;
             background: linear-gradient(135deg, #f3ba2f, #d49c1a);
             border-radius: 50%;
             display: flex;
@@ -85,10 +115,12 @@
             justify-content: center;
             font-weight: 700;
             color: #0e0c07;
-            font-size: 15px;
+            font-size: 16px;
             overflow: hidden;
             border: 2px solid rgba(243, 186, 47, 0.3);
             flex-shrink: 0;
+            cursor: pointer;
+            transition: 0.2s;
         }
         .avatar img { width: 100%; height: 100%; object-fit: cover; }
         .user-info .name {
@@ -105,10 +137,10 @@
             font-weight: 600;
         }
         .settings-btn {
-            background: rgba(26, 22, 16, 0.7);
-            border: 1px solid rgba(243, 186, 47, 0.2);
+            background: rgba(26, 22, 16, 0.5);
+            border: 1px solid rgba(243, 186, 47, 0.15);
             border-radius: 40px;
-            padding: 6px 12px;
+            padding: 6px 10px;
             color: #f3ba2f;
             font-size: 16px;
             cursor: pointer;
@@ -121,18 +153,19 @@
         .settings-btn:active { transform: scale(0.9); }
         .settings-btn span { font-size: 10px; font-weight: 600; }
 
-        /* Balance Card - No 2/11 */
+        /* Balance */
         .balance-card {
-            background: linear-gradient(135deg, #1a1610, #221d15);
+            background: linear-gradient(135deg, rgba(26, 22, 16, 0.6), rgba(34, 29, 21, 0.4));
             border-radius: 20px;
-            padding: 12px 16px 10px;
+            padding: 10px 16px 8px;
             text-align: center;
-            border: 1px solid rgba(243, 186, 47, 0.12);
+            border: 1px solid rgba(243, 186, 47, 0.08);
             margin-bottom: 6px;
             flex-shrink: 0;
             box-shadow: 0 8px 32px rgba(0,0,0,0.4);
             position: relative;
             z-index: 1;
+            backdrop-filter: blur(10px);
         }
         .balance-card .label {
             font-size: 9px;
@@ -157,12 +190,12 @@
             margin-top: 1px;
         }
 
-        /* Level & Progress */
+        /* Level Progress */
         .level-progress {
-            background: rgba(26, 22, 16, 0.6);
+            background: rgba(26, 22, 16, 0.5);
             border-radius: 30px;
-            padding: 5px 14px 6px;
-            border: 1px solid rgba(47, 40, 28, 0.2);
+            padding: 4px 14px 5px;
+            border: 1px solid rgba(47, 40, 28, 0.15);
             margin-bottom: 6px;
             flex-shrink: 0;
             position: relative;
@@ -195,7 +228,25 @@
             width: 0%;
         }
 
-        /* Coin */
+        /* Page Content */
+        .page-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+        .page {
+            display: none;
+            flex-direction: column;
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 4px;
+        }
+        .page.active { display: flex; }
+
+        /* Coin - 3D High Quality */
         .coin-wrapper {
             display: flex;
             justify-content: center;
@@ -207,25 +258,55 @@
             overflow: visible;
             touch-action: none;
             z-index: 1;
+            perspective: 800px;
         }
         .coin {
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle at 35% 30%, #fce181, #d49c1a 45%, #b8860b 70%, #8a6b0e);
+            width: 220px;
+            height: 220px;
             border-radius: 50%;
-            border: 8px solid #f9d342;
-            box-shadow: 0 0 0 3px rgba(107, 79, 14, 0.5), 0 12px 60px rgba(243, 186, 47, 0.3), inset 0 -10px 30px rgba(0,0,0,0.5), inset 0 10px 30px rgba(255,215,0,0.15);
-            cursor: pointer;
-            transition: transform 0.06s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            touch-action: none;
             position: relative;
+            cursor: pointer;
+            touch-action: none;
+            transition: transform 0.06s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transform-style: preserve-3d;
             z-index: 2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
         .coin::before {
             content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, #fce181, #d49c1a 40%, #b8860b 65%, #8a6b0e 90%);
+            border: 8px solid #f9d342;
+            box-shadow:
+                0 0 0 3px rgba(107, 79, 14, 0.5),
+                0 12px 60px rgba(243, 186, 47, 0.3),
+                inset 0 -10px 30px rgba(0,0,0,0.5),
+                inset 0 10px 30px rgba(255,215,0,0.15),
+                0 0 40px rgba(243, 186, 47, 0.1);
+            z-index: 1;
+        }
+        .coin::after {
+            content: 'E';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            font-size: 6rem;
+            font-weight: 900;
+            color: #7a5f0e;
+            text-shadow:
+                0 2px 4px rgba(255,215,0,0.2),
+                0 -2px 4px rgba(0,0,0,0.3),
+                0 0 30px rgba(243, 186, 47, 0.1);
+            font-family: 'Georgia', serif;
+        }
+        /* Coin inner ring */
+        .coin .inner-ring {
             position: absolute;
             top: 12px;
             left: 12px;
@@ -233,19 +314,10 @@
             bottom: 12px;
             border-radius: 50%;
             border: 2px solid rgba(255,215,0,0.1);
+            z-index: 1;
             pointer-events: none;
         }
-        .coin::after {
-            content: 'E';
-            position: relative;
-            z-index: 1;
-            font-size: 5.5rem;
-            font-weight: 900;
-            color: #7a5f0e;
-            text-shadow: 0 2px 4px rgba(255,215,0,0.2), 0 -2px 4px rgba(0,0,0,0.3);
-            font-family: 'Georgia', serif;
-        }
-        .coin:active { transform: scale(0.88); }
+        .coin:active { transform: scale(0.88) rotateY(10deg); }
         .coin.disabled { opacity: 0.4; pointer-events: none; }
 
         .float-text {
@@ -275,7 +347,7 @@
             100% { opacity: 0; transform: translateY(-140px) scale(1.3) rotate(0deg); }
         }
 
-        /* Big Buttons Row */
+        /* Big Buttons */
         .btn-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -309,28 +381,29 @@
         .big-btn.secondary:active { transform: translateY(4px); box-shadow: 0 0px 0 #1a1610; }
         .big-btn.small { padding: 10px 16px; font-size: 12px; }
 
-        /* Bottom Navigation */
+        /* Bottom Navigation - Blue */
         .bottom-nav {
             display: flex;
             justify-content: space-around;
-            background: rgba(20, 17, 13, 0.9);
+            background: linear-gradient(135deg, rgba(20, 40, 80, 0.85), rgba(10, 25, 60, 0.9));
             border-radius: 40px;
             padding: 6px 4px;
-            border: 1px solid rgba(47, 40, 28, 0.3);
+            border: 1px solid rgba(60, 100, 180, 0.2);
             flex-shrink: 0;
             margin-top: 6px;
             position: relative;
             z-index: 1;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 4px 30px rgba(0, 20, 80, 0.2);
         }
         .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 4px 8px;
+            padding: 4px 6px;
             border-radius: 30px;
             font-size: 8px;
-            color: #7a6a4a;
+            color: rgba(150, 180, 220, 0.6);
             cursor: pointer;
             background: transparent;
             border: none;
@@ -341,36 +414,18 @@
             position: relative;
         }
         .nav-item .icon { font-size: 18px; line-height: 1; }
-        .nav-item .label { font-size: 8px; text-transform: uppercase; letter-spacing: 0.3px; }
-        .nav-item.active { color: #f3ba2f; background: rgba(30, 26, 18, 0.6); }
+        .nav-item .label { font-size: 7px; text-transform: uppercase; letter-spacing: 0.3px; }
+        .nav-item.active { color: #6cb4ff; background: rgba(60, 120, 255, 0.15); }
         .nav-item:active { opacity: 0.6; }
         .nav-item .badge-dot {
             position: absolute;
-            top: 4px;
-            right: 4px;
-            width: 6px;
-            height: 6px;
+            top: 2px;
+            right: 2px;
+            width: 5px;
+            height: 5px;
             background: #ff6b6b;
             border-radius: 50%;
         }
-
-        /* Page Content */
-        .page-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            position: relative;
-            z-index: 1;
-        }
-        .page {
-            display: none;
-            flex-direction: column;
-            flex: 1;
-            overflow-y: auto;
-            padding-bottom: 4px;
-        }
-        .page.active { display: flex; }
 
         /* Tasks Page */
         .task-item {
@@ -386,7 +441,8 @@
             transition: 0.2s;
         }
         .task-item:active { transform: scale(0.98); }
-        .task-item .task-info { text-align: left; flex: 1; }
+        .task-item .task-info { display: flex; align-items: center; gap: 10px; flex: 1; }
+        .task-item .task-info .platform-icon { font-size: 24px; width: 36px; text-align: center; }
         .task-item .task-info .name { font-size: 13px; font-weight: 600; color: #e5d6b0; }
         .task-item .task-info .desc { font-size: 10px; color: #8a7a54; }
         .task-item .task-reward { font-size: 12px; font-weight: 700; color: #f3ba2f; margin: 0 10px; }
@@ -453,6 +509,74 @@
         .airdrop-card .airdrop-info .row .label { color: #8a7a54; }
         .airdrop-card .airdrop-info .row .value { color: #f3ba2f; font-weight: 600; }
 
+        /* Profile Page */
+        .profile-card {
+            background: rgba(26, 22, 16, 0.6);
+            border-radius: 24px;
+            padding: 24px 20px 20px;
+            border: 1px solid rgba(47, 40, 28, 0.3);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .profile-card .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f3ba2f, #d49c1a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            border: 3px solid rgba(243, 186, 47, 0.3);
+            cursor: pointer;
+            transition: 0.3s;
+            margin-bottom: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 40px rgba(243, 186, 47, 0.15);
+        }
+        .profile-card .profile-avatar:active { transform: scale(0.95); }
+        .profile-card .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .profile-card .profile-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #f3ba2f;
+            margin-bottom: 4px;
+        }
+        .profile-card .profile-handle {
+            font-size: 13px;
+            color: #8a7a54;
+            margin-bottom: 16px;
+        }
+        .profile-card .profile-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            width: 100%;
+            margin-top: 8px;
+        }
+        .profile-card .profile-stats .stat {
+            background: rgba(14, 12, 7, 0.6);
+            padding: 10px;
+            border-radius: 14px;
+            border: 1px solid rgba(47, 40, 28, 0.2);
+        }
+        .profile-card .profile-stats .stat .num {
+            font-size: 18px;
+            font-weight: 700;
+            color: #f3ba2f;
+        }
+        .profile-card .profile-stats .stat .lbl {
+            font-size: 9px;
+            color: #8a7a54;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
         /* Friends Page */
         .friends-card {
             background: rgba(26, 22, 16, 0.6);
@@ -494,15 +618,6 @@
             font-size: 13px;
         }
 
-        /* Earn Page */
-        .earn-card {
-            background: rgba(26, 22, 16, 0.6);
-            border-radius: 20px;
-            padding: 16px;
-            border: 1px solid rgba(47, 40, 28, 0.3);
-            backdrop-filter: blur(10px);
-        }
-
         /* Modal */
         .modal-overlay {
             position: fixed;
@@ -520,13 +635,28 @@
             background: linear-gradient(145deg, #1a1610, #12100d);
             border: 1px solid rgba(61, 50, 31, 0.4);
             border-radius: 30px;
-            padding: 24px 20px 20px;
+            padding: 20px 18px 18px;
             max-width: 380px;
             width: 100%;
             max-height: 85vh;
             overflow-y: auto;
             box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+            position: relative;
         }
+        .modal-box .modal-close-x {
+            position: absolute;
+            top: 12px;
+            left: 14px;
+            font-size: 22px;
+            color: #8a7a54;
+            cursor: pointer;
+            transition: 0.2s;
+            background: none;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 50%;
+        }
+        .modal-box .modal-close-x:active { transform: scale(0.8); color: #f3ba2f; }
         .modal-box h2 {
             background: linear-gradient(135deg, #f3ba2f, #d49c1a);
             -webkit-background-clip: text;
@@ -534,25 +664,9 @@
             font-size: 1.3rem;
             margin-bottom: 14px;
             text-align: center;
+            padding-top: 4px;
         }
         .modal-box p { color: #bdaa7a; font-size: 13px; margin-bottom: 10px; text-align: center; }
-        .modal-box .close-btn {
-            background: linear-gradient(135deg, #f3ba2f, #d49c1a);
-            border: none;
-            padding: 10px;
-            border-radius: 40px;
-            font-weight: 700;
-            color: #0e0c07;
-            width: 100%;
-            font-size: 15px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        .modal-box .close-btn.secondary {
-            background: rgba(26, 22, 16, 0.8);
-            color: #f3ba2f;
-            border: 1px solid rgba(243, 186, 47, 0.2);
-        }
         .modal-box .input-group {
             display: flex;
             flex-direction: column;
@@ -654,27 +768,80 @@
         .modal-box .combo-attempts .dot.used { background: #ff6b6b; border-color: #ff6b6b; }
         .modal-box .combo-attempts .dot.remaining { background: #f3ba2f; border-color: #f3ba2f; }
 
+        /* Full Screen Avatar Modal */
+        .fullscreen-modal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+            padding: 20px;
+            backdrop-filter: blur(20px);
+        }
+        .fullscreen-modal.active { display: flex; }
+        .fullscreen-modal .close-fs {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            color: #8a7a54;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 10px;
+        }
+        .fullscreen-modal .close-fs:active { color: #f3ba2f; transform: scale(0.8); }
+        .fullscreen-modal .fs-avatar {
+            width: 80vw;
+            height: 80vw;
+            max-width: 400px;
+            max-height: 400px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f3ba2f, #d49c1a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 120px;
+            border: 4px solid rgba(243, 186, 47, 0.3);
+            overflow: hidden;
+            box-shadow: 0 0 80px rgba(243, 186, 47, 0.2);
+        }
+        .fullscreen-modal .fs-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .fullscreen-modal .fs-name {
+            color: #f3ba2f;
+            font-size: 24px;
+            font-weight: 700;
+            margin-top: 20px;
+        }
+
         /* Scrollbar */
         .modal-box::-webkit-scrollbar, .page::-webkit-scrollbar { width: 3px; }
         .modal-box::-webkit-scrollbar-track, .page::-webkit-scrollbar-track { background: transparent; }
         .modal-box::-webkit-scrollbar-thumb, .page::-webkit-scrollbar-thumb { background: #3d321f; border-radius: 10px; }
 
+        /* Swipe to close */
+        .modal-box { touch-action: pan-y; }
+
         @media (max-width: 420px) {
-            .coin { width: 170px; height: 170px; }
-            .coin::after { font-size: 4.8rem; }
+            .coin { width: 180px; height: 180px; }
+            .coin::after { font-size: 5rem; }
             .balance-card .amount { font-size: 2.4rem; }
+            .profile-card .profile-avatar { width: 80px; height: 80px; font-size: 36px; }
         }
         @media (max-width: 360px) {
-            .coin { width: 150px; height: 150px; }
-            .coin::after { font-size: 4.2rem; }
+            .coin { width: 160px; height: 160px; }
+            .coin::after { font-size: 4.5rem; }
             .balance-card .amount { font-size: 2rem; }
+            .profile-card .profile-avatar { width: 70px; height: 70px; font-size: 30px; }
         }
     </style>
 </head>
 <body>
 <div class="app theme-dark" id="app">
 
-    <!-- Header -->
+    <!-- Header - Brown-Pinkish/Mauve -->
     <div class="header">
         <div class="user-info" id="userInfo">
             <div class="avatar" id="avatarDisplay">👩</div>
@@ -690,7 +857,7 @@
         </button>
     </div>
 
-    <!-- Balance - No 2/11 -->
+    <!-- Balance -->
     <div class="balance-card">
         <div class="label">💰 BALANCE</div>
         <div class="amount" id="balanceDisplay">0</div>
@@ -712,44 +879,44 @@
     <div class="page-content">
         <!-- MAIN PAGE -->
         <div class="page active" id="page-main">
-            <!-- Coin -->
             <div class="coin-wrapper" id="coinWrapper">
-                <div class="coin" id="mainCoin" role="button" aria-label="Tap to earn"></div>
+                <div class="coin" id="mainCoin" role="button" aria-label="Tap to earn">
+                    <div class="inner-ring"></div>
+                </div>
             </div>
-
-            <!-- Big Buttons: Daily (left) and Boost (right) -->
             <div class="btn-row">
                 <button class="big-btn" id="dailyBtn">📅 Daily</button>
                 <button class="big-btn" id="boostBtn">⚡ Boost</button>
             </div>
         </div>
 
-        <!-- EXCHANGE PAGE -->
-        <div class="page" id="page-exchange">
+        <!-- TASKS PAGE -->
+        <div class="page" id="page-tasks">
             <div style="margin-bottom:8px;">
-                <h2 style="color:#f3ba2f;font-size:16px;">📈 Exchange</h2>
-                <p style="color:#8a7a54;font-size:11px;">Trade your coins for special perks!</p>
+                <h2 style="color:#f3ba2f;font-size:16px;">📋 Tasks</h2>
+                <p style="color:#8a7a54;font-size:11px;">Complete tasks to earn coins!</p>
             </div>
-            <div class="earn-card">
-                <div class="airdrop-info">
-                    <div class="row"><span class="label">Your Coins</span><span class="value" id="exchangeBalance">0</span></div>
-                    <div class="row"><span class="label">Exchange Rate</span><span class="value">1 coin = 0.001 ETH</span></div>
-                </div>
-                <button class="big-btn" onclick="alert('Exchange feature coming soon!')" style="margin-top:10px;">Exchange Now</button>
+            <div id="tasksContainer">
+                <!-- Tasks rendered here -->
             </div>
         </div>
 
-        <!-- MINE PAGE -->
-        <div class="page" id="page-mine">
+        <!-- AIRDROP PAGE -->
+        <div class="page" id="page-airdrop">
             <div style="margin-bottom:8px;">
-                <h2 style="color:#f3ba2f;font-size:16px;">⛏️ Mine</h2>
-                <p style="color:#8a7a54;font-size:11px;">Mine coins by tapping!</p>
+                <h2 style="color:#f3ba2f;font-size:16px;">🎯 Airdrop</h2>
+                <p style="color:#8a7a54;font-size:11px;">Connect your Binance wallet</p>
             </div>
-            <div class="earn-card">
+            <div class="airdrop-card">
+                <div class="binance-logo"><span>BINANCE</span></div>
+                <p style="color:#bdaa7a;font-size:12px;">Enter your Binance UID to connect</p>
+                <input type="text" id="binanceUidInput" placeholder="Enter Binance UID..." />
+                <button class="btn-connect" onclick="connectBinance()">🔗 Connect Wallet</button>
                 <div class="airdrop-info">
-                    <div class="row"><span class="label">Coins Mined</span><span class="value" id="mineBalance">0</span></div>
+                    <div class="row"><span class="label">Your Coins</span><span class="value" id="airdropBalance">0</span></div>
+                    <div class="row"><span class="label">Value (USD)</span><span class="value" id="airdropValue">$0.00</span></div>
+                    <div class="row"><span class="label">Min. Withdraw</span><span class="value">1,000 coins</span></div>
                 </div>
-                <button class="big-btn" onclick="handleMine()" style="margin-top:10px;">⛏️ Mine Now</button>
             </div>
         </div>
 
@@ -766,79 +933,83 @@
                 </div>
                 <div class="invite-link" id="inviteLinkDisplay">Loading...</div>
                 <button class="copy-btn" onclick="copyInviteLink()">📋 Copy Link</button>
-                <button class="big-btn secondary" onclick="simulateReferral()" style="margin-top:8px;">➕ Simulate Referral</button>
                 <p style="font-size:10px;color:#8a7a54;margin-top:6px;">Each referral gives you 100 coins!</p>
             </div>
         </div>
 
-        <!-- EARN PAGE -->
-        <div class="page" id="page-earn">
+        <!-- PROFILE PAGE -->
+        <div class="page" id="page-profile">
             <div style="margin-bottom:8px;">
-                <h2 style="color:#f3ba2f;font-size:16px;">🎯 Earn</h2>
-                <p style="color:#8a7a54;font-size:11px;">Complete tasks to earn extra coins!</p>
+                <h2 style="color:#f3ba2f;font-size:16px;">👤 Profile</h2>
             </div>
-            <div id="earnTasksContainer">
-                <!-- Tasks rendered here -->
-            </div>
-        </div>
-
-        <!-- AIRDROP PAGE -->
-        <div class="page" id="page-airdrop">
-            <div style="margin-bottom:8px;">
-                <h2 style="color:#f3ba2f;font-size:16px;">🎯 Airdrop</h2>
-                <p style="color:#8a7a54;font-size:11px;">Connect your Binance wallet to withdraw</p>
-            </div>
-            <div class="airdrop-card">
-                <div class="binance-logo"><span>BINANCE</span></div>
-                <p style="color:#bdaa7a;font-size:12px;">Enter your Binance UID to connect</p>
-                <input type="text" id="binanceUidInput" placeholder="Enter Binance UID..." />
-                <button class="btn-connect" onclick="connectBinance()">🔗 Connect Wallet</button>
-                <div class="airdrop-info">
-                    <div class="row"><span class="label">Your Coins</span><span class="value" id="airdropBalance">0</span></div>
-                    <div class="row"><span class="label">Value (USD)</span><span class="value" id="airdropValue">$0.00</span></div>
-                    <div class="row"><span class="label">Min. Withdraw</span><span class="value">1,000 coins</span></div>
+            <div class="profile-card">
+                <div class="profile-avatar" id="profileAvatar" onclick="openFullscreenAvatar()">
+                    <span id="profileAvatarText">👩</span>
                 </div>
-                <p style="font-size:9px;color:#4d3f28;margin-top:6px;">🔒 Secure connection via Binance</p>
+                <div class="profile-name" id="profileName">Jane CEO</div>
+                <div class="profile-handle" id="profileHandle">@jane_ceo</div>
+                <div class="profile-stats">
+                    <div class="stat">
+                        <div class="num" id="profileCoins">0</div>
+                        <div class="lbl">Coins</div>
+                    </div>
+                    <div class="stat">
+                        <div class="num" id="profileLevel">1</div>
+                        <div class="lbl">Level</div>
+                    </div>
+                    <div class="stat">
+                        <div class="num" id="profileReferrals">0</div>
+                        <div class="lbl">Referrals</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Bottom Navigation -->
+    <!-- Bottom Navigation - Blue -->
     <div class="bottom-nav">
         <button class="nav-item active" data-page="page-main" onclick="switchPage('page-main')">
             <span class="icon">🏠</span>
-            <span class="label">Main</span>
+            <span class="label">Home</span>
         </button>
-        <button class="nav-item" data-page="page-exchange" onclick="switchPage('page-exchange')">
-            <span class="icon">📈</span>
-            <span class="label">Exchange</span>
-        </button>
-        <button class="nav-item" data-page="page-mine" onclick="switchPage('page-mine')">
-            <span class="icon">⛏️</span>
-            <span class="label">Mine</span>
-        </button>
-        <button class="nav-item" data-page="page-friends" onclick="switchPage('page-friends')">
-            <span class="icon">👥</span>
-            <span class="label">Friends</span>
-        </button>
-        <button class="nav-item" data-page="page-earn" onclick="switchPage('page-earn')">
-            <span class="icon">🎯</span>
-            <span class="label">Earn</span>
+        <button class="nav-item" data-page="page-tasks" onclick="switchPage('page-tasks')">
+            <span class="icon">📋</span>
+            <span class="label">Tasks</span>
+            <span class="badge-dot"></span>
         </button>
         <button class="nav-item" data-page="page-airdrop" onclick="switchPage('page-airdrop')">
             <span class="icon">🎯</span>
             <span class="label">Airdrop</span>
         </button>
+        <button class="nav-item" data-page="page-friends" onclick="switchPage('page-friends')">
+            <span class="icon">👥</span>
+            <span class="label">Friends</span>
+        </button>
+        <button class="nav-item" data-page="page-profile" onclick="switchPage('page-profile')">
+            <span class="icon">👤</span>
+            <span class="label">Profile</span>
+        </button>
     </div>
 
 </div>
 
-<!-- Modal -->
+<!-- Full Screen Avatar Modal -->
+<div class="fullscreen-modal" id="fullscreenModal" onclick="closeFullscreenAvatar()">
+    <button class="close-fs" onclick="closeFullscreenAvatar()">✕</button>
+    <div style="display:flex;flex-direction:column;align-items:center;">
+        <div class="fs-avatar" id="fsAvatar">
+            <span id="fsAvatarText">👩</span>
+        </div>
+        <div class="fs-name" id="fsName">Jane CEO</div>
+    </div>
+</div>
+
+<!-- Regular Modal -->
 <div class="modal-overlay" id="modalOverlay">
     <div class="modal-box" id="modalBox">
+        <button class="modal-close-x" onclick="closeModal()">✕</button>
         <h2 id="modalTitle">Modal</h2>
         <div id="modalContent"></div>
-        <button class="close-btn" id="modalClose">Close</button>
     </div>
 </div>
 
@@ -847,7 +1018,7 @@
         "use strict";
 
         // --- PERSISTENT STORAGE ---
-        const STORAGE_KEY = 'eco_app_data_v15';
+        const STORAGE_KEY = 'eco_app_data_v16';
 
         function loadData() {
             try {
@@ -884,6 +1055,9 @@
         let dailyComboClaimed = saved?.dailyComboClaimed || false;
         let comboAttempts = saved?.comboAttempts || 0;
         let comboDate = saved?.comboDate || '';
+        let maxEnergy = saved?.maxEnergy || MAX_TAPS;
+        let superTapActive = saved?.superTapActive || false;
+        let superTapEndTime = saved?.superTapEndTime || 0;
         const COOLDOWN_DAYS = 7;
         const COOLDOWN_MS = COOLDOWN_DAYS * 24 * 60 * 60 * 1000;
         const MAX_COMBO_ATTEMPTS = 3;
@@ -905,15 +1079,55 @@
         const modalBox = document.getElementById('modalBox');
         const modalTitle = document.getElementById('modalTitle');
         const modalContent = document.getElementById('modalContent');
-        const modalClose = document.getElementById('modalClose');
         const referralCount = document.getElementById('referralCount');
         const inviteLinkDisplay = document.getElementById('inviteLinkDisplay');
-        const exchangeBalance = document.getElementById('exchangeBalance');
-        const mineBalance = document.getElementById('mineBalance');
         const airdropBalance = document.getElementById('airdropBalance');
         const airdropValue = document.getElementById('airdropValue');
         const binanceUidInput = document.getElementById('binanceUidInput');
-        const earnTasksContainer = document.getElementById('earnTasksContainer');
+        const tasksContainer = document.getElementById('tasksContainer');
+        const profileName = document.getElementById('profileName');
+        const profileHandle = document.getElementById('profileHandle');
+        const profileCoins = document.getElementById('profileCoins');
+        const profileLevel = document.getElementById('profileLevel');
+        const profileReferrals = document.getElementById('profileReferrals');
+        const profileAvatarText = document.getElementById('profileAvatarText');
+        const fsAvatarText = document.getElementById('fsAvatarText');
+        const fsName = document.getElementById('fsName');
+        const fullscreenModal = document.getElementById('fullscreenModal');
+
+        // --- TELEGRAM INTEGRATION ---
+        function initTelegramUser() {
+            try {
+                if (window.Telegram && window.Telegram.WebApp) {
+                    const tg = window.Telegram.WebApp;
+                    const user = tg.initDataUnsafe?.user;
+                    if (user) {
+                        const firstName = user.first_name || '';
+                        const lastName = user.last_name || '';
+                        const fullName = (firstName + ' ' + lastName).trim() || 'User';
+                        userName = fullName;
+                        if (user.photo_url) {
+                            userAvatar = `<img src="${user.photo_url}" alt="avatar" />`;
+                            avatarDisplay.innerHTML = userAvatar;
+                            profileAvatarText.innerHTML = `<img src="${user.photo_url}" alt="avatar" />`;
+                            fsAvatarText.innerHTML = `<img src="${user.photo_url}" alt="avatar" />`;
+                        } else {
+                            userAvatar = firstName.charAt(0) || '👤';
+                            avatarDisplay.textContent = userAvatar;
+                            profileAvatarText.textContent = userAvatar;
+                            fsAvatarText.textContent = userAvatar;
+                        }
+                        userNameDisplay.textContent = userName;
+                        profileName.textContent = userName;
+                        profileHandle.textContent = '@' + (user.username || userName.toLowerCase().replace(' ', '_'));
+                        fsName.textContent = userName;
+                        saveState();
+                        return true;
+                    }
+                }
+            } catch (e) {}
+            return false;
+        }
 
         // --- FUNCTIONS ---
         function getLevel(coins) {
@@ -939,8 +1153,21 @@
 
         function getInviteLink() {
             const base = 'https://e-coin.app/invite/';
-            const uid = Math.random().toString(36).substring(2, 10);
+            const uid = (userName + Math.random()).toString(36).substring(2, 10);
             return base + uid;
+        }
+
+        function getPlatformIcon(url) {
+            const u = url.toLowerCase();
+            if (u.includes('tiktok')) return '🎵';
+            if (u.includes('instagram') || u.includes('ig')) return '📸';
+            if (u.includes('twitter') || u.includes('x.com')) return '🐦';
+            if (u.includes('telegram') || u.includes('t.me')) return '📱';
+            if (u.includes('facebook') || u.includes('fb')) return '📘';
+            if (u.includes('youtube') || u.includes('youtu.be')) return '▶️';
+            if (u.includes('whatsapp')) return '💬';
+            if (u.includes('discord')) return '🎮';
+            return '🔗';
         }
 
         function saveState() {
@@ -959,15 +1186,16 @@
                 socialLinks: socialLinks,
                 dailyComboClaimed: dailyComboClaimed,
                 comboAttempts: comboAttempts,
-                comboDate: comboDate
+                comboDate: comboDate,
+                maxEnergy: maxEnergy,
+                superTapActive: superTapActive,
+                superTapEndTime: superTapEndTime
             });
         }
 
         function updateUI() {
             const formatted = balance.toLocaleString();
             balanceDisplay.textContent = formatted;
-            exchangeBalance.textContent = formatted;
-            mineBalance.textContent = formatted;
             airdropBalance.textContent = formatted;
             airdropValue.textContent = '$' + (balance / 1000).toFixed(2);
 
@@ -982,8 +1210,15 @@
             nextLevelDisplay.textContent = `Next: ${nextThreshold.toLocaleString()} coins`;
 
             userNameDisplay.textContent = userName;
-            avatarDisplay.textContent = userAvatar;
+            profileName.textContent = userName;
+            profileCoins.textContent = balance.toLocaleString();
+            profileLevel.textContent = level;
+            profileReferrals.textContent = referrals;
             referralCount.textContent = referrals;
+
+            if (profileHandle) {
+                profileHandle.textContent = '@' + userName.toLowerCase().replace(' ', '_');
+            }
 
             if (tapsRemaining <= 0) {
                 coinEl.classList.add('disabled');
@@ -991,20 +1226,15 @@
                 coinEl.classList.remove('disabled');
             }
 
-            // Update invite link
             if (inviteLinkDisplay) {
-                const link = getInviteLink();
-                inviteLinkDisplay.textContent = link;
+                inviteLinkDisplay.textContent = getInviteLink();
             }
 
-            // Restore binance UID
             if (binanceUidInput && binanceUid) {
                 binanceUidInput.value = binanceUid;
             }
 
-            // Render earn tasks
-            renderEarnTasks();
-
+            renderTasks();
             saveState();
         }
 
@@ -1015,8 +1245,8 @@
             const regenRate = getTapRegenRate();
             const tapsToAdd = Math.floor(timeSinceLastTap / regenRate);
 
-            if (tapsToAdd > 0 && tapsRemaining < MAX_TAPS) {
-                tapsRemaining = Math.min(MAX_TAPS, tapsRemaining + tapsToAdd);
+            if (tapsToAdd > 0 && tapsRemaining < maxEnergy) {
+                tapsRemaining = Math.min(maxEnergy, tapsRemaining + tapsToAdd);
                 lastTapTime = now - (timeSinceLastTap % regenRate * 1000);
                 updateUI();
             }
@@ -1033,10 +1263,26 @@
                 return;
             }
 
-            const amount = tapPower;
+            let amount = tapPower;
+            let isSuper = false;
+
+            // Check super tap
+            if (superTapActive && Date.now() < superTapEndTime) {
+                amount = tapPower * 2;
+                isSuper = true;
+            }
+
             tapsRemaining -= 1;
             balance += amount;
             lastTapTime = Date.now();
+
+            // Check energy scaling
+            if (balance >= 100000 && maxEnergy < 3000) {
+                maxEnergy = 3000;
+                tapsRemaining = maxEnergy;
+                alert('⚡ Energy limit increased to 3000!');
+            }
+
             updateUI();
 
             const rect = coinEl.getBoundingClientRect();
@@ -1049,13 +1295,13 @@
                     const touch = e.touches[i];
                     const tx = touch.clientX - wrapperRect.left;
                     const ty = touch.clientY - wrapperRect.top;
-                    createFloatText(tx, ty, amount);
+                    createFloatText(tx, ty, amount, isSuper);
                 }
             } else {
-                createFloatText(cx, cy, amount);
+                createFloatText(cx, cy, amount, isSuper);
             }
 
-            coinEl.style.transform = 'scale(0.86)';
+            coinEl.style.transform = 'scale(0.86) rotateY(10deg)';
             setTimeout(() => coinEl.style.transform = '', 80);
         }
 
@@ -1072,10 +1318,10 @@
             setTimeout(() => el.remove(), 1200);
         }
 
-        function createFloatText(x, y, amount) {
+        function createFloatText(x, y, amount, isSuper) {
             const el = document.createElement('div');
-            el.className = 'float-text';
-            el.textContent = `+${amount}`;
+            el.className = 'float-text' + (isSuper ? ' super' : '');
+            el.textContent = isSuper ? `×${amount}` : `+${amount}`;
             el.style.left = (x - 20) + 'px';
             el.style.top = (y - 10) + 'px';
             const offsetX = (Math.random() - 0.5) * 30;
@@ -1101,9 +1347,10 @@
         function handleBoost() {
             const cost = getBoostCost();
             const nextPower = tapPower + 1;
+            const superCost = 300;
 
             openModal('⚡ Boost', `
-                <p>Upgrade your tap power!</p>
+                <p>Upgrade your tap power or activate super boost!</p>
                 <div class="setting-item">
                     <span class="label">Current Tap Power</span>
                     <span class="value">+${tapPower}</span>
@@ -1116,12 +1363,20 @@
                     <span class="label">Cost</span>
                     <span class="value">${cost.toLocaleString()} coins</span>
                 </div>
-                <div class="setting-item">
-                    <span class="label">Your Coins</span>
-                    <span class="value">${balance.toLocaleString()}</span>
+                <button class="big-btn" onclick="upgradeBoost()" style="margin-top:6px;">Upgrade</button>
+
+                <div style="height:12px;"></div>
+                <div style="border-top:1px solid rgba(47,40,28,0.2);padding-top:12px;">
+                    <div class="setting-item">
+                        <span class="label">🔥 Super Tap</span>
+                        <span class="value">${superTapActive && Date.now() < superTapEndTime ? 'ACTIVE! ×2' : 'Inactive'}</span>
+                    </div>
+                    <button class="big-btn secondary" onclick="activateSuperTap()" style="margin-top:6px;">${superTapActive && Date.now() < superTapEndTime ? '⏳ Active' : 'Activate (300 coins)'}</button>
+                    <p style="font-size:10px;color:#8a7a54;margin-top:4px;">Doubles your tap power for 30 seconds</p>
                 </div>
-                <button class="big-btn" onclick="upgradeBoost()" style="margin-top:10px;">Upgrade</button>
-                <p style="font-size:11px;color:#8a7a54;margin-top:6px;">Cost doubles each upgrade: 500 → 1,000 → 2,000...</p>
+
+                <p style="font-size:11px;color:#8a7a54;margin-top:8px;">Cost doubles each upgrade: 500 → 1,000 → 2,000...</p>
+                <p style="font-size:10px;color:#4d3f28;">⚡ Energy: ${Math.floor(tapsRemaining)}/${maxEnergy}</p>
             `);
         }
 
@@ -1140,13 +1395,28 @@
             handleBoost();
         }
 
+        function activateSuperTap() {
+            const cost = 300;
+            if (balance < cost) {
+                alert(`❌ Not enough coins! You need ${cost} coins.`);
+                return;
+            }
+            balance -= cost;
+            superTapActive = true;
+            superTapEndTime = Date.now() + 30000;
+            updateUI();
+            closeModal();
+            alert(`🔥 Super Tap activated! ×2 power for 30 seconds!`);
+            handleBoost();
+        }
+
         window.upgradeBoost = upgradeBoost;
+        window.activateSuperTap = activateSuperTap;
 
         // --- DAILY COMBO ---
         function handleDaily() {
             const today = new Date().toDateString();
 
-            // Reset combo if new day
             if (comboDate !== today) {
                 dailyComboClaimed = false;
                 comboAttempts = 0;
@@ -1163,17 +1433,20 @@
                 attemptsHTML += `<div class="dot ${cls}"></div>`;
             }
 
-            // Get social links for tasks
             let tasksHTML = '';
             if (socialLinks.length === 0) {
                 tasksHTML = `<p style="color:#8a7a54;font-size:12px;">No social tasks available. Add links in Settings!</p>`;
             } else {
                 socialLinks.forEach((link, index) => {
+                    const icon = getPlatformIcon(link.url);
                     tasksHTML += `
                         <div class="task-item">
                             <div class="task-info">
-                                <div class="name">🔗 ${link.name}</div>
-                                <div class="desc">${link.url}</div>
+                                <span class="platform-icon">${icon}</span>
+                                <div>
+                                    <div class="name">${link.name}</div>
+                                    <div class="desc">${link.url}</div>
+                                </div>
                             </div>
                             <div class="task-reward">+50 coins</div>
                             <button class="task-btn" onclick="completeSocialTask(${index})">Go</button>
@@ -1213,8 +1486,6 @@
             { q: 'What is the largest planet?', a: 'jupiter' },
             { q: 'What is the chemical symbol for water?', a: 'h2o' },
             { q: 'What year did World War II end?', a: '1945' },
-            { q: 'What is the speed of light?', a: '299792458' },
-            { q: 'Who painted the Mona Lisa?', a: 'da vinci' },
             { q: 'What is the square root of 144?', a: '12' },
             { q: 'What is the tallest mountain?', a: 'everest' }
         ];
@@ -1232,7 +1503,6 @@
                 return;
             }
 
-            // Select random question
             currentComboIndex = Math.floor(Math.random() * comboQuestions.length);
             const question = comboQuestions[currentComboIndex];
 
@@ -1307,33 +1577,37 @@
 
         window.completeSocialTask = completeSocialTask;
 
-        function renderEarnTasks() {
+        function renderTasks() {
             let html = '';
             if (socialLinks.length === 0) {
                 html = `
-                    <div class="earn-card">
-                        <p style="color:#8a7a54;font-size:13px;text-align:center;">No tasks available.</p>
-                        <p style="color:#4d3f28;font-size:11px;text-align:center;">Add social links in Settings → Social Links</p>
+                    <div style="background:rgba(26,22,16,0.6);border-radius:20px;padding:30px 20px;border:1px solid rgba(47,40,28,0.3);text-align:center;">
+                        <p style="color:#8a7a54;font-size:13px;">No tasks available.</p>
+                        <p style="color:#4d3f28;font-size:11px;">Add social links in Settings → Social Links</p>
                     </div>
                 `;
             } else {
                 socialLinks.forEach((link, index) => {
+                    const icon = getPlatformIcon(link.url);
                     html += `
-                        <div class="task-item" style="margin-bottom:8px;">
+                        <div class="task-item">
                             <div class="task-info">
-                                <div class="name">🔗 ${link.name}</div>
-                                <div class="desc">${link.url}</div>
+                                <span class="platform-icon">${icon}</span>
+                                <div>
+                                    <div class="name">${link.name}</div>
+                                    <div class="desc">${link.url}</div>
+                                </div>
                             </div>
                             <div class="task-reward">+50 coins</div>
-                            <button class="task-btn" onclick="completeEarnTask(${index})">Go</button>
+                            <button class="task-btn" onclick="completeTaskFromPage(${index})">Go</button>
                         </div>
                     `;
                 });
             }
-            earnTasksContainer.innerHTML = html;
+            tasksContainer.innerHTML = html;
         }
 
-        function completeEarnTask(index) {
+        function completeTaskFromPage(index) {
             const link = socialLinks[index];
             if (!link) return;
             const reward = 50;
@@ -1343,19 +1617,7 @@
             window.open(link.url, '_blank');
         }
 
-        window.completeEarnTask = completeEarnTask;
-
-        // --- MINE ---
-        function handleMine() {
-            const mined = Math.floor(Math.random() * 30) + 10;
-            balance += mined;
-            tapsRemaining = Math.min(MAX_TAPS, tapsRemaining + 20);
-            updateUI();
-            alert(`⛏️ You mined ${mined} coins and +20 taps!`);
-            switchPage('page-main');
-        }
-
-        window.handleMine = handleMine;
+        window.completeTaskFromPage = completeTaskFromPage;
 
         // --- REFERRALS ---
         function copyInviteLink() {
@@ -1368,17 +1630,6 @@
         }
 
         window.copyInviteLink = copyInviteLink;
-
-        function simulateReferral() {
-            referrals += 1;
-            const reward = 100;
-            balance += reward;
-            updateUI();
-            alert(`🎉 New referral! +${reward} coins! Total referrals: ${referrals}`);
-            switchPage('page-friends');
-        }
-
-        window.simulateReferral = simulateReferral;
 
         // --- AIRDROP ---
         function connectBinance() {
@@ -1402,15 +1653,15 @@
             const canChange = (now - profileLastChanged) >= COOLDOWN_MS;
             const cooldownRemaining = COOLDOWN_DAYS - Math.floor((now - profileLastChanged) / (1000 * 60 * 60 * 24));
 
-            // Get social links for display
             let linksHTML = '';
             if (socialLinks.length === 0) {
                 linksHTML = `<p style="color:#8a7a54;font-size:11px;">No social links added.</p>`;
             } else {
                 socialLinks.forEach((link, index) => {
+                    const icon = getPlatformIcon(link.url);
                     linksHTML += `
                         <div class="setting-item">
-                            <span class="label">${link.name}</span>
+                            <span class="label">${icon} ${link.name}</span>
                             <div>
                                 <span style="color:#8a7a54;font-size:10px;">${link.url.substring(0,20)}...</span>
                                 <button onclick="removeSocialLink(${index})" style="background:rgba(255,107,107,0.2);border:none;padding:2px 10px;border-radius:30px;color:#ff6b6b;cursor:pointer;font-size:10px;">✕</button>
@@ -1436,7 +1687,7 @@
 
                 <div class="input-group">
                     <label style="color:#8a7a54;font-size:12px;">Avatar (emoji or text)</label>
-                    <input type="text" id="settingsAvatar" value="${userAvatar}" placeholder="Enter emoji..." maxlength="2" ${canChange ? '' : 'disabled'} />
+                    <input type="text" id="settingsAvatar" value="${typeof userAvatar === 'string' && !userAvatar.includes('<') ? userAvatar : '👩'}" placeholder="Enter emoji..." maxlength="2" ${canChange ? '' : 'disabled'} />
                 </div>
 
                 <div style="height:10px;"></div>
@@ -1464,6 +1715,7 @@
                         <input type="text" id="socialUrl" placeholder="https://..." />
                         <button class="big-btn" onclick="addSocialLink()" style="font-size:13px;padding:8px;">Add Link</button>
                     </div>
+                    <p style="font-size:9px;color:#4d3f28;margin-top:4px;">Max 5 links. Platform icons appear automatically!</p>
                 </div>
 
                 <div style="height:10px;"></div>
@@ -1483,13 +1735,10 @@
                     <div class="row"><span class="label">Level</span><span class="value">${getLevel(balance)}</span></div>
                     <div class="row"><span class="label">Tap Power</span><span class="value">+${tapPower}</span></div>
                     <div class="row"><span class="label">Referrals</span><span class="value">${referrals}</span></div>
-                    <div class="row"><span class="label">Taps Left</span><span class="value">${Math.floor(tapsRemaining).toLocaleString()}</span></div>
+                    <div class="row"><span class="label">Energy</span><span class="value">${Math.floor(tapsRemaining)}/${maxEnergy}</span></div>
                 </div>
-
-                <button class="close-btn secondary" onclick="closeModal()" style="margin-top:10px;">Close</button>
             `);
 
-            // Restore binance UID in settings
             setTimeout(() => {
                 const binanceInput = document.getElementById('binanceSettingsInput');
                 if (binanceInput && binanceUid) {
@@ -1519,7 +1768,12 @@
             }
 
             userName = name;
-            if (avatar) userAvatar = avatar;
+            if (avatar) {
+                userAvatar = avatar;
+                avatarDisplay.textContent = userAvatar;
+                profileAvatarText.textContent = userAvatar;
+                fsAvatarText.textContent = userAvatar;
+            }
             profileLastChanged = now;
             updateUI();
             closeModal();
@@ -1534,9 +1788,7 @@
             const app = document.getElementById('app');
             app.className = 'app ' + theme;
             saveState();
-            // Update modal if open
-            const modalContentEl = document.getElementById('modalContent');
-            if (modalContentEl && modalContentEl.innerHTML.includes('Theme')) {
+            if (document.getElementById('modalContent').innerHTML.includes('Theme')) {
                 openSettings();
             }
         }
@@ -1551,6 +1803,11 @@
 
             if (!name || !url) {
                 alert('Please enter both name and URL.');
+                return;
+            }
+
+            if (socialLinks.length >= 5) {
+                alert('Maximum 5 social links allowed.');
                 return;
             }
 
@@ -1595,6 +1852,19 @@
 
         window.saveBinanceSettings = saveBinanceSettings;
 
+        // --- FULL SCREEN AVATAR ---
+        function openFullscreenAvatar() {
+            fullscreenModal.classList.add('active');
+            fsName.textContent = userName;
+        }
+
+        function closeFullscreenAvatar() {
+            fullscreenModal.classList.remove('active');
+        }
+
+        window.openFullscreenAvatar = openFullscreenAvatar;
+        window.closeFullscreenAvatar = closeFullscreenAvatar;
+
         // --- PAGE SWITCHING ---
         function switchPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -1612,30 +1882,72 @@
             modalTitle.textContent = title;
             modalContent.innerHTML = contentHTML;
             modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
         function closeModal() {
             modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
         }
 
         window.closeModal = closeModal;
+
+        // --- SWIPE TO CLOSE ---
+        let touchStartY = 0;
+        let touchEndY = 0;
+
+        modalBox.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+
+        modalBox.addEventListener('touchmove', (e) => {
+            touchEndY = e.touches[0].clientY;
+            const diff = touchEndY - touchStartY;
+            if (diff > 80) {
+                closeModal();
+            }
+        }, { passive: true });
+
+        // --- CLOSE MODAL ON OVERLAY CLICK ---
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeModal();
+        });
 
         // --- EVENTS ---
         boostBtn.addEventListener('click', handleBoost);
         dailyBtn.addEventListener('click', handleDaily);
 
-        modalClose.addEventListener('click', closeModal);
-        modalOverlay.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) closeModal();
-        });
-
         // --- USER CLICK FOR PROFILE ---
         userInfo.addEventListener('click', function() {
-            openSettings();
+            switchPage('page-profile');
         });
 
         // --- INIT ---
-        // Set initial theme
+        // Try Telegram auto-login first
+        const tgLoaded = initTelegramUser();
+
+        // If not from Telegram, use saved data
+        if (!tgLoaded) {
+            if (saved) {
+                userName = saved.userName || 'Jane CEO';
+                userAvatar = saved.userAvatar || '👩';
+                if (typeof userAvatar === 'string' && userAvatar.includes('<img')) {
+                    avatarDisplay.innerHTML = userAvatar;
+                    profileAvatarText.innerHTML = userAvatar;
+                    fsAvatarText.innerHTML = userAvatar;
+                } else {
+                    avatarDisplay.textContent = userAvatar;
+                    profileAvatarText.textContent = userAvatar;
+                    fsAvatarText.textContent = userAvatar;
+                }
+                userNameDisplay.textContent = userName;
+                profileName.textContent = userName;
+                fsName.textContent = userName;
+                profileHandle.textContent = '@' + userName.toLowerCase().replace(' ', '_');
+            }
+        }
+
+        // Set theme
         const app = document.getElementById('app');
         app.className = 'app ' + theme;
 
@@ -1645,6 +1957,12 @@
             dailyComboClaimed = false;
             comboAttempts = 0;
             comboDate = today;
+            saveState();
+        }
+
+        // Check super tap expiry
+        if (superTapActive && Date.now() > superTapEndTime) {
+            superTapActive = false;
             saveState();
         }
 
@@ -1658,10 +1976,12 @@
         console.log('💰 E-Coin loaded!');
         console.log('👤 User:', userName);
         console.log('⚡ Tap power:', tapPower);
-        console.log('🔋 Taps remaining:', tapsRemaining);
+        console.log('🔋 Energy:', Math.floor(tapsRemaining) + '/' + maxEnergy);
         console.log('🎨 Theme:', theme);
         console.log('👥 Referrals:', referrals);
         console.log('🔗 Social links:', socialLinks.length);
+        console.log('🔥 Super Tap:', superTapActive ? 'ACTIVE' : 'Inactive');
+        console.log('📱 Telegram:', tgLoaded ? 'Connected' : 'Standalone');
     })();
 </script>
 </body>
