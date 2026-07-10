@@ -27,7 +27,7 @@
             background: #12100d;
             display: flex;
             flex-direction: column;
-            padding: 8px 10px 6px;
+            padding: 6px 8px 4px;
             overflow: hidden;
             position: relative;
         }
@@ -35,22 +35,26 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             flex-shrink: 0;
         }
         .user-info {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             background: #1a1610;
-            padding: 2px 10px 2px 4px;
+            padding: 2px 8px 2px 3px;
             border-radius: 40px;
             border: 1px solid #3d321f;
             cursor: pointer;
+            transition: 0.1s;
+        }
+        .user-info:active {
+            transform: scale(0.95);
         }
         .avatar {
-            width: 28px;
-            height: 28px;
+            width: 26px;
+            height: 26px;
             background: linear-gradient(135deg, #f3ba2f, #d49c1a);
             border-radius: 50%;
             display: flex;
@@ -58,7 +62,7 @@
             justify-content: center;
             font-weight: 700;
             color: #0e0c07;
-            font-size: 12px;
+            font-size: 11px;
             overflow: hidden;
         }
         .avatar img {
@@ -68,36 +72,36 @@
         }
         .user-info span {
             font-weight: 500;
-            font-size: 11px;
+            font-size: 10px;
             color: #e5d6b0;
         }
         .badge {
             background: #2f2a1a;
             color: #f3ba2f;
-            padding: 2px 8px;
+            padding: 1px 6px;
             border-radius: 30px;
-            font-size: 9px;
+            font-size: 8px;
             font-weight: 600;
             border: 1px solid #4f3d1f;
         }
         .balance-card {
             background: #1a1610;
-            border-radius: 16px;
-            padding: 8px 10px 6px;
+            border-radius: 14px;
+            padding: 6px 8px 4px;
             text-align: center;
             border: 1px solid #2f281c;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             flex-shrink: 0;
             box-shadow: inset 0 4px 12px rgba(0,0,0,0.6);
         }
         .balance-card .label {
-            font-size: 8px;
+            font-size: 7px;
             color: #b0945a;
             letter-spacing: 2px;
             text-transform: uppercase;
         }
         .balance-card .amount {
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 700;
             color: #fad974;
             line-height: 1.1;
@@ -107,14 +111,14 @@
         .balance-card .stats {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-top: 2px;
-            font-size: 10px;
+            gap: 8px;
+            margin-top: 1px;
+            font-size: 9px;
             color: #bdaa7a;
         }
         .balance-card .stats span {
             background: #0e0c07;
-            padding: 1px 10px;
+            padding: 0 8px;
             border-radius: 40px;
             border: 1px solid #2f281c;
         }
@@ -124,13 +128,13 @@
             align-items: center;
             background: #1a1610;
             border-radius: 30px;
-            padding: 2px 10px 2px 12px;
+            padding: 2px 8px 2px 10px;
             border: 1px solid #2f281c;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             flex-shrink: 0;
         }
         .level-row .level-badge {
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 600;
             color: #f3ba2f;
         }
@@ -139,20 +143,20 @@
             font-weight: 400;
         }
         .level-row .next-level {
-            font-size: 9px;
+            font-size: 8px;
             color: #8a7a54;
         }
         .timer-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 3px;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             flex-shrink: 0;
         }
         .timer-item {
             background: #19150f;
-            border-radius: 10px;
-            padding: 4px 2px;
+            border-radius: 8px;
+            padding: 3px 2px;
             text-align: center;
             border: 1px solid #2d2417;
             cursor: pointer;
@@ -162,33 +166,66 @@
             background: #2a2215;
         }
         .timer-item .value {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             font-weight: 700;
             color: #f3ba2f;
         }
         .timer-item .desc {
-            font-size: 6px;
+            font-size: 5px;
             text-transform: uppercase;
             color: #8a7a54;
             letter-spacing: 0.3px;
-            margin-top: 1px;
+            margin-top: 0px;
+        }
+        .tap-limit-bar {
+            background: #0e0c07;
+            border-radius: 30px;
+            padding: 2px 8px;
+            margin-bottom: 3px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #2f281c;
+            flex-shrink: 0;
+        }
+        .tap-limit-bar .label {
+            font-size: 7px;
+            color: #8a7a54;
+        }
+        .tap-limit-bar .value {
+            font-size: 9px;
+            font-weight: 700;
+            color: #f3ba2f;
+        }
+        .tap-limit-bar .fill {
+            width: 60px;
+            height: 3px;
+            background: #2a2215;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .tap-limit-bar .fill .bar {
+            height: 100%;
+            background: linear-gradient(90deg, #f3ba2f, #ff6b6b);
+            border-radius: 10px;
+            transition: width 0.5s;
         }
         .progress-row {
             background: #1a1610;
             border-radius: 40px;
-            padding: 3px 12px 3px 8px;
+            padding: 2px 10px 2px 6px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             border: 1px solid #2f281c;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             flex-shrink: 0;
         }
         .progress-row .left {
             display: flex;
             align-items: center;
-            gap: 4px;
-            font-size: 10px;
+            gap: 3px;
+            font-size: 9px;
             flex: 1;
         }
         .progress-row .left .fill {
@@ -208,18 +245,18 @@
             background: #f3ba2f;
             color: #0e0c07;
             font-weight: 700;
-            padding: 2px 12px;
+            padding: 1px 10px;
             border-radius: 30px;
-            font-size: 10px;
+            font-size: 9px;
             cursor: pointer;
             transition: 0.08s;
-            box-shadow: 0 3px 0 #876a1a;
+            box-shadow: 0 2px 0 #876a1a;
             border: none;
             flex-shrink: 0;
         }
         .progress-row .right:active {
             transform: translateY(2px);
-            box-shadow: 0 1px 0 #876a1a;
+            box-shadow: 0 0px 0 #876a1a;
         }
         .coin-wrapper {
             display: flex;
@@ -228,7 +265,7 @@
             flex: 1;
             min-height: 0;
             position: relative;
-            margin: 2px 0;
+            margin: 1px 0;
             overflow: visible;
             touch-action: none;
         }
@@ -312,9 +349,9 @@
         }
         .ceo-tag {
             background: #1f1a0f;
-            padding: 2px 12px 2px 8px;
+            padding: 1px 10px 1px 6px;
             border-radius: 40px;
-            font-size: 10px;
+            font-size: 9px;
             border: 1px solid #3d321f;
             color: #d4bb7a;
             cursor: pointer;
@@ -324,39 +361,39 @@
             font-weight: 600;
         }
         .small-balance {
-            font-size: 11px;
+            font-size: 10px;
             color: #8a7a54;
         }
         .action-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr;
             gap: 3px;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             flex-shrink: 0;
         }
         .action-btn {
             background: #1a1610;
             border: 1px solid #2f281c;
             border-radius: 30px;
-            padding: 5px 0;
+            padding: 4px 0;
             text-align: center;
             font-weight: 600;
-            font-size: 9px;
+            font-size: 8px;
             color: #e5d6b0;
             cursor: pointer;
             transition: 0.08s;
-            box-shadow: 0 3px 0 #0a0806;
+            box-shadow: 0 2px 0 #0a0806;
             border: none;
         }
         .action-btn:active {
             transform: translateY(2px);
-            box-shadow: 0 1px 0 #0a0806;
+            box-shadow: 0 0px 0 #0a0806;
         }
         .action-btn.gold {
             background: #f3ba2f;
             border-color: #f3ba2f;
             color: #0b0a08;
-            box-shadow: 0 3px 0 #876a1a;
+            box-shadow: 0 2px 0 #876a1a;
         }
         .action-btn.gold:active {
             background: #dbaa24;
@@ -375,9 +412,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 3px 4px;
+            padding: 2px 4px;
             border-radius: 30px;
-            font-size: 8px;
+            font-size: 7px;
             color: #7a6a4a;
             cursor: pointer;
             background: transparent;
@@ -388,7 +425,7 @@
             flex: 1;
         }
         .nav-item .icon {
-            font-size: 14px;
+            font-size: 12px;
             line-height: 1;
         }
         .nav-item.active {
@@ -400,17 +437,17 @@
         }
         .footer-airdrop {
             text-align: center;
-            font-size: 8px;
+            font-size: 7px;
             color: #4d3f28;
             letter-spacing: 1px;
             border-top: 1px solid #1f1a10;
-            padding-top: 3px;
+            padding-top: 2px;
             flex-shrink: 0;
             margin-top: 2px;
         }
         .footer-airdrop span {
             background: #1a1610;
-            padding: 1px 14px;
+            padding: 0 12px;
             border-radius: 40px;
             border: 1px solid #2f281c;
             color: #f3ba2f;
@@ -433,7 +470,7 @@
             background: #1a1610;
             border: 1px solid #3d321f;
             border-radius: 30px;
-            padding: 20px 16px 16px;
+            padding: 18px 14px 14px;
             max-width: 340px;
             width: 100%;
             max-height: 80vh;
@@ -441,43 +478,43 @@
         }
         .modal-box h2 {
             color: #f3ba2f;
-            font-size: 1.2rem;
-            margin-bottom: 12px;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
             text-align: center;
         }
         .modal-box p {
             color: #bdaa7a;
-            font-size: 12px;
-            margin-bottom: 8px;
+            font-size: 11px;
+            margin-bottom: 6px;
             text-align: center;
         }
         .modal-box .close-btn {
             background: #f3ba2f;
             border: none;
-            padding: 8px;
+            padding: 6px;
             border-radius: 40px;
             font-weight: 700;
             color: #0e0c07;
             width: 100%;
-            font-size: 14px;
+            font-size: 13px;
             cursor: pointer;
             margin-top: 6px;
         }
         .modal-box .invite-link {
             background: #0e0c07;
-            padding: 8px;
-            border-radius: 14px;
+            padding: 6px;
+            border-radius: 12px;
             border: 1px solid #2f281c;
             color: #f3ba2f;
-            font-size: 12px;
+            font-size: 11px;
             word-break: break-all;
-            margin: 8px 0;
+            margin: 6px 0;
             text-align: center;
         }
         .modal-box .copy-btn {
             background: #2f281c;
             border: none;
-            padding: 5px 14px;
+            padding: 4px 12px;
             border-radius: 30px;
             color: #f3ba2f;
             font-weight: 600;
@@ -487,16 +524,16 @@
         }
         .modal-box .airdrop-info {
             background: #0e0c07;
-            padding: 12px;
-            border-radius: 14px;
+            padding: 10px;
+            border-radius: 12px;
             border: 1px solid #2f281c;
-            margin: 6px 0;
+            margin: 4px 0;
         }
         .modal-box .airdrop-info .row {
             display: flex;
             justify-content: space-between;
             padding: 2px 0;
-            font-size: 12px;
+            font-size: 11px;
         }
         .modal-box .airdrop-info .row .label {
             color: #8a7a54;
@@ -507,10 +544,10 @@
         }
         .modal-box .boost-option {
             background: #0e0c07;
-            padding: 8px 12px;
-            border-radius: 12px;
+            padding: 6px 10px;
+            border-radius: 10px;
             border: 1px solid #2f281c;
-            margin: 4px 0;
+            margin: 3px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -518,86 +555,82 @@
         .modal-box .boost-option button {
             background: #f3ba2f;
             border: none;
-            padding: 4px 12px;
+            padding: 3px 10px;
             border-radius: 30px;
             font-weight: 600;
-            cursor: pointer; 
-            font-size: 11px;
+            cursor: pointer;
+            font-size: 10px;
         }
         .modal-box .boost-option .cost {
             color: #8a7a54;
-            font-size: 10px;
+            font-size: 9px;
         }
         .modal-box .referral-bonus {
             background: linear-gradient(135deg, #2f281c, #1a1610);
             border: 1px solid #f3ba2f40;
-            border-radius: 14px;
-            padding: 10px;
-            margin: 6px 0;
+            border-radius: 12px;
+            padding: 8px;
+            margin: 4px 0;
             text-align: center;
         }
         .modal-box .referral-bonus .big {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             color: #f3ba2f;
             font-weight: 700;
         }
         .modal-box .referral-bonus .sub {
-            font-size: 10px;
+            font-size: 9px;
             color: #8a7a54;
         }
         .modal-box .social-links {
             display: flex;
             justify-content: center;
-            gap: 8px;
-            margin: 8px 0;
+            gap: 6px;
+            margin: 6px 0;
             flex-wrap: wrap;
         }
         .modal-box .social-links a {
             color: #f3ba2f;
             text-decoration: none;
-            font-size: 18px;
             background: #0e0c07;
-            padding: 5px 10px;
+            padding: 4px 8px;
             border-radius: 30px;
             border: 1px solid #2f281c;
             transition: 0.2s;
             display: flex;
             align-items: center;
-            gap: 4px;
-            font-size: 11px;
+            gap: 3px;
+            font-size: 10px;
         }
         .modal-box .social-links a:hover {
             background: #2f281c;
         }
-        .modal-box .social-links a .icon {
-            font-size: 16px;
-        }
         .modal-box .admin-badge {
             background: #f3ba2f;
             color: #0e0c07;
-            padding: 2px 10px;
+            padding: 1px 8px;
             border-radius: 30px;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 700;
             display: inline-block;
-            margin: 4px auto;
+            margin: 3px auto;
         }
         .user-profile {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 4px 0;
+            gap: 6px;
+            padding: 3px 0;
         }
         .user-profile .avatar-lg {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background: linear-gradient(135deg, #f3ba2f, #d49c1a);
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 18px;
         }
         .user-profile .avatar-lg img {
             width: 100%;
@@ -610,54 +643,32 @@
         .user-profile .info .name {
             color: #f3ba2f;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
         }
         .user-profile .info .handle {
             color: #8a7a54;
-            font-size: 11px;
-        }
-        .tap-limit-bar {
-            background: #0e0c07;
-            border-radius: 30px;
-            padding: 2px 10px;
-            margin-bottom: 4px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid #2f281c;
-            flex-shrink: 0;
-        }
-        .tap-limit-bar .label {
-            font-size: 8px;
-            color: #8a7a54;
-        }
-        .tap-limit-bar .value {
             font-size: 10px;
+        }
+        .modal-box .verify-btn {
+            background: #f3ba2f;
+            border: none;
+            padding: 5px 14px;
+            border-radius: 30px;
             font-weight: 700;
-            color: #f3ba2f;
-        }
-        .tap-limit-bar .fill {
-            width: 80px;
-            height: 4px;
-            background: #2a2215;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .tap-limit-bar .fill .bar {
-            height: 100%;
-            background: linear-gradient(90deg, #f3ba2f, #ff6b6b);
-            border-radius: 10px;
-            transition: width 0.5s;
+            cursor: pointer;
+            margin: 4px auto;
+            display: block;
+            font-size: 12px;
         }
         @media (max-width: 420px) {
             .coin { width: 170px; height: 170px; }
             .coin::after { font-size: 4.5rem; }
-            .balance-card .amount { font-size: 2rem; }
+            .balance-card .amount { font-size: 1.8rem; }
         }
         @media (max-width: 360px) {
             .coin { width: 150px; height: 150px; }
             .coin::after { font-size: 4rem; }
-            .balance-card .amount { font-size: 1.8rem; }
+            .balance-card .amount { font-size: 1.6rem; }
         }
     </style>
 </head>
@@ -667,7 +678,7 @@
     <div class="header">
         <div class="user-info" id="userInfo">
             <div class="avatar" id="avatarDisplay">👩</div>
-            <span id="userNameDisplay">Jane </span>
+            <span id="userNameDisplay">Jane (CEO)</span>
         </div>
         <div class="badge">Silver ▾</div>
     </div>
@@ -676,7 +687,7 @@
         <div class="label">💰 BALANCE</div>
         <div class="amount" id="balanceDisplay">0</div>
         <div class="stats">
-    
+            <span>2 / 11</span>
             <span>⚡ +207 /h</span>
         </div>
     </div>
@@ -701,7 +712,6 @@
         </div>
     </div>
 
-    <!-- Tap Limit Bar -->
     <div class="tap-limit-bar">
         <span class="label">🔋 Taps Left</span>
         <div class="fill"><div class="bar" id="tapLimitBar" style="width:100%"></div></div>
@@ -721,7 +731,7 @@
     </div>
 
     <div class="coin-label">
-        <div class="ceo-tag" id="ceoTag">👑  <span id="ceoCoinCount">0</span></div>
+        <div class="ceo-tag" id="ceoTag">👑 (CEO) <span id="ceoCoinCount">0</span></div>
         <div class="small-balance">🪙 <span id="balanceSmall">0</span></div>
     </div>
 
@@ -731,6 +741,18 @@
         <button class="action-btn" id="airdropBtn">Airdrop</button>
         <button class="action-btn" id="aiBtn">🤖 AI</button>
     </div>
+
+    <div class="bottom-nav">
+        <button class="nav-item active"><span class="icon">🏠</span>Home</button>
+        <button class="nav-item"><span class="icon">🔍</span>Search</button>
+        <button class="nav-item"><span class="icon">🔔</span>Notif.</button>
+        <button class="nav-item"><span class="icon">⚡</span>Activity</button>
+    </div>
+
+    <div class="footer-airdrop">
+        <span>✦ Airdrop active ✦</span>
+    </div>
+</div>
 
 <div class="modal-overlay" id="modalOverlay">
     <div class="modal-box" id="modalBox">
@@ -776,7 +798,7 @@
         const modalClose = document.getElementById('modalClose');
 
         // --- PERSISTENT STORAGE ---
-        const STORAGE_KEY = 'eco_app_data_v9';
+        const STORAGE_KEY = 'eco_app_data_v10';
 
         function loadData() {
             try {
@@ -812,7 +834,30 @@
         let lastTapTime = saved?.lastTapTime || 0;
         let superTapActive = saved?.superTapActive || false;
         let superTapMultiplier = saved?.superTapMultiplier || 1;
+        let superTapRemaining = saved?.superTapRemaining || 0;
         const maxProgress = 1500;
+
+        // --- TELEGRAM AUTO-LOGIN ---
+        function initTelegramUser() {
+            try {
+                if (window.Telegram && window.Telegram.WebApp) {
+                    const tg = window.Telegram.WebApp;
+                    const user = tg.initDataUnsafe?.user;
+                    if (user) {
+                        userName = user.first_name || user.username || 'User';
+                        if (user.photo_url) {
+                            avatarDisplay.innerHTML = `<img src="${user.photo_url}" alt="avatar" />`;
+                        } else {
+                            avatarDisplay.textContent = user.first_name?.charAt(0) || '👤';
+                        }
+                        userNameDisplay.textContent = userName + ' (CEO)';
+                        saveState();
+                        return true;
+                    }
+                }
+            } catch (e) {}
+            return false;
+        }
 
         // --- FUNCTIONS ---
         function getLevel(coins) {
@@ -830,7 +875,6 @@
         }
 
         function getTapRegenRate() {
-            // Regenerate 1 tap every 0.4 seconds (1500 taps in 10 minutes)
             return 0.4;
         }
 
@@ -849,7 +893,8 @@
                 tapsRemaining: tapsRemaining,
                 lastTapTime: lastTapTime,
                 superTapActive: superTapActive,
-                superTapMultiplier: superTapMultiplier
+                superTapMultiplier: superTapMultiplier,
+                superTapRemaining: superTapRemaining
             });
         }
 
@@ -867,12 +912,10 @@
             const nextThreshold = getNextLevelThreshold(balance);
             nextLevelDisplay.textContent = `Next: ${nextThreshold.toLocaleString()} coins`;
 
-            // Update tap limit
             const tapPct = Math.min(100, (tapsRemaining / MAX_TAPS) * 100);
             tapLimitBar.style.width = tapPct + '%';
             tapLimitDisplay.textContent = Math.floor(tapsRemaining).toLocaleString();
 
-            // Enable/disable coin
             if (tapsRemaining <= 0) {
                 coinEl.classList.add('disabled');
             } else {
@@ -885,7 +928,7 @@
         // --- TAP REGENERATION ---
         function regenerateTaps() {
             const now = Date.now();
-            const timeSinceLastTap = (now - lastTapTime) / 1000; // seconds
+            const timeSinceLastTap = (now - lastTapTime) / 1000;
             const regenRate = getTapRegenRate();
             const tapsToAdd = Math.floor(timeSinceLastTap / regenRate);
             
@@ -900,7 +943,6 @@
         function handleTap(e) {
             e.preventDefault?.();
             
-            // Regenerate taps first
             regenerateTaps();
             
             if (tapsRemaining <= 0) {
@@ -911,19 +953,26 @@
             let amount = tapPower;
             let isSuper = false;
             
-            // Check if super tap is active
-            if (superTapActive) {
+            if (superTapActive && superTapRemaining > 0) {
                 amount = tapPower * superTapMultiplier;
                 isSuper = true;
-                // Super tap uses more taps
                 const tapCost = Math.ceil(superTapMultiplier / 2);
                 if (tapsRemaining < tapCost) {
                     showTapLimitMessage();
                     return;
                 }
                 tapsRemaining -= tapCost;
+                superTapRemaining -= 1;
+                if (superTapRemaining <= 0) {
+                    superTapActive = false;
+                    superTapMultiplier = 1;
+                }
             } else {
                 tapsRemaining -= 1;
+                if (superTapActive && superTapRemaining <= 0) {
+                    superTapActive = false;
+                    superTapMultiplier = 1;
+                }
             }
 
             balance += amount;
@@ -935,7 +984,6 @@
             lastTapTime = Date.now();
             updateUI();
 
-            // Show floating text
             const rect = coinEl.getBoundingClientRect();
             const wrapperRect = coinWrapper.getBoundingClientRect();
             const cx = rect.left - wrapperRect.left + rect.width / 2;
@@ -957,7 +1005,6 @@
         }
 
         function showTapLimitMessage() {
-            // Show "Wait" message
             const wrapperRect = coinWrapper.getBoundingClientRect();
             const cx = wrapperRect.width / 2;
             const cy = 20;
@@ -1019,9 +1066,8 @@
                 dailyClaimed = false;
                 cipherClaimed = false;
                 comboClaimed = false;
-                localStorage.setItem('eco_last_date', today);
-                // Reset taps daily
                 tapsRemaining = MAX_TAPS;
+                localStorage.setItem('eco_last_date', today);
                 saveState();
                 updateUI();
             }
@@ -1036,7 +1082,6 @@
             const reward = 100;
             balance += reward;
             ceoCoins += reward;
-            // Add bonus taps
             tapsRemaining = Math.min(MAX_TAPS, tapsRemaining + 200);
             dailyClaimed = true;
             updateUI();
@@ -1080,7 +1125,6 @@
             const cost = getBoostCost();
             const nextPower = tapPower + 1;
             const superCost = 300;
-            const superMult = 10;
             
             openModal('⚡ Boost & Super Taps', `
                 <p>Upgrade your tap power or buy super taps!</p>
@@ -1096,7 +1140,7 @@
                 <div class="boost-option" style="border-color: #ff6b6b40;">
                     <div>
                         <strong style="color:#ff6b6b;">🔥 Super Taps</strong>
-                        <div class="cost">${superTapActive ? 'ACTIVE! ×' + superTapMultiplier : '×10 for 30 taps'}</div>
+                        <div class="cost">${superTapActive ? 'ACTIVE! ×' + superTapMultiplier + ' (' + superTapRemaining + ' left)' : '×10 for 30 taps'}</div>
                     </div>
                     <button onclick="buySuperTaps()">${superCost} coins</button>
                 </div>
@@ -1106,8 +1150,8 @@
                     <div class="row"><span class="label">Taps remaining</span><span class="value">${Math.floor(tapsRemaining).toLocaleString()}</span></div>
                     <div class="row"><span class="label">Boost Level</span><span class="value">${boostLevel}</span></div>
                 </div>
-                <p style="font-size:10px;color:#8a7a54;">Tap power costs double each upgrade: 500 → 1,000 → 2,000...</p>
-                <p style="font-size:10px;color:#8a7a54;">Super Taps: ×10 power for 30 taps (uses 15 taps)</p>
+                <p style="font-size:9px;color:#8a7a54;">Tap power costs double each upgrade: 500 → 1,000 → 2,000...</p>
+                <p style="font-size:9px;color:#8a7a54;">Super Taps: ×10 power for 30 taps</p>
             `);
         }
 
@@ -1129,19 +1173,13 @@
         function buySuperTaps() {
             const cost = 300;
             if (balance < cost) {
-                alert(`❌ ${cost} coins.`);
+                alert(`❌ Not enough coins! You need ${cost} coins.`);
                 return;
             }
             balance -= cost;
             superTapActive = true;
             superTapMultiplier = 10;
-            // Super taps last for 30 taps
-            setTimeout(() => {
-                superTapActive = false;
-                superTapMultiplier = 1;
-                updateUI();
-                alert('🔥 Super Taps expired!');
-            }, 30000); // 30 seconds
+            superTapRemaining = 30;
             updateUI();
             closeModal();
             alert(`🔥 Super Taps activated! ×10 power for 30 taps!`);
@@ -1175,8 +1213,8 @@
                 </div>
                 <div class="invite-link">${inviteLink}</div>
                 <button class="copy-btn" onclick="navigator.clipboard?.writeText('${inviteLink}') && alert('Link copied!')">📋 Copy Link</button>
-                <button class="verify-btn" onclick="simulateReferral()" style="margin-top:6px;background:#f3ba2f;border:none;padding:6px 16px;border-radius:30px;font-weight:700;cursor:pointer;margin:4px auto;display:block;font-size:13px;">➕ Simulate Referral</button>
-                <p style="margin-top:6px;font-size:10px;color:#8a7a54;">Share this link with your friends</p>
+                <button class="verify-btn" onclick="simulateReferral()">➕ Simulate Referral</button>
+                <p style="margin-top:4px;font-size:9px;color:#8a7a54;">Share this link with your friends</p>
             `);
         }
 
@@ -1203,8 +1241,8 @@
                     <div class="row"><span class="label">Rate</span><span class="value">1 coin = $0.001</span></div>
                     <div class="row"><span class="label">Min. Withdraw</span><span class="value">1,000 coins</span></div>
                 </div>
-                <p style="font-size:10px;color:#8a7a54;">Connect your Binance wallet to withdraw</p>
-                <button style="background:#f3ba2f;border:none;padding:8px;border-radius:40px;font-weight:700;width:100%;cursor:pointer;margin-top:4px;" onclick="connectBinance()">
+                <p style="font-size:9px;color:#8a7a54;">Connect your Binance wallet to withdraw</p>
+                <button style="background:#f3ba2f;border:none;padding:6px;border-radius:40px;font-weight:700;width:100%;cursor:pointer;margin-top:4px;" onclick="connectBinance()">
                     🔗 Connect Binance Wallet
                 </button>
             `);
@@ -1228,7 +1266,7 @@
                     <div class="row"><span class="label">Coins</span><span class="value">${balance.toLocaleString()}</span></div>
                     <div class="row"><span class="label">Exchange Rate</span><span class="value">1 coin = 0.001 ETH</span></div>
                 </div>
-                <button style="background:#f3ba2f;border:none;padding:8px;border-radius:40px;font-weight:700;width:100%;cursor:pointer;margin-top:4px;" onclick="alert('Exchange feature coming soon!')">
+                <button style="background:#f3ba2f;border:none;padding:6px;border-radius:40px;font-weight:700;width:100%;cursor:pointer;margin-top:4px;" onclick="alert('Exchange feature coming soon!')">
                     Exchange Now
                 </button>
             `);
@@ -1238,14 +1276,14 @@
         function handleAI() {
             openModal('🤖 E-Coin AI', `
                 <p>I'm your E-Coin AI Assistant! Ask me anything.</p>
-                <div style="background:#0e0c07;padding:10px;border-radius:14px;border:1px solid #2f281c;margin:6px 0;max-height:150px;overflow-y:auto;">
-                    <div style="color:#f3ba2f;font-size:12px;">👋 Hello! How can I help you today?</div>
+                <div style="background:#0e0c07;padding:8px;border-radius:12px;border:1px solid #2f281c;margin:4px 0;max-height:120px;overflow-y:auto;">
+                    <div style="color:#f3ba2f;font-size:11px;">👋 Hello! How can I help you today?</div>
                 </div>
-                <div style="display:flex;gap:6px;margin-top:6px;">
-                    <input type="text" id="aiInput" placeholder="Ask me..." style="flex:1;padding:5px 10px;border-radius:30px;border:1px solid #2f281c;background:#0e0c07;color:#e5d6b0;font-size:12px;outline:none;" onkeydown="if(event.key==='Enter') askAI()" />
-                    <button onclick="askAI()" style="background:#f3ba2f;border:none;padding:5px 12px;border-radius:30px;font-weight:700;cursor:pointer;font-size:12px;">Ask</button>
+                <div style="display:flex;gap:4px;margin-top:4px;">
+                    <input type="text" id="aiInput" placeholder="Ask me..." style="flex:1;padding:4px 8px;border-radius:30px;border:1px solid #2f281c;background:#0e0c07;color:#e5d6b0;font-size:11px;outline:none;" onkeydown="if(event.key==='Enter') askAI()" />
+                    <button onclick="askAI()" style="background:#f3ba2f;border:none;padding:4px 10px;border-radius:30px;font-weight:700;cursor:pointer;font-size:11px;">Ask</button>
                 </div>
-                <div style="margin-top:6px;text-align:center;font-size:10px;color:#8a7a54;">
+                <div style="margin-top:4px;text-align:center;font-size:9px;color:#8a7a54;">
                     <span class="admin-badge">ADMIN</span> E-Coin AI v1.0
                 </div>
             `);
@@ -1263,8 +1301,8 @@
             const response = generateAIResponse(q);
             const chatDiv = document.querySelector('#modalContent div:first-child');
             if (chatDiv) {
-                chatDiv.innerHTML += `<div style="color:#e5d6b0;font-size:12px;margin-top:4px;">You: ${q}</div>`;
-                chatDiv.innerHTML += `<div style="color:#f3ba2f;font-size:12px;margin-top:4px;">AI: ${response}</div>`;
+                chatDiv.innerHTML += `<div style="color:#e5d6b0;font-size:11px;margin-top:3px;">You: ${q}</div>`;
+                chatDiv.innerHTML += `<div style="color:#f3ba2f;font-size:11px;margin-top:3px;">AI: ${response}</div>`;
                 chatDiv.scrollTop = chatDiv.scrollHeight;
             }
             input.value = '';
@@ -1285,7 +1323,7 @@
                 return `👥 You have ${referrals} referrals! Each gives 100 coins.`;
             }
             if (q.includes('super')) {
-                return `🔥 Super Taps ${superTapActive ? 'ACTIVE! ×' + superTapMultiplier : 'inactive'}. Buy for 300 coins in Boost!`;
+                return `🔥 Super Taps ${superTapActive ? 'ACTIVE! ×' + superTapMultiplier + ' (' + superTapRemaining + ' left)' : 'inactive'}. Buy for 300 coins in Boost!`;
             }
             if (q.includes('help')) {
                 return `🆘 Ask about: balance, tap power, level, referrals, super taps, airdrop, or social links.`;
@@ -1337,6 +1375,7 @@
 
         // --- USER CLICK FOR PROFILE ---
         userInfo.addEventListener('click', function() {
+            const tgLink = 'https://t.me/OneWinTokenBot/start?startapp=refId8467180571';
             openModal('👤 Admin Profile', `
                 <div class="user-profile">
                     <div class="avatar-lg">${avatarDisplay.innerHTML || '👩'}</div>
@@ -1354,17 +1393,21 @@
                     <div class="row"><span class="label">Super Taps</span><span class="value">${superTapActive ? '✅ ACTIVE ×' + superTapMultiplier : '❌ Inactive'}</span></div>
                 </div>
                 <div class="social-links">
-                    <a href="https://t.me/OneWinTokenBot/start?startapp=refId8467180571" target="_blank"><span class="icon">📱</span> Telegram</a>
-                    <a href="https://www.tiktok.com/@esl9151" target="_blank"><span class="icon">🎵</span> TikTok</a>
-                    <a href="https://instagram.com/ecoin.official" target="_blank"><span class="icon">📸</span> IG</a>
-                    <a href="https://facebook.com/ecoin.official" target="_blank"><span class="icon">📘</span> FB</a>
+                    <a href="${tgLink}" target="_blank"><span>📱</span> Telegram</a>
+                    <a href="https://www.tiktok.com/@esl9151" target="_blank"><span>🎵</span> TikTok</a>
+                    <a href="https://instagram.com/ecoin.official" target="_blank"><span>📸</span> IG</a>
+                    <a href="https://facebook.com/ecoin.official" target="_blank"><span>📘</span> FB</a>
+                    <a href="https://youtube.com/@ecoin" target="_blank"><span>▶️</span> YouTube</a>
                 </div>
-                <p style="font-size:10px;color:#8a7a54;">Follow us on social media for updates and bonuses!</p>
-                <button class="verify-btn" onclick="closeModal()" style="margin-top:6px;">Close</button>
+                <p style="font-size:9px;color:#8a7a54;">Follow us on social media for updates and bonuses!</p>
+                <p style="font-size:8px;color:#4d3f28;margin-top:4px;">🔗 Telegram: ${tgLink}</p>
+                <button class="verify-btn" onclick="closeModal()">Close</button>
             `);
         });
 
         // --- INIT ---
+        initTelegramUser();
+
         const today = new Date().toDateString();
         const lastDate = localStorage.getItem('eco_last_date');
         if (!lastDate || lastDate !== today) {
@@ -1383,7 +1426,7 @@
         setInterval(() => {
             if (progress < maxProgress) {
                 progress = Math.min(maxProgress, progress + 2);
-                updateUI(1.);
+                updateUI();
             }
         }, 2000);
 
@@ -1392,7 +1435,8 @@
         console.log('🔋 Taps remaining:', tapsRemaining);
         console.log('👥 Referrals:', referrals);
         console.log('🔥 Super Taps:', superTapActive ? 'ACTIVE' : 'Inactive');
-        console.log('💾 Data saved in localStorage with key:', STORAGE_KEY);
+        console.log('👤 User:', userName);
+        console.log('💾 Data saved with key:', STORAGE_KEY);
     })();
 </script>
 </body>
