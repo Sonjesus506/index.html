@@ -26,17 +26,20 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            padding: 8px 12px 6px;
+            padding: 12px 16px 16px;
             overflow: hidden;
             position: relative;
-            transition: background 0.3s;
+            transition: background 0.4s;
         }
-        /* Theme colors */
-        .theme-dark { background: linear-gradient(180deg, #12100d 0%, #1a1610 40%, #0e0c07 100%); }
-        .theme-blue { background: linear-gradient(180deg, #0d121e 0%, #161a2a 40%, #0a0e18 100%); }
-        .theme-green { background: linear-gradient(180deg, #0d1a0d 0%, #1a2a16 40%, #0a180a 100%); }
-        .theme-purple { background: linear-gradient(180deg, #140d1a 0%, #1a162a 40%, #0e0a18 100%); }
-        .theme-red { background: linear-gradient(180deg, #1a0d0d 0%, #2a1616 40%, #180a0a 100%); }
+        /* Themes */
+        .theme-dark { background: linear-gradient(180deg, #12100d 0%, #1a1610 50%, #0e0c07 100%); }
+        .theme-blue { background: linear-gradient(180deg, #0d121e 0%, #161a2a 50%, #0a0e18 100%); }
+        .theme-green { background: linear-gradient(180deg, #0d1a0d 0%, #1a2a16 50%, #0a180a 100%); }
+        .theme-purple { background: linear-gradient(180deg, #140d1a 0%, #1a162a 50%, #0e0a18 100%); }
+        .theme-red { background: linear-gradient(180deg, #1a0d0d 0%, #2a1616 50%, #180a0a 100%); }
+        .theme-orange { background: linear-gradient(180deg, #1a0f0d 0%, #2a1a16 50%, #180a0a 100%); }
+        .theme-teal { background: linear-gradient(180deg, #0d1a1a 0%, #162a2a 50%, #0a1818 100%); }
+
         .app::before {
             content: '';
             position: absolute;
@@ -44,15 +47,17 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(ellipse at 50% 20%, rgba(243, 186, 47, 0.06) 0%, transparent 60%);
+            background: radial-gradient(ellipse at 50% 20%, rgba(243, 186, 47, 0.05) 0%, transparent 60%);
             pointer-events: none;
             z-index: 0;
         }
+
+        /* Header - Settings top right */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             flex-shrink: 0;
             position: relative;
             z-index: 1;
@@ -60,19 +65,19 @@
         .user-info {
             display: flex;
             align-items: center;
-            gap: 8px;
-            background: rgba(26, 22, 16, 0.8);
-            padding: 4px 14px 4px 6px;
+            gap: 10px;
+            background: rgba(26, 22, 16, 0.7);
+            padding: 6px 16px 6px 8px;
             border-radius: 40px;
-            border: 1px solid rgba(243, 186, 47, 0.3);
+            border: 1px solid rgba(243, 186, 47, 0.2);
             cursor: pointer;
             transition: 0.2s;
             backdrop-filter: blur(10px);
         }
         .user-info:active { transform: scale(0.95); }
         .avatar {
-            width: 30px;
-            height: 30px;
+            width: 36px;
+            height: 36px;
             background: linear-gradient(135deg, #f3ba2f, #d49c1a);
             border-radius: 50%;
             display: flex;
@@ -80,36 +85,64 @@
             justify-content: center;
             font-weight: 700;
             color: #0e0c07;
-            font-size: 13px;
+            font-size: 16px;
             overflow: hidden;
             border: 2px solid rgba(243, 186, 47, 0.3);
+            flex-shrink: 0;
         }
         .avatar img { width: 100%; height: 100%; object-fit: cover; }
-        .user-info span { font-weight: 600; font-size: 12px; color: #e5d6b0; }
-        .badge {
-            background: linear-gradient(135deg, #2f2a1a, #1f1a0f);
-            color: #f3ba2f;
-            padding: 3px 12px;
-            border-radius: 30px;
-            font-size: 10px;
+        .user-info .name {
             font-weight: 600;
-            border: 1px solid rgba(243, 186, 47, 0.2);
+            font-size: 14px;
+            color: #e5d6b0;
         }
+        .user-info .level-tag {
+            font-size: 10px;
+            color: #f3ba2f;
+            background: rgba(243, 186, 47, 0.15);
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+        .settings-btn {
+            background: rgba(26, 22, 16, 0.7);
+            border: 1px solid rgba(243, 186, 47, 0.2);
+            border-radius: 40px;
+            padding: 8px 14px;
+            color: #f3ba2f;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.2s;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .settings-btn:active { transform: scale(0.9); }
+        .settings-btn span { font-size: 11px; font-weight: 600; }
+
+        /* Balance Card */
         .balance-card {
             background: linear-gradient(135deg, #1a1610, #221d15);
-            border-radius: 20px;
-            padding: 12px 14px 10px;
+            border-radius: 24px;
+            padding: 16px 20px 14px;
             text-align: center;
-            border: 1px solid rgba(243, 186, 47, 0.15);
-            margin-bottom: 6px;
+            border: 1px solid rgba(243, 186, 47, 0.12);
+            margin-bottom: 8px;
             flex-shrink: 0;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(243, 186, 47, 0.05);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
             position: relative;
             z-index: 1;
         }
-        .balance-card .label { font-size: 9px; color: #b0945a; letter-spacing: 3px; text-transform: uppercase; font-weight: 600; }
+        .balance-card .label {
+            font-size: 10px;
+            color: #b0945a;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
         .balance-card .amount {
-            font-size: 2.8rem;
+            font-size: 3.2rem;
             font-weight: 800;
             background: linear-gradient(135deg, #fad974, #f3ba2f);
             -webkit-background-clip: text;
@@ -118,114 +151,51 @@
             text-shadow: 0 0 60px rgba(243, 186, 47, 0.15);
             letter-spacing: 1px;
         }
-        .balance-card .stats {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin-top: 4px;
-            font-size: 10px;
-            color: #bdaa7a;
+        .balance-card .sub {
+            font-size: 11px;
+            color: #8a7a54;
+            margin-top: 2px;
         }
-        .balance-card .stats span {
-            background: rgba(14, 12, 7, 0.6);
-            padding: 2px 14px;
-            border-radius: 40px;
-            border: 1px solid rgba(47, 40, 28, 0.5);
-        }
-        .level-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+
+        /* Level & Progress */
+        .level-progress {
             background: rgba(26, 22, 16, 0.6);
             border-radius: 30px;
-            padding: 4px 14px 4px 16px;
-            border: 1px solid rgba(243, 186, 47, 0.1);
-            margin-bottom: 6px;
+            padding: 6px 16px 8px;
+            border: 1px solid rgba(47, 40, 28, 0.2);
+            margin-bottom: 8px;
             flex-shrink: 0;
             position: relative;
             z-index: 1;
             backdrop-filter: blur(10px);
         }
-        .level-row .level-badge { font-size: 12px; font-weight: 600; color: #f3ba2f; }
-        .level-row .level-badge span { color: #e5d6b0; font-weight: 400; }
-        .level-row .next-level { font-size: 10px; color: #8a7a54; }
-        .timer-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 6px;
-            margin-bottom: 6px;
-            flex-shrink: 0;
-            position: relative;
-            z-index: 1;
-        }
-        .timer-item {
-            background: rgba(25, 21, 15, 0.7);
-            border-radius: 14px;
-            padding: 8px 4px;
-            text-align: center;
-            border: 1px solid rgba(45, 36, 23, 0.5);
-            cursor: pointer;
-            transition: all 0.2s;
-            backdrop-filter: blur(10px);
-        }
-        .timer-item:active { background: rgba(42, 34, 21, 0.8); transform: scale(0.96); }
-        .timer-item .value {
-            font-size: 1rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #f3ba2f, #d49c1a);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .timer-item .desc { font-size: 7px; text-transform: uppercase; color: #8a7a54; letter-spacing: 0.5px; margin-top: 2px; font-weight: 600; }
-        .tap-limit-bar {
-            background: rgba(14, 12, 7, 0.6);
-            border-radius: 30px;
-            padding: 4px 12px;
-            margin-bottom: 6px;
+        .level-progress .top {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            border: 1px solid rgba(47, 40, 28, 0.3);
-            flex-shrink: 0;
-            position: relative;
-            z-index: 1;
-            backdrop-filter: blur(10px);
+            font-size: 11px;
+            color: #8a7a54;
+            margin-bottom: 2px;
         }
-        .tap-limit-bar .label { font-size: 8px; color: #8a7a54; font-weight: 600; }
-        .tap-limit-bar .value { font-size: 11px; font-weight: 700; color: #f3ba2f; }
-        .tap-limit-bar .fill { width: 80px; height: 4px; background: rgba(42, 34, 21, 0.6); border-radius: 10px; overflow: hidden; }
-        .tap-limit-bar .fill .bar { height: 100%; background: linear-gradient(90deg, #f3ba2f, #ff6b6b); border-radius: 10px; transition: width 0.5s; }
-        .progress-row {
-            background: rgba(26, 22, 16, 0.6);
-            border-radius: 40px;
-            padding: 4px 14px 4px 10px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border: 1px solid rgba(47, 40, 28, 0.3);
-            margin-bottom: 6px;
-            flex-shrink: 0;
-            position: relative;
-            z-index: 1;
-            backdrop-filter: blur(10px);
+        .level-progress .top .level {
+            color: #f3ba2f;
+            font-weight: 600;
         }
-        .progress-row .left { display: flex; align-items: center; gap: 6px; font-size: 10px; flex: 1; color: #8a7a54; }
-        .progress-row .left .fill { flex: 1; height: 4px; background: rgba(42, 34, 21, 0.6); border-radius: 10px; overflow: hidden; }
-        .progress-row .left .fill .bar { height: 100%; background: linear-gradient(90deg, #f3ba2f, #d49c1a); border-radius: 10px; transition: width 0.3s; }
-        .progress-row .right {
-            background: linear-gradient(135deg, #f3ba2f, #d49c1a);
-            color: #0e0c07;
-            font-weight: 700;
-            padding: 3px 16px;
-            border-radius: 30px;
-            font-size: 10px;
-            cursor: pointer;
-            transition: 0.08s;
-            box-shadow: 0 3px 0 #876a1a;
-            border: none;
-            flex-shrink: 0;
+        .level-progress .bar-track {
+            width: 100%;
+            height: 6px;
+            background: rgba(42, 34, 21, 0.6);
+            border-radius: 10px;
+            overflow: hidden;
         }
-        .progress-row .right:active { transform: translateY(2px); box-shadow: 0 1px 0 #876a1a; }
+        .level-progress .bar-track .bar {
+            height: 100%;
+            background: linear-gradient(90deg, #f3ba2f, #d49c1a);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        /* Coin */
         .coin-wrapper {
             display: flex;
             justify-content: center;
@@ -233,14 +203,14 @@
             flex: 1;
             min-height: 0;
             position: relative;
-            margin: 2px 0;
+            margin: 4px 0;
             overflow: visible;
             touch-action: none;
             z-index: 1;
         }
         .coin {
-            width: 200px;
-            height: 200px;
+            width: 220px;
+            height: 220px;
             background: radial-gradient(circle at 35% 30%, #fce181, #d49c1a 45%, #b8860b 70%, #8a6b0e);
             border-radius: 50%;
             border: 8px solid #f9d342;
@@ -269,7 +239,7 @@
             content: 'E';
             position: relative;
             z-index: 1;
-            font-size: 5.5rem;
+            font-size: 6rem;
             font-weight: 900;
             color: #7a5f0e;
             text-shadow: 0 2px 4px rgba(255,215,0,0.2), 0 -2px 4px rgba(0,0,0,0.3);
@@ -277,9 +247,10 @@
         }
         .coin:active { transform: scale(0.88); }
         .coin.disabled { opacity: 0.4; pointer-events: none; }
+
         .float-text {
             position: absolute;
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             font-weight: 800;
             color: #f3ba2f;
             text-shadow: 0 0 20px #f3ba2f, 0 0 40px #f3ba2f80, 0 0 60px #f3ba2f40;
@@ -291,250 +262,76 @@
         .float-text.super {
             color: #ff6b6b;
             text-shadow: 0 0 20px #ff6b6b, 0 0 40px #ff6b6b80, 0 0 60px #ff6b6b40;
-            font-size: 3rem;
+            font-size: 3.2rem;
         }
         .float-text.tap-limit {
             color: #ffd93d;
             text-shadow: 0 0 20px #ffd93d, 0 0 40px #ffd93d80;
-            font-size: 1.8rem;
+            font-size: 2rem;
         }
         @keyframes floatUp {
             0% { opacity: 1; transform: translateY(0) scale(0.8) rotate(-5deg); }
             30% { opacity: 1; transform: translateY(-20px) scale(1.1) rotate(3deg); }
-            100% { opacity: 0; transform: translateY(-140px) scale(1.3) rotate(0deg); }
+            100% { opacity: 0; transform: translateY(-150px) scale(1.3) rotate(0deg); }
         }
-        .coin-label {
+
+        .tap-info {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 4px;
+            justify-content: center;
+            gap: 30px;
+            padding: 4px 0;
             flex-shrink: 0;
-            margin-top: 2px;
             position: relative;
             z-index: 1;
         }
-        .ceo-tag {
-            background: rgba(31, 26, 15, 0.8);
-            padding: 2px 14px 2px 10px;
-            border-radius: 40px;
-            font-size: 10px;
-            border: 1px solid rgba(61, 50, 31, 0.4);
-            color: #d4bb7a;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-            transition: 0.2s;
-        }
-        .ceo-tag span { color: #f3ba2f; font-weight: 600; }
-        .small-balance { font-size: 11px; color: #8a7a54; font-weight: 600; }
-
-        /* Bottom Navigation */
-        .bottom-nav {
-            display: flex;
-            justify-content: space-around;
-            background: rgba(20, 17, 13, 0.9);
-            border-radius: 40px;
-            padding: 6px 4px;
-            border: 1px solid rgba(47, 40, 28, 0.3);
-            flex-shrink: 0;
-            margin-top: 4px;
-            position: relative;
-            z-index: 1;
-            backdrop-filter: blur(10px);
-        }
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 4px 8px;
-            border-radius: 30px;
-            font-size: 8px;
-            color: #7a6a4a;
-            cursor: pointer;
-            background: transparent;
-            border: none;
-            font-weight: 600;
-            gap: 2px;
-            transition: 0.15s;
-            flex: 1;
-            position: relative;
-        }
-        .nav-item .icon { font-size: 18px; line-height: 1; }
-        .nav-item .label { font-size: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .nav-item.active { color: #f3ba2f; background: rgba(30, 26, 18, 0.6); }
-        .nav-item:active { opacity: 0.6; }
-        .nav-item .badge-dot {
-            position: absolute;
-            top: 4px;
-            right: 4px;
-            width: 6px;
-            height: 6px;
-            background: #ff6b6b;
-            border-radius: 50%;
-        }
-
-        /* Page Content */
-        .page-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            position: relative;
-            z-index: 1;
-        }
-        .page {
-            display: none;
-            flex-direction: column;
-            flex: 1;
-            overflow-y: auto;
-            padding-bottom: 4px;
-        }
-        .page.active { display: flex; }
-
-        /* Tasks Page */
-        .task-item {
-            background: rgba(26, 22, 16, 0.6);
-            border-radius: 14px;
-            padding: 12px 14px;
-            margin-bottom: 8px;
-            border: 1px solid rgba(47, 40, 28, 0.3);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(10px);
-            transition: 0.2s;
-        }
-        .task-item:active { transform: scale(0.98); }
-        .task-item .task-info { text-align: left; }
-        .task-item .task-info .name { font-size: 13px; font-weight: 600; color: #e5d6b0; }
-        .task-item .task-info .desc { font-size: 10px; color: #8a7a54; }
-        .task-item .task-reward { font-size: 12px; font-weight: 700; color: #f3ba2f; }
-        .task-item .task-btn {
-            background: linear-gradient(135deg, #f3ba2f, #d49c1a);
-            border: none;
-            padding: 4px 14px;
-            border-radius: 30px;
-            font-weight: 700;
-            cursor: pointer;
-            font-size: 11px;
-            color: #0e0c07;
-        }
-        .task-item .task-btn.done { background: #2a2215; color: #8a7a54; cursor: default; }
-
-        /* Airdrop Page */
-        .airdrop-card {
-            background: rgba(26, 22, 16, 0.6);
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid rgba(47, 40, 28, 0.3);
+        .tap-info .item {
             text-align: center;
-            backdrop-filter: blur(10px);
         }
-        .airdrop-card .binance-logo {
-            font-size: 3rem;
-            font-weight: 900;
-            color: #f3ba2f;
-            margin-bottom: 10px;
-        }
-        .airdrop-card .binance-logo span { background: #f3ba2f; color: #0e0c07; padding: 4px 12px; border-radius: 8px; }
-        .airdrop-card input {
-            width: 100%;
-            padding: 10px 14px;
-            border-radius: 30px;
-            border: 1px solid rgba(47, 40, 28, 0.3);
-            background: rgba(14, 12, 7, 0.6);
-            color: #e5d6b0;
+        .tap-info .item .num {
             font-size: 14px;
-            outline: none;
-            margin: 10px 0;
-        }
-        .airdrop-card input:focus { border-color: #f3ba2f; }
-        .airdrop-card .btn-connect {
-            background: linear-gradient(135deg, #f3ba2f, #d49c1a);
-            border: none;
-            padding: 12px;
-            border-radius: 40px;
             font-weight: 700;
-            cursor: pointer;
-            font-size: 14px;
-            color: #0e0c07;
-            width: 100%;
+            color: #f3ba2f;
+        }
+        .tap-info .item .lbl {
+            font-size: 9px;
+            color: #8a7a54;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        /* Profile Page */
-        .profile-section {
-            background: rgba(26, 22, 16, 0.6);
-            border-radius: 20px;
-            padding: 16px;
-            border: 1px solid rgba(47, 40, 28, 0.3);
-            margin-bottom: 10px;
-            backdrop-filter: blur(10px);
-        }
-        .profile-section h3 { color: #f3ba2f; font-size: 13px; margin-bottom: 8px; }
-        .profile-section .input-group {
-            display: flex;
-            gap: 8px;
-            margin-top: 6px;
-        }
-        .profile-section .input-group input {
-            flex: 1;
-            padding: 8px 12px;
-            border-radius: 30px;
-            border: 1px solid rgba(47, 40, 28, 0.3);
-            background: rgba(14, 12, 7, 0.6);
-            color: #e5d6b0;
-            font-size: 12px;
-            outline: none;
-        }
-        .profile-section .input-group input:focus { border-color: #f3ba2f; }
-        .profile-section .input-group button {
+        /* Big Buttons */
+        .big-btn {
             background: linear-gradient(135deg, #f3ba2f, #d49c1a);
             border: none;
-            padding: 8px 16px;
-            border-radius: 30px;
+            padding: 14px 24px;
+            border-radius: 50px;
             font-weight: 700;
-            cursor: pointer;
-            font-size: 12px;
+            font-size: 16px;
             color: #0e0c07;
-        }
-        .profile-section .link-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 6px 0;
-            border-bottom: 1px solid rgba(47, 40, 28, 0.2);
-        }
-        .profile-section .link-item .name { color: #e5d6b0; font-size: 12px; }
-        .profile-section .link-item .url { color: #8a7a54; font-size: 10px; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .profile-section .link-item button {
-            background: rgba(255, 107, 107, 0.2);
-            border: none;
-            padding: 2px 10px;
-            border-radius: 30px;
-            color: #ff6b6b;
             cursor: pointer;
-            font-size: 10px;
+            box-shadow: 0 4px 0 #876a1a, 0 6px 20px rgba(243, 186, 47, 0.2);
+            transition: 0.08s;
+            width: 100%;
+            text-align: center;
         }
-        .theme-selector {
-            display: flex;
+        .big-btn:active { transform: translateY(4px); box-shadow: 0 0px 0 #876a1a, 0 6px 20px rgba(243, 186, 47, 0.1); }
+        .big-btn.secondary {
+            background: rgba(26, 22, 16, 0.8);
+            color: #f3ba2f;
+            box-shadow: 0 4px 0 #1a1610, 0 6px 20px rgba(0,0,0,0.3);
+            border: 1px solid rgba(243, 186, 47, 0.2);
+        }
+        .big-btn.secondary:active { transform: translateY(4px); box-shadow: 0 0px 0 #1a1610; }
+
+        .btn-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 6px;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+            margin-top: 4px;
         }
-        .theme-selector .theme-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border: 2px solid rgba(47, 40, 28, 0.3);
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .theme-selector .theme-btn.active { border-color: #f3ba2f; transform: scale(1.1); }
-        .theme-selector .theme-btn:active { transform: scale(0.9); }
-        .theme-dark-btn { background: #12100d; }
-        .theme-blue-btn { background: #0d121e; }
-        .theme-green-btn { background: #0d1a0d; }
-        .theme-purple-btn { background: #140d1a; }
-        .theme-red-btn { background: #1a0d0d; }
 
         /* Modal */
         .modal-overlay {
@@ -553,8 +350,8 @@
             background: linear-gradient(145deg, #1a1610, #12100d);
             border: 1px solid rgba(61, 50, 31, 0.4);
             border-radius: 30px;
-            padding: 20px 16px 16px;
-            max-width: 360px;
+            padding: 24px 20px 20px;
+            max-width: 380px;
             width: 100%;
             max-height: 85vh;
             overflow-y: auto;
@@ -564,44 +361,104 @@
             background: linear-gradient(135deg, #f3ba2f, #d49c1a);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-size: 1.2rem;
-            margin-bottom: 12px;
+            font-size: 1.3rem;
+            margin-bottom: 14px;
             text-align: center;
         }
-        .modal-box p { color: #bdaa7a; font-size: 12px; margin-bottom: 8px; text-align: center; }
+        .modal-box p { color: #bdaa7a; font-size: 13px; margin-bottom: 10px; text-align: center; }
         .modal-box .close-btn {
             background: linear-gradient(135deg, #f3ba2f, #d49c1a);
             border: none;
-            padding: 8px;
+            padding: 10px;
             border-radius: 40px;
             font-weight: 700;
             color: #0e0c07;
             width: 100%;
-            font-size: 14px;
+            font-size: 15px;
             cursor: pointer;
-            margin-top: 8px;
+            margin-top: 10px;
         }
-        .modal-box .boost-option {
-            background: rgba(14, 12, 7, 0.6);
-            padding: 8px 12px;
-            border-radius: 12px;
+        .modal-box .close-btn.secondary {
+            background: rgba(26, 22, 16, 0.8);
+            color: #f3ba2f;
+            border: 1px solid rgba(243, 186, 47, 0.2);
+        }
+        .modal-box .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 8px 0;
+        }
+        .modal-box .input-group input, .modal-box .input-group textarea {
+            padding: 10px 14px;
+            border-radius: 30px;
             border: 1px solid rgba(47, 40, 28, 0.3);
-            margin: 4px 0;
+            background: rgba(14, 12, 7, 0.6);
+            color: #e5d6b0;
+            font-size: 14px;
+            outline: none;
+            width: 100%;
+        }
+        .modal-box .input-group input:focus, .modal-box .input-group textarea:focus {
+            border-color: #f3ba2f;
+        }
+        .modal-box .input-group textarea { border-radius: 16px; resize: vertical; min-height: 60px; }
+        .modal-box .setting-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(47, 40, 28, 0.2);
         }
-        .modal-box .boost-option button {
-            background: linear-gradient(135deg, #f3ba2f, #d49c1a);
-            border: none;
-            padding: 4px 14px;
-            border-radius: 30px;
-            font-weight: 700;
+        .modal-box .setting-item .label { color: #e5d6b0; font-size: 13px; }
+        .modal-box .setting-item .value { color: #f3ba2f; font-size: 13px; font-weight: 600; }
+        .modal-box .theme-selector {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 6px 0;
+        }
+        .modal-box .theme-selector .theme-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid rgba(47, 40, 28, 0.3);
             cursor: pointer;
-            font-size: 11px;
-            color: #0e0c07;
+            transition: 0.2s;
         }
-        .modal-box .boost-option .cost { color: #8a7a54; font-size: 10px; }
+        .modal-box .theme-selector .theme-btn.active { border-color: #f3ba2f; transform: scale(1.1); }
+        .modal-box .theme-selector .theme-btn:active { transform: scale(0.9); }
+        .t-dark { background: #12100d; }
+        .t-blue { background: #0d121e; }
+        .t-green { background: #0d1a0d; }
+        .t-purple { background: #140d1a; }
+        .t-red { background: #1a0d0d; }
+        .t-orange { background: #1a0f0d; }
+        .t-teal { background: #0d1a1a; }
+
+        .modal-box .morse-tutorial {
+            background: rgba(14, 12, 7, 0.6);
+            padding: 12px;
+            border-radius: 14px;
+            border: 1px solid rgba(47, 40, 28, 0.3);
+            margin: 8px 0;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        .modal-box .morse-tutorial .row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .modal-box .morse-tutorial .char {
+            background: rgba(243, 186, 47, 0.1);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            color: #f3ba2f;
+        }
+
         .modal-box .airdrop-info {
             background: rgba(14, 12, 7, 0.6);
             padding: 12px;
@@ -609,222 +466,90 @@
             border: 1px solid rgba(47, 40, 28, 0.3);
             margin: 6px 0;
         }
-        .modal-box .airdrop-info .row { display: flex; justify-content: space-between; padding: 3px 0; font-size: 12px; }
+        .modal-box .airdrop-info .row { display: flex; justify-content: space-between; padding: 3px 0; font-size: 13px; }
         .modal-box .airdrop-info .row .label { color: #8a7a54; }
         .modal-box .airdrop-info .row .value { color: #f3ba2f; font-weight: 600; }
-        .modal-box .verify-btn {
-            background: linear-gradient(135deg, #f3ba2f, #d49c1a);
-            border: none;
-            padding: 6px 18px;
-            border-radius: 30px;
-            font-weight: 700;
-            cursor: pointer;
-            margin: 6px auto;
-            display: block;
-            font-size: 13px;
-            color: #0e0c07;
-        }
 
         /* Scrollbar */
-        .page::-webkit-scrollbar { width: 3px; }
-        .page::-webkit-scrollbar-track { background: transparent; }
-        .page::-webkit-scrollbar-thumb { background: #3d321f; border-radius: 10px; }
+        .modal-box::-webkit-scrollbar { width: 3px; }
+        .modal-box::-webkit-scrollbar-track { background: transparent; }
+        .modal-box::-webkit-scrollbar-thumb { background: #3d321f; border-radius: 10px; }
 
         @media (max-width: 420px) {
-            .coin { width: 170px; height: 170px; }
-            .coin::after { font-size: 4.5rem; }
-            .balance-card .amount { font-size: 2.4rem; }
+            .coin { width: 180px; height: 180px; }
+            .coin::after { font-size: 5rem; }
+            .balance-card .amount { font-size: 2.6rem; }
         }
         @media (max-width: 360px) {
             .coin { width: 150px; height: 150px; }
-            .coin::after { font-size: 4rem; }
-            .balance-card .amount { font-size: 2rem; }
+            .coin::after { font-size: 4.2rem; }
+            .balance-card .amount { font-size: 2.2rem; }
         }
     </style>
 </head>
 <body>
 <div class="app theme-dark" id="app">
 
+    <!-- Header -->
     <div class="header">
         <div class="user-info" id="userInfo">
             <div class="avatar" id="avatarDisplay">👩</div>
-            <span id="userNameDisplay">Admin</span>
+            <div>
+                <div class="name" id="userNameDisplay">Jane CEO</div>
+                <div style="display:flex;gap:6px;align-items:center;">
+                    <span class="level-tag">🏆 Level <span id="levelDisplay">1</span></span>
+                </div>
+            </div>
         </div>
-        <div class="badge">Silver ▾</div>
+        <button class="settings-btn" onclick="openSettings()">
+            ⚙️ <span>Settings</span>
+        </button>
     </div>
 
+    <!-- Balance -->
     <div class="balance-card">
         <div class="label">💰 BALANCE</div>
         <div class="amount" id="balanceDisplay">0</div>
-        <div class="stats">
-            <span>2 / 11</span>
-            <span>⚡ +207 /h</span>
+        <div class="sub">⚡ +207 /h</div>
+    </div>
+
+    <!-- Level Progress -->
+    <div class="level-progress">
+        <div class="top">
+            <span class="level">Level <span id="levelDisplay2">1</span></span>
+            <span id="nextLevelDisplay">Next: 1,000 coins</span>
+        </div>
+        <div class="bar-track">
+            <div class="bar" id="progressBar" style="width:0%"></div>
         </div>
     </div>
 
-    <div class="level-row">
-        <div class="level-badge">🏆 Level <span id="levelDisplay">1</span></div>
-        <div class="next-level" id="nextLevelDisplay">Next: 1,000 coins</div>
+    <!-- Coin -->
+    <div class="coin-wrapper" id="coinWrapper">
+        <div class="coin" id="mainCoin" role="button" aria-label="Tap to earn"></div>
     </div>
 
-    <!-- Page Content -->
-    <div class="page-content">
-        <!-- MAIN PAGE -->
-        <div class="page active" id="page-main">
-            <div class="timer-grid">
-                <div class="timer-item" onclick="claimDaily()">
-                    <div class="value" id="dailyTimer">13:38</div>
-                    <div class="desc">Daily reward</div>
-                </div>
-                <div class="timer-item" onclick="claimCipher()">
-                    <div class="value" id="cipherTimer">08:38</div>
-                    <div class="desc">Daily cipher</div>
-                </div>
-                <div class="timer-item" onclick="claimCombo()">
-                    <div class="value" id="comboTimer">01:38</div>
-                    <div class="desc">Daily combo</div>
-                </div>
-            </div>
-
-            <div class="tap-limit-bar">
-                <span class="label">🔋 Taps Left</span>
-                <div class="fill"><div class="bar" id="tapLimitBar" style="width:100%"></div></div>
-                <span class="value" id="tapLimitDisplay">1,500</span>
-            </div>
-
-            <div class="progress-row">
-                <div class="left">
-                    <span>$</span>
-                    <div class="fill"><div class="bar" id="progressBar" style="width:100%"></div></div>
-                </div>
-                <button class="right" id="boostBtn">Boost</button>
-            </div>
-
-            <div class="coin-wrapper" id="coinWrapper">
-                <div class="coin" id="mainCoin" role="button" aria-label="Tap to earn"></div>
-            </div>
-
-            <div class="coin-label">
-                <div class="ceo-tag" id="ceoTag">👑 (CEO) <span id="ceoCoinCount">0</span></div>
-                <div class="small-balance">🪙 <span id="balanceSmall">0</span></div>
-            </div>
+    <!-- Tap Info -->
+    <div class="tap-info">
+        <div class="item">
+            <div class="num" id="tapPowerDisplay">+1</div>
+            <div class="lbl">Tap Power</div>
         </div>
-
-        <!-- TASKS PAGE -->
-        <div class="page" id="page-tasks">
-            <div style="margin-bottom:8px;">
-                <h2 style="color:#f3ba2f;font-size:16px;">📋 Daily Tasks</h2>
-                <p style="color:#8a7a54;font-size:11px;">Complete tasks to earn coins!</p>
-            </div>
-            <div id="tasksContainer">
-                <!-- Tasks will be rendered here -->
-            </div>
-        </div>
-
-        <!-- AIRDROP PAGE -->
-        <div class="page" id="page-airdrop">
-            <div style="margin-bottom:8px;">
-                <h2 style="color:#f3ba2f;font-size:16px;">🎯 Airdrop</h2>
-                <p style="color:#8a7a54;font-size:11px;">Connect your Binance wallet to withdraw</p>
-            </div>
-            <div class="airdrop-card">
-                <div class="binance-logo"><span>BINANCE</span></div>
-                <p style="color:#bdaa7a;font-size:12px;">Enter your Binance UID to connect</p>
-                <input type="text" id="binanceUid" placeholder="Enter Binance UID..." />
-                <button class="btn-connect" onclick="connectBinance()">🔗 Connect Wallet</button>
-                <div class="airdrop-info" style="margin-top:12px;">
-                    <div class="row"><span class="label">Your Coins</span><span class="value" id="airdropBalance">0</span></div>
-                    <div class="row"><span class="label">Value (USD)</span><span class="value" id="airdropValue">$0.00</span></div>
-                    <div class="row"><span class="label">Min. Withdraw</span><span class="value">1,000 coins</span></div>
-                </div>
-                <p style="font-size:9px;color:#4d3f28;margin-top:6px;">🔒 Secure connection via Binance</p>
-            </div>
-        </div>
-
-        <!-- PROFILE PAGE -->
-        <div class="page" id="page-profile">
-            <div style="margin-bottom:8px;">
-                <h2 style="color:#f3ba2f;font-size:16px;">👤 Profile</h2>
-                <p style="color:#8a7a54;font-size:11px;">Admin Dashboard - Manage your app</p>
-            </div>
-
-            <!-- User Info -->
-            <div class="profile-section">
-                <h3>👤 User Info</h3>
-                <div class="user-profile" style="display:flex;align-items:center;gap:10px;padding:4px 0;">
-                    <div class="avatar" style="width:44px;height:44px;font-size:20px;">👩</div>
-                    <div>
-                        <div style="color:#f3ba2f;font-weight:700;font-size:15px;" id="profileName">Admin</div>
-                        <div style="color:#8a7a54;font-size:11px;">@admin</div>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <input type="text" id="usernameInput" placeholder="Change username..." />
-                    <button onclick="updateUsername()">Save</button>
-                </div>
-            </div>
-
-            <!-- Theme Selector -->
-            <div class="profile-section">
-                <h3>🎨 Theme</h3>
-                <div class="theme-selector">
-                    <div class="theme-btn theme-dark-btn active" data-theme="theme-dark" onclick="setTheme('theme-dark')"></div>
-                    <div class="theme-btn theme-blue-btn" data-theme="theme-blue" onclick="setTheme('theme-blue')"></div>
-                    <div class="theme-btn theme-green-btn" data-theme="theme-green" onclick="setTheme('theme-green')"></div>
-                    <div class="theme-btn theme-purple-btn" data-theme="theme-purple" onclick="setTheme('theme-purple')"></div>
-                    <div class="theme-btn theme-red-btn" data-theme="theme-red" onclick="setTheme('theme-red')"></div>
-                </div>
-            </div>
-
-            <!-- Social Links (Admin Panel) -->
-            <div class="profile-section">
-                <h3>🔗 Social Links (Admin)</h3>
-                <p style="font-size:10px;color:#8a7a54;margin-bottom:6px;">Add links that will appear in Tasks</p>
-                <div id="customLinksContainer">
-                    <!-- Links rendered here -->
-                </div>
-                <div class="input-group" style="flex-wrap:wrap;gap:6px;margin-top:8px;">
-                    <input type="text" id="linkNameInput" placeholder="Name (e.g. TikTok)" style="flex:1;min-width:80px;" />
-                    <input type="text" id="linkUrlInput" placeholder="https://..." style="flex:2;min-width:120px;" />
-                    <button onclick="addCustomLink()">Add</button>
-                </div>
-            </div>
-
-            <!-- Stats -->
-            <div class="profile-section">
-                <h3>📊 Stats</h3>
-                <div class="airdrop-info" style="margin:0;">
-                    <div class="row"><span class="label">Total Coins</span><span class="value" id="profileCoins">0</span></div>
-                    <div class="row"><span class="label">Level</span><span class="value" id="profileLevel">1</span></div>
-                    <div class="row"><span class="label">Referrals</span><span class="value" id="profileReferrals">0</span></div>
-                    <div class="row"><span class="label">Tap Power</span><span class="value" id="profileTapPower">+1</span></div>
-                </div>
-            </div>
+        <div class="item">
+            <div class="num" id="tapLimitDisplay">1,500</div>
+            <div class="lbl">Taps Left</div>
         </div>
     </div>
 
-    <!-- Bottom Navigation -->
-    <div class="bottom-nav">
-        <button class="nav-item active" data-page="page-main" onclick="switchPage('page-main')">
-            <span class="icon">🏠</span>
-            <span class="label">Main</span>
-        </button>
-        <button class="nav-item" data-page="page-tasks" onclick="switchPage('page-tasks')">
-            <span class="icon">📋</span>
-            <span class="label">Tasks</span>
-            <span class="badge-dot"></span>
-        </button>
-        <button class="nav-item" data-page="page-airdrop" onclick="switchPage('page-airdrop')">
-            <span class="icon">🎯</span>
-            <span class="label">Airdrop</span>
-        </button>
-        <button class="nav-item" data-page="page-profile" onclick="switchPage('page-profile')">
-            <span class="icon">👤</span>
-            <span class="label">Profile</span>
-        </button>
+    <!-- Big Buttons -->
+    <div class="btn-row">
+        <button class="big-btn" id="boostBtn">⚡ Boost</button>
+        <button class="big-btn secondary" id="dailyBtn">📅 Daily</button>
     </div>
+
 </div>
 
+<!-- Modal -->
 <div class="modal-overlay" id="modalOverlay">
     <div class="modal-box" id="modalBox">
         <h2 id="modalTitle">Modal</h2>
@@ -838,7 +563,7 @@
         "use strict";
 
         // --- PERSISTENT STORAGE ---
-        const STORAGE_KEY = 'eco_app_data_v13';
+        const STORAGE_KEY = 'eco_app_data_v14';
 
         function loadData() {
             try {
@@ -862,58 +587,43 @@
         let saved = loadData();
         let balance = saved?.balance || 0;
         let ceoCoins = saved?.ceoCoins || 0;
-        let progress = saved?.progress || 1500;
         let tapPower = saved?.tapPower || 1;
         let boostLevel = saved?.boostLevel || 1;
-        let dailyClaimed = saved?.dailyClaimed || false;
-        let cipherClaimed = saved?.cipherClaimed || false;
-        let comboClaimed = saved?.comboClaimed || false;
-        let referrals = saved?.referrals || 0;
-        let userName = saved?.userName || 'Admin';
         let tapsRemaining = saved?.tapsRemaining !== undefined ? saved.tapsRemaining : MAX_TAPS;
         let lastTapTime = saved?.lastTapTime || 0;
-        let superTapActive = saved?.superTapActive || false;
-        let superTapMultiplier = saved?.superTapMultiplier || 1;
-        let superTapRemaining = saved?.superTapRemaining || 0;
-        let customLinks = saved?.customLinks || [];
+        let userName = saved?.userName || 'Jane CEO';
+        let userAvatar = saved?.userAvatar || '👩';
         let theme = saved?.theme || 'theme-dark';
+        let profileLastChanged = saved?.profileLastChanged || 0;
+        let dailyCipherClaimed = saved?.dailyCipherClaimed || false;
+        let dailyRewardClaimed = saved?.dailyRewardClaimed || false;
         let binanceUid = saved?.binanceUid || '';
-        const maxProgress = 1500;
+        let promotionLinks = saved?.promotionLinks || [];
+        let completedPromotions = saved?.completedPromotions || [];
+        const COOLDOWN_DAYS = 7;
+        const COOLDOWN_MS = COOLDOWN_DAYS * 24 * 60 * 60 * 1000;
 
         // --- DOM ---
         const balanceDisplay = document.getElementById('balanceDisplay');
-        const balanceSmall = document.getElementById('balanceSmall');
-        const ceoCoinCount = document.getElementById('ceoCoinCount');
-        const coinEl = document.getElementById('mainCoin');
-        const coinWrapper = document.getElementById('coinWrapper');
-        const dailyTimer = document.getElementById('dailyTimer');
-        const cipherTimer = document.getElementById('cipherTimer');
-        const comboTimer = document.getElementById('comboTimer');
-        const progressBar = document.getElementById('progressBar');
-        const boostBtn = document.getElementById('boostBtn');
         const levelDisplay = document.getElementById('levelDisplay');
+        const levelDisplay2 = document.getElementById('levelDisplay2');
         const nextLevelDisplay = document.getElementById('nextLevelDisplay');
-        const ceoTag = document.getElementById('ceoTag');
+        const progressBar = document.getElementById('progressBar');
+        const tapPowerDisplay = document.getElementById('tapPowerDisplay');
+        const tapLimitDisplay = document.getElementById('tapLimitDisplay');
         const userNameDisplay = document.getElementById('userNameDisplay');
         const avatarDisplay = document.getElementById('avatarDisplay');
+        const coinEl = document.getElementById('mainCoin');
+        const coinWrapper = document.getElementById('coinWrapper');
+        const boostBtn = document.getElementById('boostBtn');
+        const dailyBtn = document.getElementById('dailyBtn');
         const userInfo = document.getElementById('userInfo');
-        const tapLimitBar = document.getElementById('tapLimitBar');
-        const tapLimitDisplay = document.getElementById('tapLimitDisplay');
+
         const modalOverlay = document.getElementById('modalOverlay');
         const modalBox = document.getElementById('modalBox');
         const modalTitle = document.getElementById('modalTitle');
         const modalContent = document.getElementById('modalContent');
         const modalClose = document.getElementById('modalClose');
-        const tasksContainer = document.getElementById('tasksContainer');
-        const customLinksContainer = document.getElementById('customLinksContainer');
-        const airdropBalance = document.getElementById('airdropBalance');
-        const airdropValue = document.getElementById('airdropValue');
-        const binanceUidInput = document.getElementById('binanceUid');
-        const profileCoins = document.getElementById('profileCoins');
-        const profileLevel = document.getElementById('profileLevel');
-        const profileReferrals = document.getElementById('profileReferrals');
-        const profileTapPower = document.getElementById('profileTapPower');
-        const profileName = document.getElementById('profileName');
 
         // --- FUNCTIONS ---
         function getLevel(coins) {
@@ -921,9 +631,12 @@
             return Math.floor(coins / 1000) + 1;
         }
 
-        function getNextLevelThreshold(coins) {
-            const current = getLevel(coins);
-            return current * 1000;
+        function getLevelProgress(coins) {
+            const level = getLevel(coins);
+            const threshold = (level - 1) * 1000;
+            const nextThreshold = level * 1000;
+            const progress = (coins - threshold) / (nextThreshold - threshold) * 100;
+            return Math.min(100, progress);
         }
 
         function getBoostCost() {
@@ -938,42 +651,41 @@
             saveData({
                 balance: balance,
                 ceoCoins: ceoCoins,
-                progress: progress,
                 tapPower: tapPower,
                 boostLevel: boostLevel,
-                dailyClaimed: dailyClaimed,
-                cipherClaimed: cipherClaimed,
-                comboClaimed: comboClaimed,
-                referrals: referrals,
-                userName: userName,
                 tapsRemaining: tapsRemaining,
                 lastTapTime: lastTapTime,
-                superTapActive: superTapActive,
-                superTapMultiplier: superTapMultiplier,
-                superTapRemaining: superTapRemaining,
-                customLinks: customLinks,
+                userName: userName,
+                userAvatar: userAvatar,
                 theme: theme,
-                binanceUid: binanceUid
+                profileLastChanged: profileLastChanged,
+                dailyCipherClaimed: dailyCipherClaimed,
+                dailyRewardClaimed: dailyRewardClaimed,
+                binanceUid: binanceUid,
+                promotionLinks: promotionLinks,
+                completedPromotions: completedPromotions
             });
         }
 
         function updateUI() {
             const formatted = balance.toLocaleString();
             balanceDisplay.textContent = formatted;
-            balanceSmall.textContent = formatted;
-            ceoCoinCount.textContent = ceoCoins.toLocaleString();
 
-            const pct = Math.min(100, (progress / maxProgress) * 100);
-            progressBar.style.width = pct + '%';
+            const level = getLevel(balance);
+            levelDisplay.textContent = level;
+            levelDisplay2.textContent = level;
 
-            const newLevel = getLevel(balance);
-            levelDisplay.textContent = newLevel;
-            const nextThreshold = getNextLevelThreshold(balance);
+            const progress = getLevelProgress(balance);
+            progressBar.style.width = progress + '%';
+
+            const nextThreshold = level * 1000;
             nextLevelDisplay.textContent = `Next: ${nextThreshold.toLocaleString()} coins`;
 
-            const tapPct = Math.min(100, (tapsRemaining / MAX_TAPS) * 100);
-            tapLimitBar.style.width = tapPct + '%';
+            tapPowerDisplay.textContent = '+' + tapPower;
             tapLimitDisplay.textContent = Math.floor(tapsRemaining).toLocaleString();
+
+            userNameDisplay.textContent = userName;
+            avatarDisplay.textContent = userAvatar;
 
             if (tapsRemaining <= 0) {
                 coinEl.classList.add('disabled');
@@ -981,32 +693,6 @@
                 coinEl.classList.remove('disabled');
             }
 
-            // Update profile stats
-            profileCoins.textContent = balance.toLocaleString();
-            profileLevel.textContent = getLevel(balance);
-            profileReferrals.textContent = referrals;
-            profileTapPower.textContent = '+' + tapPower;
-            profileName.textContent = userName;
-
-            // Update airdrop
-            airdropBalance.textContent = balance.toLocaleString();
-            airdropValue.textContent = '$' + (balance / 1000).toFixed(2);
-
-            // Update tasks
-            renderTasks();
-            renderCustomLinks();
-
-            saveState();
-        }
-
-        // --- THEME ---
-        function setTheme(newTheme) {
-            theme = newTheme;
-            const app = document.getElementById('app');
-            app.className = 'app ' + theme;
-            document.querySelectorAll('.theme-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.theme === theme);
-            });
             saveState();
         }
 
@@ -1024,7 +710,7 @@
             }
         }
 
-        // --- MULTI-TOUCH SUPPORT ---
+        // --- TAP ---
         function handleTap(e) {
             e.preventDefault?.();
 
@@ -1035,36 +721,11 @@
                 return;
             }
 
-            let amount = tapPower;
-            let isSuper = false;
-
-            if (superTapActive && superTapRemaining > 0) {
-                amount = tapPower * superTapMultiplier;
-                isSuper = true;
-                const tapCost = Math.ceil(superTapMultiplier / 2);
-                if (tapsRemaining < tapCost) {
-                    showTapLimitMessage();
-                    return;
-                }
-                tapsRemaining -= tapCost;
-                superTapRemaining -= 1;
-                if (superTapRemaining <= 0) {
-                    superTapActive = false;
-                    superTapMultiplier = 1;
-                }
-            } else {
-                tapsRemaining -= 1;
-                if (superTapActive && superTapRemaining <= 0) {
-                    superTapActive = false;
-                    superTapMultiplier = 1;
-                }
-            }
+            const amount = tapPower;
+            tapsRemaining -= 1;
 
             balance += amount;
             ceoCoins += amount;
-            if (progress < maxProgress) {
-                progress = Math.min(maxProgress, progress + amount);
-            }
 
             lastTapTime = Date.now();
             updateUI();
@@ -1079,10 +740,10 @@
                     const touch = e.touches[i];
                     const tx = touch.clientX - wrapperRect.left;
                     const ty = touch.clientY - wrapperRect.top;
-                    createFloatText(tx, ty, amount, isSuper);
+                    createFloatText(tx, ty, amount);
                 }
             } else {
-                createFloatText(cx, cy, amount, isSuper);
+                createFloatText(cx, cy, amount);
             }
 
             coinEl.style.transform = 'scale(0.86)';
@@ -1102,10 +763,10 @@
             setTimeout(() => el.remove(), 1200);
         }
 
-        function createFloatText(x, y, amount, isSuper) {
+        function createFloatText(x, y, amount) {
             const el = document.createElement('div');
-            el.className = 'float-text' + (isSuper ? ' super' : '');
-            el.textContent = isSuper ? `×${amount}` : `+${amount}`;
+            el.className = 'float-text';
+            el.textContent = `+${amount}`;
             el.style.left = (x - 20) + 'px';
             el.style.top = (y - 10) + 'px';
             const offsetX = (Math.random() - 0.5) * 30;
@@ -1127,113 +788,31 @@
             regenerateTaps();
         }, 1000);
 
-        // --- TIMERS ---
-        function updateTimers() {
-            const now = new Date();
-            const midnight = new Date(now);
-            midnight.setHours(24, 0, 0, 0);
-            let diff = Math.max(0, (midnight - now) / 1000);
-            const dh = Math.floor(diff / 3600);
-            const dm = Math.floor((diff % 3600) / 60);
-            dailyTimer.textContent = `${String(dh).padStart(2,'0')}:${String(dm).padStart(2,'0')}`;
-
-            const secs = now.getSeconds();
-            const fakeCipher = 60 - (secs % 60);
-            cipherTimer.textContent = `00:${String(fakeCipher).padStart(2,'0')}`;
-
-            const comboMin = Math.floor((secs % 30) / 2);
-            const comboSec = secs % 30;
-            comboTimer.textContent = `${String(comboMin).padStart(2,'0')}:${String(comboSec).padStart(2,'0')}`;
-
-            const today = now.toDateString();
-            const lastDate = localStorage.getItem('eco_last_date');
-            if (lastDate !== today) {
-                dailyClaimed = false;
-                cipherClaimed = false;
-                comboClaimed = false;
-                tapsRemaining = MAX_TAPS;
-                localStorage.setItem('eco_last_date', today);
-                saveState();
-                updateUI();
-            }
-        }
-
-        // --- DAILY TASK CLAIMS ---
-        function claimDaily() {
-            if (dailyClaimed) {
-                alert('✅ Daily reward already claimed! Come back tomorrow.');
-                return;
-            }
-            const reward = 100;
-            balance += reward;
-            ceoCoins += reward;
-            tapsRemaining = Math.min(MAX_TAPS, tapsRemaining + 200);
-            dailyClaimed = true;
-            updateUI();
-            alert(`🎉 Daily reward claimed! +${reward} coins and +200 taps!`);
-        }
-
-        function claimCipher() {
-            if (cipherClaimed) {
-                alert('✅ Daily cipher already claimed! Come back tomorrow.');
-                return;
-            }
-            const reward = 50;
-            balance += reward;
-            ceoCoins += reward;
-            tapsRemaining = Math.min(MAX_TAPS, tapsRemaining + 100);
-            cipherClaimed = true;
-            updateUI();
-            alert(`🔐 Cipher claimed! +${reward} coins and +100 taps!`);
-        }
-
-        function claimCombo() {
-            if (comboClaimed) {
-                alert('✅ Daily combo already claimed! Come back tomorrow.');
-                return;
-            }
-            const reward = 75;
-            balance += reward;
-            ceoCoins += reward;
-            tapsRemaining = Math.min(MAX_TAPS, tapsRemaining + 1000000);
-            comboClaimed = true;
-            updateUI();
-            alert(`🔥 Combo claimed! +${reward} coins and +1,000,000 taps!`);
-        }
-
-        window.claimDaily = claimDaily;
-        window.claimCipher = claimCipher;
-        window.claimCombo = claimCombo;
-
-        // --- BOOST / SUPER TAPS ---
+        // --- BOOST ---
         function handleBoost() {
             const cost = getBoostCost();
             const nextPower = tapPower + 1;
-            const superCost = 300;
 
-            openModal('⚡ Boost & Super Taps', `
-                <p>Upgrade your tap power or buy super taps!</p>
-                <div class="boost-option">
-                    <div>
-                        <strong style="color:#f3ba2f;">Tap Power: +${tapPower}</strong>
-                        <div class="cost">Next: +${nextPower}</div>
-                    </div>
-                    <button onclick="upgradeBoost()">${cost.toLocaleString()} coins</button>
+            openModal('⚡ Boost', `
+                <p>Upgrade your tap power!</p>
+                <div class="setting-item">
+                    <span class="label">Current Tap Power</span>
+                    <span class="value">+${tapPower}</span>
                 </div>
-                <div class="boost-option" style="border-color: #ff6b6b40;">
-                    <div>
-                        <strong style="color:#ff6b6b;">🔥 Super Taps</strong>
-                        <div class="cost">${superTapActive ? 'ACTIVE! ×' + superTapMultiplier + ' (' + superTapRemaining + ' left)' : '×10 for 30 taps'}</div>
-                    </div>
-                    <button onclick="buySuperTaps()">${superCost} coins</button>
+                <div class="setting-item">
+                    <span class="label">Next Level</span>
+                    <span class="value">+${nextPower}</span>
                 </div>
-                <div class="airdrop-info">
-                    <div class="row"><span class="label">Your coins</span><span class="value">${balance.toLocaleString()}</span></div>
-                    <div class="row"><span class="label">Taps remaining</span><span class="value">${Math.floor(tapsRemaining).toLocaleString()}</span></div>
-                    <div class="row"><span class="label">Boost Level</span><span class="value">${boostLevel}</span></div>
+                <div class="setting-item">
+                    <span class="label">Cost</span>
+                    <span class="value">${cost.toLocaleString()} coins</span>
                 </div>
-                <p style="font-size:10px;color:#8a7a54;">Tap power costs double each upgrade: 500 → 1,000 → 2,000...</p>
-                <p style="font-size:10px;color:#8a7a54;">Super Taps: ×10 power for 30 taps (uses 15 taps)</p>
+                <div class="setting-item">
+                    <span class="label">Your Coins</span>
+                    <span class="value">${balance.toLocaleString()}</span>
+                </div>
+                <button class="big-btn" onclick="upgradeBoost()" style="margin-top:10px;">Upgrade</button>
+                <p style="font-size:11px;color:#8a7a54;margin-top:6px;">Cost doubles each upgrade: 500 → 1,000 → 2,000...</p>
             `);
         }
 
@@ -1252,24 +831,379 @@
             handleBoost();
         }
 
-        function buySuperTaps() {
-            const cost = 300;
-            if (balance < cost) {
-                alert(`❌ Not enough coins! You need ${cost} coins.`);
-                return;
+        window.upgradeBoost = upgradeBoost;
+
+        // --- DAILY ---
+        function handleDaily() {
+            const now = new Date();
+            const today = now.toDateString();
+            const lastDate = localStorage.getItem('eco_last_date');
+
+            // Reset daily claims if new day
+            if (lastDate !== today) {
+                dailyCipherClaimed = false;
+                dailyRewardClaimed = false;
+                localStorage.setItem('eco_last_date', today);
+                saveState();
             }
-            balance -= cost;
-            superTapActive = true;
-            superTapMultiplier = 10;
-            superTapRemaining = 30;
-            updateUI();
-            closeModal();
-            alert(`🔥 Super Taps activated! ×10 power for 30 taps!`);
-            handleBoost();
+
+            const dailyRewardStatus = dailyRewardClaimed ? '✅ Claimed' : '🎁 Claim';
+            const cipherStatus = dailyCipherClaimed ? '✅ Claimed' : '🔐 Solve';
+
+            openModal('📅 Daily Rewards', `
+                <p>Complete daily tasks to earn big rewards!</p>
+
+                <div class="setting-item">
+                    <span class="label">📆 Daily Reward</span>
+                    <span class="value">+100 coins</span>
+                </div>
+                <button class="big-btn" onclick="claimDailyReward()" style="margin-top:4px;font-size:14px;padding:10px;">${dailyRewardStatus}</button>
+
+                <div style="height:10px;"></div>
+
+                <div class="setting-item">
+                    <span class="label">🔐 Daily Cipher (Morse Code)</span>
+                    <span class="value">+1,000,000 coins!</span>
+                </div>
+                <button class="big-btn" onclick="openCipher()" style="margin-top:4px;font-size:14px;padding:10px;">${cipherStatus}</button>
+
+                <div style="height:10px;"></div>
+
+                <div class="setting-item">
+                    <span class="label">📢 Promotion Tasks</span>
+                    <span class="value">+2,000 coins</span>
+                </div>
+                <button class="big-btn secondary" onclick="openPromotions()" style="margin-top:4px;font-size:14px;padding:10px;">📋 View Promotions</button>
+            `);
         }
 
-        window.upgradeBoost = upgradeBoost;
-        window.buySuperTaps = buySuperTaps;
+        function claimDailyReward() {
+            if (dailyRewardClaimed) {
+                alert('✅ Daily reward already claimed! Come back tomorrow.');
+                return;
+            }
+            const reward = 100;
+            balance += reward;
+            ceoCoins += reward;
+            dailyRewardClaimed = true;
+            updateUI();
+            closeModal();
+            alert(`🎉 Daily reward claimed! +${reward} coins!`);
+            handleDaily();
+        }
+
+        window.claimDailyReward = claimDailyReward;
+
+        // --- CIPHER (Morse Code) ---
+        const morseMap = {
+            'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.',
+            'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..',
+            'M': '--', 'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.',
+            'S': '...', 'T': '-', 'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-',
+            'Y': '-.--', 'Z': '--..'
+        };
+
+        function openCipher() {
+            if (dailyCipherClaimed) {
+                alert('✅ Daily cipher already claimed! Come back tomorrow.');
+                return;
+            }
+
+            // Generate random letter
+            const letters = Object.keys(morseMap);
+            const targetLetter = letters[Math.floor(Math.random() * letters.length)];
+            const targetMorse = morseMap[targetLetter];
+
+            // Store the answer for verification
+            window._cipherAnswer = targetLetter;
+
+            const morseTutorial = Object.entries(morseMap).slice(0, 10).map(([char, code]) =>
+                `<span class="char">${char}: ${code}</span>`
+            ).join('');
+
+            openModal('🔐 Daily Cipher (Morse Code)', `
+                <p>Decode the Morse code to earn <strong style="color:#f3ba2f;">1,000,000 coins</strong>!</p>
+
+                <div style="text-align:center;font-size:3rem;padding:16px;background:rgba(14,12,7,0.6);border-radius:16px;border:1px solid rgba(47,40,28,0.3);margin:8px 0;letter-spacing:8px;font-weight:700;color:#f3ba2f;">
+                    ${targetMorse}
+                </div>
+
+                <div class="input-group">
+                    <input type="text" id="cipherInput" placeholder="Enter the letter (A-Z)" style="text-align:center;font-size:20px;text-transform:uppercase;" maxlength="1" />
+                    <button class="big-btn" onclick="checkCipher()" style="font-size:14px;padding:10px;">Submit Answer</button>
+                </div>
+
+                <div class="morse-tutorial">
+                    <p style="font-size:11px;color:#8a7a54;margin-bottom:4px;">📖 Morse Code Tutorial (A-J):</p>
+                    <div class="row">${morseTutorial}</div>
+                    <p style="font-size:10px;color:#4d3f28;margin-top:4px;">Dot = tap (.)  Dash = hold (-)</p>
+                </div>
+            `);
+
+            setTimeout(() => {
+                const input = document.getElementById('cipherInput');
+                if (input) input.focus();
+            }, 300);
+        }
+
+        window.openCipher = openCipher;
+
+        function checkCipher() {
+            const input = document.getElementById('cipherInput');
+            if (!input) return;
+            const answer = input.value.trim().toUpperCase();
+            const target = window._cipherAnswer;
+
+            if (!answer) {
+                alert('Please enter a letter.');
+                return;
+            }
+
+            if (answer === target) {
+                const reward = 1000000;
+                balance += reward;
+                ceoCoins += reward;
+                dailyCipherClaimed = true;
+                updateUI();
+                closeModal();
+                alert(`🎉 Correct! You earned ${reward.toLocaleString()} coins!`);
+                handleDaily();
+            } else {
+                alert(`❌ Wrong answer! The correct letter was ${target}. Try again tomorrow.`);
+                closeModal();
+            }
+        }
+
+        window.checkCipher = checkCipher;
+
+        // --- PROMOTIONS ---
+        function openPromotions() {
+            let promoHTML = '';
+            if (promotionLinks.length === 0) {
+                promoHTML = `<p style="color:#8a7a54;font-size:12px;">No promotions available. Check back later!</p>`;
+            } else {
+                promotionLinks.forEach((link, index) => {
+                    const isDone = completedPromotions.includes(index);
+                    promoHTML += `
+                        <div class="setting-item">
+                            <span class="label">🔗 ${link.name}</span>
+                            <span class="value">${isDone ? '✅ Done' : '+2,000 coins'}</span>
+                        </div>
+                        <button class="big-btn secondary" onclick="completePromotion(${index})" style="font-size:13px;padding:8px;margin-top:2px;${isDone ? 'opacity:0.4;' : ''}" ${isDone ? 'disabled' : ''}>
+                            ${isDone ? '✅ Completed' : 'Visit & Claim'}
+                        </button>
+                    `;
+                });
+            }
+
+            openModal('📢 Promotion Tasks', `
+                <p>Visit promoted links to earn <strong style="color:#f3ba2f;">2,000 coins</strong> each!</p>
+                ${promoHTML}
+                <div style="height:6px;"></div>
+                <button class="big-btn secondary" onclick="addPromotionLink()" style="font-size:13px;padding:8px;">➕ Promote Your Link (2,000 coins)</button>
+                <p style="font-size:10px;color:#4d3f28;margin-top:6px;">Pay coins to get your link featured here</p>
+            `);
+        }
+
+        window.openPromotions = openPromotions;
+
+        function addPromotionLink() {
+            const cost = 2000;
+            if (balance < cost) {
+                alert(`❌ Not enough coins! You need ${cost.toLocaleString()} coins.`);
+                return;
+            }
+
+            openModal('📢 Promote Your Link', `
+                <p>Pay <strong style="color:#f3ba2f;">${cost.toLocaleString()} coins</strong> to promote your link here!</p>
+                <div class="input-group">
+                    <input type="text" id="promoName" placeholder="Link Name (e.g. My YouTube)" />
+                    <input type="text" id="promoUrl" placeholder="https://..." />
+                    <button class="big-btn" onclick="submitPromotion()" style="font-size:14px;padding:10px;">Submit & Pay</button>
+                </div>
+                <p style="font-size:10px;color:#8a7a54;">Your link will appear in Tasks for others to visit</p>
+            `);
+        }
+
+        window.addPromotionLink = addPromotionLink;
+
+        function submitPromotion() {
+            const nameInput = document.getElementById('promoName');
+            const urlInput = document.getElementById('promoUrl');
+            const name = nameInput?.value.trim();
+            const url = urlInput?.value.trim();
+
+            if (!name || !url) {
+                alert('Please fill in both fields.');
+                return;
+            }
+
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                alert('Please enter a valid URL starting with http:// or https://');
+                return;
+            }
+
+            const cost = 2000;
+            if (balance < cost) {
+                alert(`❌ Not enough coins! You need ${cost.toLocaleString()} coins.`);
+                return;
+            }
+
+            balance -= cost;
+            ceoCoins -= cost;
+            promotionLinks.push({ name, url });
+            updateUI();
+            closeModal();
+            alert(`✅ Promotion added! Your link is now in Tasks.`);
+            handleDaily();
+        }
+
+        window.submitPromotion = submitPromotion;
+
+        function completePromotion(index) {
+            if (completedPromotions.includes(index)) {
+                alert('✅ You already completed this promotion.');
+                return;
+            }
+
+            const link = promotionLinks[index];
+            if (!link) return;
+
+            const reward = 2000;
+            balance += reward;
+            ceoCoins += reward;
+            completedPromotions.push(index);
+            updateUI();
+            closeModal();
+            alert(`🎉 Promotion completed! +${reward.toLocaleString()} coins!`);
+            window.open(link.url, '_blank');
+            handleDaily();
+        }
+
+        window.completePromotion = completePromotion;
+
+        // --- SETTINGS ---
+        function openSettings() {
+            const now = Date.now();
+            const canChange = (now - profileLastChanged) >= COOLDOWN_MS;
+            const cooldownRemaining = COOLDOWN_DAYS - Math.floor((now - profileLastChanged) / (1000 * 60 * 60 * 24));
+
+            openModal('⚙️ Settings', `
+                <p>Customize your E-Coin experience</p>
+
+                <div style="text-align:center;margin:8px 0;">
+                    <div style="font-size:3rem;display:inline-block;background:rgba(14,12,7,0.6);padding:8px 20px;border-radius:50%;border:2px solid rgba(243,186,47,0.2);">${userAvatar}</div>
+                </div>
+
+                <div class="input-group">
+                    <label style="color:#8a7a54;font-size:12px;">Username</label>
+                    <input type="text" id="settingsUsername" value="${userName}" placeholder="Enter username..." ${canChange ? '' : 'disabled'} />
+                    ${canChange ? `<button class="big-btn" onclick="updateProfile()" style="font-size:14px;padding:10px;">💾 Save Changes</button>` :
+                    `<p style="color:#ff6b6b;font-size:11px;">⏳ Wait ${cooldownRemaining} days to change profile again</p>`}
+                </div>
+
+                <div class="input-group">
+                    <label style="color:#8a7a54;font-size:12px;">Avatar (emoji or text)</label>
+                    <input type="text" id="settingsAvatar" value="${userAvatar}" placeholder="Enter emoji..." maxlength="2" ${canChange ? '' : 'disabled'} />
+                </div>
+
+                <div style="height:10px;"></div>
+
+                <div style="text-align:center;">
+                    <p style="color:#8a7a54;font-size:12px;margin-bottom:6px;">🎨 Theme</p>
+                    <div class="theme-selector">
+                        <div class="theme-btn t-dark ${theme === 'theme-dark' ? 'active' : ''}" onclick="setTheme('theme-dark')"></div>
+                        <div class="theme-btn t-blue ${theme === 'theme-blue' ? 'active' : ''}" onclick="setTheme('theme-blue')"></div>
+                        <div class="theme-btn t-green ${theme === 'theme-green' ? 'active' : ''}" onclick="setTheme('theme-green')"></div>
+                        <div class="theme-btn t-purple ${theme === 'theme-purple' ? 'active' : ''}" onclick="setTheme('theme-purple')"></div>
+                        <div class="theme-btn t-red ${theme === 'theme-red' ? 'active' : ''}" onclick="setTheme('theme-red')"></div>
+                        <div class="theme-btn t-orange ${theme === 'theme-orange' ? 'active' : ''}" onclick="setTheme('theme-orange')"></div>
+                        <div class="theme-btn t-teal ${theme === 'theme-teal' ? 'active' : ''}" onclick="setTheme('theme-teal')"></div>
+                    </div>
+                </div>
+
+                <div style="height:10px;"></div>
+
+                <div class="airdrop-info">
+                    <h3 style="color:#f3ba2f;font-size:13px;margin-bottom:6px;">🔗 Binance Wallet</h3>
+                    <div class="row"><span class="label">Wallet UID</span><span class="value">${binanceUid || 'Not connected'}</span></div>
+                    <div class="input-group" style="margin-top:6px;">
+                        <input type="text" id="binanceInput" placeholder="Enter Binance UID..." value="${binanceUid}" />
+                        <button class="big-btn" onclick="saveBinanceUid()" style="font-size:13px;padding:8px;">💾 Save</button>
+                    </div>
+                </div>
+
+                <div class="airdrop-info">
+                    <h3 style="color:#f3ba2f;font-size:13px;margin-bottom:6px;">📊 Stats</h3>
+                    <div class="row"><span class="label">Total Coins</span><span class="value">${balance.toLocaleString()}</span></div>
+                    <div class="row"><span class="label">Level</span><span class="value">${getLevel(balance)}</span></div>
+                    <div class="row"><span class="label">Tap Power</span><span class="value">+${tapPower}</span></div>
+                    <div class="row"><span class="label">Taps Left</span><span class="value">${Math.floor(tapsRemaining).toLocaleString()}</span></div>
+                </div>
+
+                <button class="close-btn secondary" onclick="closeModal()" style="margin-top:10px;">Close</button>
+            `);
+        }
+
+        window.openSettings = openSettings;
+
+        function updateProfile() {
+            const nameInput = document.getElementById('settingsUsername');
+            const avatarInput = document.getElementById('settingsAvatar');
+            const name = nameInput?.value.trim();
+            const avatar = avatarInput?.value.trim();
+
+            if (!name) {
+                alert('Please enter a username.');
+                return;
+            }
+
+            const now = Date.now();
+            if ((now - profileLastChanged) < COOLDOWN_MS && profileLastChanged > 0) {
+                const daysLeft = COOLDOWN_DAYS - Math.floor((now - profileLastChanged) / (1000 * 60 * 60 * 24));
+                alert(`⏳ Please wait ${daysLeft} days before changing your profile again.`);
+                return;
+            }
+
+            userName = name;
+            if (avatar) userAvatar = avatar;
+            profileLastChanged = now;
+            updateUI();
+            closeModal();
+            alert('✅ Profile updated! You can change again after 7 days.');
+            openSettings();
+        }
+
+        window.updateProfile = updateProfile;
+
+        function setTheme(newTheme) {
+            theme = newTheme;
+            const app = document.getElementById('app');
+            app.className = 'app ' + theme;
+            saveState();
+            // Update modal if open
+            const modalContent = document.getElementById('modalContent');
+            if (modalContent && modalContent.innerHTML.includes('Theme')) {
+                openSettings();
+            }
+        }
+
+        window.setTheme = setTheme;
+
+        function saveBinanceUid() {
+            const input = document.getElementById('binanceInput');
+            const uid = input?.value.trim();
+            if (!uid) {
+                alert('Please enter your Binance UID.');
+                return;
+            }
+            binanceUid = uid;
+            saveState();
+            alert('✅ Binance UID saved successfully!');
+            openSettings();
+        }
+
+        window.saveBinanceUid = saveBinanceUid;
 
         // --- MODAL ---
         function openModal(title, contentHTML) {
@@ -1284,210 +1218,48 @@
 
         window.closeModal = closeModal;
 
-        // --- TASKS ---
-        function renderTasks() {
-            let html = '';
-            // Social Links from Admin
-            if (customLinks.length > 0) {
-                customLinks.forEach((link, index) => {
-                    html += `
-                        <div class="task-item" onclick="window.open('${link.url}', '_blank')">
-                            <div class="task-info">
-                                <div class="name">🔗 ${link.name}</div>
-                                <div class="desc">Follow/Visit our page</div>
-                            </div>
-                            <div class="task-reward">+50 coins</div>
-                            <button class="task-btn" onclick="event.stopPropagation(); completeSocialTask(${index})">Go</button>
-                        </div>
-                    `;
-                });
-            } else {
-                html += `
-                    <div class="task-item" style="justify-content:center;">
-                        <div class="task-info" style="text-align:center;">
-                            <div class="name" style="color:#8a7a54;">No social tasks available</div>
-                            <div class="desc">Add links in Profile → Social Links</div>
-                        </div>
-                    </div>
-                `;
-            }
-            tasksContainer.innerHTML = html;
-        }
-
-        function completeSocialTask(index) {
-            const link = customLinks[index];
-            if (!link) return;
-            // Give reward
-            const reward = 50;
-            balance += reward;
-            ceoCoins += reward;
-            updateUI();
-            alert(`✅ Task completed! +${reward} coins!`);
-            window.open(link.url, '_blank');
-        }
-
-        window.completeSocialTask = completeSocialTask;
-
-        // --- CUSTOM LINKS (Admin) ---
-        function renderCustomLinks() {
-            let html = '';
-            if (customLinks.length === 0) {
-                html = `<p style="color:#8a7a54;font-size:11px;">No links added yet.</p>`;
-            } else {
-                customLinks.forEach((link, index) => {
-                    html += `
-                        <div class="link-item">
-                            <span class="name">${link.name}</span>
-                            <span class="url">${link.url}</span>
-                            <button onclick="removeCustomLink(${index})">✕</button>
-                        </div>
-                    `;
-                });
-            }
-            customLinksContainer.innerHTML = html;
-        }
-
-        function addCustomLink() {
-            const nameInput = document.getElementById('linkNameInput');
-            const urlInput = document.getElementById('linkUrlInput');
-            const name = nameInput.value.trim();
-            const url = urlInput.value.trim();
-            if (!name || !url) {
-                alert('Please enter both name and URL.');
-                return;
-            }
-            // Validate URL
-            if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                alert('Please enter a valid URL starting with http:// or https://');
-                return;
-            }
-            customLinks.push({ name, url });
-            nameInput.value = '';
-            urlInput.value = '';
-            saveState();
-            updateUI();
-            alert('✅ Link added successfully! It will appear in Tasks.');
-        }
-
-        function removeCustomLink(index) {
-            customLinks.splice(index, 1);
-            saveState();
-            updateUI();
-        }
-
-        window.addCustomLink = addCustomLink;
-        window.removeCustomLink = removeCustomLink;
-
-        // --- AIRDROP ---
-        function connectBinance() {
-            const uid = document.getElementById('binanceUid').value.trim();
-            if (!uid) {
-                alert('Please enter your Binance UID.');
-                return;
-            }
-            binanceUid = uid;
-            saveState();
-            alert(`✅ Binance Wallet connected!\nUID: ${uid}\n\n🎁 You received 50 bonus coins!`);
-            balance += 50;
-            ceoCoins += 50;
-            updateUI();
-        }
-
-        window.connectBinance = connectBinance;
-
-        // --- UPDATE USERNAME ---
-        function updateUsername() {
-            const input = document.getElementById('usernameInput');
-            const name = input.value.trim();
-            if (!name) {
-                alert('Please enter a username.');
-                return;
-            }
-            userName = name;
-            userNameDisplay.textContent = userName;
-            profileName.textContent = userName;
-            saveState();
-            updateUI();
-            input.value = '';
-            alert('✅ Username updated!');
-        }
-
-        window.updateUsername = updateUsername;
-
-        // --- PAGE SWITCHING ---
-        function switchPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.querySelector(`.nav-item[data-page="${pageId}"]`).classList.add('active');
-        }
-
-        window.switchPage = switchPage;
-
         // --- EVENTS ---
         boostBtn.addEventListener('click', handleBoost);
+        dailyBtn.addEventListener('click', handleDaily);
 
         modalClose.addEventListener('click', closeModal);
         modalOverlay.addEventListener('click', (e) => {
             if (e.target === modalOverlay) closeModal();
         });
 
-        // --- CEO DOUBLE CLICK ---
-        ceoTag.addEventListener('dblclick', function() {
-            ceoCoins += 500;
-            balance += 100;
-            tapsRemaining = Math.min(MAX_TAPS, tapsRemaining + 100);
-            updateUI();
-            this.style.color = '#f3ba2f';
-            setTimeout(() => this.style.color = '', 300);
-        });
-
         // --- USER CLICK FOR PROFILE ---
         userInfo.addEventListener('click', function() {
-            switchPage('page-profile');
+            openSettings();
         });
 
         // --- INIT ---
         // Set initial theme
         const app = document.getElementById('app');
         app.className = 'app ' + theme;
-        document.querySelectorAll('.theme-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.theme === theme);
-        });
 
-        // Restore Binance UID
-        if (binanceUid) {
-            document.getElementById('binanceUid').value = binanceUid;
-        }
-
+        // Check daily reset
         const today = new Date().toDateString();
         const lastDate = localStorage.getItem('eco_last_date');
-        if (!lastDate || lastDate !== today) {
-            dailyClaimed = false;
-            cipherClaimed = false;
-            comboClaimed = false;
-            tapsRemaining = MAX_TAPS;
+        if (lastDate !== today) {
+            dailyCipherClaimed = false;
+            dailyRewardClaimed = false;
             localStorage.setItem('eco_last_date', today);
             saveState();
         }
 
-        updateTimers();
         updateUI();
-        setInterval(updateTimers, 1000);
 
+        // Tap regeneration interval
         setInterval(() => {
-            if (progress < maxProgress) {
-                progress = Math.min(maxProgress, progress + 2);
-                updateUI();
-            }
-        }, 2000);
+            regenerateTaps();
+        }, 1000);
 
         console.log('💰 E-Coin loaded!');
+        console.log('👤 User:', userName);
         console.log('⚡ Tap power:', tapPower);
         console.log('🔋 Taps remaining:', tapsRemaining);
-        console.log('👥 Referrals:', referrals);
-        console.log('📋 Custom links:', customLinks.length);
         console.log('🎨 Theme:', theme);
+        console.log('📢 Promotions:', promotionLinks.length);
     })();
 </script>
 </body>
