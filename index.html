@@ -26,7 +26,7 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            padding: 12px 16px 16px;
+            padding: 10px 14px 8px;
             overflow: hidden;
             position: relative;
             transition: background 0.4s;
@@ -57,7 +57,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             flex-shrink: 0;
             position: relative;
             z-index: 1;
@@ -67,7 +67,7 @@
             align-items: center;
             gap: 10px;
             background: rgba(26, 22, 16, 0.7);
-            padding: 6px 16px 6px 8px;
+            padding: 5px 14px 5px 6px;
             border-radius: 40px;
             border: 1px solid rgba(243, 186, 47, 0.2);
             cursor: pointer;
@@ -76,8 +76,8 @@
         }
         .user-info:active { transform: scale(0.95); }
         .avatar {
-            width: 36px;
-            height: 36px;
+            width: 34px;
+            height: 34px;
             background: linear-gradient(135deg, #f3ba2f, #d49c1a);
             border-radius: 50%;
             display: flex;
@@ -85,7 +85,7 @@
             justify-content: center;
             font-weight: 700;
             color: #0e0c07;
-            font-size: 16px;
+            font-size: 15px;
             overflow: hidden;
             border: 2px solid rgba(243, 186, 47, 0.3);
             flex-shrink: 0;
@@ -93,14 +93,14 @@
         .avatar img { width: 100%; height: 100%; object-fit: cover; }
         .user-info .name {
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
             color: #e5d6b0;
         }
         .user-info .level-tag {
-            font-size: 10px;
+            font-size: 9px;
             color: #f3ba2f;
             background: rgba(243, 186, 47, 0.15);
-            padding: 2px 10px;
+            padding: 1px 8px;
             border-radius: 30px;
             font-weight: 600;
         }
@@ -108,9 +108,9 @@
             background: rgba(26, 22, 16, 0.7);
             border: 1px solid rgba(243, 186, 47, 0.2);
             border-radius: 40px;
-            padding: 8px 14px;
+            padding: 6px 12px;
             color: #f3ba2f;
-            font-size: 18px;
+            font-size: 16px;
             cursor: pointer;
             transition: 0.2s;
             backdrop-filter: blur(10px);
@@ -119,30 +119,30 @@
             gap: 4px;
         }
         .settings-btn:active { transform: scale(0.9); }
-        .settings-btn span { font-size: 11px; font-weight: 600; }
+        .settings-btn span { font-size: 10px; font-weight: 600; }
 
-        /* Balance Card */
+        /* Balance Card - No 2/11 */
         .balance-card {
             background: linear-gradient(135deg, #1a1610, #221d15);
-            border-radius: 24px;
-            padding: 16px 20px 14px;
+            border-radius: 20px;
+            padding: 12px 16px 10px;
             text-align: center;
             border: 1px solid rgba(243, 186, 47, 0.12);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             flex-shrink: 0;
             box-shadow: 0 8px 32px rgba(0,0,0,0.4);
             position: relative;
             z-index: 1;
         }
         .balance-card .label {
-            font-size: 10px;
+            font-size: 9px;
             color: #b0945a;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             text-transform: uppercase;
             font-weight: 600;
         }
         .balance-card .amount {
-            font-size: 3.2rem;
+            font-size: 2.8rem;
             font-weight: 800;
             background: linear-gradient(135deg, #fad974, #f3ba2f);
             -webkit-background-clip: text;
@@ -152,18 +152,18 @@
             letter-spacing: 1px;
         }
         .balance-card .sub {
-            font-size: 11px;
+            font-size: 10px;
             color: #8a7a54;
-            margin-top: 2px;
+            margin-top: 1px;
         }
 
         /* Level & Progress */
         .level-progress {
             background: rgba(26, 22, 16, 0.6);
             border-radius: 30px;
-            padding: 6px 16px 8px;
+            padding: 5px 14px 6px;
             border: 1px solid rgba(47, 40, 28, 0.2);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             flex-shrink: 0;
             position: relative;
             z-index: 1;
@@ -172,7 +172,7 @@
         .level-progress .top {
             display: flex;
             justify-content: space-between;
-            font-size: 11px;
+            font-size: 10px;
             color: #8a7a54;
             margin-bottom: 2px;
         }
@@ -182,7 +182,7 @@
         }
         .level-progress .bar-track {
             width: 100%;
-            height: 6px;
+            height: 5px;
             background: rgba(42, 34, 21, 0.6);
             border-radius: 10px;
             overflow: hidden;
@@ -203,14 +203,14 @@
             flex: 1;
             min-height: 0;
             position: relative;
-            margin: 4px 0;
+            margin: 2px 0;
             overflow: visible;
             touch-action: none;
             z-index: 1;
         }
         .coin {
-            width: 220px;
-            height: 220px;
+            width: 200px;
+            height: 200px;
             background: radial-gradient(circle at 35% 30%, #fce181, #d49c1a 45%, #b8860b 70%, #8a6b0e);
             border-radius: 50%;
             border: 8px solid #f9d342;
@@ -239,7 +239,7 @@
             content: 'E';
             position: relative;
             z-index: 1;
-            font-size: 6rem;
+            font-size: 5.5rem;
             font-weight: 900;
             color: #7a5f0e;
             text-shadow: 0 2px 4px rgba(255,215,0,0.2), 0 -2px 4px rgba(0,0,0,0.3);
@@ -250,7 +250,7 @@
 
         .float-text {
             position: absolute;
-            font-size: 2.4rem;
+            font-size: 2.2rem;
             font-weight: 800;
             color: #f3ba2f;
             text-shadow: 0 0 20px #f3ba2f, 0 0 40px #f3ba2f80, 0 0 60px #f3ba2f40;
@@ -262,51 +262,36 @@
         .float-text.super {
             color: #ff6b6b;
             text-shadow: 0 0 20px #ff6b6b, 0 0 40px #ff6b6b80, 0 0 60px #ff6b6b40;
-            font-size: 3.2rem;
+            font-size: 3rem;
         }
         .float-text.tap-limit {
             color: #ffd93d;
             text-shadow: 0 0 20px #ffd93d, 0 0 40px #ffd93d80;
-            font-size: 2rem;
+            font-size: 1.8rem;
         }
         @keyframes floatUp {
             0% { opacity: 1; transform: translateY(0) scale(0.8) rotate(-5deg); }
             30% { opacity: 1; transform: translateY(-20px) scale(1.1) rotate(3deg); }
-            100% { opacity: 0; transform: translateY(-150px) scale(1.3) rotate(0deg); }
+            100% { opacity: 0; transform: translateY(-140px) scale(1.3) rotate(0deg); }
         }
 
-        .tap-info {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            padding: 4px 0;
+        /* Big Buttons Row */
+        .btn-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
             flex-shrink: 0;
             position: relative;
             z-index: 1;
+            margin-top: 4px;
         }
-        .tap-info .item {
-            text-align: center;
-        }
-        .tap-info .item .num {
-            font-size: 14px;
-            font-weight: 700;
-            color: #f3ba2f;
-        }
-        .tap-info .item .lbl {
-            font-size: 9px;
-            color: #8a7a54;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* Big Buttons */
         .big-btn {
             background: linear-gradient(135deg, #f3ba2f, #d49c1a);
             border: none;
-            padding: 14px 24px;
+            padding: 14px 20px;
             border-radius: 50px;
             font-weight: 700;
-            font-size: 16px;
+            font-size: 15px;
             color: #0e0c07;
             cursor: pointer;
             box-shadow: 0 4px 0 #876a1a, 0 6px 20px rgba(243, 186, 47, 0.2);
@@ -322,15 +307,200 @@
             border: 1px solid rgba(243, 186, 47, 0.2);
         }
         .big-btn.secondary:active { transform: translateY(4px); box-shadow: 0 0px 0 #1a1610; }
+        .big-btn.small { padding: 10px 16px; font-size: 12px; }
 
-        .btn-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
+        /* Bottom Navigation */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(20, 17, 13, 0.9);
+            border-radius: 40px;
+            padding: 6px 4px;
+            border: 1px solid rgba(47, 40, 28, 0.3);
             flex-shrink: 0;
+            margin-top: 6px;
             position: relative;
             z-index: 1;
-            margin-top: 4px;
+            backdrop-filter: blur(10px);
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 4px 8px;
+            border-radius: 30px;
+            font-size: 8px;
+            color: #7a6a4a;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            font-weight: 600;
+            gap: 1px;
+            transition: 0.15s;
+            flex: 1;
+            position: relative;
+        }
+        .nav-item .icon { font-size: 18px; line-height: 1; }
+        .nav-item .label { font-size: 8px; text-transform: uppercase; letter-spacing: 0.3px; }
+        .nav-item.active { color: #f3ba2f; background: rgba(30, 26, 18, 0.6); }
+        .nav-item:active { opacity: 0.6; }
+        .nav-item .badge-dot {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 6px;
+            height: 6px;
+            background: #ff6b6b;
+            border-radius: 50%;
+        }
+
+        /* Page Content */
+        .page-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+        .page {
+            display: none;
+            flex-direction: column;
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 4px;
+        }
+        .page.active { display: flex; }
+
+        /* Tasks Page */
+        .task-item {
+            background: rgba(26, 22, 16, 0.6);
+            border-radius: 14px;
+            padding: 12px 14px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(47, 40, 28, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            transition: 0.2s;
+        }
+        .task-item:active { transform: scale(0.98); }
+        .task-item .task-info { text-align: left; flex: 1; }
+        .task-item .task-info .name { font-size: 13px; font-weight: 600; color: #e5d6b0; }
+        .task-item .task-info .desc { font-size: 10px; color: #8a7a54; }
+        .task-item .task-reward { font-size: 12px; font-weight: 700; color: #f3ba2f; margin: 0 10px; }
+        .task-item .task-btn {
+            background: linear-gradient(135deg, #f3ba2f, #d49c1a);
+            border: none;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 11px;
+            color: #0e0c07;
+            flex-shrink: 0;
+        }
+        .task-item .task-btn.done { background: #2a2215; color: #8a7a54; cursor: default; }
+
+        /* Airdrop Page */
+        .airdrop-card {
+            background: rgba(26, 22, 16, 0.6);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(47, 40, 28, 0.3);
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        .airdrop-card .binance-logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #f3ba2f;
+            margin-bottom: 8px;
+        }
+        .airdrop-card .binance-logo span { background: #f3ba2f; color: #0e0c07; padding: 4px 14px; border-radius: 8px; }
+        .airdrop-card input {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 30px;
+            border: 1px solid rgba(47, 40, 28, 0.3);
+            background: rgba(14, 12, 7, 0.6);
+            color: #e5d6b0;
+            font-size: 14px;
+            outline: none;
+            margin: 8px 0;
+        }
+        .airdrop-card input:focus { border-color: #f3ba2f; }
+        .airdrop-card .btn-connect {
+            background: linear-gradient(135deg, #f3ba2f, #d49c1a);
+            border: none;
+            padding: 12px;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 14px;
+            color: #0e0c07;
+            width: 100%;
+        }
+        .airdrop-card .airdrop-info {
+            background: rgba(14, 12, 7, 0.6);
+            padding: 12px;
+            border-radius: 14px;
+            border: 1px solid rgba(47, 40, 28, 0.3);
+            margin: 10px 0 0;
+        }
+        .airdrop-card .airdrop-info .row { display: flex; justify-content: space-between; padding: 3px 0; font-size: 12px; }
+        .airdrop-card .airdrop-info .row .label { color: #8a7a54; }
+        .airdrop-card .airdrop-info .row .value { color: #f3ba2f; font-weight: 600; }
+
+        /* Friends Page */
+        .friends-card {
+            background: rgba(26, 22, 16, 0.6);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(47, 40, 28, 0.3);
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        .friends-card .referral-bonus {
+            background: linear-gradient(135deg, rgba(47, 40, 28, 0.4), rgba(26, 22, 16, 0.6));
+            border: 1px solid rgba(243, 186, 47, 0.15);
+            border-radius: 14px;
+            padding: 14px;
+            margin: 8px 0;
+        }
+        .friends-card .referral-bonus .big { font-size: 2rem; color: #f3ba2f; font-weight: 700; }
+        .friends-card .referral-bonus .sub { font-size: 11px; color: #8a7a54; }
+        .friends-card .invite-link {
+            background: rgba(14, 12, 7, 0.6);
+            padding: 10px;
+            border-radius: 14px;
+            border: 1px solid rgba(47, 40, 28, 0.3);
+            color: #f3ba2f;
+            font-size: 12px;
+            word-break: break-all;
+            margin: 8px 0;
+        }
+        .friends-card .copy-btn {
+            background: rgba(47, 40, 28, 0.6);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            color: #f3ba2f;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 4px auto;
+            display: inline-block;
+            font-size: 13px;
+        }
+
+        /* Earn Page */
+        .earn-card {
+            background: rgba(26, 22, 16, 0.6);
+            border-radius: 20px;
+            padding: 16px;
+            border: 1px solid rgba(47, 40, 28, 0.3);
+            backdrop-filter: blur(10px);
         }
 
         /* Modal */
@@ -402,7 +572,6 @@
         .modal-box .input-group input:focus, .modal-box .input-group textarea:focus {
             border-color: #f3ba2f;
         }
-        .modal-box .input-group textarea { border-radius: 16px; resize: vertical; min-height: 60px; }
         .modal-box .setting-item {
             display: flex;
             justify-content: space-between;
@@ -437,28 +606,6 @@
         .t-orange { background: #1a0f0d; }
         .t-teal { background: #0d1a1a; }
 
-        .modal-box .morse-tutorial {
-            background: rgba(14, 12, 7, 0.6);
-            padding: 12px;
-            border-radius: 14px;
-            border: 1px solid rgba(47, 40, 28, 0.3);
-            margin: 8px 0;
-            max-height: 150px;
-            overflow-y: auto;
-        }
-        .modal-box .morse-tutorial .row {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        .modal-box .morse-tutorial .char {
-            background: rgba(243, 186, 47, 0.1);
-            padding: 2px 8px;
-            border-radius: 6px;
-            font-size: 11px;
-            color: #f3ba2f;
-        }
-
         .modal-box .airdrop-info {
             background: rgba(14, 12, 7, 0.6);
             padding: 12px;
@@ -469,21 +616,58 @@
         .modal-box .airdrop-info .row { display: flex; justify-content: space-between; padding: 3px 0; font-size: 13px; }
         .modal-box .airdrop-info .row .label { color: #8a7a54; }
         .modal-box .airdrop-info .row .value { color: #f3ba2f; font-weight: 600; }
+        .modal-box .big-btn {
+            background: linear-gradient(135deg, #f3ba2f, #d49c1a);
+            border: none;
+            padding: 12px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 15px;
+            color: #0e0c07;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 4px 0 #876a1a;
+            transition: 0.08s;
+        }
+        .modal-box .big-btn:active { transform: translateY(4px); box-shadow: 0 0px 0 #876a1a; }
+        .modal-box .big-btn.secondary {
+            background: rgba(26, 22, 16, 0.8);
+            color: #f3ba2f;
+            box-shadow: 0 4px 0 #1a1610;
+            border: 1px solid rgba(243, 186, 47, 0.2);
+        }
+        .modal-box .big-btn.secondary:active { transform: translateY(4px); box-shadow: 0 0px 0 #1a1610; }
+
+        .modal-box .combo-attempts {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 6px 0;
+        }
+        .modal-box .combo-attempts .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #2a2215;
+            border: 1px solid rgba(47, 40, 28, 0.3);
+        }
+        .modal-box .combo-attempts .dot.used { background: #ff6b6b; border-color: #ff6b6b; }
+        .modal-box .combo-attempts .dot.remaining { background: #f3ba2f; border-color: #f3ba2f; }
 
         /* Scrollbar */
-        .modal-box::-webkit-scrollbar { width: 3px; }
-        .modal-box::-webkit-scrollbar-track { background: transparent; }
-        .modal-box::-webkit-scrollbar-thumb { background: #3d321f; border-radius: 10px; }
+        .modal-box::-webkit-scrollbar, .page::-webkit-scrollbar { width: 3px; }
+        .modal-box::-webkit-scrollbar-track, .page::-webkit-scrollbar-track { background: transparent; }
+        .modal-box::-webkit-scrollbar-thumb, .page::-webkit-scrollbar-thumb { background: #3d321f; border-radius: 10px; }
 
         @media (max-width: 420px) {
-            .coin { width: 180px; height: 180px; }
-            .coin::after { font-size: 5rem; }
-            .balance-card .amount { font-size: 2.6rem; }
+            .coin { width: 170px; height: 170px; }
+            .coin::after { font-size: 4.8rem; }
+            .balance-card .amount { font-size: 2.4rem; }
         }
         @media (max-width: 360px) {
             .coin { width: 150px; height: 150px; }
             .coin::after { font-size: 4.2rem; }
-            .balance-card .amount { font-size: 2.2rem; }
+            .balance-card .amount { font-size: 2rem; }
         }
     </style>
 </head>
@@ -506,7 +690,7 @@
         </button>
     </div>
 
-    <!-- Balance -->
+    <!-- Balance - No 2/11 -->
     <div class="balance-card">
         <div class="label">💰 BALANCE</div>
         <div class="amount" id="balanceDisplay">0</div>
@@ -524,27 +708,127 @@
         </div>
     </div>
 
-    <!-- Coin -->
-    <div class="coin-wrapper" id="coinWrapper">
-        <div class="coin" id="mainCoin" role="button" aria-label="Tap to earn"></div>
+    <!-- Page Content -->
+    <div class="page-content">
+        <!-- MAIN PAGE -->
+        <div class="page active" id="page-main">
+            <!-- Coin -->
+            <div class="coin-wrapper" id="coinWrapper">
+                <div class="coin" id="mainCoin" role="button" aria-label="Tap to earn"></div>
+            </div>
+
+            <!-- Big Buttons: Daily (left) and Boost (right) -->
+            <div class="btn-row">
+                <button class="big-btn" id="dailyBtn">📅 Daily</button>
+                <button class="big-btn" id="boostBtn">⚡ Boost</button>
+            </div>
+        </div>
+
+        <!-- EXCHANGE PAGE -->
+        <div class="page" id="page-exchange">
+            <div style="margin-bottom:8px;">
+                <h2 style="color:#f3ba2f;font-size:16px;">📈 Exchange</h2>
+                <p style="color:#8a7a54;font-size:11px;">Trade your coins for special perks!</p>
+            </div>
+            <div class="earn-card">
+                <div class="airdrop-info">
+                    <div class="row"><span class="label">Your Coins</span><span class="value" id="exchangeBalance">0</span></div>
+                    <div class="row"><span class="label">Exchange Rate</span><span class="value">1 coin = 0.001 ETH</span></div>
+                </div>
+                <button class="big-btn" onclick="alert('Exchange feature coming soon!')" style="margin-top:10px;">Exchange Now</button>
+            </div>
+        </div>
+
+        <!-- MINE PAGE -->
+        <div class="page" id="page-mine">
+            <div style="margin-bottom:8px;">
+                <h2 style="color:#f3ba2f;font-size:16px;">⛏️ Mine</h2>
+                <p style="color:#8a7a54;font-size:11px;">Mine coins by tapping!</p>
+            </div>
+            <div class="earn-card">
+                <div class="airdrop-info">
+                    <div class="row"><span class="label">Coins Mined</span><span class="value" id="mineBalance">0</span></div>
+                </div>
+                <button class="big-btn" onclick="handleMine()" style="margin-top:10px;">⛏️ Mine Now</button>
+            </div>
+        </div>
+
+        <!-- FRIENDS PAGE -->
+        <div class="page" id="page-friends">
+            <div style="margin-bottom:8px;">
+                <h2 style="color:#f3ba2f;font-size:16px;">👥 Friends</h2>
+                <p style="color:#8a7a54;font-size:11px;">Invite friends and earn rewards!</p>
+            </div>
+            <div class="friends-card">
+                <div class="referral-bonus">
+                    <div class="big">👥 <span id="referralCount">0</span></div>
+                    <div class="sub">Total Referrals</div>
+                </div>
+                <div class="invite-link" id="inviteLinkDisplay">Loading...</div>
+                <button class="copy-btn" onclick="copyInviteLink()">📋 Copy Link</button>
+                <button class="big-btn secondary" onclick="simulateReferral()" style="margin-top:8px;">➕ Simulate Referral</button>
+                <p style="font-size:10px;color:#8a7a54;margin-top:6px;">Each referral gives you 100 coins!</p>
+            </div>
+        </div>
+
+        <!-- EARN PAGE -->
+        <div class="page" id="page-earn">
+            <div style="margin-bottom:8px;">
+                <h2 style="color:#f3ba2f;font-size:16px;">🎯 Earn</h2>
+                <p style="color:#8a7a54;font-size:11px;">Complete tasks to earn extra coins!</p>
+            </div>
+            <div id="earnTasksContainer">
+                <!-- Tasks rendered here -->
+            </div>
+        </div>
+
+        <!-- AIRDROP PAGE -->
+        <div class="page" id="page-airdrop">
+            <div style="margin-bottom:8px;">
+                <h2 style="color:#f3ba2f;font-size:16px;">🎯 Airdrop</h2>
+                <p style="color:#8a7a54;font-size:11px;">Connect your Binance wallet to withdraw</p>
+            </div>
+            <div class="airdrop-card">
+                <div class="binance-logo"><span>BINANCE</span></div>
+                <p style="color:#bdaa7a;font-size:12px;">Enter your Binance UID to connect</p>
+                <input type="text" id="binanceUidInput" placeholder="Enter Binance UID..." />
+                <button class="btn-connect" onclick="connectBinance()">🔗 Connect Wallet</button>
+                <div class="airdrop-info">
+                    <div class="row"><span class="label">Your Coins</span><span class="value" id="airdropBalance">0</span></div>
+                    <div class="row"><span class="label">Value (USD)</span><span class="value" id="airdropValue">$0.00</span></div>
+                    <div class="row"><span class="label">Min. Withdraw</span><span class="value">1,000 coins</span></div>
+                </div>
+                <p style="font-size:9px;color:#4d3f28;margin-top:6px;">🔒 Secure connection via Binance</p>
+            </div>
+        </div>
     </div>
 
-    <!-- Tap Info -->
-    <div class="tap-info">
-        <div class="item">
-            <div class="num" id="tapPowerDisplay">+1</div>
-            <div class="lbl">Tap Power</div>
-        </div>
-        <div class="item">
-            <div class="num" id="tapLimitDisplay">1,500</div>
-            <div class="lbl">Taps Left</div>
-        </div>
-    </div>
-
-    <!-- Big Buttons -->
-    <div class="btn-row">
-        <button class="big-btn" id="boostBtn">⚡ Boost</button>
-        <button class="big-btn secondary" id="dailyBtn">📅 Daily</button>
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <button class="nav-item active" data-page="page-main" onclick="switchPage('page-main')">
+            <span class="icon">🏠</span>
+            <span class="label">Main</span>
+        </button>
+        <button class="nav-item" data-page="page-exchange" onclick="switchPage('page-exchange')">
+            <span class="icon">📈</span>
+            <span class="label">Exchange</span>
+        </button>
+        <button class="nav-item" data-page="page-mine" onclick="switchPage('page-mine')">
+            <span class="icon">⛏️</span>
+            <span class="label">Mine</span>
+        </button>
+        <button class="nav-item" data-page="page-friends" onclick="switchPage('page-friends')">
+            <span class="icon">👥</span>
+            <span class="label">Friends</span>
+        </button>
+        <button class="nav-item" data-page="page-earn" onclick="switchPage('page-earn')">
+            <span class="icon">🎯</span>
+            <span class="label">Earn</span>
+        </button>
+        <button class="nav-item" data-page="page-airdrop" onclick="switchPage('page-airdrop')">
+            <span class="icon">🎯</span>
+            <span class="label">Airdrop</span>
+        </button>
     </div>
 
 </div>
@@ -563,7 +847,7 @@
         "use strict";
 
         // --- PERSISTENT STORAGE ---
-        const STORAGE_KEY = 'eco_app_data_v14';
+        const STORAGE_KEY = 'eco_app_data_v15';
 
         function loadData() {
             try {
@@ -586,7 +870,6 @@
         const MAX_TAPS = 1500;
         let saved = loadData();
         let balance = saved?.balance || 0;
-        let ceoCoins = saved?.ceoCoins || 0;
         let tapPower = saved?.tapPower || 1;
         let boostLevel = saved?.boostLevel || 1;
         let tapsRemaining = saved?.tapsRemaining !== undefined ? saved.tapsRemaining : MAX_TAPS;
@@ -595,13 +878,15 @@
         let userAvatar = saved?.userAvatar || '👩';
         let theme = saved?.theme || 'theme-dark';
         let profileLastChanged = saved?.profileLastChanged || 0;
-        let dailyCipherClaimed = saved?.dailyCipherClaimed || false;
-        let dailyRewardClaimed = saved?.dailyRewardClaimed || false;
+        let referrals = saved?.referrals || 0;
         let binanceUid = saved?.binanceUid || '';
-        let promotionLinks = saved?.promotionLinks || [];
-        let completedPromotions = saved?.completedPromotions || [];
+        let socialLinks = saved?.socialLinks || [];
+        let dailyComboClaimed = saved?.dailyComboClaimed || false;
+        let comboAttempts = saved?.comboAttempts || 0;
+        let comboDate = saved?.comboDate || '';
         const COOLDOWN_DAYS = 7;
         const COOLDOWN_MS = COOLDOWN_DAYS * 24 * 60 * 60 * 1000;
+        const MAX_COMBO_ATTEMPTS = 3;
 
         // --- DOM ---
         const balanceDisplay = document.getElementById('balanceDisplay');
@@ -609,8 +894,6 @@
         const levelDisplay2 = document.getElementById('levelDisplay2');
         const nextLevelDisplay = document.getElementById('nextLevelDisplay');
         const progressBar = document.getElementById('progressBar');
-        const tapPowerDisplay = document.getElementById('tapPowerDisplay');
-        const tapLimitDisplay = document.getElementById('tapLimitDisplay');
         const userNameDisplay = document.getElementById('userNameDisplay');
         const avatarDisplay = document.getElementById('avatarDisplay');
         const coinEl = document.getElementById('mainCoin');
@@ -618,12 +901,19 @@
         const boostBtn = document.getElementById('boostBtn');
         const dailyBtn = document.getElementById('dailyBtn');
         const userInfo = document.getElementById('userInfo');
-
         const modalOverlay = document.getElementById('modalOverlay');
         const modalBox = document.getElementById('modalBox');
         const modalTitle = document.getElementById('modalTitle');
         const modalContent = document.getElementById('modalContent');
         const modalClose = document.getElementById('modalClose');
+        const referralCount = document.getElementById('referralCount');
+        const inviteLinkDisplay = document.getElementById('inviteLinkDisplay');
+        const exchangeBalance = document.getElementById('exchangeBalance');
+        const mineBalance = document.getElementById('mineBalance');
+        const airdropBalance = document.getElementById('airdropBalance');
+        const airdropValue = document.getElementById('airdropValue');
+        const binanceUidInput = document.getElementById('binanceUidInput');
+        const earnTasksContainer = document.getElementById('earnTasksContainer');
 
         // --- FUNCTIONS ---
         function getLevel(coins) {
@@ -647,10 +937,15 @@
             return 0.4;
         }
 
+        function getInviteLink() {
+            const base = 'https://e-coin.app/invite/';
+            const uid = Math.random().toString(36).substring(2, 10);
+            return base + uid;
+        }
+
         function saveState() {
             saveData({
                 balance: balance,
-                ceoCoins: ceoCoins,
                 tapPower: tapPower,
                 boostLevel: boostLevel,
                 tapsRemaining: tapsRemaining,
@@ -659,17 +954,22 @@
                 userAvatar: userAvatar,
                 theme: theme,
                 profileLastChanged: profileLastChanged,
-                dailyCipherClaimed: dailyCipherClaimed,
-                dailyRewardClaimed: dailyRewardClaimed,
+                referrals: referrals,
                 binanceUid: binanceUid,
-                promotionLinks: promotionLinks,
-                completedPromotions: completedPromotions
+                socialLinks: socialLinks,
+                dailyComboClaimed: dailyComboClaimed,
+                comboAttempts: comboAttempts,
+                comboDate: comboDate
             });
         }
 
         function updateUI() {
             const formatted = balance.toLocaleString();
             balanceDisplay.textContent = formatted;
+            exchangeBalance.textContent = formatted;
+            mineBalance.textContent = formatted;
+            airdropBalance.textContent = formatted;
+            airdropValue.textContent = '$' + (balance / 1000).toFixed(2);
 
             const level = getLevel(balance);
             levelDisplay.textContent = level;
@@ -681,17 +981,29 @@
             const nextThreshold = level * 1000;
             nextLevelDisplay.textContent = `Next: ${nextThreshold.toLocaleString()} coins`;
 
-            tapPowerDisplay.textContent = '+' + tapPower;
-            tapLimitDisplay.textContent = Math.floor(tapsRemaining).toLocaleString();
-
             userNameDisplay.textContent = userName;
             avatarDisplay.textContent = userAvatar;
+            referralCount.textContent = referrals;
 
             if (tapsRemaining <= 0) {
                 coinEl.classList.add('disabled');
             } else {
                 coinEl.classList.remove('disabled');
             }
+
+            // Update invite link
+            if (inviteLinkDisplay) {
+                const link = getInviteLink();
+                inviteLinkDisplay.textContent = link;
+            }
+
+            // Restore binance UID
+            if (binanceUidInput && binanceUid) {
+                binanceUidInput.value = binanceUid;
+            }
+
+            // Render earn tasks
+            renderEarnTasks();
 
             saveState();
         }
@@ -723,10 +1035,7 @@
 
             const amount = tapPower;
             tapsRemaining -= 1;
-
             balance += amount;
-            ceoCoins += amount;
-
             lastTapTime = Date.now();
             updateUI();
 
@@ -833,260 +1142,283 @@
 
         window.upgradeBoost = upgradeBoost;
 
-        // --- DAILY ---
+        // --- DAILY COMBO ---
         function handleDaily() {
-            const now = new Date();
-            const today = now.toDateString();
-            const lastDate = localStorage.getItem('eco_last_date');
+            const today = new Date().toDateString();
 
-            // Reset daily claims if new day
-            if (lastDate !== today) {
-                dailyCipherClaimed = false;
-                dailyRewardClaimed = false;
-                localStorage.setItem('eco_last_date', today);
+            // Reset combo if new day
+            if (comboDate !== today) {
+                dailyComboClaimed = false;
+                comboAttempts = 0;
+                comboDate = today;
                 saveState();
             }
 
-            const dailyRewardStatus = dailyRewardClaimed ? '✅ Claimed' : '🎁 Claim';
-            const cipherStatus = dailyCipherClaimed ? '✅ Claimed' : '🔐 Solve';
+            const comboStatus = dailyComboClaimed ? '✅ Claimed' : '🔐 Solve Combo';
+            const attemptsLeft = MAX_COMBO_ATTEMPTS - comboAttempts;
 
-            openModal('📅 Daily Rewards', `
-                <p>Complete daily tasks to earn big rewards!</p>
+            let attemptsHTML = '';
+            for (let i = 0; i < MAX_COMBO_ATTEMPTS; i++) {
+                const cls = i < comboAttempts ? 'used' : 'remaining';
+                attemptsHTML += `<div class="dot ${cls}"></div>`;
+            }
 
-                <div class="setting-item">
-                    <span class="label">📆 Daily Reward</span>
-                    <span class="value">+100 coins</span>
+            // Get social links for tasks
+            let tasksHTML = '';
+            if (socialLinks.length === 0) {
+                tasksHTML = `<p style="color:#8a7a54;font-size:12px;">No social tasks available. Add links in Settings!</p>`;
+            } else {
+                socialLinks.forEach((link, index) => {
+                    tasksHTML += `
+                        <div class="task-item">
+                            <div class="task-info">
+                                <div class="name">🔗 ${link.name}</div>
+                                <div class="desc">${link.url}</div>
+                            </div>
+                            <div class="task-reward">+50 coins</div>
+                            <button class="task-btn" onclick="completeSocialTask(${index})">Go</button>
+                        </div>
+                    `;
+                });
+            }
+
+            openModal('📅 Daily Tasks', `
+                <p>Complete tasks and solve the daily combo!</p>
+
+                <div style="margin:8px 0;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(14,12,7,0.6);padding:10px 14px;border-radius:14px;border:1px solid rgba(47,40,28,0.3);">
+                        <span style="color:#e5d6b0;font-size:13px;font-weight:600;">🎯 Daily Combo</span>
+                        <span style="color:#f3ba2f;font-size:13px;font-weight:700;">1,000,000 coins!</span>
+                    </div>
+                    <div class="combo-attempts">${attemptsHTML}</div>
+                    <p style="font-size:10px;color:#8a7a54;">${attemptsLeft} attempts remaining</p>
+                    <button class="big-btn" onclick="openCombo()" style="margin-top:4px;font-size:14px;padding:10px;" ${dailyComboClaimed ? 'disabled style="opacity:0.5;"' : ''}>${comboStatus}</button>
                 </div>
-                <button class="big-btn" onclick="claimDailyReward()" style="margin-top:4px;font-size:14px;padding:10px;">${dailyRewardStatus}</button>
 
                 <div style="height:10px;"></div>
-
-                <div class="setting-item">
-                    <span class="label">🔐 Daily Cipher (Morse Code)</span>
-                    <span class="value">+1,000,000 coins!</span>
+                <div style="border-top:1px solid rgba(47,40,28,0.2);padding-top:10px;">
+                    <p style="color:#8a7a54;font-size:11px;text-align:left;margin-bottom:6px;">📋 Social Tasks</p>
+                    ${tasksHTML}
                 </div>
-                <button class="big-btn" onclick="openCipher()" style="margin-top:4px;font-size:14px;padding:10px;">${cipherStatus}</button>
-
-                <div style="height:10px;"></div>
-
-                <div class="setting-item">
-                    <span class="label">📢 Promotion Tasks</span>
-                    <span class="value">+2,000 coins</span>
-                </div>
-                <button class="big-btn secondary" onclick="openPromotions()" style="margin-top:4px;font-size:14px;padding:10px;">📋 View Promotions</button>
             `);
         }
 
-        function claimDailyReward() {
-            if (dailyRewardClaimed) {
-                alert('✅ Daily reward already claimed! Come back tomorrow.');
-                return;
-            }
-            const reward = 100;
-            balance += reward;
-            ceoCoins += reward;
-            dailyRewardClaimed = true;
-            updateUI();
-            closeModal();
-            alert(`🎉 Daily reward claimed! +${reward} coins!`);
-            handleDaily();
-        }
+        window.handleDaily = handleDaily;
 
-        window.claimDailyReward = claimDailyReward;
+        // --- COMBO SYSTEM ---
+        const comboQuestions = [
+            { q: 'What is the capital of France?', a: 'paris' },
+            { q: 'What is 7 + 8?', a: '15' },
+            { q: 'What color is the sky?', a: 'blue' },
+            { q: 'What is the largest planet?', a: 'jupiter' },
+            { q: 'What is the chemical symbol for water?', a: 'h2o' },
+            { q: 'What year did World War II end?', a: '1945' },
+            { q: 'What is the speed of light?', a: '299792458' },
+            { q: 'Who painted the Mona Lisa?', a: 'da vinci' },
+            { q: 'What is the square root of 144?', a: '12' },
+            { q: 'What is the tallest mountain?', a: 'everest' }
+        ];
 
-        // --- CIPHER (Morse Code) ---
-        const morseMap = {
-            'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.',
-            'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..',
-            'M': '--', 'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.',
-            'S': '...', 'T': '-', 'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-',
-            'Y': '-.--', 'Z': '--..'
-        };
+        let currentComboIndex = 0;
 
-        function openCipher() {
-            if (dailyCipherClaimed) {
-                alert('✅ Daily cipher already claimed! Come back tomorrow.');
+        function openCombo() {
+            if (dailyComboClaimed) {
+                alert('✅ Daily combo already claimed! Come back tomorrow.');
                 return;
             }
 
-            // Generate random letter
-            const letters = Object.keys(morseMap);
-            const targetLetter = letters[Math.floor(Math.random() * letters.length)];
-            const targetMorse = morseMap[targetLetter];
+            if (comboAttempts >= MAX_COMBO_ATTEMPTS) {
+                alert('❌ You have used all 3 attempts. Try again tomorrow!');
+                return;
+            }
 
-            // Store the answer for verification
-            window._cipherAnswer = targetLetter;
+            // Select random question
+            currentComboIndex = Math.floor(Math.random() * comboQuestions.length);
+            const question = comboQuestions[currentComboIndex];
 
-            const morseTutorial = Object.entries(morseMap).slice(0, 10).map(([char, code]) =>
-                `<span class="char">${char}: ${code}</span>`
-            ).join('');
-
-            openModal('🔐 Daily Cipher (Morse Code)', `
-                <p>Decode the Morse code to earn <strong style="color:#f3ba2f;">1,000,000 coins</strong>!</p>
-
-                <div style="text-align:center;font-size:3rem;padding:16px;background:rgba(14,12,7,0.6);border-radius:16px;border:1px solid rgba(47,40,28,0.3);margin:8px 0;letter-spacing:8px;font-weight:700;color:#f3ba2f;">
-                    ${targetMorse}
-                </div>
-
+            openModal('🎯 Daily Combo', `
+                <p>Answer correctly to win <strong style="color:#f3ba2f;">1,000,000 coins</strong>!</p>
+                <p style="font-size:1.2rem;font-weight:600;padding:12px;background:rgba(14,12,7,0.6);border-radius:16px;border:1px solid rgba(47,40,28,0.3);margin:8px 0;">
+                    ${question.q}
+                </p>
                 <div class="input-group">
-                    <input type="text" id="cipherInput" placeholder="Enter the letter (A-Z)" style="text-align:center;font-size:20px;text-transform:uppercase;" maxlength="1" />
-                    <button class="big-btn" onclick="checkCipher()" style="font-size:14px;padding:10px;">Submit Answer</button>
+                    <input type="text" id="comboAnswer" placeholder="Type your answer..." style="text-align:center;font-size:18px;" />
+                    <button class="big-btn" onclick="submitCombo()" style="font-size:14px;padding:10px;">Submit Answer</button>
                 </div>
-
-                <div class="morse-tutorial">
-                    <p style="font-size:11px;color:#8a7a54;margin-bottom:4px;">📖 Morse Code Tutorial (A-J):</p>
-                    <div class="row">${morseTutorial}</div>
-                    <p style="font-size:10px;color:#4d3f28;margin-top:4px;">Dot = tap (.)  Dash = hold (-)</p>
-                </div>
+                <p style="font-size:10px;color:#8a7a54;">Attempts remaining: ${MAX_COMBO_ATTEMPTS - comboAttempts - 1}</p>
             `);
 
             setTimeout(() => {
-                const input = document.getElementById('cipherInput');
+                const input = document.getElementById('comboAnswer');
                 if (input) input.focus();
             }, 300);
         }
 
-        window.openCipher = openCipher;
+        window.openCombo = openCombo;
 
-        function checkCipher() {
-            const input = document.getElementById('cipherInput');
+        function submitCombo() {
+            const input = document.getElementById('comboAnswer');
             if (!input) return;
-            const answer = input.value.trim().toUpperCase();
-            const target = window._cipherAnswer;
+            const answer = input.value.trim().toLowerCase();
 
             if (!answer) {
-                alert('Please enter a letter.');
+                alert('Please enter an answer.');
                 return;
             }
 
-            if (answer === target) {
+            const question = comboQuestions[currentComboIndex];
+            const isCorrect = answer === question.a;
+
+            comboAttempts += 1;
+            saveState();
+
+            if (isCorrect) {
                 const reward = 1000000;
                 balance += reward;
-                ceoCoins += reward;
-                dailyCipherClaimed = true;
+                dailyComboClaimed = true;
                 updateUI();
                 closeModal();
                 alert(`🎉 Correct! You earned ${reward.toLocaleString()} coins!`);
                 handleDaily();
             } else {
-                alert(`❌ Wrong answer! The correct letter was ${target}. Try again tomorrow.`);
-                closeModal();
+                if (comboAttempts >= MAX_COMBO_ATTEMPTS) {
+                    closeModal();
+                    alert(`❌ Wrong answer! You have used all 3 attempts. Try again tomorrow!`);
+                } else {
+                    alert(`❌ Wrong answer! ${MAX_COMBO_ATTEMPTS - comboAttempts} attempts remaining.`);
+                    openCombo();
+                }
             }
         }
 
-        window.checkCipher = checkCipher;
+        window.submitCombo = submitCombo;
 
-        // --- PROMOTIONS ---
-        function openPromotions() {
-            let promoHTML = '';
-            if (promotionLinks.length === 0) {
-                promoHTML = `<p style="color:#8a7a54;font-size:12px;">No promotions available. Check back later!</p>`;
-            } else {
-                promotionLinks.forEach((link, index) => {
-                    const isDone = completedPromotions.includes(index);
-                    promoHTML += `
-                        <div class="setting-item">
-                            <span class="label">🔗 ${link.name}</span>
-                            <span class="value">${isDone ? '✅ Done' : '+2,000 coins'}</span>
-                        </div>
-                        <button class="big-btn secondary" onclick="completePromotion(${index})" style="font-size:13px;padding:8px;margin-top:2px;${isDone ? 'opacity:0.4;' : ''}" ${isDone ? 'disabled' : ''}>
-                            ${isDone ? '✅ Completed' : 'Visit & Claim'}
-                        </button>
-                    `;
-                });
-            }
-
-            openModal('📢 Promotion Tasks', `
-                <p>Visit promoted links to earn <strong style="color:#f3ba2f;">2,000 coins</strong> each!</p>
-                ${promoHTML}
-                <div style="height:6px;"></div>
-                <button class="big-btn secondary" onclick="addPromotionLink()" style="font-size:13px;padding:8px;">➕ Promote Your Link (2,000 coins)</button>
-                <p style="font-size:10px;color:#4d3f28;margin-top:6px;">Pay coins to get your link featured here</p>
-            `);
-        }
-
-        window.openPromotions = openPromotions;
-
-        function addPromotionLink() {
-            const cost = 2000;
-            if (balance < cost) {
-                alert(`❌ Not enough coins! You need ${cost.toLocaleString()} coins.`);
-                return;
-            }
-
-            openModal('📢 Promote Your Link', `
-                <p>Pay <strong style="color:#f3ba2f;">${cost.toLocaleString()} coins</strong> to promote your link here!</p>
-                <div class="input-group">
-                    <input type="text" id="promoName" placeholder="Link Name (e.g. My YouTube)" />
-                    <input type="text" id="promoUrl" placeholder="https://..." />
-                    <button class="big-btn" onclick="submitPromotion()" style="font-size:14px;padding:10px;">Submit & Pay</button>
-                </div>
-                <p style="font-size:10px;color:#8a7a54;">Your link will appear in Tasks for others to visit</p>
-            `);
-        }
-
-        window.addPromotionLink = addPromotionLink;
-
-        function submitPromotion() {
-            const nameInput = document.getElementById('promoName');
-            const urlInput = document.getElementById('promoUrl');
-            const name = nameInput?.value.trim();
-            const url = urlInput?.value.trim();
-
-            if (!name || !url) {
-                alert('Please fill in both fields.');
-                return;
-            }
-
-            if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                alert('Please enter a valid URL starting with http:// or https://');
-                return;
-            }
-
-            const cost = 2000;
-            if (balance < cost) {
-                alert(`❌ Not enough coins! You need ${cost.toLocaleString()} coins.`);
-                return;
-            }
-
-            balance -= cost;
-            ceoCoins -= cost;
-            promotionLinks.push({ name, url });
-            updateUI();
-            closeModal();
-            alert(`✅ Promotion added! Your link is now in Tasks.`);
-            handleDaily();
-        }
-
-        window.submitPromotion = submitPromotion;
-
-        function completePromotion(index) {
-            if (completedPromotions.includes(index)) {
-                alert('✅ You already completed this promotion.');
-                return;
-            }
-
-            const link = promotionLinks[index];
+        // --- SOCIAL TASKS ---
+        function completeSocialTask(index) {
+            const link = socialLinks[index];
             if (!link) return;
-
-            const reward = 2000;
+            const reward = 50;
             balance += reward;
-            ceoCoins += reward;
-            completedPromotions.push(index);
             updateUI();
-            closeModal();
-            alert(`🎉 Promotion completed! +${reward.toLocaleString()} coins!`);
+            alert(`✅ Task completed! +${reward} coins!`);
             window.open(link.url, '_blank');
             handleDaily();
         }
 
-        window.completePromotion = completePromotion;
+        window.completeSocialTask = completeSocialTask;
+
+        function renderEarnTasks() {
+            let html = '';
+            if (socialLinks.length === 0) {
+                html = `
+                    <div class="earn-card">
+                        <p style="color:#8a7a54;font-size:13px;text-align:center;">No tasks available.</p>
+                        <p style="color:#4d3f28;font-size:11px;text-align:center;">Add social links in Settings → Social Links</p>
+                    </div>
+                `;
+            } else {
+                socialLinks.forEach((link, index) => {
+                    html += `
+                        <div class="task-item" style="margin-bottom:8px;">
+                            <div class="task-info">
+                                <div class="name">🔗 ${link.name}</div>
+                                <div class="desc">${link.url}</div>
+                            </div>
+                            <div class="task-reward">+50 coins</div>
+                            <button class="task-btn" onclick="completeEarnTask(${index})">Go</button>
+                        </div>
+                    `;
+                });
+            }
+            earnTasksContainer.innerHTML = html;
+        }
+
+        function completeEarnTask(index) {
+            const link = socialLinks[index];
+            if (!link) return;
+            const reward = 50;
+            balance += reward;
+            updateUI();
+            alert(`✅ Task completed! +${reward} coins!`);
+            window.open(link.url, '_blank');
+        }
+
+        window.completeEarnTask = completeEarnTask;
+
+        // --- MINE ---
+        function handleMine() {
+            const mined = Math.floor(Math.random() * 30) + 10;
+            balance += mined;
+            tapsRemaining = Math.min(MAX_TAPS, tapsRemaining + 20);
+            updateUI();
+            alert(`⛏️ You mined ${mined} coins and +20 taps!`);
+            switchPage('page-main');
+        }
+
+        window.handleMine = handleMine;
+
+        // --- REFERRALS ---
+        function copyInviteLink() {
+            const link = getInviteLink();
+            navigator.clipboard?.writeText(link).then(() => {
+                alert('📋 Link copied!');
+            }).catch(() => {
+                prompt('Copy this link:', link);
+            });
+        }
+
+        window.copyInviteLink = copyInviteLink;
+
+        function simulateReferral() {
+            referrals += 1;
+            const reward = 100;
+            balance += reward;
+            updateUI();
+            alert(`🎉 New referral! +${reward} coins! Total referrals: ${referrals}`);
+            switchPage('page-friends');
+        }
+
+        window.simulateReferral = simulateReferral;
+
+        // --- AIRDROP ---
+        function connectBinance() {
+            const uid = document.getElementById('binanceUidInput').value.trim();
+            if (!uid) {
+                alert('Please enter your Binance UID.');
+                return;
+            }
+            binanceUid = uid;
+            saveState();
+            alert(`✅ Binance Wallet connected!\nUID: ${uid}\n\n🎁 You received 50 bonus coins!`);
+            balance += 50;
+            updateUI();
+        }
+
+        window.connectBinance = connectBinance;
 
         // --- SETTINGS ---
         function openSettings() {
             const now = Date.now();
             const canChange = (now - profileLastChanged) >= COOLDOWN_MS;
             const cooldownRemaining = COOLDOWN_DAYS - Math.floor((now - profileLastChanged) / (1000 * 60 * 60 * 24));
+
+            // Get social links for display
+            let linksHTML = '';
+            if (socialLinks.length === 0) {
+                linksHTML = `<p style="color:#8a7a54;font-size:11px;">No social links added.</p>`;
+            } else {
+                socialLinks.forEach((link, index) => {
+                    linksHTML += `
+                        <div class="setting-item">
+                            <span class="label">${link.name}</span>
+                            <div>
+                                <span style="color:#8a7a54;font-size:10px;">${link.url.substring(0,20)}...</span>
+                                <button onclick="removeSocialLink(${index})" style="background:rgba(255,107,107,0.2);border:none;padding:2px 10px;border-radius:30px;color:#ff6b6b;cursor:pointer;font-size:10px;">✕</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
 
             openModal('⚙️ Settings', `
                 <p>Customize your E-Coin experience</p>
@@ -1099,7 +1431,7 @@
                     <label style="color:#8a7a54;font-size:12px;">Username</label>
                     <input type="text" id="settingsUsername" value="${userName}" placeholder="Enter username..." ${canChange ? '' : 'disabled'} />
                     ${canChange ? `<button class="big-btn" onclick="updateProfile()" style="font-size:14px;padding:10px;">💾 Save Changes</button>` :
-                    `<p style="color:#ff6b6b;font-size:11px;">⏳ Wait ${cooldownRemaining} days to change profile again</p>`}
+                    `<p style="color:#ff6b6b;font-size:11px;">⏳ Wait ${Math.max(0, cooldownRemaining)} days to change profile</p>`}
                 </div>
 
                 <div class="input-group">
@@ -1124,12 +1456,24 @@
 
                 <div style="height:10px;"></div>
 
+                <div style="border-top:1px solid rgba(47,40,28,0.2);padding-top:10px;">
+                    <h3 style="color:#f3ba2f;font-size:13px;margin-bottom:6px;">🔗 Social Links (Tasks)</h3>
+                    ${linksHTML}
+                    <div class="input-group" style="margin-top:6px;">
+                        <input type="text" id="socialName" placeholder="Name (e.g. TikTok)" />
+                        <input type="text" id="socialUrl" placeholder="https://..." />
+                        <button class="big-btn" onclick="addSocialLink()" style="font-size:13px;padding:8px;">Add Link</button>
+                    </div>
+                </div>
+
+                <div style="height:10px;"></div>
+
                 <div class="airdrop-info">
                     <h3 style="color:#f3ba2f;font-size:13px;margin-bottom:6px;">🔗 Binance Wallet</h3>
                     <div class="row"><span class="label">Wallet UID</span><span class="value">${binanceUid || 'Not connected'}</span></div>
                     <div class="input-group" style="margin-top:6px;">
-                        <input type="text" id="binanceInput" placeholder="Enter Binance UID..." value="${binanceUid}" />
-                        <button class="big-btn" onclick="saveBinanceUid()" style="font-size:13px;padding:8px;">💾 Save</button>
+                        <input type="text" id="binanceSettingsInput" placeholder="Enter Binance UID..." value="${binanceUid}" />
+                        <button class="big-btn" onclick="saveBinanceSettings()" style="font-size:13px;padding:8px;">💾 Save</button>
                     </div>
                 </div>
 
@@ -1138,11 +1482,20 @@
                     <div class="row"><span class="label">Total Coins</span><span class="value">${balance.toLocaleString()}</span></div>
                     <div class="row"><span class="label">Level</span><span class="value">${getLevel(balance)}</span></div>
                     <div class="row"><span class="label">Tap Power</span><span class="value">+${tapPower}</span></div>
+                    <div class="row"><span class="label">Referrals</span><span class="value">${referrals}</span></div>
                     <div class="row"><span class="label">Taps Left</span><span class="value">${Math.floor(tapsRemaining).toLocaleString()}</span></div>
                 </div>
 
                 <button class="close-btn secondary" onclick="closeModal()" style="margin-top:10px;">Close</button>
             `);
+
+            // Restore binance UID in settings
+            setTimeout(() => {
+                const binanceInput = document.getElementById('binanceSettingsInput');
+                if (binanceInput && binanceUid) {
+                    binanceInput.value = binanceUid;
+                }
+            }, 100);
         }
 
         window.openSettings = openSettings;
@@ -1182,16 +1535,52 @@
             app.className = 'app ' + theme;
             saveState();
             // Update modal if open
-            const modalContent = document.getElementById('modalContent');
-            if (modalContent && modalContent.innerHTML.includes('Theme')) {
+            const modalContentEl = document.getElementById('modalContent');
+            if (modalContentEl && modalContentEl.innerHTML.includes('Theme')) {
                 openSettings();
             }
         }
 
         window.setTheme = setTheme;
 
-        function saveBinanceUid() {
-            const input = document.getElementById('binanceInput');
+        function addSocialLink() {
+            const nameInput = document.getElementById('socialName');
+            const urlInput = document.getElementById('socialUrl');
+            const name = nameInput?.value.trim();
+            const url = urlInput?.value.trim();
+
+            if (!name || !url) {
+                alert('Please enter both name and URL.');
+                return;
+            }
+
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                alert('Please enter a valid URL starting with http:// or https://');
+                return;
+            }
+
+            socialLinks.push({ name, url });
+            nameInput.value = '';
+            urlInput.value = '';
+            saveState();
+            updateUI();
+            alert('✅ Social link added! It will appear in Tasks.');
+            openSettings();
+        }
+
+        window.addSocialLink = addSocialLink;
+
+        function removeSocialLink(index) {
+            socialLinks.splice(index, 1);
+            saveState();
+            updateUI();
+            openSettings();
+        }
+
+        window.removeSocialLink = removeSocialLink;
+
+        function saveBinanceSettings() {
+            const input = document.getElementById('binanceSettingsInput');
             const uid = input?.value.trim();
             if (!uid) {
                 alert('Please enter your Binance UID.');
@@ -1199,11 +1588,24 @@
             }
             binanceUid = uid;
             saveState();
+            updateUI();
             alert('✅ Binance UID saved successfully!');
             openSettings();
         }
 
-        window.saveBinanceUid = saveBinanceUid;
+        window.saveBinanceSettings = saveBinanceSettings;
+
+        // --- PAGE SWITCHING ---
+        function switchPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const target = document.getElementById(pageId);
+            if (target) target.classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            const navBtn = document.querySelector(`.nav-item[data-page="${pageId}"]`);
+            if (navBtn) navBtn.classList.add('active');
+        }
+
+        window.switchPage = switchPage;
 
         // --- MODAL ---
         function openModal(title, contentHTML) {
@@ -1237,13 +1639,12 @@
         const app = document.getElementById('app');
         app.className = 'app ' + theme;
 
-        // Check daily reset
+        // Check daily reset for combo
         const today = new Date().toDateString();
-        const lastDate = localStorage.getItem('eco_last_date');
-        if (lastDate !== today) {
-            dailyCipherClaimed = false;
-            dailyRewardClaimed = false;
-            localStorage.setItem('eco_last_date', today);
+        if (comboDate !== today) {
+            dailyComboClaimed = false;
+            comboAttempts = 0;
+            comboDate = today;
             saveState();
         }
 
@@ -1259,7 +1660,8 @@
         console.log('⚡ Tap power:', tapPower);
         console.log('🔋 Taps remaining:', tapsRemaining);
         console.log('🎨 Theme:', theme);
-        console.log('📢 Promotions:', promotionLinks.length);
+        console.log('👥 Referrals:', referrals);
+        console.log('🔗 Social links:', socialLinks.length);
     })();
 </script>
 </body>
