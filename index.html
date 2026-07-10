@@ -687,8 +687,8 @@
         <div class="label">💰 BALANCE</div>
         <div class="amount" id="balanceDisplay">0</div>
         <div class="stats">
-            <span>2 / 11</span>
-            <span>⚡ +207 /h</span>
+            
+            <span>⚡ +200 /h</span>
         </div>
     </div>
 
@@ -697,17 +697,16 @@
         <div class="next-level" id="nextLevelDisplay">Next: 1,000 coins</div>
     </div>
 
-    <div class="timer-grid">
-        <div class="timer-item" onclick="claimDaily()">
-            <div class="value" id="dailyTimer">05:35</div>
-            <div class="desc">Daily reward</div>
+    <div class="on-grid">
+        <div class=  onclick="claimTask()">
+            <div class="desc">Task</div>
         </div>
-        <div class="timer-item" onclick="claimCipher()">
-            <div class="value" id="cipherTimer">00:56</div>
-            <div class="desc">Daily cipher</div>
+        <div class="timer-item" onclick="claimClaim()">
+            <div class="value" id="cipherTimer">24:00</div>
+            <div class="desc">Daily bonus</div>
         </div>
         <div class="timer-item" onclick="claimCombo()">
-            <div class="value" id="comboTimer">02:04</div>
+            <div class="value" id="comboTimer">24:00</div>
             <div class="desc">Daily combo</div>
         </div>
     </div>
@@ -741,18 +740,6 @@
         <button class="action-btn" id="airdropBtn">Airdrop</button>
         <button class="action-btn" id="aiBtn">🤖 AI</button>
     </div>
-
-    <div class="bottom-nav">
-        <button class="nav-item active"><span class="icon">🏠</span>Home</button>
-        <button class="nav-item"><span class="icon">🔍</span>Search</button>
-        <button class="nav-item"><span class="icon">🔔</span>Notif.</button>
-        <button class="nav-item"><span class="icon">⚡</span>Activity</button>
-    </div>
-
-    <div class="footer-airdrop">
-        <span>✦ Airdrop active ✦</span>
-    </div>
-</div>
 
 <div class="modal-overlay" id="modalOverlay">
     <div class="modal-box" id="modalBox">
@@ -850,7 +837,7 @@
                         } else {
                             avatarDisplay.textContent = user.first_name?.charAt(0) || '👤';
                         }
-                        userNameDisplay.textContent = userName + ' (CEO)';
+                        userNameDisplay.textContent = userName +
                         saveState();
                         return true;
                     }
@@ -1074,7 +1061,7 @@
         }
 
         // --- DAILY TASK CLAIMS ---
-        function claimDaily() {
+        function claimTask() {
             if (dailyClaimed) {
                 alert('✅ Daily reward already claimed! Come back tomorrow.');
                 return;
@@ -1088,9 +1075,9 @@
             alert(`🎉 Daily reward claimed! +${reward} coins and +200 taps!`);
         }
 
-        function claimCipher() {
+        function claimClaim() {
             if (cipherClaimed) {
-                alert('✅ Daily cipher already claimed! Come back tomorrow.');
+                alert('✅ Daily bonus  already claimed! Come back tomorrow.');
                 return;
             }
             const reward = 50;
@@ -1110,14 +1097,14 @@
             const reward = 75;
             balance += reward;
             ceoCoins += reward;
-            tapsRemaining = Math.min(MAX_TAPS, tapsRemaining + 150);
+            tapsRemaining = Math.min(MAX_TAPS, tapsRemaining + 1M);
             comboClaimed = true;
             updateUI();
-            alert(`🔥 Combo claimed! +${reward} coins and +150 taps!`);
+            alert(`🔥 Combo claimed! +${reward} coins and +1M taps!`);
         }
 
-        window.claimDaily = claimDaily;
-        window.claimCipher = claimCipher;
+        window.claimTask = claimTask;
+        window.claimClaim = claimClaim;
         window.claimCombo = claimCombo;
 
         // --- BOOST / SUPER TAPS ---
@@ -1158,7 +1145,7 @@
         function upgradeBoost() {
             const cost = getBoostCost();
             if (balance < cost) {
-                alert(`❌ Not enough coins! You need ${cost.toLocaleString()} coins.`);
+                alert(`❌  ${cost.toLocaleString()} coins.`);
                 return;
             }
             balance -= cost;
@@ -1171,18 +1158,18 @@
         }
 
         function buySuperTaps() {
-            const cost = 300;
+            const cost = getBoostCost();
             if (balance < cost) {
-                alert(`❌ Not enough coins! You need ${cost} coins.`);
+                alert(`❌  ${cost} coins.`);
                 return;
             }
             balance -= cost;
             superTapActive = true;
             superTapMultiplier = 10;
-            superTapRemaining = 30;
+            superTapRemaining = 0:60
             updateUI();
             closeModal();
-            alert(`🔥 Super Taps activated! ×10 power for 30 taps!`);
+            alert(`🔥 Super Taps activated! ×10 power for 0:60 taps!`);
             handleBoost();
         }
 
@@ -1216,17 +1203,6 @@
                 <button class="verify-btn" onclick="simulateReferral()">➕ Simulate Referral</button>
                 <p style="margin-top:4px;font-size:9px;color:#8a7a54;">Share this link with your friends</p>
             `);
-        }
-
-        function simulateReferral() {
-            referrals += 1;
-            const reward = 100;
-            balance += reward;
-            ceoCoins += reward;
-            tapsRemaining = Math.min(MAX_TAPS, tapsRemaining + 50);
-            updateUI();
-            alert(`🎉 New referral! +${reward} coins and +50 taps! Total referrals: ${referrals}`);
-            handleFriends();
         }
 
         window.simulateReferral = simulateReferral;
@@ -1329,16 +1305,16 @@
                 return `🆘 Ask about: balance, tap power, level, referrals, super taps, airdrop, or social links.`;
             }
             if (q.includes('telegram')) {
-                return `📱 Join Telegram: https://t.me/OneWinTokenBot/start?startapp=refId8467180571`;
+                return `📱 Join Telegram: `;
             }
             if (q.includes('tiktok')) {
                 return `🎵 TikTok: https://www.tiktok.com/@esl9151`;
             }
             if (q.includes('instagram') || q.includes('ig')) {
-                return `📸 Instagram: https://instagram.com/ecoin.official`;
+                return `📸 Instagram: `;
             }
             if (q.includes('facebook') || q.includes('fb')) {
-                return `📘 Facebook: https://facebook.com/ecoin.official`;
+                return `📘 Facebook: `;
             }
             return `🤔 Not sure about that. Try asking about: balance, tap power, level, referrals, super taps, or social links.`;
         }
