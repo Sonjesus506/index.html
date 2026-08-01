@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>💰 Crypto Tap</title>
+    <title>🪙 E-Coin Bot</title>
     <style>
-        /* ===== RESET & BASE ===== */
         * {
             margin: 0;
             padding: 0;
@@ -22,8 +21,6 @@
             color: #f5e6d3;
             position: fixed;
         }
-
-        /* ===== APP CONTAINER ===== */
         .app {
             width: 100%;
             height: 100%;
@@ -60,7 +57,9 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            cursor: pointer;
         }
+        .user-section:active { opacity: 0.7; }
         .avatar {
             width: 44px;
             height: 44px;
@@ -146,7 +145,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* ===== COIN - PREMIUM GOLD ===== */
+        /* ===== COIN - PREMIUM ===== */
         .coin-wrapper {
             display: flex;
             justify-content: center;
@@ -169,7 +168,6 @@
             z-index: 2;
             transform-style: preserve-3d;
         }
-        /* Main coin body */
         .coin::before {
             content: '';
             position: absolute;
@@ -188,7 +186,6 @@
                 0 0 80px rgba(243, 186, 47, 0.08);
             z-index: 1;
         }
-        /* Coin symbol */
         .coin::after {
             content: '₿';
             position: absolute;
@@ -205,7 +202,6 @@
                 0 0 40px rgba(243, 186, 47, 0.1);
             font-family: 'Georgia', serif;
         }
-        /* Inner rings */
         .coin .inner-ring {
             position: absolute;
             top: 14px;
@@ -228,7 +224,6 @@
             z-index: 1;
             pointer-events: none;
         }
-        /* Shine effect */
         .coin .shine {
             position: absolute;
             top: 8%;
@@ -241,7 +236,6 @@
             pointer-events: none;
             opacity: 0.6;
         }
-        /* Decorative dots */
         .coin .dot {
             position: absolute;
             width: 6px;
@@ -254,7 +248,6 @@
         .coin:active { transform: scale(0.85) rotateY(10deg); }
         .coin.disabled { opacity: 0.4; pointer-events: none; }
 
-        /* ===== FLOAT TEXT ===== */
         .float-text {
             position: absolute;
             font-size: 2.2rem;
@@ -294,7 +287,7 @@
         .bottom-btn .label { font-size: 7px; color: #8a7a54; margin-top: 2px; font-weight: 600; }
         .bottom-btn .time { font-size: 8px; color: #4d3f28; }
 
-        /* ===== NEWS BAR ===== */
+        /* ===== NEWS ===== */
         .news-bar {
             background: rgba(26, 22, 16, 0.5);
             border-radius: 10px;
@@ -467,8 +460,26 @@
             width: 100%;
         }
         .modal-box .modal-body .input-group input:focus { border-color: #f3ba2f; }
+        .modal-box .modal-body .input-group textarea {
+            padding: 10px 14px;
+            border-radius: 16px;
+            border: 1px solid rgba(47, 40, 28, 0.3);
+            background: rgba(14, 12, 7, 0.6);
+            color: #e5d6b0;
+            font-size: 13px;
+            outline: none;
+            width: 100%;
+            resize: vertical;
+            min-height: 60px;
+            font-family: inherit;
+        }
+        .modal-box .modal-body .input-group textarea:focus { border-color: #f3ba2f; }
 
-        /* ===== RESPONSIVE ===== */
+        /* Scrollbar */
+        .modal-box::-webkit-scrollbar { width: 3px; }
+        .modal-box::-webkit-scrollbar-track { background: transparent; }
+        .modal-box::-webkit-scrollbar-thumb { background: #3d321f; border-radius: 10px; }
+
         @media (max-width: 420px) {
             .coin { width: 180px; height: 180px; }
             .coin::after { font-size: 70px; }
@@ -479,11 +490,6 @@
             .coin::after { font-size: 55px; }
             .bottom-row { grid-template-columns: 1fr 1fr; }
         }
-
-        /* Scrollbar */
-        .modal-box::-webkit-scrollbar { width: 3px; }
-        .modal-box::-webkit-scrollbar-track { background: transparent; }
-        .modal-box::-webkit-scrollbar-thumb { background: #3d321f; border-radius: 10px; }
     </style>
 </head>
 <body>
@@ -491,7 +497,7 @@
 
     <!-- ===== HEADER ===== -->
     <div class="header">
-        <div class="user-section">
+        <div class="user-section" onclick="openProfile()">
             <div class="avatar" id="avatarDisplay">👤</div>
             <div class="user-info">
                 <div class="name" id="userName">CEO</div>
@@ -500,7 +506,7 @@
             </div>
         </div>
         <div class="header-right">
-            <button class="header-btn" onclick="openUpgrades()">⬆️ Lv.<span id="levelDisplay">1</span></button>
+            <button class="header-btn" onclick="openUpgrades()">⬆️ <span id="levelDisplay">1</span></button>
             <button class="header-btn" onclick="openSettings()">⚙️</button>
         </div>
     </div>
@@ -562,7 +568,7 @@
 
     <!-- ===== NEWS ===== -->
     <div class="news-bar">
-        <span class="news-text" id="newsText">💰 Crypto market update: New airdrop coming soon!</span>
+        <span class="news-text" id="newsText">🔒 Crypto market update: New airdrop coming soon!</span>
         <span class="news-link" onclick="openNews()">Visit ></span>
     </div>
 
@@ -603,7 +609,7 @@
     "use strict";
 
     // ===== STATE =====
-    const STORAGE_KEY = 'crypto_tap_data_v2';
+    const STORAGE_KEY = 'ecoin_bot_data';
     const MAX_ENERGY = 1000;
     const ENERGY_REGEN = 1;
 
@@ -617,17 +623,21 @@
     let tapPower = saved?.tapPower || 1;
     let lastTapTime = saved?.lastTapTime || 0;
     let userName = saved?.userName || 'CEO';
+    let userAvatar = saved?.userAvatar || '👤';
+    let referralCode = saved?.referralCode || '';
+    let referrals = saved?.referrals || 0;
     let dailyRewardClaimed = saved?.dailyRewardClaimed || false;
     let dailyRewardDate = saved?.dailyRewardDate || '';
     let comboClaimed = saved?.comboClaimed || false;
     let comboDate = saved?.comboDate || '';
+    let comboAttempts = saved?.comboAttempts || 0;
     let cipherSolved = saved?.cipherSolved || false;
     let cipherDate = saved?.cipherDate || '';
     let miniGameScore = saved?.miniGameScore || 0;
     let activityLog = saved?.activityLog || ['🎮 Started playing!'];
     let notifications = saved?.notifications || [];
-    let comboAttempts = saved?.comboAttempts || 0;
-    let comboAnswer = saved?.comboAnswer || 0;
+    let walletConnected = saved?.walletConnected || false;
+    let walletAddress = saved?.walletAddress || '';
 
     // ===== DOM =====
     const balanceDisplay = document.getElementById('balanceDisplay');
@@ -637,26 +647,41 @@
     const hourEarnings = document.getElementById('hourEarnings');
     const rankProgress = document.getElementById('rankProgress');
     const userNameDisplay = document.getElementById('userName');
+    const avatarDisplay = document.getElementById('avatarDisplay');
     const coinEl = document.getElementById('mainCoin');
     const coinWrapper = document.getElementById('coinWrapper');
     const dailyRewardTime = document.getElementById('dailyRewardTime');
     const cipherTime = document.getElementById('cipherTime');
     const comboTime = document.getElementById('comboTime');
     const miniGameTime = document.getElementById('miniGameTime');
-    const newsText = document.getElementById('newsText');
     const modalOverlay = document.getElementById('modalOverlay');
     const modalTitle = document.getElementById('modalTitle');
     const modalBody = document.getElementById('modalBody');
 
+    // ===== GENERATE REFERRAL CODE =====
+    function generateReferralCode() {
+        if (referralCode) return referralCode;
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let code = '';
+        for (let i = 0; i < 8; i++) {
+            code += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        referralCode = code;
+        saveState();
+        return code;
+    }
+    generateReferralCode();
+
     // ===== FUNCTIONS =====
     function saveState() {
         localStorage.setItem(STORAGE_KEY, JSON.stringify({
-            balance, energy, level, tapPower, lastTapTime, userName,
+            balance, energy, level, tapPower, lastTapTime, userName, userAvatar,
+            referralCode, referrals,
             dailyRewardClaimed, dailyRewardDate,
-            comboClaimed, comboDate,
+            comboClaimed, comboDate, comboAttempts,
             cipherSolved, cipherDate,
             miniGameScore, activityLog, notifications,
-            comboAttempts, comboAnswer
+            walletConnected, walletAddress
         }));
     }
 
@@ -668,6 +693,7 @@
         rankProgress.textContent = `${Math.min(level, 11)} / 11`;
         hourEarnings.textContent = (tapPower * 3600 / 2).toFixed(0);
         userNameDisplay.textContent = userName;
+        avatarDisplay.textContent = userAvatar;
 
         if (energy <= 0) coinEl.classList.add('disabled');
         else coinEl.classList.remove('disabled');
@@ -745,7 +771,6 @@
         const y = (e.clientY || wrapperRect.top + 50) - wrapperRect.top;
         createFloatText(x, y, amount);
 
-        // Animation
         coinEl.style.transform = 'scale(0.85) rotateY(8deg)';
         setTimeout(() => coinEl.style.transform = '', 80);
     }
@@ -807,6 +832,69 @@
     modalOverlay.addEventListener('click', (e) => {
         if (e.target === modalOverlay) closeModal();
     });
+
+    // ===== PROFILE =====
+    function openProfile() {
+        openModal('👤 Profile', `
+            <div style="text-align:center;padding:6px 0;">
+                <div style="font-size:4rem;display:inline-block;background:rgba(14,12,7,0.6);padding:8px 20px;border-radius:50%;border:2px solid rgba(243,186,47,0.2);">${userAvatar}</div>
+                <div style="font-size:1.5rem;font-weight:700;color:#f3ba2f;margin:6px 0;">${userName}</div>
+                <div class="item"><span class="label">🏆 Level</span><span class="value">${level}</span></div>
+                <div class="item"><span class="label">💰 Coins</span><span class="value">${balance.toLocaleString()}</span></div>
+                <div class="item"><span class="label">👆 Tap Power</span><span class="value">+${tapPower}</span></div>
+                <div class="item"><span class="label">👥 Referrals</span><span class="value">${referrals}</span></div>
+                <div class="item"><span class="label">🔗 Referral Code</span><span class="value" style="font-size:11px;">${referralCode}</span></div>
+                <div style="margin-top:8px;">
+                    <button class="big-btn secondary" onclick="copyReferral()">📋 Copy Referral Link</button>
+                </div>
+                <div style="margin-top:8px;">
+                    <div class="item"><span class="label">🔗 Wallet</span><span class="value">${walletConnected ? '✅ Connected' : '❌ Not connected'}</span></div>
+                    ${walletConnected ? `<div style="font-size:10px;color:#8a7a54;word-break:break-all;">${walletAddress}</div>` : ''}
+                    <button class="big-btn secondary" onclick="${walletConnected ? 'disconnectWallet()' : 'connectWallet()'}" style="margin-top:4px;">
+                        ${walletConnected ? '🔓 Disconnect' : '🔗 Connect Wallet'}
+                    </button>
+                </div>
+            </div>
+        `);
+    }
+    window.openProfile = openProfile;
+
+    function copyReferral() {
+        const link = `https://ecoinbot.app/ref/${referralCode}`;
+        navigator.clipboard?.writeText(link).then(() => {
+            alert('📋 Referral link copied!');
+        }).catch(() => {
+            prompt('Copy this link:', link);
+        });
+    }
+    window.copyReferral = copyReferral;
+
+    function connectWallet() {
+        const address = prompt('Enter your wallet address:');
+        if (address && address.trim()) {
+            walletAddress = address.trim();
+            walletConnected = true;
+            addActivity('🔗 Connected wallet: ' + walletAddress.substring(0, 6) + '...');
+            balance += 100; // Bonus for connecting
+            addNotification('🎉 Wallet connected! +100 bonus coins!');
+            updateUI();
+            closeModal();
+            openProfile();
+        }
+    }
+    window.connectWallet = connectWallet;
+
+    function disconnectWallet() {
+        if (confirm('Disconnect wallet?')) {
+            walletConnected = false;
+            walletAddress = '';
+            addActivity('🔓 Wallet disconnected');
+            updateUI();
+            closeModal();
+            openProfile();
+        }
+    }
+    window.disconnectWallet = disconnectWallet;
 
     // ===== DAILY REWARD =====
     function openDailyReward() {
@@ -938,10 +1026,9 @@
             return;
         }
         
-        // Random correct answer (changes daily)
         const correctAnswer = Math.floor(Math.random() * 3);
-        
         comboAttempts++;
+        
         if (index === correctAnswer) {
             balance += 1000;
             comboClaimed = true;
@@ -967,7 +1054,7 @@
         openModal('🎮 Mini Game', `
             <div style="text-align:center;padding:6px 0;">
                 <div style="font-size:3rem;">🎮</div>
-                <div style="font-size:14px;color:#bdaa7a;margin:6px 0;">Tap the button as fast as you can!</div>
+                <div style="font-size:14px;color:#bdaa7a;margin:6px 0;">Tap the coin as fast as you can!</div>
                 <div style="font-size:3rem;font-weight:800;color:#f3ba2f;" id="miniGameScore">${miniGameScore}</div>
                 <div style="font-size:11px;color:#8a7a54;">Your best score</div>
                 <button class="big-btn" onclick="startMiniGame()" style="margin-top:10px;">▶️ Play</button>
@@ -1118,6 +1205,10 @@
                     <input type="text" id="usernameInput" placeholder="Change username..." value="${userName}" />
                     <button class="big-btn" onclick="changeUsername()">✏️ Update</button>
                 </div>
+                <div class="input-group" style="margin-top:6px;">
+                    <input type="text" id="avatarInput" placeholder="Avatar emoji..." value="${userAvatar}" maxlength="2" />
+                    <button class="big-btn" onclick="changeAvatar()">🔄 Update Avatar</button>
+                </div>
                 <div style="height:10px;"></div>
                 <div class="item">
                     <span class="label">💰 Balance</span>
@@ -1130,6 +1221,10 @@
                 <div class="item">
                     <span class="label">👆 Tap Power</span>
                     <span class="value">+${tapPower}</span>
+                </div>
+                <div class="item">
+                    <span class="label">👥 Referrals</span>
+                    <span class="value">${referrals}</span>
                 </div>
                 <button class="big-btn secondary" onclick="resetGame()" style="margin-top:10px;color:#ff6b6b;">🔄 Reset Game</button>
             </div>
@@ -1152,6 +1247,22 @@
         openSettings();
     }
     window.changeUsername = changeUsername;
+
+    function changeAvatar() {
+        const input = document.getElementById('avatarInput');
+        if (!input) return;
+        const avatar = input.value.trim();
+        if (!avatar) {
+            alert('Please enter an avatar emoji.');
+            return;
+        }
+        userAvatar = avatar;
+        addActivity(`🔄 Changed avatar to ${userAvatar}`);
+        updateUI();
+        closeModal();
+        openSettings();
+    }
+    window.changeAvatar = changeAvatar;
 
     function resetGame() {
         if (confirm('⚠️ Are you sure? This will delete all progress!')) {
@@ -1213,16 +1324,18 @@
     updateUI();
 
     if (!saved) {
-        addNotification('💰 Welcome to Crypto Tap!');
+        addNotification('🪙 Welcome to E-Coin Bot!');
         addActivity('🎮 Started playing!');
+        addNotification('🎁 Claim your daily reward!');
     }
 
-    console.log('💰 Crypto Tap loaded!');
+    console.log('🪙 E-Coin Bot loaded!');
     console.log('👤 User:', userName);
     console.log('💵 Balance:', balance);
     console.log('⚡ Energy:', energy);
     console.log('🏆 Level:', level);
     console.log('👆 Tap Power:', tapPower);
+    console.log('🔗 Referral Code:', referralCode);
 })();
 </script>
 </body>
