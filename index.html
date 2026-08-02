@@ -1,1378 +1,614 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>🪙 E-Coin Bot</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, 'Segoe UI', Roboto, system-ui, sans-serif;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-        html, body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background: #0a0e14;
-            color: #e8edf5;
-            position: fixed;
-        }
-        .app {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            padding: 8px 12px 6px;
-            overflow: hidden;
-            background: linear-gradient(180deg, #0f1a2e 0%, #0a0e14 40%, #060810 100%);
-            position: relative;
-        }
-        .app::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(ellipse at 50% 30%, rgba(64, 164, 255, 0.05) 0%, transparent 60%);
-            pointer-events: none;
-            z-index: 0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>⛓️ Web3 Crypto Miner</title>
+  <style>
+    /* ----- global reset & dark futuristic theme ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
 
-        /* ===== HEADER ===== */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-shrink: 0;
-            position: relative;
-            z-index: 1;
-            padding: 2px 0 4px;
-        }
-        .user-section {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-        }
-        .user-section:active { opacity: 0.7; }
-        .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #40a4ff, #1a6bc4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            font-weight: 700;
-            color: #fff;
-            border: 2px solid rgba(64, 164, 255, 0.3);
-            flex-shrink: 0;
-        }
-        .user-info .name {
-            font-size: 14px;
-            font-weight: 700;
-            color: #e8edf5;
-        }
-        .user-info .rank {
-            font-size: 10px;
-            color: #40a4ff;
-            background: rgba(64, 164, 255, 0.12);
-            padding: 1px 10px;
-            border-radius: 30px;
-            display: inline-block;
-            font-weight: 600;
-        }
-        .user-info .sub-info {
-            font-size: 9px;
-            color: #6a7a8a;
-            margin-top: 1px;
-        }
-        .user-info .sub-info span {
-            color: #40a4ff;
-        }
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .header-btn {
-            background: rgba(26, 34, 46, 0.6);
-            border: 1px solid rgba(64, 164, 255, 0.15);
-            border-radius: 30px;
-            padding: 4px 10px;
-            color: #e8edf5;
-            font-size: 10px;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 3px;
-        }
-        .header-btn:active { transform: scale(0.95); }
-        .header-btn .icon { font-size: 12px; }
+    body {
+      background: #0a0f17;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+    }
 
-        /* ===== STATS ROW ===== */
-        .stats-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 4px;
-            flex-shrink: 0;
-            position: relative;
-            z-index: 1;
-            margin: 2px 0 4px;
-        }
-        .stat-box {
-            background: rgba(26, 34, 46, 0.5);
-            border-radius: 10px;
-            padding: 4px 6px;
-            border: 1px solid rgba(64, 164, 255, 0.08);
-            text-align: center;
-        }
-        .stat-box .num {
-            font-size: 16px;
-            font-weight: 800;
-            color: #40a4ff;
-        }
-        .stat-box .label {
-            font-size: 6px;
-            color: #6a7a8a;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-        .stat-box .sub-num {
-            font-size: 10px;
-            color: #6a7a8a;
-        }
+    .miner-container {
+      max-width: 460px;
+      width: 100%;
+      background: #101a26;
+      background: radial-gradient(circle at 30% 10%, #15222f, #0b131d);
+      border-radius: 48px 48px 32px 32px;
+      padding: 28px 18px 32px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(0, 255, 200, 0.06) inset;
+      border: 1px solid rgba(0, 255, 200, 0.04);
+      transition: all 0.2s;
+    }
 
-        /* ===== COIN - SILVER/BLUE ===== */
-        .coin-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex: 1;
-            min-height: 0;
-            position: relative;
-            z-index: 1;
-            perspective: 800px;
-            margin: 2px 0;
-        }
-        .coin {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            position: relative;
-            cursor: pointer;
-            touch-action: none;
-            transition: transform 0.06s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            z-index: 2;
-            transform-style: preserve-3d;
-        }
-        .coin::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 50%;
-            background: radial-gradient(circle at 35% 28%, #e8f0ff, #8ab8e8 30%, #4a8ac8 55%, #2a6aaa 75%, #1a4a7a 95%);
-            border: 8px solid #6aaae8;
-            box-shadow:
-                0 0 0 4px rgba(26, 74, 122, 0.4),
-                0 12px 60px rgba(64, 164, 255, 0.25),
-                inset 0 -15px 40px rgba(0,0,0,0.4),
-                inset 0 15px 40px rgba(100, 200, 255, 0.1),
-                0 0 80px rgba(64, 164, 255, 0.05);
-            z-index: 1;
-        }
-        .coin::after {
-            content: '₿';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
-            font-size: 80px;
-            font-weight: 900;
-            color: #1a4a7a;
-            text-shadow: 
-                0 2px 4px rgba(100, 200, 255, 0.2),
-                0 -2px 4px rgba(0,0,0,0.3),
-                0 0 40px rgba(64, 164, 255, 0.1);
-            font-family: 'Georgia', serif;
-        }
-        .coin .inner-ring {
-            position: absolute;
-            top: 14px;
-            left: 14px;
-            right: 14px;
-            bottom: 14px;
-            border-radius: 50%;
-            border: 2px solid rgba(100, 200, 255, 0.15);
-            z-index: 1;
-            pointer-events: none;
-        }
-        .coin .shine {
-            position: absolute;
-            top: 8%;
-            left: 12%;
-            width: 35%;
-            height: 25%;
-            background: radial-gradient(ellipse, rgba(255,255,255,0.4) 0%, transparent 70%);
-            border-radius: 50%;
-            z-index: 3;
-            pointer-events: none;
-            opacity: 0.6;
-        }
-        .coin:active { transform: scale(0.85) rotateY(10deg); }
-        .coin.disabled { opacity: 0.4; pointer-events: none; }
+    /* ----- typography & accents ----- */
+    .glow-cyan {
+      color: #b0f0ff;
+      text-shadow: 0 0 12px rgba(0, 220, 255, 0.3);
+    }
 
-        .float-text {
-            position: absolute;
-            font-size: 2rem;
-            font-weight: 800;
-            color: #40a4ff;
-            text-shadow: 0 0 20px #40a4ff, 0 0 40px #40a4ff80;
-            pointer-events: none;
-            z-index: 10;
-            animation: floatUp 0.9s ease-out forwards;
-        }
-        @keyframes floatUp {
-            0% { opacity: 1; transform: translateY(0) scale(0.8); }
-            100% { opacity: 0; transform: translateY(-120px) scale(1.2); }
-        }
+    .text-green {
+      color: #5ce0a0;
+    }
 
-        /* ===== ENERGY BAR ===== */
-        .energy-bar {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-shrink: 0;
-            position: relative;
-            z-index: 1;
-            background: rgba(26, 34, 46, 0.4);
-            border-radius: 30px;
-            padding: 4px 12px 4px 8px;
-            border: 1px solid rgba(64, 164, 255, 0.08);
-            margin: 2px 0;
-        }
-        .energy-bar .track {
-            flex: 1;
-            height: 6px;
-            background: rgba(42, 54, 66, 0.6);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .energy-bar .track .fill {
-            height: 100%;
-            background: linear-gradient(90deg, #40a4ff, #1a6bc4);
-            border-radius: 10px;
-            transition: width 0.3s ease;
-        }
-        .energy-bar .label {
-            font-size: 10px;
-            color: #6a7a8a;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-        .energy-bar .label span {
-            color: #40a4ff;
-        }
-        .energy-bar .boost-btn {
-            background: linear-gradient(135deg, #40a4ff, #1a6bc4);
-            border: none;
-            padding: 2px 14px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 10px;
-            color: #fff;
-            cursor: pointer;
-            transition: 0.15s;
-        }
-        .energy-bar .boost-btn:active { transform: scale(0.95); }
+    .text-gold {
+      background: linear-gradient(135deg, #f7e05e, #f9b84a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-        /* ===== BOTTOM ROW ===== */
-        .bottom-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 6px;
-            flex-shrink: 0;
-            position: relative;
-            z-index: 1;
-            margin-top: 4px;
-        }
-        .bottom-btn {
-            background: rgba(26, 34, 46, 0.6);
-            border: 1px solid rgba(64, 164, 255, 0.08);
-            border-radius: 12px;
-            padding: 6px 4px;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.15s;
-        }
-        .bottom-btn:active { transform: scale(0.95); background: rgba(64, 164, 255, 0.1); }
-        .bottom-btn .icon { font-size: 16px; display: block; }
-        .bottom-btn .label { font-size: 7px; color: #6a7a8a; margin-top: 2px; font-weight: 600; }
-        .bottom-btn .time { font-size: 8px; color: #3a4a5a; }
+    .label-muted {
+      color: #6f8ba8;
+      font-weight: 500;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
 
-        /* ===== NEWS ===== */
-        .news-bar {
-            background: rgba(26, 34, 46, 0.5);
-            border-radius: 10px;
-            padding: 5px 10px;
-            border: 1px solid rgba(64, 164, 255, 0.08);
-            flex-shrink: 0;
-            position: relative;
-            z-index: 1;
-            margin-top: 4px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .news-bar .news-text {
-            font-size: 8px;
-            color: #8a9aaa;
-            flex: 1;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .news-bar .news-link {
-            font-size: 8px;
-            color: #40a4ff;
-            font-weight: 600;
-            cursor: pointer;
-            flex-shrink: 0;
-            margin-left: 6px;
-        }
+    /* ----- header stats ----- */
+    .header-stats {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(8, 18, 28, 0.5);
+      backdrop-filter: blur(6px);
+      border-radius: 60px;
+      padding: 8px 16px 8px 20px;
+      border: 1px solid #1e3347;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
 
-        /* ===== BOTTOM NAV ===== */
-        .bottom-nav {
-            display: flex;
-            justify-content: space-around;
-            background: linear-gradient(135deg, rgba(15, 26, 46, 0.95), rgba(10, 14, 20, 0.95));
-            border-radius: 30px;
-            padding: 5px 4px;
-            border: 1px solid rgba(64, 164, 255, 0.08);
-            flex-shrink: 0;
-            margin-top: 5px;
-            position: relative;
-            z-index: 1;
-            backdrop-filter: blur(15px);
-        }
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 3px 8px;
-            border-radius: 30px;
-            font-size: 7px;
-            color: rgba(106, 122, 138, 0.5);
-            cursor: pointer;
-            background: transparent;
-            border: none;
-            font-weight: 600;
-            gap: 1px;
-            transition: 0.15s;
-            flex: 1;
-            position: relative;
-        }
-        .nav-item .icon { font-size: 18px; line-height: 1; }
-        .nav-item .label { font-size: 6px; text-transform: uppercase; letter-spacing: 0.3px; }
-        .nav-item.active { color: #40a4ff; background: rgba(64, 164, 255, 0.08); }
-        .nav-item:active { opacity: 0.6; }
-        .nav-item .badge-dot {
-            position: absolute;
-            top: 2px;
-            right: 4px;
-            width: 5px;
-            height: 5px;
-            background: #ff6b6b;
-            border-radius: 50%;
-        }
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-        /* ===== MODAL ===== */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.85);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            padding: 20px;
-            backdrop-filter: blur(10px);
-        }
-        .modal-overlay.active { display: flex; }
-        .modal-box {
-            background: linear-gradient(145deg, #0f1a2e, #0a0e14);
-            border: 1px solid rgba(64, 164, 255, 0.15);
-            border-radius: 24px;
-            padding: 20px 18px 18px;
-            max-width: 380px;
-            width: 100%;
-            max-height: 85vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-            position: relative;
-        }
-        .modal-box .modal-close {
-            position: absolute;
-            top: 12px;
-            right: 14px;
-            font-size: 20px;
-            color: #6a7a8a;
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 4px 8px;
-        }
-        .modal-box .modal-close:active { color: #40a4ff; }
-        .modal-box h2 {
-            color: #40a4ff;
-            font-size: 1.2rem;
-            margin-bottom: 12px;
-            text-align: center;
-        }
-        .modal-box .modal-body {
-            color: #8a9aaa;
-            font-size: 13px;
-        }
-        .modal-box .modal-body .item {
-            background: rgba(15, 26, 46, 0.6);
-            padding: 10px 14px;
-            border-radius: 12px;
-            border: 1px solid rgba(64, 164, 255, 0.08);
-            margin: 6px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .modal-box .modal-body .item .label { color: #6a7a8a; font-size: 12px; }
-        .modal-box .modal-body .item .value { color: #40a4ff; font-weight: 600; font-size: 14px; }
-        .modal-box .modal-body .big-btn {
-            background: linear-gradient(135deg, #40a4ff, #1a6bc4);
-            border: none;
-            padding: 12px;
-            border-radius: 40px;
-            font-weight: 700;
-            font-size: 15px;
-            color: #fff;
-            cursor: pointer;
-            width: 100%;
-            box-shadow: 0 4px 0 #0f3a6a;
-            transition: 0.08s;
-            margin-top: 8px;
-        }
-        .modal-box .modal-body .big-btn:active { transform: translateY(4px); box-shadow: 0 0px 0 #0f3a6a; }
-        .modal-box .modal-body .big-btn.secondary {
-            background: rgba(26, 34, 46, 0.8);
-            color: #40a4ff;
-            box-shadow: 0 4px 0 #0a0e14;
-            border: 1px solid rgba(64, 164, 255, 0.15);
-        }
-        .modal-box .modal-body .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin: 8px 0;
-        }
-        .modal-box .modal-body .input-group input {
-            padding: 10px 14px;
-            border-radius: 30px;
-            border: 1px solid rgba(64, 164, 255, 0.15);
-            background: rgba(10, 14, 20, 0.6);
-            color: #e8edf5;
-            font-size: 14px;
-            outline: none;
-            width: 100%;
-        }
-        .modal-box .modal-body .input-group input:focus { border-color: #40a4ff; }
+    .stat-item .value {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #e2f0ff;
+      letter-spacing: -0.2px;
+      line-height: 1.3;
+    }
 
-        .modal-box::-webkit-scrollbar { width: 3px; }
-        .modal-box::-webkit-scrollbar-track { background: transparent; }
-        .modal-box::-webkit-scrollbar-thumb { background: #1a3a5a; border-radius: 10px; }
+    .stat-item .value.gold {
+      background: linear-gradient(135deg, #f7e05e, #f9b84a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-        @media (max-width: 420px) {
-            .coin { width: 170px; height: 170px; }
-            .coin::after { font-size: 65px; }
-            .stats-row .stat-box .num { font-size: 14px; }
-        }
-        @media (max-width: 360px) {
-            .coin { width: 150px; height: 150px; }
-            .coin::after { font-size: 55px; }
-            .bottom-row { grid-template-columns: 1fr 1fr; }
-        }
-    </style>
+    .stat-divider {
+      width: 1px;
+      height: 28px;
+      background: #28445a;
+    }
+
+    /* ----- balance big ----- */
+    .balance-display {
+      text-align: center;
+      margin: 6px 0 12px;
+    }
+
+    .balance-display .coin {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #f7e05e, #f9b84a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -1px;
+      line-height: 1.1;
+    }
+
+    .balance-display .label {
+      font-size: 0.7rem;
+      color: #6f8ba8;
+      letter-spacing: 0.1em;
+    }
+
+    /* ----- status pill ----- */
+    .status-pill {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #0e1a24;
+      padding: 8px 16px;
+      border-radius: 60px;
+      margin: 10px 0 18px;
+      border: 1px solid #2a4054;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #3d5a6e;
+      transition: 0.2s;
+      box-shadow: 0 0 6px rgba(0,0,0,0.6);
+    }
+
+    .dot.active {
+      background: #3fe07a;
+      box-shadow: 0 0 20px #3fe07a;
+    }
+
+    .status-label {
+      font-weight: 600;
+      color: #b8d4ec;
+    }
+
+    /* ----- buttons ----- */
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 16px 12px;
+      border: none;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      background: #1d2f3f;
+      color: #d4e6fa;
+      box-shadow: 0 6px 0 #0a141e, 0 8px 24px rgba(0, 0, 0, 0.6);
+      transition: all 0.07s ease;
+      margin-bottom: 14px;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      border: 1px solid #365066;
+    }
+
+    .btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #0a141e;
+    }
+
+    .btn-primary {
+      background: linear-gradient(145deg, #1e7bff, #0f4fbb);
+      color: white;
+      border: 1px solid #6bb0ff;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+
+    .btn-success {
+      background: linear-gradient(145deg, #2fb86a, #167a42);
+      color: white;
+      border: 1px solid #6ae09a;
+    }
+
+    .btn-warning {
+      background: linear-gradient(145deg, #e6b84c, #c48f2b);
+      color: #0d141e;
+      border: 1px solid #f7d97a;
+      font-weight: 800;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      transform: translateY(2px);
+      box-shadow: 0 3px 0 #0a141e;
+      pointer-events: none;
+    }
+
+    /* ----- boost card ----- */
+    .boost-card {
+      background: rgba(0, 20, 35, 0.5);
+      backdrop-filter: blur(4px);
+      border-radius: 40px;
+      padding: 14px 18px;
+      margin: 6px 0 16px;
+      border: 1px solid #2b4a60;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .boost-info .title {
+      font-weight: 600;
+      color: #c0defa;
+      font-size: 0.9rem;
+    }
+
+    .boost-info .price {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #f7d46a;
+    }
+
+    .btn-boost {
+      background: #1d3547;
+      border: 1px solid #4f7a9a;
+      color: #e0f0ff;
+      padding: 8px 22px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 0 #0d1a24;
+      transition: 0.06s linear;
+      cursor: pointer;
+    }
+
+    .btn-boost:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #0d1a24;
+    }
+
+    /* ----- withdrawal card ----- */
+    .withdraw-card {
+      background: rgba(8, 22, 34, 0.6);
+      backdrop-filter: blur(4px);
+      border-radius: 32px;
+      padding: 18px 16px 20px;
+      margin-top: 20px;
+      border: 1px solid #1e3b50;
+    }
+
+    .withdraw-card .title {
+      color: #b0d4f0;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.7rem;
+      color: #7d9bb8;
+      margin-bottom: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    .form-group select, 
+    .form-group input {
+      width: 100%;
+      padding: 12px 14px;
+      background: #0d1b28;
+      border: 1px solid #2a4a62;
+      border-radius: 40px;
+      color: #d6edff;
+      font-size: 0.95rem;
+      outline: none;
+      transition: 0.15s;
+    }
+
+    .form-group select:focus,
+    .form-group input:focus {
+      border-color: #4aa0e0;
+      box-shadow: 0 0 12px rgba(0, 160, 255, 0.2);
+    }
+
+    .form-group select option {
+      background: #0d1b28;
+    }
+
+    .btn-withdraw {
+      background: linear-gradient(145deg, #00b894, #00876a);
+      border: 1px solid #4ae0b0;
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      margin-top: 6px;
+    }
+
+    .btn-withdraw:active {
+      background: #00876a;
+    }
+
+    /* ----- toast / alert (user-friendly) ----- */
+    .toast-message {
+      background: #1f2c3a;
+      border-left: 6px solid #f7b84a;
+      color: #f0f7ff;
+      padding: 14px 20px;
+      border-radius: 60px;
+      font-weight: 500;
+      margin: 12px 0 4px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+      border: 1px solid #4b647a;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .toast-success {
+      border-left-color: #4ae09a;
+    }
+
+    /* ----- responsive ----- */
+    @media (max-width: 420px) {
+      .miner-container { padding: 18px 12px 24px; }
+      .balance-display .coin { font-size: 2.4rem; }
+      .header-stats { padding: 6px 12px; }
+      .stat-item .value { font-size: 0.95rem; }
+    }
+
+    .flex { display: flex; }
+    .gap-1 { gap: 6px; }
+    .w-full { width: 100%; }
+    .text-center { text-align: center; }
+    .mt-1 { margin-top: 8px; }
+    .mb-1 { margin-bottom: 8px; }
+  </style>
 </head>
 <body>
-<div class="app" id="app">
+<div class="miner-container" id="app">
 
-    <!-- ===== HEADER ===== -->
-    <div class="header">
-        <div class="user-section" onclick="openProfile()">
-            <div class="avatar" id="avatarDisplay">👤</div>
-            <div class="user-info">
-                <div class="name" id="userName">CEO</div>
-                <div class="rank">🥉 Bronze <span id="rankProgress">1 / 11</span></div>
-                <div class="sub-info">⚡ <span id="energyDisplay">1000</span> / 1000</div>
-            </div>
-        </div>
-        <div class="header-right">
-            <button class="header-btn" onclick="openUpgrades()">⬆️ Lv.<span id="levelDisplay">1</span></button>
-            <button class="header-btn" onclick="openSettings()">⚙️</button>
-        </div>
+  <!-- header stats -->
+  <div class="header-stats">
+    <div class="stat-item">
+      <span class="label-muted">⚡ Speed</span>
+      <span class="value gold" id="speedDisplay">0.0000</span>
     </div>
-
-    <!-- ===== STATS ROW ===== -->
-    <div class="stats-row">
-        <div class="stat-box">
-            <div class="num" id="balanceDisplay">0</div>
-            <div class="label">💰 Coins</div>
-        </div>
-        <div class="stat-box">
-            <div class="num" id="hourEarnings">0</div>
-            <div class="label">⚡ Per Hour</div>
-        </div>
-        <div class="stat-box">
-            <div class="num" id="tapPowerDisplay">1</div>
-            <div class="label">👆 Tap Power</div>
-        </div>
-        <div class="stat-box">
-            <div class="num" id="skinCount">0/11</div>
-            <div class="label">🎨 Skins</div>
-        </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <span class="label-muted">⏳ Mined</span>
+      <span class="value" id="minedDisplay">0.0000</span>
     </div>
-
-    <!-- ===== COIN ===== -->
-    <div class="coin-wrapper" id="coinWrapper">
-        <div class="coin" id="mainCoin" role="button" aria-label="Tap to earn">
-            <div class="inner-ring"></div>
-            <div class="shine"></div>
-        </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <span class="label-muted">Status</span>
+      <span class="value" id="statusText" style="font-size:0.8rem; color:#8ab4d0;">Idle</span>
     </div>
+  </div>
 
-    <!-- ===== ENERGY BAR ===== -->
-    <div class="energy-bar">
-        <div class="label"><span id="energyPercent">100</span>%</div>
-        <div class="track">
-            <div class="fill" id="energyFill" style="width:100%"></div>
-        </div>
-        <button class="boost-btn" onclick="boostEnergy()">⚡ Boost</button>
+  <!-- balance -->
+  <div class="balance-display">
+    <div class="label">💰 TOTAL BALANCE</div>
+    <div class="coin" id="balanceDisplay">0.0000</div>
+  </div>
+
+  <!-- status dot -->
+  <div class="status-pill">
+    <span class="dot" id="statusDot"></span>
+    <span class="status-label" id="statusLabel">⏸️ Mining Stopped</span>
+    <span style="margin-left: auto; color: #62859e; font-size: 0.75rem;" id="sessionTime">00:00</span>
+  </div>
+
+  <!-- start/stop -->
+  <button class="btn btn-primary" id="toggleMineBtn">
+    <span>▶</span> START MINING
+  </button>
+
+  <!-- boost card -->
+  <div class="boost-card">
+    <div class="boost-info">
+      <span class="title">🚀 Upgrade Speed</span>
+      <span class="price" id="boostCostDisplay">💰 100 COINS</span>
+      <span style="font-size:0.65rem; color:#6e95b0;">+0.0005 coins/sec</span>
     </div>
+    <button class="btn-boost" id="boostBtn">⬆ BOOST</button>
+  </div>
 
-    <!-- ===== BOTTOM ROW ===== -->
-    <div class="bottom-row">
-        <div class="bottom-btn" onclick="openDailyReward()">
-            <span class="icon">🎁</span>
-            <span class="label">Daily reward</span>
-            <span class="time" id="dailyRewardTime">--:--</span>
-        </div>
-        <div class="bottom-btn" onclick="openCipher()">
-            <span class="icon">🔐</span>
-            <span class="label">Daily cipher</span>
-            <span class="time" id="cipherTime">--:--</span>
-        </div>
-        <div class="bottom-btn" onclick="openCombo()">
-            <span class="icon">🎯</span>
-            <span class="label">Daily combo</span>
-            <span class="time" id="comboTime">--:--</span>
-        </div>
-        <div class="bottom-btn" onclick="openMiniGame()">
-            <span class="icon">🎮</span>
-            <span class="label">Mini game</span>
-            <span class="time" id="miniGameTime">--:--</span>
-        </div>
+  <!-- withdrawal card -->
+  <div class="withdraw-card">
+    <div class="title">💸 Instant Withdrawal</div>
+    <div class="form-group">
+      <label>Payment Method</label>
+      <select id="paymentMethod">
+        <option value="mpesa">Vodacom M-Pesa / Tigo Pesa</option>
+        <option value="solana">Solana Wallet (SOL)</option>
+        <option value="usdt">USDT (TRC20)</option>
+      </select>
     </div>
-
-    <!-- ===== NEWS ===== -->
-    <div class="news-bar">
-        <span class="news-text" id="newsText">🔒 Crypto market update: New airdrop coming soon!</span>
-        <span class="news-link" onclick="openNews()">Visit ></span>
+    <div class="form-group">
+      <label>Phone / Wallet Address</label>
+      <input type="text" id="walletInput" placeholder="e.g. 0712345678 or 0x...">
     </div>
-
-    <!-- ===== BOTTOM NAV ===== -->
-    <div class="bottom-nav">
-        <button class="nav-item active" data-page="home" onclick="switchPage('home')">
-            <span class="icon">🏠</span>
-            <span class="label">Home</span>
-        </button>
-        <button class="nav-item" data-page="search" onclick="switchPage('search')">
-            <span class="icon">🔍</span>
-            <span class="label">Search</span>
-        </button>
-        <button class="nav-item" data-page="notifications" onclick="switchPage('notifications')">
-            <span class="icon">🔔</span>
-            <span class="label">Notifications</span>
-            <span class="badge-dot"></span>
-        </button>
-        <button class="nav-item" data-page="activity" onclick="switchPage('activity')">
-            <span class="icon">📊</span>
-            <span class="label">Activity</span>
-        </button>
+    <div class="form-group">
+      <label>Amount (min 100 coins)</label>
+      <input type="number" id="withdrawAmount" placeholder="100" min="100" step="1">
     </div>
+    <button class="btn btn-withdraw" id="withdrawBtn">⚡ Submit Withdrawal</button>
+  </div>
 
-</div>
+  <!-- toast container -->
+  <div id="toastContainer" class="w-full" style="min-height: 48px; margin-top: 6px;"></div>
 
-<!-- ===== MODAL ===== -->
-<div class="modal-overlay" id="modalOverlay">
-    <div class="modal-box">
-        <button class="modal-close" onclick="closeModal()">✕</button>
-        <h2 id="modalTitle">Modal</h2>
-        <div class="modal-body" id="modalBody"></div>
-    </div>
+  <!-- footer -->
+  <div style="margin-top:16px; font-size:0.6rem; color:#2b4b62; text-align:center; border-top:1px solid #1a3142; padding-top:14px;">
+    <span>⛓️ simulated · no real resources · web3 demo</span>
+  </div>
 </div>
 
 <script>
-(function() {
+  (function() {
     "use strict";
 
-    // ==========================================
-    // TELEGRAM AUTO-LOGIN
-    // ==========================================
-    let telegramUser = null;
-    try {
-        if (window.Telegram && window.Telegram.WebApp) {
-            const tg = window.Telegram.WebApp;
-            const user = tg.initDataUnsafe?.user;
-            if (user) {
-                telegramUser = user;
-                console.log('✅ Telegram user detected:', user.first_name);
-            }
-        }
-    } catch(e) {}
+    // ----- state -----
+    let balance = 0.0;
+    let miningSpeed = 0.0005;          // base coins/sec
+    let totalMined = 0.0;
+    let isMining = false;
+    let miningInterval = null;
+    let sessionInterval = null;
+    let sessionSeconds = 0;
 
-    // ==========================================
-    // STATE
-    // ==========================================
-    const STORAGE_KEY = 'ecoin_bot_v3';
-    const MAX_ENERGY = 1000;
-    const ENERGY_REGEN = 1;
+    // boost cost
+    let boostCost = 100;
+    const BOOST_INCREMENT = 0.0005;
 
-    let saved = (() => {
-        try { return JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch(e) { return null; }
-    })();
-
-    let defaultName = 'CEO';
-    if (telegramUser && telegramUser.first_name) {
-        defaultName = telegramUser.first_name;
-        if (telegramUser.last_name) {
-            defaultName += ' ' + telegramUser.last_name;
-        }
-    }
-
-    let balance = saved?.balance || 0;
-    let energy = saved?.energy ?? MAX_ENERGY;
-    let level = saved?.level || 1;
-    let tapPower = saved?.tapPower || 1;
-    let lastTapTime = saved?.lastTapTime || 0;
-    let userName = saved?.userName || defaultName;
-    let userAvatar = saved?.userAvatar || '👤';
-    let skinCount = saved?.skinCount || 0;
-    let referrals = saved?.referrals || 0;
-    let dailyRewardClaimed = saved?.dailyRewardClaimed || false;
-    let dailyRewardDate = saved?.dailyRewardDate || '';
-    let comboClaimed = saved?.comboClaimed || false;
-    let comboDate = saved?.comboDate || '';
-    let comboAttempts = saved?.comboAttempts || 0;
-    let cipherSolved = saved?.cipherSolved || false;
-    let cipherDate = saved?.cipherDate || '';
-    let miniGameScore = saved?.miniGameScore || 0;
-    let activityLog = saved?.activityLog || ['🎮 Started playing!'];
-    let notifications = saved?.notifications || [];
-
-    // ==========================================
-    // DOM
-    // ==========================================
+    // DOM refs
     const balanceDisplay = document.getElementById('balanceDisplay');
-    const energyDisplay = document.getElementById('energyDisplay');
-    const energyPercent = document.getElementById('energyPercent');
-    const energyFill = document.getElementById('energyFill');
-    const levelDisplay = document.getElementById('levelDisplay');
-    const tapPowerDisplay = document.getElementById('tapPowerDisplay');
-    const hourEarnings = document.getElementById('hourEarnings');
-    const rankProgress = document.getElementById('rankProgress');
-    const skinCountDisplay = document.getElementById('skinCount');
-    const userNameDisplay = document.getElementById('userName');
-    const avatarDisplay = document.getElementById('avatarDisplay');
-    const coinEl = document.getElementById('mainCoin');
-    const coinWrapper = document.getElementById('coinWrapper');
-    const dailyRewardTime = document.getElementById('dailyRewardTime');
-    const cipherTime = document.getElementById('cipherTime');
-    const comboTime = document.getElementById('comboTime');
-    const miniGameTime = document.getElementById('miniGameTime');
-    const modalOverlay = document.getElementById('modalOverlay');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalBody = document.getElementById('modalBody');
+    const speedDisplay = document.getElementById('speedDisplay');
+    const minedDisplay = document.getElementById('minedDisplay');
+    const statusDot = document.getElementById('statusDot');
+    const statusLabel = document.getElementById('statusLabel');
+    const statusText = document.getElementById('statusText');
+    const sessionTime = document.getElementById('sessionTime');
+    const toggleBtn = document.getElementById('toggleMineBtn');
+    const boostBtn = document.getElementById('boostBtn');
+    const boostCostDisplay = document.getElementById('boostCostDisplay');
+    const toastContainer = document.getElementById('toastContainer');
 
-    // ==========================================
-    // FUNCTIONS
-    // ==========================================
-    function saveState() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({
-            balance, energy, level, tapPower, lastTapTime, userName, userAvatar,
-            skinCount, referrals,
-            dailyRewardClaimed, dailyRewardDate,
-            comboClaimed, comboDate, comboAttempts,
-            cipherSolved, cipherDate,
-            miniGameScore, activityLog, notifications
-        }));
+    // withdrawal elements
+    const paymentMethod = document.getElementById('paymentMethod');
+    const walletInput = document.getElementById('walletInput');
+    const withdrawAmount = document.getElementById('withdrawAmount');
+    const withdrawBtn = document.getElementById('withdrawBtn');
+
+    // ----- helpers -----
+    function fmt(v) { return Number(v).toFixed(4); }
+
+    // ----- refresh UI (all displays) -----
+    function refreshUI() {
+      balanceDisplay.textContent = fmt(balance);
+      speedDisplay.textContent = fmt(miningSpeed);
+      minedDisplay.textContent = fmt(totalMined);
+      boostCostDisplay.textContent = `💰 ${boostCost} COINS`;
+      // status text in header (already updated via setter)
     }
 
-    function updateUI() {
-        balanceDisplay.textContent = balance.toLocaleString();
-        const energyPct = Math.floor((energy / MAX_ENERGY) * 100);
-        energyDisplay.textContent = Math.floor(energy);
-        energyPercent.textContent = energyPct;
-        energyFill.style.width = energyPct + '%';
-        levelDisplay.textContent = level;
-        tapPowerDisplay.textContent = tapPower;
-        hourEarnings.textContent = (tapPower * 3600 / 2).toFixed(0);
-        rankProgress.textContent = `${Math.min(level, 11)} / 11`;
-        skinCountDisplay.textContent = `${skinCount}/11`;
-        userNameDisplay.textContent = userName;
-        avatarDisplay.textContent = userAvatar;
-
-        if (energy <= 0) coinEl.classList.add('disabled');
-        else coinEl.classList.remove('disabled');
-
-        updateCountdowns();
-        saveState();
+    // ----- toast system (user-friendly alert) -----
+    function showToast(msg, isSuccess = false) {
+      toastContainer.innerHTML = `<div class="toast-message ${isSuccess ? 'toast-success' : ''}">${msg}</div>`;
+      if (window.toastTimeout) clearTimeout(window.toastTimeout);
+      window.toastTimeout = setTimeout(() => {
+        toastContainer.innerHTML = '';
+      }, 5000);
     }
 
-    function updateCountdowns() {
-        const now = new Date();
-        const times = [
-            { el: dailyRewardTime, target: 0, min: 0 },
-            { el: cipherTime, target: 6, min: 15 },
-            { el: comboTime, target: 23, min: 15 },
-            { el: miniGameTime, target: 7, min: 15 }
-        ];
-        times.forEach(({ el, target, min }) => {
-            let targetDate = new Date(now);
-            targetDate.setHours(target, min, 0, 0);
-            if (targetDate < now) targetDate.setDate(targetDate.getDate() + 1);
-            const diff = targetDate - now;
-            const h = Math.floor(diff / 3600000);
-            const m = Math.floor((diff % 3600000) / 60000);
-            el.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
-        });
+    // ----- mining tick (per second) -----
+    function mineTick() {
+      if (!isMining) return;
+      balance += miningSpeed;
+      totalMined += miningSpeed;
+      refreshUI();
     }
 
-    // ==========================================
-    // ENERGY REGEN
-    // ==========================================
-    function regenerateEnergy() {
-        const now = Date.now();
-        const diff = (now - lastTapTime) / 1000;
-        const regen = diff * ENERGY_REGEN;
-        if (regen > 0 && energy < MAX_ENERGY) {
-            energy = Math.min(MAX_ENERGY, energy + regen);
-            lastTapTime = now - (diff % 1 * 1000);
-            updateUI();
-        }
+    // ----- start / stop mining -----
+    function toggleMining() {
+      if (isMining) {
+        // stop
+        isMining = false;
+        if (miningInterval) { clearInterval(miningInterval); miningInterval = null; }
+        if (sessionInterval) { clearInterval(sessionInterval); sessionInterval = null; }
+        statusDot.classList.remove('active');
+        statusLabel.textContent = '⏸️ Mining Stopped';
+        statusText.textContent = 'Idle';
+        toggleBtn.innerHTML = '<span>▶</span> START MINING';
+        toggleBtn.className = 'btn btn-primary';
+      } else {
+        // start
+        isMining = true;
+        sessionSeconds = 0;
+        sessionTime.textContent = '00:00';
+
+        miningInterval = setInterval(mineTick, 1000);
+        sessionInterval = setInterval(() => {
+          sessionSeconds++;
+          const m = String(Math.floor(sessionSeconds / 60)).padStart(2, '0');
+          const s = String(sessionSeconds % 60).padStart(2, '0');
+          sessionTime.textContent = `${m}:${s}`;
+        }, 1000);
+
+        statusDot.classList.add('active');
+        statusLabel.textContent = '⛏️ Mining...';
+        statusText.textContent = 'Active';
+        toggleBtn.innerHTML = '<span>⏹</span> STOP MINING';
+        toggleBtn.className = 'btn btn-success';
+        showToast('⛏️ Mining started!', true);
+      }
+      refreshUI();
     }
 
-    setInterval(() => {
-        regenerateEnergy();
-        updateCountdowns();
-    }, 1000);
-
-    // ==========================================
-    // TAP
-    // ==========================================
-    function handleTap(e) {
-        e.preventDefault?.();
-        regenerateEnergy();
-
-        if (energy <= 0) {
-            showTapLimit();
-            return;
-        }
-
-        const amount = tapPower;
-        energy -= 1;
-        balance += amount;
-        lastTapTime = Date.now();
-
-        const newLevel = Math.floor(balance / 1000) + 1;
-        if (newLevel > level) {
-            level = newLevel;
-            addActivity(`🏆 Leveled up to ${level}!`);
-            if (level % 5 === 0) {
-                addNotification(`🎉 You reached level ${level}! Amazing!`);
-            }
-        }
-
-        updateUI();
-
-        const wrapperRect = coinWrapper.getBoundingClientRect();
-        const x = (e.clientX || window.innerWidth/2) - wrapperRect.left;
-        const y = (e.clientY || wrapperRect.top + 50) - wrapperRect.top;
-        createFloatText(x, y, amount);
-
-        coinEl.style.transform = 'scale(0.85) rotateY(8deg)';
-        setTimeout(() => coinEl.style.transform = '', 80);
+    // ----- boost speed -----
+    function handleBoost() {
+      if (balance < boostCost) {
+        showToast(`❌ Insufficient balance! Need ${boostCost} coins.`);
+        return;
+      }
+      balance -= boostCost;
+      miningSpeed += BOOST_INCREMENT;
+      boostCost = Math.floor(boostCost * 1.35);
+      if (boostCost < 100) boostCost = 100;
+      refreshUI();
+      showToast(`🚀 Speed +${BOOST_INCREMENT} coins/sec!`, true);
     }
 
-    function showTapLimit() {
-        const el = document.createElement('div');
-        el.className = 'float-text';
-        el.textContent = '⏳ No energy!';
-        el.style.left = (coinWrapper.offsetWidth/2 - 40) + 'px';
-        el.style.top = '20px';
-        coinWrapper.appendChild(el);
-        setTimeout(() => el.remove(), 1200);
+    // ----- withdrawal logic -----
+    function handleWithdrawal() {
+      const method = paymentMethod.value;
+      const wallet = walletInput.value.trim();
+      const amountRaw = parseFloat(withdrawAmount.value);
+
+      if (!wallet) {
+        showToast('❌ Please enter a phone number or wallet address.');
+        return;
+      }
+      if (isNaN(amountRaw) || amountRaw < 100) {
+        showToast('❌ Minimum withdrawal is 100 coins.');
+        return;
+      }
+      if (amountRaw > balance) {
+        showToast(`❌ Insufficient balance! You have ${fmt(balance)} coins.`);
+        return;
+      }
+
+      // deduct coins
+      balance -= amountRaw;
+      refreshUI();
+
+      // show instant confirmation
+      let methodName = 'M-Pesa';
+      if (method === 'solana') methodName = 'Solana';
+      else if (method === 'usdt') methodName = 'USDT (TRC20)';
+
+      showToast(`✅ Withdrawal of ${amountRaw} coins via ${methodName} to ${wallet} submitted!`, true);
+
+      // clear fields (optional)
+      walletInput.value = '';
+      withdrawAmount.value = '';
     }
 
-    function createFloatText(x, y, amount) {
-        const el = document.createElement('div');
-        el.className = 'float-text';
-        el.textContent = `+${amount}`;
-        el.style.left = (x - 15) + 'px';
-        el.style.top = (y - 10) + 'px';
-        coinWrapper.appendChild(el);
-        setTimeout(() => el.remove(), 900);
-    }
+    // ----- event listeners -----
+    toggleBtn.addEventListener('click', toggleMining);
+    boostBtn.addEventListener('click', handleBoost);
+    withdrawBtn.addEventListener('click', handleWithdrawal);
 
-    // ==========================================
-    // COIN EVENTS
-    // ==========================================
-    coinEl.addEventListener('click', handleTap);
-    coinEl.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        handleTap(e);
-    }, { passive: false });
+    // ----- initial render -----
+    refreshUI();
+    statusDot.classList.remove('active');
+    statusLabel.textContent = '⏸️ Mining Stopped';
+    statusText.textContent = 'Idle';
+    sessionTime.textContent = '00:00';
 
-    // ==========================================
-    // HELPERS
-    // ==========================================
-    function addActivity(msg) {
-        activityLog.unshift(`${new Date().toLocaleTimeString()} ${msg}`);
-        if (activityLog.length > 50) activityLog.pop();
-        saveState();
-    }
+    // intro toast
+    setTimeout(() => {
+      showToast('⚡ Start mining & withdraw your coins!', true);
+    }, 400);
 
-    function addNotification(msg) {
-        notifications.unshift({ msg, time: new Date().toLocaleString(), read: false });
-        if (notifications.length > 30) notifications.pop();
-        saveState();
-    }
-
-    // ==========================================
-    // BOOST ENERGY
-    // ==========================================
-    function boostEnergy() {
-        if (balance < 50) {
-            alert('❌ Need 50 coins to boost!');
-            return;
-        }
-        balance -= 50;
-        energy = Math.min(MAX_ENERGY, energy + 200);
-        addActivity('⚡ Boosted energy +200!');
-        updateUI();
-        alert('⚡ Energy boosted! +200 energy!');
-    }
-    window.boostEnergy = boostEnergy;
-
-    // ==========================================
-    // MODAL
-    // ==========================================
-    function openModal(title, html) {
-        modalTitle.textContent = title;
-        modalBody.innerHTML = html;
-        modalOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-        modalOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-    window.closeModal = closeModal;
-
-    modalOverlay.addEventListener('click', (e) => {
-        if (e.target === modalOverlay) closeModal();
+    // ----- cleanup on page unload -----
+    window.addEventListener('beforeunload', function() {
+      if (miningInterval) clearInterval(miningInterval);
+      if (sessionInterval) clearInterval(sessionInterval);
     });
 
-    // ==========================================
-    // PROFILE
-    // ==========================================
-    function openProfile() {
-        openModal('👤 Profile', `
-            <div style="text-align:center;padding:6px 0;">
-                <div style="font-size:4rem;display:inline-block;background:rgba(15,26,46,0.6);padding:8px 20px;border-radius:50%;border:2px solid rgba(64,164,255,0.15);">${userAvatar}</div>
-                <div style="font-size:1.5rem;font-weight:700;color:#40a4ff;margin:6px 0;">${userName}</div>
-                <div class="item"><span class="label">🏆 Level</span><span class="value">${level}</span></div>
-                <div class="item"><span class="label">💰 Coins</span><span class="value">${balance.toLocaleString()}</span></div>
-                <div class="item"><span class="label">👆 Tap Power</span><span class="value">+${tapPower}</span></div>
-                <div class="item"><span class="label">👥 Referrals</span><span class="value">${referrals}</span></div>
-                <div class="item"><span class="label">🎨 Skins</span><span class="value">${skinCount}/11</span></div>
-                ${telegramUser ? `<div style="font-size:10px;color:#4caf50;margin-top:4px;">✅ Connected to Telegram: @${telegramUser.username || telegramUser.first_name}</div>` : ''}
-            </div>
-        `);
-    }
-    window.openProfile = openProfile;
-
-    // ==========================================
-    // DAILY REWARD
-    // ==========================================
-    function openDailyReward() {
-        const today = new Date().toDateString();
-        const claimed = dailyRewardDate === today && dailyRewardClaimed;
-        const reward = 100 + level * 10;
-
-        openModal('🎁 Daily Reward', `
-            <div style="text-align:center;padding:12px 0;">
-                <div style="font-size:4rem;">🎁</div>
-                <div style="font-size:2rem;font-weight:800;color:#40a4ff;">+${reward} coins</div>
-                <div style="font-size:11px;color:#6a7a8a;">Claim once per day</div>
-                ${claimed ? `
-                    <div style="background:rgba(15,26,46,0.4);padding:12px;border-radius:14px;margin:10px 0;">
-                        ✅ Already claimed today!<br>
-                        <span style="font-size:10px;color:#6a7a8a;">Next reward in 24h</span>
-                    </div>
-                ` : `
-                    <button class="big-btn" onclick="claimDailyReward()">🎯 Claim Now</button>
-                `}
-            </div>
-        `);
-    }
-    window.openDailyReward = openDailyReward;
-
-    function claimDailyReward() {
-        const reward = 100 + level * 10;
-        balance += reward;
-        dailyRewardClaimed = true;
-        dailyRewardDate = new Date().toDateString();
-        addActivity(`🎁 Claimed daily reward: +${reward} coins`);
-        updateUI();
-        closeModal();
-        openDailyReward();
-    }
-    window.claimDailyReward = claimDailyReward;
-
-    // ==========================================
-    // DAILY CIPHER
-    // ==========================================
-    function openCipher() {
-        const today = new Date().toDateString();
-        const solved = cipherDate === today && cipherSolved;
-        const code = Math.floor(1000 + Math.random() * 9000);
-
-        openModal('🔐 Daily Cipher', `
-            <div style="text-align:center;padding:6px 0;">
-                <div style="font-size:3rem;">🔐</div>
-                <div style="font-size:14px;color:#6a7a8a;margin:6px 0;">Enter the daily cipher code:</div>
-                <div style="font-size:2.5rem;font-weight:800;color:#40a4ff;background:rgba(15,26,46,0.6);padding:12px;border-radius:16px;border:1px solid rgba(64,164,255,0.15);">
-                    ${code}
-                </div>
-                ${solved ? `
-                    <div style="background:rgba(15,26,46,0.4);padding:12px;border-radius:14px;margin:10px 0;color:#4caf50;">
-                        ✅ Solved today! +500 coins
-                    </div>
-                ` : `
-                    <div class="input-group" style="margin-top:10px;">
-                        <input type="text" id="cipherInput" placeholder="Enter code..." inputmode="numeric" />
-                        <button class="big-btn" onclick="solveCipher(${code})">🔓 Unlock</button>
-                    </div>
-                `}
-            </div>
-        `);
-        setTimeout(() => {
-            const inp = document.getElementById('cipherInput');
-            if (inp) inp.focus();
-        }, 300);
-    }
-    window.openCipher = openCipher;
-
-    function solveCipher(code) {
-        const input = document.getElementById('cipherInput');
-        if (!input) return;
-        if (input.value.trim() === String(code)) {
-            balance += 500;
-            cipherSolved = true;
-            cipherDate = new Date().toDateString();
-            addActivity('🔐 Solved daily cipher: +500 coins');
-            updateUI();
-            closeModal();
-            alert('✅ Correct! +500 coins!');
-        } else {
-            alert('❌ Wrong code. Try again!');
-            openCipher();
-        }
-    }
-    window.solveCipher = solveCipher;
-
-    // ==========================================
-    // DAILY COMBO
-    // ==========================================
-    const comboEmojis = ['🎯', '⭐', '💎'];
-    const MAX_COMBO_ATTEMPTS = 3;
-
-    function openCombo() {
-        const today = new Date().toDateString();
-        const claimed = comboDate === today && comboClaimed;
-
-        let attemptsHTML = '';
-        for (let i = 0; i < MAX_COMBO_ATTEMPTS; i++) {
-            const cls = i < comboAttempts ? 'used' : 'remaining';
-            attemptsHTML += `<div class="dot ${cls}" style="display:inline-block;width:12px;height:12px;border-radius:50%;margin:2px;background:${i < comboAttempts ? '#ff6b6b' : '#40a4ff'};border:1px solid rgba(64,164,255,0.15);"></div>`;
-        }
-
-        openModal('🎯 Daily Combo', `
-            <div style="text-align:center;padding:6px 0;">
-                <div style="font-size:3rem;">🎯</div>
-                <div style="font-size:14px;color:#6a7a8a;margin:6px 0;">Pick the winning combo!</div>
-                ${claimed ? `
-                    <div style="background:rgba(15,26,46,0.4);padding:12px;border-radius:14px;margin:10px 0;color:#4caf50;">
-                        ✅ Combo claimed! +1000 coins
-                    </div>
-                ` : `
-                    <div style="display:flex;gap:8px;justify-content:center;margin:10px 0;">
-                        ${comboEmojis.map((e, i) => `
-                            <button class="big-btn secondary" onclick="selectCombo(${i})" style="flex:1;min-width:60px;padding:10px;font-size:20px;">
-                                ${e}
-                            </button>
-                        `).join('')}
-                    </div>
-                    <div style="font-size:10px;color:#6a7a8a;">Attempts: ${attemptsHTML}</div>
-                    <div style="font-size:10px;color:#3a4a5a;margin-top:4px;">${MAX_COMBO_ATTEMPTS - comboAttempts} attempts remaining</div>
-                `}
-            </div>
-        `);
-    }
-    window.openCombo = openCombo;
-
-    function selectCombo(index) {
-        if (comboAttempts >= MAX_COMBO_ATTEMPTS) {
-            alert('❌ You used all attempts! Try again tomorrow.');
-            return;
-        }
-        
-        const correctAnswer = Math.floor(Math.random() * 3);
-        comboAttempts++;
-        
-        if (index === correctAnswer) {
-            balance += 1000;
-            comboClaimed = true;
-            comboDate = new Date().toDateString();
-            addActivity('🎯 Won daily combo: +1000 coins');
-            updateUI();
-            closeModal();
-            alert('🎉 Correct! +1000 coins!');
-        } else {
-            const left = MAX_COMBO_ATTEMPTS - comboAttempts;
-            alert(`❌ Wrong! ${left} attempts left.`);
-            if (left > 0) openCombo();
-            else {
-                closeModal();
-                alert('No more attempts. Try again tomorrow!');
-            }
-        }
-    }
-    window.selectCombo = selectCombo;
-
-    // ==========================================
-    // MINI GAME
-    // ==========================================
-    function openMiniGame() {
-        openModal('🎮 Mini Game', `
-            <div style="text-align:center;padding:6px 0;">
-                <div style="font-size:3rem;">🎮</div>
-                <div style="font-size:14px;color:#6a7a8a;margin:6px 0;">Tap the coin as fast as you can!</div>
-                <div style="font-size:3rem;font-weight:800;color:#40a4ff;" id="miniGameScore">${miniGameScore}</div>
-                <div style="font-size:11px;color:#6a7a8a;">Your best score</div>
-                <button class="big-btn" onclick="startMiniGame()" style="margin-top:10px;">▶️ Play</button>
-            </div>
-        `);
-    }
-    window.openMiniGame = openMiniGame;
-
-    let miniGameRunning = false;
-    let miniGameTaps = 0;
-    let miniGameTimer = null;
-
-    function startMiniGame() {
-        if (miniGameRunning) return;
-        miniGameRunning = true;
-        miniGameTaps = 0;
-        let timeLeft = 10;
-
-        openModal('🎮 Mini Game', `
-            <div style="text-align:center;">
-                <div style="font-size:4rem;cursor:pointer;display:inline-block;padding:20px;border-radius:50%;background:rgba(64,164,255,0.08);border:2px solid rgba(64,164,255,0.15);" id="miniGameHamster" onclick="tapMiniGame()">🪙</div>
-                <div style="font-size:2rem;font-weight:800;color:#40a4ff;margin:6px 0;" id="miniGameCounter">0</div>
-                <div style="font-size:14px;color:#6a7a8a;">⏱️ <span id="miniGameTimer">10</span>s</div>
-                <div style="font-size:10px;color:#3a4a5a;">Tap the coin!</div>
-            </div>
-        `);
-
-        miniGameTimer = setInterval(() => {
-            timeLeft--;
-            const timerEl = document.getElementById('miniGameTimer');
-            if (timerEl) timerEl.textContent = timeLeft;
-            if (timeLeft <= 0) {
-                clearInterval(miniGameTimer);
-                miniGameRunning = false;
-                if (miniGameTaps > miniGameScore) {
-                    miniGameScore = miniGameTaps;
-                    saveState();
-                    addActivity(`🎮 New mini game record: ${miniGameTaps} taps!`);
-                    alert(`🏆 New record! ${miniGameTaps} taps!`);
-                } else {
-                    alert(`⏱️ Time up! ${miniGameTaps} taps.`);
-                }
-                closeModal();
-                openMiniGame();
-            }
-        }, 1000);
-    }
-    window.startMiniGame = startMiniGame;
-
-    function tapMiniGame() {
-        if (!miniGameRunning) return;
-        miniGameTaps++;
-        const counter = document.getElementById('miniGameCounter');
-        if (counter) counter.textContent = miniGameTaps;
-        const coin = document.getElementById('miniGameHamster');
-        if (coin) {
-            coin.style.transform = 'scale(0.8)';
-            setTimeout(() => coin.style.transform = '', 100);
-        }
-    }
-    window.tapMiniGame = tapMiniGame;
-
-    // ==========================================
-    // UPGRADES
-    // ==========================================
-    function openUpgrades() {
-        const upgradeCost = 100 * Math.pow(2, tapPower - 1);
-        
-        openModal('⬆️ Upgrades', `
-            <div style="padding:6px 0;">
-                <div class="item">
-                    <span class="label">Current Tap Power</span>
-                    <span class="value">+${tapPower}</span>
-                </div>
-                <div class="item">
-                    <span class="label">Next Level</span>
-                    <span class="value">+${tapPower + 1}</span>
-                </div>
-                <div class="item">
-                    <span class="label">Upgrade Cost</span>
-                    <span class="value">${upgradeCost.toLocaleString()} coins</span>
-                </div>
-                <button class="big-btn" onclick="upgradeTap()" ${balance < upgradeCost ? 'disabled style="opacity:0.4;"' : ''}>
-                    ${balance < upgradeCost ? '❌ Not enough coins' : '⬆️ Upgrade'}
-                </button>
-                <div style="margin-top:10px;border-top:1px solid rgba(64,164,255,0.08);padding-top:10px;">
-                    <div class="item">
-                        <span class="label">⚡ Energy</span>
-                        <span class="value">${Math.floor(energy)} / ${MAX_ENERGY}</span>
-                    </div>
-                    <div class="item">
-                        <span class="label">🏆 Level</span>
-                        <span class="value">${level}</span>
-                    </div>
-                    <div class="item">
-                        <span class="label">💰 Total Coins</span>
-                        <span class="value">${balance.toLocaleString()}</span>
-                    </div>
-                </div>
-            </div>
-        `);
-    }
-    window.openUpgrades = openUpgrades;
-
-    function upgradeTap() {
-        const cost = 100 * Math.pow(2, tapPower - 1);
-        if (balance < cost) {
-            alert('❌ Not enough coins!');
-            return;
-        }
-        balance -= cost;
-        tapPower += 1;
-        addActivity(`⬆️ Upgraded tap power to +${tapPower}`);
-        updateUI();
-        closeModal();
-        openUpgrades();
-    }
-    window.upgradeTap = upgradeTap;
-
-    // ==========================================
-    // NEWS
-    // ==========================================
-    function openNews() {
-        openModal('📰 News', `
-            <div style="padding:6px 0;">
-                <div style="background:rgba(15,26,46,0.6);padding:12px;border-radius:12px;border:1px solid rgba(64,164,255,0.08);margin:4px 0;">
-                    <div style="font-size:14px;font-weight:600;color:#e8edf5;">💰 New Airdrop Event!</div>
-                    <div style="font-size:11px;color:#6a7a8a;margin-top:6px;">Connect your wallet to participate in the upcoming airdrop. 10,000 coins reward!</div>
-                </div>
-                <div style="background:rgba(15,26,46,0.6);padding:12px;border-radius:12px;border:1px solid rgba(64,164,255,0.08);margin:4px 0;">
-                    <div style="font-size:14px;font-weight:600;color:#e8edf5;">🎉 Season 2 Coming Soon!</div>
-                    <div style="font-size:11px;color:#6a7a8a;margin-top:6px;">New features, more rewards, and exclusive skins!</div>
-                </div>
-            </div>
-        `);
-    }
-    window.openNews = openNews;
-
-    // ==========================================
-    // SETTINGS
-    // ==========================================
-    function openSettings() {
-        openModal('⚙️ Settings', `
-            <div style="padding:6px 0;">
-                <div class="item">
-                    <span class="label">👤 Username</span>
-                    <span class="value" id="settingsUsername">${userName}</span>
-                </div>
-                <div class="input-group" style="margin-top:6px;">
-                    <input type="text" id="usernameInput" placeholder="Change username..." value="${userName}" />
-                    <button class="big-btn" onclick="changeUsername()">✏️ Update</button>
-                </div>
-                <div class="input-group" style="margin-top:6px;">
-                    <input type="text" id="avatarInput" placeholder="Avatar emoji..." value="${userAvatar}" maxlength="2" />
-                    <button class="big-btn" onclick="changeAvatar()">🔄 Update Avatar</button>
-                </div>
-                <div style="height:10px;"></div>
-                <div class="item">
-                    <span class="label">💰 Balance</span>
-                    <span class="value">${balance.toLocaleString()}</span>
-                </div>
-                <div class="item">
-                    <span class="label">🏆 Level</span>
-                    <span class="value">${level}</span>
-                </div>
-                <div class="item">
-                    <span class="label">👆 Tap Power</span>
-                    <span class="value">+${tapPower}</span>
-                </div>
-                <button class="big-btn secondary" onclick="resetGame()" style="margin-top:10px;color:#ff6b6b;">🔄 Reset Game</button>
-            </div>
-        `);
-    }
-    window.openSettings = openSettings;
-
-    function changeUsername() {
-        const input = document.getElementById('usernameInput');
-        if (!input) return;
-        const name = input.value.trim();
-        if (!name) {
-            alert('Please enter a username.');
-            return;
-        }
-        userName = name;
-        addActivity(`✏️ Changed username to ${userName}`);
-        updateUI();
-        closeModal();
-        openSettings();
-    }
-    window.changeUsername = changeUsername;
-
-    function changeAvatar() {
-        const input = document.getElementById('avatarInput');
-        if (!input) return;
-        const avatar = input.value.trim();
-        if (!avatar) {
-            alert('Please enter an avatar emoji.');
-            return;
-        }
-        userAvatar = avatar;
-        addActivity(`🔄 Changed avatar to ${userAvatar}`);
-        updateUI();
-        closeModal();
-        openSettings();
-    }
-    window.changeAvatar = changeAvatar;
-
-    function resetGame() {
-        if (confirm('⚠️ Are you sure? This will delete all progress!')) {
-            if (confirm('Really? All coins, levels, and upgrades will be lost!')) {
-                localStorage.removeItem(STORAGE_KEY);
-                location.reload();
-            }
-        }
-    }
-    window.resetGame = resetGame;
-
-    // ==========================================
-    // PAGE SWITCHING
-    // ==========================================
-    function switchPage(page) {
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        const btn = document.querySelector(`.nav-item[data-page="${page}"]`);
-        if (btn) btn.classList.add('active');
-
-        if (page === 'notifications') {
-            openModal('🔔 Notifications', `
-                <div style="padding:4px 0;">
-                    ${notifications.length === 0 ? '<p style="color:#6a7a8a;text-align:center;">No notifications</p>' :
-                    notifications.map(n => `
-                        <div style="background:rgba(15,26,46,0.6);padding:10px 14px;border-radius:10px;border:1px solid rgba(64,164,255,0.08);margin:4px 0;">
-                            <div style="font-size:13px;color:#e8edf5;">${n.msg}</div>
-                            <div style="font-size:9px;color:#3a4a5a;">${n.time}</div>
-                        </div>
-                    `).join('')}
-                </div>
-            `);
-            notifications.forEach(n => n.read = true);
-            saveState();
-        } else if (page === 'activity') {
-            openModal('📊 Activity', `
-                <div style="padding:4px 0;">
-                    ${activityLog.length === 0 ? '<p style="color:#6a7a8a;text-align:center;">No activity yet</p>' :
-                    activityLog.map(a => `
-                        <div style="background:rgba(15,26,46,0.6);padding:8px 12px;border-radius:8px;border:1px solid rgba(64,164,255,0.08);margin:3px 0;font-size:12px;color:#8a9aaa;">
-                            ${a}
-                        </div>
-                    `).join('')}
-                </div>
-            `);
-        } else if (page === 'search') {
-            openModal('🔍 Search', `
-                <div style="padding:6px 0;text-align:center;">
-                    <div style="font-size:3rem;">🔍</div>
-                    <p style="color:#6a7a8a;margin:6px 0;">Search for players and more</p>
-                    <div class="input-group">
-                        <input type="text" placeholder="Search..." />
-                        <button class="big-btn secondary">Search</button>
-                    </div>
-                </div>
-            `);
-        }
-    }
-    window.switchPage = switchPage;
-
-    // ==========================================
-    // INIT
-    // ==========================================
-    updateUI();
-
-    if (!saved) {
-        addNotification('🪙 Welcome to E-Coin Bot!');
-        addActivity('🎮 Started playing!');
-        if (telegramUser) {
-            addNotification(`👋 Welcome ${telegramUser.first_name}!`);
-        }
-        addNotification('🎁 Claim your daily reward!');
-    }
-
-    console.log('🪙 E-Coin Bot loaded!');
-    console.log('👤 User:', userName);
-    console.log('💵 Balance:', balance);
-    console.log('⚡ Energy:', energy);
-    console.log('🏆 Level:', level);
-    console.log('👆 Tap Power:', tapPower);
-})();
+  })();
 </script>
 </body>
 </html>
