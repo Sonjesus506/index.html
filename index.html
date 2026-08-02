@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>🟡 BNB Social Miner</title>
+    <title>🟡 BNB CPU Miner</title>
     <style>
         * {
             margin: 0;
@@ -55,23 +55,265 @@
             transition: all 0.3s ease;
         }
 
-        .bnb-gold {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        /* ===== CPU MINING MACHINE ===== */
+        .cpu-machine {
+            background: rgba(8, 20, 32, 0.6);
+            border-radius: 28px;
+            padding: 16px;
+            border: 2px solid var(--border-color);
+            margin-bottom: 10px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
         }
 
-        .bnb-badge {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: #0a121c;
-            padding: 2px 12px;
+        .cpu-machine.level-1 { border-color: #4a9eff; }
+        .cpu-machine.level-2 { border-color: #4ae09a; }
+        .cpu-machine.level-3 { border-color: #f7e05e; }
+        .cpu-machine.level-4 { border-color: #ff9f4a; }
+        .cpu-machine.level-5 { border-color: #ff6b8a; }
+        .cpu-machine.level-6 { border-color: #b47aff; }
+        .cpu-machine.level-7 { border-color: #00f2ea; }
+        .cpu-machine.level-8 { border-color: #ff4757; }
+        .cpu-machine.level-9 { border-color: #ffd700; }
+        .cpu-machine.level-10 { border-color: #ff6b6b; box-shadow: 0 0 40px rgba(255, 107, 107, 0.3); }
+
+        .cpu-machine .machine-label {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            font-size: 0.5rem;
+            color: var(--text-muted);
+            background: rgba(0,0,0,0.3);
+            padding: 2px 10px;
             border-radius: 30px;
-            font-size: 0.6rem;
-            font-weight: 800;
-            display: inline-block;
         }
 
+        .cpu-machine .machine-label .level-badge {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .cpu-visual {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 0;
+        }
+
+        /* CPU Chip */
+        .cpu-chip {
+            width: 120px;
+            height: 120px;
+            background: #0d1b28;
+            border-radius: 20px;
+            border: 3px solid var(--border-color);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s ease;
+            margin: 5px auto;
+        }
+
+        .cpu-chip .chip-inner {
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle at 30% 30%, #1a2f40, #0a121c);
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: all 0.5s ease;
+        }
+
+        .cpu-chip .chip-inner .cpu-icon {
+            font-size: 2rem;
+            transition: all 0.5s ease;
+        }
+
+        .cpu-chip .chip-inner .cpu-text {
+            font-size: 0.4rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* CPU Fan - Spinning */
+        .cpu-fan {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            animation: spinFan 1.5s linear infinite;
+            animation-play-state: paused;
+        }
+
+        .cpu-fan.spinning {
+            animation-play-state: running;
+        }
+
+        @keyframes spinFan {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .cpu-fan .fan-blade {
+            position: absolute;
+            width: 8px;
+            height: 35px;
+            background: linear-gradient(180deg, var(--primary), var(--primary-dark));
+            border-radius: 10px;
+            top: 50%;
+            left: 50%;
+            transform-origin: 50% 0%;
+            opacity: 0.7;
+            box-shadow: 0 0 10px var(--shadow-color);
+        }
+
+        .cpu-fan .fan-blade:nth-child(1) { transform: rotate(0deg) translateX(-4px) translateY(-50%); }
+        .cpu-fan .fan-blade:nth-child(2) { transform: rotate(72deg) translateX(-4px) translateY(-50%); }
+        .cpu-fan .fan-blade:nth-child(3) { transform: rotate(144deg) translateX(-4px) translateY(-50%); }
+        .cpu-fan .fan-blade:nth-child(4) { transform: rotate(216deg) translateX(-4px) translateY(-50%); }
+        .cpu-fan .fan-blade:nth-child(5) { transform: rotate(288deg) translateX(-4px) translateY(-50%); }
+
+        .cpu-fan .fan-center {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary), var(--primary-dark));
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 20px var(--shadow-color);
+            z-index: 2;
+        }
+
+        /* Speed indicators on CPU */
+        .cpu-leds {
+            display: flex;
+            gap: 4px;
+            margin-top: 6px;
+        }
+
+        .cpu-led {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .cpu-led.active {
+            background: var(--green);
+            box-shadow: 0 0 10px var(--green);
+        }
+
+        .cpu-led.speed-1 { background: #4a9eff; box-shadow: 0 0 10px #4a9eff; }
+        .cpu-led.speed-2 { background: #4ae09a; box-shadow: 0 0 10px #4ae09a; }
+        .cpu-led.speed-3 { background: #f7e05e; box-shadow: 0 0 10px #f7e05e; }
+        .cpu-led.speed-4 { background: #ff9f4a; box-shadow: 0 0 10px #ff9f4a; }
+        .cpu-led.speed-5 { background: #ff6b8a; box-shadow: 0 0 10px #ff6b8a; }
+
+        /* CPU Info */
+        .cpu-info {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 8px;
+            padding: 6px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 40px;
+        }
+
+        .cpu-info-item {
+            text-align: center;
+        }
+
+        .cpu-info-item .label {
+            font-size: 0.4rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .cpu-info-item .value {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .cpu-info-item .value.gold {
+            color: var(--primary);
+        }
+
+        /* ===== BOOST LEVELS ===== */
+        .boost-levels {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .level-item {
+            background: rgba(8, 20, 32, 0.4);
+            border-radius: 16px;
+            padding: 8px 10px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .level-item:hover {
+            border-color: var(--primary);
+        }
+
+        .level-item.active {
+            border-color: var(--primary);
+            background: rgba(247, 224, 94, 0.1);
+        }
+
+        .level-item .level-num {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .level-item .level-speed {
+            font-size: 0.5rem;
+            color: var(--primary);
+        }
+
+        .level-item .level-price {
+            font-size: 0.5rem;
+            color: var(--text-muted);
+        }
+
+        .level-item .level-buy {
+            margin-top: 4px;
+            padding: 3px 12px;
+            border-radius: 30px;
+            border: none;
+            font-weight: 600;
+            font-size: 0.5rem;
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            color: #0a121c;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .level-item .level-buy:active {
+            transform: scale(0.95);
+        }
+
+        .level-item .level-buy.owned {
+            background: rgba(74, 224, 154, 0.2);
+            color: var(--green);
+        }
+
+        /* ===== NAVIGATION ===== */
         .nav-tabs {
             display: flex;
             background: #0d1822;
@@ -166,7 +408,7 @@
             text-transform: uppercase;
         }
 
-        /* Miner Visual */
+        /* Miner Visual - Home */
         .miner-visual {
             display: flex;
             flex-direction: column;
@@ -210,11 +452,6 @@
 
         .fan-blades.spinning {
             animation-play-state: running;
-        }
-
-        @keyframes spinFan {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
 
         .blade {
@@ -389,7 +626,7 @@
             border: 1px solid #6ae09a;
         }
 
-        /* SOCIAL CONNECT - WITH LOGOS */
+        /* Social */
         .social-header {
             display: flex;
             justify-content: space-between;
@@ -441,7 +678,6 @@
             flex-shrink: 0;
         }
 
-        /* Social Logo Colors */
         .social-item .icon.tiktok { background: #000; color: #00f2ea; }
         .social-item .icon.instagram { background: radial-gradient(circle at 30% 110%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%); color: white; }
         .social-item .icon.facebook { background: #1877f2; color: white; }
@@ -462,23 +698,6 @@
         .social-item .info .username {
             color: var(--text-muted);
             font-size: 0.55rem;
-        }
-
-        .social-item .status-badge {
-            font-size: 0.5rem;
-            padding: 3px 10px;
-            border-radius: 30px;
-            font-weight: 600;
-        }
-
-        .social-item .status-badge.connected {
-            background: rgba(74, 224, 154, 0.2);
-            color: var(--green);
-        }
-
-        .social-item .status-badge.not-connected {
-            background: rgba(255, 71, 87, 0.2);
-            color: var(--red);
         }
 
         .social-item .connect-btn {
@@ -502,7 +721,6 @@
             color: var(--green);
         }
 
-        /* Social Rewards */
         .social-rewards {
             background: rgba(8, 20, 32, 0.3);
             border-radius: 28px;
@@ -552,7 +770,7 @@
             transition: width 0.5s ease;
         }
 
-        /* GROUPS */
+        /* Groups */
         .groups-header {
             display: flex;
             justify-content: space-between;
@@ -627,108 +845,6 @@
         .group-card .join-btn.joined {
             background: rgba(74, 224, 154, 0.2);
             color: var(--green);
-        }
-
-        /* Boost - FULL WIDTH BIG BAR */
-        .boost-header h2 {
-            color: var(--primary);
-            font-size: 0.95rem;
-            text-align: center;
-            margin-bottom: 8px;
-        }
-
-        .gpu-visual {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: #0d1a28;
-            border-radius: 28px;
-            padding: 14px;
-            border: 1px solid var(--primary);
-            margin-bottom: 10px;
-        }
-
-        .gpu-speed-display {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-shadow: 0 0 20px var(--shadow-color);
-        }
-
-        .gpu-label {
-            color: var(--text-muted);
-            font-size: 0.6rem;
-            letter-spacing: 0.05em;
-        }
-
-        .boost-timer {
-            display: flex;
-            justify-content: space-between;
-            background: #0a1620;
-            border-radius: 40px;
-            padding: 8px 12px;
-            border: 1px solid var(--border-color);
-            margin: 3px 0 8px;
-        }
-
-        .boost-timer-item {
-            text-align: center;
-        }
-
-        .boost-timer-item .num {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .boost-timer-item .lbl {
-            font-size: 0.45rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-
-        .boost-card {
-            background: rgba(0, 20, 35, 0.5);
-            border-radius: 28px;
-            padding: 14px 16px;
-            border: 1px solid var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            margin: 3px 0 8px;
-            width: 100%;
-        }
-
-        .boost-info .title {
-            font-weight: 600;
-            color: var(--primary);
-            font-size: 0.8rem;
-        }
-
-        .boost-info .price {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--primary);
-        }
-
-        .btn-boost {
-            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
-            border: 1px solid var(--primary);
-            color: #0a121c;
-            padding: 8px 24px;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 0.8rem;
-            box-shadow: 0 3px 0 #0d1a24;
-            transition: 0.06s linear;
-            cursor: pointer;
-            min-width: 80px;
-        }
-
-        .btn-boost:active {
-            transform: translateY(2px);
-            box-shadow: 0 1px 0 #0d1a24;
         }
 
         /* Withdraw */
@@ -880,7 +996,7 @@
             margin-top: 4px;
         }
 
-        /* PROFILE - WITH PHOTO */
+        /* Profile */
         .profile-header {
             display: flex;
             align-items: center;
@@ -1037,7 +1153,7 @@
             transform: scale(0.9);
         }
 
-        /* FRIENDS LIST */
+        /* Friends */
         .friends-header {
             display: flex;
             justify-content: space-between;
@@ -1378,6 +1494,11 @@
             .nav-tab { font-size: 0.4rem; padding: 5px 2px; min-width: 28px; }
             .market-price .price { font-size: 0.9rem; }
             .social-item .icon { width: 32px; height: 32px; font-size: 1.4rem; }
+            .cpu-chip { width: 90px; height: 90px; }
+            .cpu-chip .chip-inner { width: 60px; height: 60px; }
+            .cpu-fan { width: 80px; height: 80px; }
+            .cpu-fan .fan-blade { height: 28px; width: 6px; }
+            .boost-levels { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
@@ -1389,9 +1510,9 @@
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
         <div style="display: flex; align-items: center; gap: 6px;">
             <span style="font-size: 1rem;">🟡</span>
-            <span style="color: var(--primary); font-weight: 800; font-size: 0.75rem;">BNB SOCIAL</span>
+            <span style="color: var(--primary); font-weight: 800; font-size: 0.75rem;">BNB CPU</span>
         </div>
-        <span class="bnb-badge">🌍 PRO</span>
+        <span class="bnb-badge">⚡ MINER</span>
     </div>
 
     <!-- Market Price -->
@@ -1409,8 +1530,8 @@
     <!-- Navigation -->
     <div class="nav-tabs">
         <button class="nav-tab active" data-screen="home">🏠</button>
-        <button class="nav-tab" data-screen="social">🌐</button>
         <button class="nav-tab" data-screen="boost">⚡</button>
+        <button class="nav-tab" data-screen="social">🌐</button>
         <button class="nav-tab" data-screen="invite">👥</button>
         <button class="nav-tab" data-screen="withdraw">💸</button>
         <button class="nav-tab" data-screen="profile">⚙️</button>
@@ -1432,7 +1553,7 @@
                 </div>
                 <div class="fan-center"></div>
             </div>
-            <div class="miner-label">⚡ BNB SOCIAL MINER</div>
+            <div class="miner-label">⚡ BNB CPU MINER</div>
         </div>
 
         <div class="stats-row">
@@ -1467,15 +1588,75 @@
         </button>
     </div>
 
-    <!-- ========== SOCIAL CONNECT WITH LOGOS ========== -->
+    <!-- ========== BOOST - CPU MACHINE WITH 10 LEVELS ========== -->
+    <div class="screen" id="screen-boost">
+        <div class="boost-header">
+            <h2>⚡ CPU Mining Machine</h2>
+        </div>
+
+        <!-- CPU Machine Visual -->
+        <div class="cpu-machine level-1" id="cpuMachine">
+            <div class="machine-label">
+                Level <span class="level-badge" id="cpuLevelDisplay">1</span>
+            </div>
+            <div class="cpu-visual">
+                <div class="cpu-chip">
+                    <div class="cpu-fan" id="cpuFan">
+                        <div class="fan-blade"></div>
+                        <div class="fan-blade"></div>
+                        <div class="fan-blade"></div>
+                        <div class="fan-blade"></div>
+                        <div class="fan-blade"></div>
+                        <div class="fan-center"></div>
+                    </div>
+                    <div class="chip-inner">
+                        <div class="cpu-icon" id="cpuIcon">🖥️</div>
+                        <div class="cpu-text" id="cpuName">Intel Core i3</div>
+                    </div>
+                </div>
+                <div class="cpu-leds" id="cpuLeds">
+                    <div class="cpu-led active"></div>
+                    <div class="cpu-led"></div>
+                    <div class="cpu-led"></div>
+                    <div class="cpu-led"></div>
+                    <div class="cpu-led"></div>
+                </div>
+                <div class="cpu-info">
+                    <div class="cpu-info-item">
+                        <div class="label">Speed</div>
+                        <div class="value gold" id="cpuSpeedDisplay">0.00000010</div>
+                    </div>
+                    <div class="cpu-info-item">
+                        <div class="label">BNB/s</div>
+                        <div class="value" id="cpuLevelSpeed">0.00000010</div>
+                    </div>
+                    <div class="cpu-info-item">
+                        <div class="label">Level</div>
+                        <div class="value" id="cpuLevelNum">1/10</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10 Boost Levels -->
+        <div style="margin-top: 8px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <span style="color:var(--text-light); font-size:0.7rem; font-weight:600;">⬆ Upgrade CPU</span>
+                <span style="color:var(--text-muted); font-size:0.5rem;">10 Levels</span>
+            </div>
+            <div class="boost-levels" id="boostLevels">
+                <!-- Will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== SOCIAL ========== -->
     <div class="screen" id="screen-social">
         <div class="social-header">
             <h2>🌐 Connect Social</h2>
             <div class="earnings">Earned: <span id="socialEarnings">0.0000</span> BNB</div>
         </div>
-
         <div class="social-connect">
-            <!-- TikTok -->
             <div class="social-item">
                 <div class="icon tiktok">♬</div>
                 <div class="info">
@@ -1484,8 +1665,6 @@
                 </div>
                 <button class="connect-btn" id="tiktokBtn">Connect</button>
             </div>
-
-            <!-- Instagram -->
             <div class="social-item">
                 <div class="icon instagram">📷</div>
                 <div class="info">
@@ -1494,8 +1673,6 @@
                 </div>
                 <button class="connect-btn" id="instagramBtn">Connect</button>
             </div>
-
-            <!-- Facebook -->
             <div class="social-item">
                 <div class="icon facebook">f</div>
                 <div class="info">
@@ -1504,8 +1681,6 @@
                 </div>
                 <button class="connect-btn" id="facebookBtn">Connect</button>
             </div>
-
-            <!-- YouTube -->
             <div class="social-item">
                 <div class="icon youtube">▶</div>
                 <div class="info">
@@ -1514,8 +1689,6 @@
                 </div>
                 <button class="connect-btn" id="youtubeBtn">Connect</button>
             </div>
-
-            <!-- Twitter/X -->
             <div class="social-item">
                 <div class="icon twitter">🐦</div>
                 <div class="info">
@@ -1524,8 +1697,6 @@
                 </div>
                 <button class="connect-btn" id="twitterBtn">Connect</button>
             </div>
-
-            <!-- Telegram -->
             <div class="social-item">
                 <div class="icon telegram">✈</div>
                 <div class="info">
@@ -1535,8 +1706,6 @@
                 <button class="connect-btn" id="telegramBtn">Connect</button>
             </div>
         </div>
-
-        <!-- Social Rewards -->
         <div class="social-rewards">
             <div class="title">🎁 Social Growth Rewards</div>
             <div class="reward-row">
@@ -1551,21 +1720,14 @@
                 <span>Connect all 6 accounts</span>
                 <span class="highlight">+0.00000100 BNB/s</span>
             </div>
-            <div class="reward-row">
-                <span>Share your link</span>
-                <span class="highlight">+30 BNB bonus</span>
-            </div>
             <div class="reward-progress">
                 <div class="fill" id="socialProgress" style="width:0%"></div>
             </div>
         </div>
-
-        <!-- Groups -->
         <div class="groups-header">
             <h3>👥 Community Groups</h3>
             <button class="create-btn" id="createGroupBtn">+ Create</button>
         </div>
-
         <div id="groupsContainer">
             <div class="group-card">
                 <div class="group-name">🌍 Global BNB Miners</div>
@@ -1586,58 +1748,11 @@
         </div>
     </div>
 
-    <!-- ========== BOOST - BIG BAR ========== -->
-    <div class="screen" id="screen-boost">
-        <div class="boost-header">
-            <h2>⚡ Speed Booster</h2>
-        </div>
-
-        <div class="gpu-visual">
-            <div style="font-size:2.8rem; margin-bottom:2px;">🖥️</div>
-            <div class="gpu-speed-display" id="gpuSpeed">0.00000010</div>
-            <div class="gpu-label">BNB / second</div>
-            <div style="display:flex; gap:10px; margin-top:4px; font-size:0.55rem; color:var(--text-muted);">
-                <span>🔄 NVIDIA RTX</span>
-                <span id="gpuLevel">Lv.1</span>
-            </div>
-        </div>
-
-        <div class="boost-timer">
-            <div class="boost-timer-item">
-                <div class="num" id="estTime1">0.000006</div>
-                <div class="lbl">BNB / 1min</div>
-            </div>
-            <div class="boost-timer-item">
-                <div class="num" id="estTime10">0.000060</div>
-                <div class="lbl">BNB / 10min</div>
-            </div>
-            <div class="boost-timer-item">
-                <div class="num" id="estTime60">0.000360</div>
-                <div class="lbl">BNB / 1hr</div>
-            </div>
-        </div>
-
-        <!-- BIG BOOST BAR - FULL WIDTH -->
-        <div class="boost-card">
-            <div class="boost-info">
-                <span class="title">🚀 Upgrade Speed</span>
-                <span class="price" id="boostCostDisplay">💰 10 BNB</span>
-                <span style="font-size:0.5rem; color:var(--text-muted);">+0.00000010 BNB/s</span>
-            </div>
-            <button class="btn-boost" id="boostBtn">⬆ BOOST</button>
-        </div>
-
-        <div style="text-align:center; color:var(--text-muted); font-size:0.6rem; margin-top:4px;">
-            Boost level: <span id="boostLevel" style="color:var(--primary); font-weight:700;">0</span>
-        </div>
-    </div>
-
     <!-- ========== INVITE ========== -->
     <div class="screen" id="screen-invite">
         <div class="invite-header">
             <h2>👥 Invite & Earn</h2>
         </div>
-
         <div class="invite-stats">
             <div class="invite-stat">
                 <div class="num" id="inviteCount">0</div>
@@ -1648,17 +1763,14 @@
                 <div class="lbl">Bonus Speed</div>
             </div>
         </div>
-
         <div class="invite-code-box">
             <div class="invite-code-label">YOUR REFERRAL CODE</div>
             <div class="invite-code" id="inviteCode">BNB-7XK9</div>
         </div>
-
         <div class="invite-link-box">
             <input type="text" id="inviteLinkInput" value="https://t.me/BNBMinerBot?start=BNB-7XK9" readonly>
             <button id="copyInviteBtn">📋 Copy</button>
         </div>
-
         <div class="invite-rewards">
             <div class="title">🎁 Referral Rewards</div>
             <div class="reward-item">
@@ -1668,10 +1780,6 @@
             <div class="reward-item">
                 <span>Speed bonus active</span>
                 <span class="highlight" id="inviteRewardActive">+0.00000000 BNB/s</span>
-            </div>
-            <div class="reward-item">
-                <span>Share your link</span>
-                <span class="highlight">🎯 30 BNB Bonus</span>
             </div>
         </div>
     </div>
@@ -1683,7 +1791,6 @@
                 💸 Withdraw BNB
                 <span class="country-badge" id="countryBadge">🌍 Auto</span>
             </div>
-
             <div class="form-group">
                 <label>🌍 Select Country</label>
                 <div class="country-selector">
@@ -1712,7 +1819,6 @@
                     </select>
                 </div>
             </div>
-
             <div class="form-group">
                 <label>📱 Payment Method</label>
                 <select id="paymentMethod">
@@ -1732,7 +1838,6 @@
                     <option value="bank_swift">SWIFT</option>
                 </select>
             </div>
-
             <div class="form-group">
                 <label>📱 Phone / Wallet Address</label>
                 <div class="phone-prefix">
@@ -1740,18 +1845,14 @@
                     <input type="text" id="walletInput" placeholder="e.g. 796844240">
                 </div>
             </div>
-
             <div class="form-group">
                 <label>💰 Amount (BNB)</label>
                 <input type="number" id="withdrawAmount" placeholder="0.5" min="0.5" step="0.01">
             </div>
-
             <div class="min-withdraw-notice">
                 ⚠️ Minimum: <strong>0.5 BNB</strong>
             </div>
-
             <button class="btn btn-withdraw" id="withdrawBtn">⚡ Submit</button>
-
             <div class="fee-info">
                 💼 <strong>10% Fee</strong> (5% Platform + 5% BNB Network)
                 <div style="display:flex; justify-content:space-around; margin-top:2px; font-size:0.45rem;">
@@ -1763,7 +1864,7 @@
         </div>
     </div>
 
-    <!-- ========== PROFILE WITH PHOTO ========== -->
+    <!-- ========== PROFILE ========== -->
     <div class="screen" id="screen-profile">
         <div class="profile-header" id="profileClick">
             <div class="profile-avatar" id="profileAvatar">
@@ -1777,8 +1878,6 @@
                 <div style="font-size:0.5rem; color:var(--text-muted);" id="userCountry">🌍 Global</div>
             </div>
         </div>
-
-        <!-- Hidden file input for photo -->
         <input type="file" id="photoInput" accept="image/*" style="display:none;">
 
         <div class="settings-group">
@@ -1843,7 +1942,6 @@
             </div>
         </div>
 
-        <!-- Friends List -->
         <div class="settings-group">
             <div class="title">👥 Friends</div>
             <div class="friends-header">
@@ -1867,14 +1965,6 @@
                     </div>
                     <span class="offline-dot"></span>
                 </div>
-                <div class="friend-item">
-                    <div class="avatar">👤</div>
-                    <div class="info">
-                        <div class="name">James M.</div>
-                        <div class="status">Online · Active</div>
-                    </div>
-                    <span class="online-dot"></span>
-                </div>
             </div>
         </div>
     </div>
@@ -1890,7 +1980,7 @@
             <div class="ai-messages" id="aiMessages">
                 <div class="ai-message bot">
                     👋 Hello! I'm your DeepSeek AI assistant.<br>
-                    Ask me about BNB, mining, social connect, or anything!
+                    Ask me about BNB, CPU mining, or anything!
                 </div>
             </div>
             <div class="ai-input">
@@ -1918,14 +2008,26 @@
         let miningInterval = null;
         let sessionInterval = null;
         let sessionSeconds = 0;
-        let boostCount = 0;
+        let boostLevel = 0; // 0-10
         let inviteCount = 0;
         let inviteBonusSpeed = 0;
         const INVITE_BONUS_PER = 0.00000010;
         const REFERRAL_CODE = 'BNB-7XK9';
         const MIN_WITHDRAW = 0.5;
-        let boostCost = 10; // Reduced from 100 to 10 BNB
-        const BOOST_INCREMENT = 0.00000010;
+
+        // 10 Boost Levels
+        const LEVELS = [
+            { level: 1, name: 'Intel Core i3', speed: 0.00000010, price: 10, icon: '🖥️', color: '#4a9eff' },
+            { level: 2, name: 'Intel Core i5', speed: 0.00000025, price: 25, icon: '🖥️', color: '#4ae09a' },
+            { level: 3, name: 'Intel Core i7', speed: 0.00000050, price: 50, icon: '🖥️', color: '#f7e05e' },
+            { level: 4, name: 'Intel Core i9', speed: 0.00000100, price: 100, icon: '🖥️', color: '#ff9f4a' },
+            { level: 5, name: 'AMD Ryzen 5', speed: 0.00000150, price: 150, icon: '🖥️', color: '#ff6b8a' },
+            { level: 6, name: 'AMD Ryzen 7', speed: 0.00000250, price: 250, icon: '🖥️', color: '#b47aff' },
+            { level: 7, name: 'AMD Ryzen 9', speed: 0.00000400, price: 400, icon: '🖥️', color: '#00f2ea' },
+            { level: 8, name: 'NVIDIA RTX 3060', speed: 0.00000600, price: 600, icon: '💻', color: '#ff4757' },
+            { level: 9, name: 'NVIDIA RTX 4080', speed: 0.00000900, price: 900, icon: '💻', color: '#ffd700' },
+            { level: 10, name: 'NVIDIA RTX 4090', speed: 0.00001500, price: 1500, icon: '💻', color: '#ff6b6b' }
+        ];
 
         // Social Connect
         let socialConnected = {
@@ -1977,13 +2079,16 @@
         const bnbChangeEl = document.getElementById('bnbChange');
         const bnbVolumeEl = document.getElementById('bnbVolume');
 
-        const gpuSpeed = document.getElementById('gpuSpeed');
-        const boostCostDisplay = document.getElementById('boostCostDisplay');
-        const boostBtn = document.getElementById('boostBtn');
-        const boostLevel = document.getElementById('boostLevel');
-        const estTime1 = document.getElementById('estTime1');
-        const estTime10 = document.getElementById('estTime10');
-        const estTime60 = document.getElementById('estTime60');
+        // CPU Machine
+        const cpuMachine = document.getElementById('cpuMachine');
+        const cpuFan = document.getElementById('cpuFan');
+        const cpuIcon = document.getElementById('cpuIcon');
+        const cpuName = document.getElementById('cpuName');
+        const cpuSpeedDisplay = document.getElementById('cpuSpeedDisplay');
+        const cpuLevelNum = document.getElementById('cpuLevelNum');
+        const cpuLevelDisplay = document.getElementById('cpuLevelDisplay');
+        const cpuLeds = document.getElementById('cpuLeds');
+        const boostLevelsContainer = document.getElementById('boostLevels');
 
         const inviteCountEl = document.getElementById('inviteCount');
         const inviteBonusEl = document.getElementById('inviteBonus');
@@ -2028,8 +2133,8 @@
         const tabs = document.querySelectorAll('.nav-tab');
         const screens = {
             home: document.getElementById('screen-home'),
-            social: document.getElementById('screen-social'),
             boost: document.getElementById('screen-boost'),
+            social: document.getElementById('screen-social'),
             invite: document.getElementById('screen-invite'),
             withdraw: document.getElementById('screen-withdraw'),
             profile: document.getElementById('screen-profile'),
@@ -2045,6 +2150,7 @@
                     screens[key].classList.toggle('active', key === screen);
                 });
                 refreshUI();
+                renderLevels();
             });
         });
 
@@ -2111,8 +2217,9 @@
             window.toastTimeout = setTimeout(() => { toastContainer.innerHTML = ''; }, 5000);
         }
 
-        function getTotalSpeed() {
-            return miningSpeed + (boostCount * BOOST_INCREMENT) + inviteBonusSpeed + socialBonusSpeed;
+        function getCurrentSpeed() {
+            const levelSpeed = boostLevel > 0 ? LEVELS[boostLevel - 1].speed : BASE_SPEED;
+            return levelSpeed + inviteBonusSpeed + socialBonusSpeed;
         }
 
         function getSocialBonus() {
@@ -2126,17 +2233,102 @@
             return 0;
         }
 
-        function updateEstimates() {
-            const total = getTotalSpeed();
-            if (total === 0) {
-                estTime1.textContent = '0';
-                estTime10.textContent = '0';
-                estTime60.textContent = '0';
+        // ==================== RENDER LEVELS ====================
+        function renderLevels() {
+            const container = boostLevelsContainer;
+            container.innerHTML = '';
+            
+            LEVELS.forEach((level, index) => {
+                const div = document.createElement('div');
+                div.className = `level-item ${boostLevel >= level.level ? 'active' : ''}`;
+                
+                const isOwned = boostLevel >= level.level;
+                const isCurrent = boostLevel === level.level - 1;
+                const isLocked = boostLevel < level.level - 1;
+                
+                div.innerHTML = `
+                    <div class="level-num">Level ${level.level}</div>
+                    <div style="font-size:0.8rem; margin:2px 0;">${level.icon}</div>
+                    <div class="level-speed">${fmt(level.speed)} BNB/s</div>
+                    <div class="level-price">💰 ${level.price} BNB</div>
+                    <button class="level-buy ${isOwned ? 'owned' : ''}" data-level="${level.level}" ${isOwned ? 'disabled' : ''}>
+                        ${isOwned ? '✅ Owned' : isCurrent ? '⬆ Buy' : '🔒 Locked'}
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+
+            // Add event listeners to buy buttons
+            document.querySelectorAll('.level-buy:not([disabled])').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const levelNum = parseInt(this.dataset.level);
+                    buyLevel(levelNum);
+                });
+            });
+        }
+
+        // ==================== BUY LEVEL ====================
+        function buyLevel(levelNum) {
+            if (levelNum <= boostLevel) {
+                showToast('✅ You already have this level!');
                 return;
             }
-            estTime1.textContent = (total * 60).toFixed(8);
-            estTime10.textContent = (total * 600).toFixed(8);
-            estTime60.textContent = (total * 3600).toFixed(8);
+
+            if (levelNum > boostLevel + 1) {
+                showToast('🔒 Buy previous level first!');
+                return;
+            }
+
+            const level = LEVELS[levelNum - 1];
+            if (!level) return;
+
+            if (balance < level.price) {
+                showToast(`❌ Need ${level.price} BNB! You have ${fmt(balance)} BNB`);
+                return;
+            }
+
+            balance -= level.price;
+            boostLevel = levelNum;
+            
+            // Update CPU machine
+            updateCPUMachine();
+            
+            refreshUI();
+            renderLevels();
+            showToast(`🚀 Upgraded to ${level.name}! Speed: ${fmt(level.speed)} BNB/s`, true);
+        }
+
+        // ==================== UPDATE CPU MACHINE ====================
+        function updateCPUMachine() {
+            const level = boostLevel > 0 ? LEVELS[boostLevel - 1] : LEVELS[0];
+            const speed = getCurrentSpeed();
+            
+            // Update machine appearance
+            cpuMachine.className = `cpu-machine level-${boostLevel + 1}`;
+            cpuLevelDisplay.textContent = boostLevel + 1;
+            cpuIcon.textContent = level.icon;
+            cpuName.textContent = level.name;
+            cpuSpeedDisplay.textContent = fmt(speed);
+            cpuLevelNum.textContent = `${boostLevel + 1}/10`;
+            
+            // Update LEDs
+            const ledCount = Math.min(boostLevel + 1, 5);
+            const leds = cpuLeds.querySelectorAll('.cpu-led');
+            leds.forEach((led, i) => {
+                if (i < ledCount) {
+                    led.className = `cpu-led speed-${i + 1}`;
+                } else {
+                    led.className = 'cpu-led';
+                }
+            });
+
+            // Fan speed based on level
+            const fanSpeed = 1.5 - (boostLevel * 0.1);
+            cpuFan.style.animationDuration = `${Math.max(0.5, fanSpeed)}s`;
+            
+            // Update border glow
+            const colors = ['#4a9eff', '#4ae09a', '#f7e05e', '#ff9f4a', '#ff6b8a', '#b47aff', '#00f2ea', '#ff4757', '#ffd700', '#ff6b6b'];
+            cpuMachine.style.borderColor = colors[boostLevel] || '#f7e05e';
         }
 
         // ==================== MARKET ====================
@@ -2166,7 +2358,7 @@
 
         // ==================== REFRESH ====================
         function refreshUI() {
-            const totalSpeed = getTotalSpeed();
+            const totalSpeed = getCurrentSpeed();
             const usdBalance = balance * bnbPrice;
             
             homeBalance.textContent = fmt(balance);
@@ -2174,9 +2366,16 @@
             homeMined.textContent = fmt(totalMined);
             usdValue.textContent = usdBalance.toFixed(2);
 
-            gpuSpeed.textContent = fmt(totalSpeed);
-            boostCostDisplay.textContent = `💰 ${boostCost} BNB`;
-            boostLevel.textContent = boostCount;
+            // CPU info
+            const level = boostLevel > 0 ? LEVELS[boostLevel - 1] : LEVELS[0];
+            cpuSpeedDisplay.textContent = fmt(totalSpeed);
+            
+            // Update CPU fan spinning status
+            if (isMining) {
+                cpuFan.classList.add('spinning');
+            } else {
+                cpuFan.classList.remove('spinning');
+            }
 
             inviteCountEl.textContent = inviteCount;
             inviteBonusEl.textContent = `+${fmt(inviteBonusSpeed)}`;
@@ -2196,19 +2395,20 @@
             profileMined.textContent = `${fmt(totalMined)} BNB`;
             profileSpeed.textContent = `${fmt(totalSpeed)} BNB/s`;
             profileInvites.textContent = inviteCount;
-            profileBoost.textContent = boostCount;
+            profileBoost.textContent = boostLevel;
 
-            const level = Math.floor(totalMined / 1);
-            userLevel.textContent = level + 1;
+            const levelNum = Math.floor(totalMined / 1);
+            userLevel.textContent = levelNum + 1;
             userXP.textContent = Math.floor((totalMined % 1) * 100);
 
-            updateEstimates();
+            // Update CPU machine
+            updateCPUMachine();
         }
 
         // ==================== MINING ====================
         function mineTick() {
             if (!isMining) return;
-            const totalSpeed = getTotalSpeed();
+            const totalSpeed = getCurrentSpeed();
             balance += totalSpeed;
             totalMined += totalSpeed;
             
@@ -2230,6 +2430,7 @@
                 toggleBtn.innerHTML = '<span>▶</span> START MINING';
                 toggleBtn.className = 'btn btn-primary';
                 fanBlades.classList.remove('spinning');
+                cpuFan.classList.remove('spinning');
             } else {
                 isMining = true;
                 sessionSeconds = 0;
@@ -2247,23 +2448,10 @@
                 toggleBtn.innerHTML = '<span>⏹</span> STOP MINING';
                 toggleBtn.className = 'btn btn-success';
                 fanBlades.classList.add('spinning');
-                showToast('⛏️ Mining started! 0.00000010 BNB/s', true);
+                cpuFan.classList.add('spinning');
+                showToast('⛏️ CPU Mining started!', true);
             }
             refreshUI();
-        }
-
-        // ==================== BOOST ====================
-        function handleBoost() {
-            if (balance < boostCost) {
-                showToast(`❌ Need ${boostCost} BNB!`);
-                return;
-            }
-            balance -= boostCost;
-            boostCount++;
-            boostCost = Math.floor(boostCost * 1.2); // Slower increase
-            if (boostCost < 10) boostCost = 10;
-            refreshUI();
-            showToast(`🚀 Speed +${BOOST_INCREMENT} BNB/s!`, true);
         }
 
         // ==================== SOCIAL CONNECT ====================
@@ -2498,13 +2686,13 @@
         // ==================== AI CHAT ====================
         const aiResponses = [
             "BNB is at $580. Market is bullish! 📈",
-            "At 0.00000010 BNB/s, you'll mine 0.5 BNB in ~58 days.",
+            "Your CPU is mining at 0.00000010 BNB/s. Upgrade for more speed! ⚡",
             "Connect social accounts for bonus speed! 🌐",
             "Each invite gives +0.00000010 BNB/s! 👥",
             "Minimum withdrawal is 0.5 BNB. 💸",
             "Groups give bonus speed. Join one! 🎯",
             "BNB price prediction: $600-$650 soon! 📊",
-            "Keep mining 24/7 to maximize earnings! 💡"
+            "CPU Level 10 gives 0.00001500 BNB/s! 🚀"
         ];
 
         function sendAIMessage(userMsg) {
@@ -2523,18 +2711,19 @@
                     response = `BNB is $${bnbPrice.toFixed(2)} (${bnbChange > 0 ? '+' : ''}${bnbChange.toFixed(1)}%) 💹`;
                 }
                 if (userMsg.toLowerCase().includes('speed') || userMsg.toLowerCase().includes('mine')) {
-                    const totalSpeed = getTotalSpeed();
-                    response = `Your speed: ${fmt(totalSpeed)} BNB/s. ${(totalSpeed * 3600).toFixed(8)} BNB/hour ⚡`;
+                    const totalSpeed = getCurrentSpeed();
+                    response = `Your CPU speed: ${fmt(totalSpeed)} BNB/s. Level ${boostLevel + 1}/10 ⚡`;
                 }
                 if (userMsg.toLowerCase().includes('balance')) {
                     response = `Balance: ${fmt(balance)} BNB ($${(balance * bnbPrice).toFixed(2)}) 💰`;
                 }
-                if (userMsg.toLowerCase().includes('social') || userMsg.toLowerCase().includes('connect')) {
-                    let count = 0;
-                    for (const key in socialConnected) {
-                        if (socialConnected[key]) count++;
+                if (userMsg.toLowerCase().includes('level') || userMsg.toLowerCase().includes('upgrade')) {
+                    const nextLevel = boostLevel < 10 ? LEVELS[boostLevel] : null;
+                    if (nextLevel) {
+                        response = `Next level: ${nextLevel.name} - ${fmt(nextLevel.speed)} BNB/s for ${nextLevel.price} BNB 🚀`;
+                    } else {
+                        response = '🎉 You have reached the maximum level! Level 10 - NVIDIA RTX 4090!';
                     }
-                    response = `You have ${count}/6 social accounts connected. Bonus speed: ${fmt(getSocialBonus())} BNB/s 🌐`;
                 }
 
                 botDiv.textContent = response;
@@ -2591,7 +2780,6 @@
 
         // ==================== EVENT LISTENERS ====================
         toggleBtn.addEventListener('click', toggleMining);
-        boostBtn.addEventListener('click', handleBoost);
         withdrawBtn.addEventListener('click', handleWithdraw);
         copyInviteBtn.addEventListener('click', copyInviteLink);
         inviteCodeEl.addEventListener('click', simulateInvite);
@@ -2600,15 +2788,20 @@
         inviteCodeEl.textContent = REFERRAL_CODE;
         inviteLinkInput.value = `https://t.me/BNBMinerBot?start=${REFERRAL_CODE}`;
 
+        // Initialize CPU Machine
+        updateCPUMachine();
+        renderLevels();
         refreshUI();
+
         statusDot.classList.remove('active');
         statusLabel.textContent = '⏸️ Stopped';
         homeStatus.textContent = 'Idle';
         sessionTime.textContent = '00:00';
         fanBlades.classList.remove('spinning');
+        cpuFan.classList.remove('spinning');
 
         setTimeout(() => {
-            showToast('🌍 Welcome! Connect social accounts for bonus speed! 🎯', true);
+            showToast('🖥️ Welcome! Start mining with your CPU!', true);
         }, 500);
 
         // ==================== CLEANUP ====================
