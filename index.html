@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>⛓️ Web3 Crypto Miner</title>
+  <title>⚡ ECoinbot · Web3 Miner</title>
   <style>
-    /* ----- global reset & dark futuristic theme ----- */
+    /* ----- RESET & BASE ----- */
     * {
       margin: 0;
       padding: 0;
@@ -14,77 +14,188 @@
     }
 
     body {
-      background: #0a0f17;
+      background: #080e17;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 14px;
+      padding: 10px;
     }
 
-    .miner-container {
-      max-width: 460px;
+    .app-container {
+      max-width: 440px;
       width: 100%;
-      background: #101a26;
-      background: radial-gradient(circle at 30% 10%, #15222f, #0b131d);
-      border-radius: 48px 48px 32px 32px;
-      padding: 28px 18px 32px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(0, 255, 200, 0.06) inset;
-      border: 1px solid rgba(0, 255, 200, 0.04);
-      transition: all 0.2s;
+      background: #0e1a26;
+      background: radial-gradient(circle at 30% 10%, #182a3a, #0a121c);
+      border-radius: 48px 48px 28px 28px;
+      padding: 24px 16px 28px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(0, 255, 200, 0.05) inset;
+      border: 1px solid rgba(0, 255, 200, 0.03);
+      position: relative;
+      overflow: hidden;
+      min-height: 700px;
     }
 
-    /* ----- typography & accents ----- */
-    .glow-cyan {
-      color: #b0f0ff;
-      text-shadow: 0 0 12px rgba(0, 220, 255, 0.3);
-    }
-
-    .text-green {
-      color: #5ce0a0;
-    }
-
-    .text-gold {
-      background: linear-gradient(135deg, #f7e05e, #f9b84a);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .label-muted {
-      color: #6f8ba8;
-      font-weight: 500;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    /* ----- header stats ----- */
-    .header-stats {
+    /* ----- navigation tabs ----- */
+    .nav-tabs {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(8, 18, 28, 0.5);
-      backdrop-filter: blur(6px);
+      background: #0d1822;
       border-radius: 60px;
-      padding: 8px 16px 8px 20px;
-      border: 1px solid #1e3347;
+      padding: 4px;
       margin-bottom: 18px;
-      flex-wrap: wrap;
+      border: 1px solid #1e3447;
+      overflow-x: auto;
     }
 
-    .stat-item {
+    .nav-tab {
+      flex: 1;
+      text-align: center;
+      padding: 10px 0;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 0.7rem;
+      color: #6a8aa8;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      background: transparent;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+      min-width: 60px;
+    }
+
+    .nav-tab.active {
+      background: linear-gradient(145deg, #1a7bff, #0f4fbb);
+      color: white;
+      box-shadow: 0 4px 20px rgba(0, 100, 255, 0.3);
+    }
+
+    .nav-tab:active {
+      transform: scale(0.96);
+    }
+
+    /* ----- screens ----- */
+    .screen {
+      display: none;
+      animation: fadeSlide 0.3s ease;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    @keyframes fadeSlide {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ----- HOME SCREEN ----- */
+    .miner-visual {
       display: flex;
       flex-direction: column;
       align-items: center;
+      margin: 8px 0 16px;
+      position: relative;
+    }
+
+    .fan-container {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .fan-ring {
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: 4px solid #2a506a;
+      box-shadow: 0 0 30px rgba(0, 180, 255, 0.1), inset 0 0 30px rgba(0, 180, 255, 0.05);
+      background: rgba(8, 24, 40, 0.4);
+    }
+
+    .fan-blades {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      animation: spinFan 2s linear infinite;
+      animation-play-state: paused;
+    }
+
+    .fan-blades.spinning {
+      animation-play-state: running;
+    }
+
+    @keyframes spinFan {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .blade {
+      position: absolute;
+      width: 40px;
+      height: 12px;
+      background: linear-gradient(90deg, #3ac0ff, #1a7bff);
+      border-radius: 20px;
+      top: 50%;
+      left: 50%;
+      transform-origin: 0 50%;
+      box-shadow: 0 0 15px rgba(0, 150, 255, 0.3);
+    }
+
+    .blade:nth-child(1) { transform: rotate(0deg) translateX(20px); }
+    .blade:nth-child(2) { transform: rotate(72deg) translateX(20px); }
+    .blade:nth-child(3) { transform: rotate(144deg) translateX(20px); }
+    .blade:nth-child(4) { transform: rotate(216deg) translateX(20px); }
+    .blade:nth-child(5) { transform: rotate(288deg) translateX(20px); }
+
+    .fan-center {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #4ac8ff, #0f4fbb);
+      box-shadow: 0 0 30px rgba(0, 150, 255, 0.5);
+      border: 2px solid #80d4ff;
+      z-index: 2;
+    }
+
+    .miner-label {
+      color: #7aaac8;
+      font-size: 0.7rem;
+      margin-top: 6px;
+      letter-spacing: 0.1em;
+    }
+
+    .stats-row {
+      display: flex;
+      justify-content: space-around;
+      background: rgba(8, 20, 32, 0.5);
+      backdrop-filter: blur(6px);
+      border-radius: 40px;
+      padding: 10px 8px;
+      border: 1px solid #1e3447;
+      margin: 4px 0 10px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-item .label {
+      font-size: 0.55rem;
+      color: #6a8aa8;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
     .stat-item .value {
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: #e2f0ff;
-      letter-spacing: -0.2px;
-      line-height: 1.3;
     }
 
     .stat-item .value.gold {
@@ -94,36 +205,27 @@
       background-clip: text;
     }
 
-    .stat-divider {
-      width: 1px;
-      height: 28px;
-      background: #28445a;
-    }
-
-    /* ----- balance big ----- */
-    .balance-display {
+    .balance-big {
       text-align: center;
-      margin: 6px 0 12px;
+      margin: 8px 0 12px;
     }
 
-    .balance-display .coin {
-      font-size: 3rem;
+    .balance-big .coin {
+      font-size: 2.8rem;
       font-weight: 800;
       background: linear-gradient(135deg, #f7e05e, #f9b84a);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       letter-spacing: -1px;
-      line-height: 1.1;
     }
 
-    .balance-display .label {
-      font-size: 0.7rem;
-      color: #6f8ba8;
+    .balance-big .label {
+      font-size: 0.6rem;
+      color: #6a8aa8;
       letter-spacing: 0.1em;
     }
 
-    /* ----- status pill ----- */
     .status-pill {
       display: flex;
       align-items: center;
@@ -132,17 +234,16 @@
       background: #0e1a24;
       padding: 8px 16px;
       border-radius: 60px;
-      margin: 10px 0 18px;
+      margin: 6px 0 14px;
       border: 1px solid #2a4054;
     }
 
     .dot {
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       background: #3d5a6e;
       transition: 0.2s;
-      box-shadow: 0 0 6px rgba(0,0,0,0.6);
     }
 
     .dot.active {
@@ -153,40 +254,42 @@
     .status-label {
       font-weight: 600;
       color: #b8d4ec;
+      font-size: 0.85rem;
     }
 
-    /* ----- buttons ----- */
+    .session-time {
+      color: #62859e;
+      font-size: 0.75rem;
+    }
+
     .btn {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
       width: 100%;
-      padding: 16px 12px;
+      padding: 14px 10px;
       border: none;
       border-radius: 60px;
       font-weight: 700;
-      font-size: 1.05rem;
+      font-size: 0.95rem;
       background: #1d2f3f;
       color: #d4e6fa;
-      box-shadow: 0 6px 0 #0a141e, 0 8px 24px rgba(0, 0, 0, 0.6);
-      transition: all 0.07s ease;
-      margin-bottom: 14px;
-      letter-spacing: 0.3px;
+      box-shadow: 0 5px 0 #0a141e, 0 8px 24px rgba(0, 0, 0, 0.5);
+      transition: all 0.06s ease;
       cursor: pointer;
       border: 1px solid #365066;
     }
 
     .btn:active {
       transform: translateY(4px);
-      box-shadow: 0 2px 0 #0a141e;
+      box-shadow: 0 1px 0 #0a141e;
     }
 
     .btn-primary {
       background: linear-gradient(145deg, #1e7bff, #0f4fbb);
       color: white;
       border: 1px solid #6bb0ff;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
 
     .btn-success {
@@ -195,32 +298,88 @@
       border: 1px solid #6ae09a;
     }
 
-    .btn-warning {
-      background: linear-gradient(145deg, #e6b84c, #c48f2b);
-      color: #0d141e;
-      border: 1px solid #f7d97a;
-      font-weight: 800;
+    .btn-invite {
+      background: linear-gradient(145deg, #9b59b6, #7d3c98);
+      color: white;
+      border: 1px solid #af7ac5;
     }
 
-    .btn:disabled {
-      opacity: 0.5;
-      transform: translateY(2px);
-      box-shadow: 0 3px 0 #0a141e;
-      pointer-events: none;
+    /* ----- BOOST SCREEN ----- */
+    .boost-header {
+      text-align: center;
+      margin-bottom: 12px;
     }
 
-    /* ----- boost card ----- */
+    .boost-header h2 {
+      color: #b8ddfa;
+      font-size: 1.2rem;
+    }
+
+    .gpu-visual {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #0d1a28;
+      border-radius: 32px;
+      padding: 20px 16px;
+      border: 1px solid #2a4a62;
+      margin-bottom: 16px;
+    }
+
+    .gpu-icon {
+      font-size: 3.5rem;
+      margin-bottom: 4px;
+    }
+
+    .gpu-speed-display {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #5ce0a0;
+      text-shadow: 0 0 20px rgba(0, 255, 150, 0.2);
+    }
+
+    .gpu-label {
+      color: #6a8aa8;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+    }
+
+    .boost-timer {
+      display: flex;
+      justify-content: space-between;
+      background: #0a1620;
+      border-radius: 40px;
+      padding: 12px 18px;
+      border: 1px solid #1e3447;
+      margin: 6px 0 14px;
+    }
+
+    .boost-timer-item {
+      text-align: center;
+    }
+
+    .boost-timer-item .num {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #c0defa;
+    }
+
+    .boost-timer-item .lbl {
+      font-size: 0.55rem;
+      color: #6a8aa8;
+      text-transform: uppercase;
+    }
+
     .boost-card {
       background: rgba(0, 20, 35, 0.5);
-      backdrop-filter: blur(4px);
-      border-radius: 40px;
+      border-radius: 32px;
       padding: 14px 18px;
-      margin: 6px 0 16px;
       border: 1px solid #2b4a60;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
+      margin: 6px 0 12px;
     }
 
     .boost-info .title {
@@ -242,7 +401,7 @@
       padding: 8px 22px;
       border-radius: 60px;
       font-weight: 700;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       box-shadow: 0 4px 0 #0d1a24;
       transition: 0.06s linear;
       cursor: pointer;
@@ -253,13 +412,143 @@
       box-shadow: 0 1px 0 #0d1a24;
     }
 
-    /* ----- withdrawal card ----- */
+    /* ----- INVITE SCREEN ----- */
+    .invite-header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .invite-header h2 {
+      color: #b8ddfa;
+      font-size: 1.2rem;
+    }
+
+    .invite-stats {
+      display: flex;
+      justify-content: space-around;
+      background: rgba(8, 20, 32, 0.5);
+      border-radius: 32px;
+      padding: 16px;
+      border: 1px solid #1e3447;
+      margin-bottom: 16px;
+    }
+
+    .invite-stat {
+      text-align: center;
+    }
+
+    .invite-stat .num {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #f7d46a;
+    }
+
+    .invite-stat .lbl {
+      font-size: 0.6rem;
+      color: #6a8aa8;
+      text-transform: uppercase;
+    }
+
+    .invite-code-box {
+      background: #0d1b28;
+      border: 2px dashed #2a4a62;
+      border-radius: 40px;
+      padding: 16px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .invite-code {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #4ac8ff;
+      letter-spacing: 4px;
+      font-family: 'Courier New', monospace;
+      word-break: break-all;
+    }
+
+    .invite-code-label {
+      font-size: 0.6rem;
+      color: #6a8aa8;
+      margin-bottom: 4px;
+    }
+
+    .invite-link-box {
+      display: flex;
+      gap: 8px;
+      background: #0a1620;
+      border-radius: 40px;
+      padding: 4px;
+      border: 1px solid #1e3447;
+      margin-bottom: 12px;
+    }
+
+    .invite-link-box input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 10px 14px;
+      color: #b8d4ec;
+      font-size: 0.75rem;
+      outline: none;
+      min-width: 0;
+    }
+
+    .invite-link-box button {
+      background: linear-gradient(145deg, #1a7bff, #0f4fbb);
+      border: none;
+      border-radius: 40px;
+      padding: 10px 18px;
+      color: white;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: 0.15s;
+      white-space: nowrap;
+    }
+
+    .invite-link-box button:active {
+      transform: scale(0.95);
+    }
+
+    .invite-rewards {
+      background: rgba(0, 20, 35, 0.3);
+      border-radius: 32px;
+      padding: 14px 16px;
+      border: 1px solid #2b4a60;
+    }
+
+    .invite-rewards .title {
+      color: #b8ddfa;
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 8px;
+    }
+
+    .reward-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid #1a2f40;
+      color: #8ab4d0;
+      font-size: 0.8rem;
+    }
+
+    .reward-item:last-child {
+      border-bottom: none;
+    }
+
+    .reward-item .highlight {
+      color: #f7d46a;
+      font-weight: 600;
+    }
+
+    /* ----- WITHDRAW SCREEN ----- */
     .withdraw-card {
       background: rgba(8, 22, 34, 0.6);
       backdrop-filter: blur(4px);
       border-radius: 32px;
       padding: 18px 16px 20px;
-      margin-top: 20px;
       border: 1px solid #1e3b50;
     }
 
@@ -279,21 +568,21 @@
 
     .form-group label {
       display: block;
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       color: #7d9bb8;
       margin-bottom: 4px;
       letter-spacing: 0.04em;
     }
 
-    .form-group select, 
+    .form-group select,
     .form-group input {
       width: 100%;
-      padding: 12px 14px;
+      padding: 11px 14px;
       background: #0d1b28;
       border: 1px solid #2a4a62;
       border-radius: 40px;
       color: #d6edff;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       outline: none;
       transition: 0.15s;
     }
@@ -301,7 +590,7 @@
     .form-group select:focus,
     .form-group input:focus {
       border-color: #4aa0e0;
-      box-shadow: 0 0 12px rgba(0, 160, 255, 0.2);
+      box-shadow: 0 0 12px rgba(0, 160, 255, 0.15);
     }
 
     .form-group select option {
@@ -312,178 +601,325 @@
       background: linear-gradient(145deg, #00b894, #00876a);
       border: 1px solid #4ae0b0;
       color: white;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-      margin-top: 6px;
+      margin-top: 4px;
     }
 
     .btn-withdraw:active {
       background: #00876a;
     }
 
-    /* ----- toast / alert (user-friendly) ----- */
+    /* ----- toast ----- */
     .toast-message {
       background: #1f2c3a;
-      border-left: 6px solid #f7b84a;
+      border-left: 5px solid #f7b84a;
       color: #f0f7ff;
-      padding: 14px 20px;
-      border-radius: 60px;
+      padding: 12px 18px;
+      border-radius: 40px;
       font-weight: 500;
-      margin: 12px 0 4px;
+      margin: 10px 0 4px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.6);
       border: 1px solid #4b647a;
       text-align: center;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
     .toast-success {
       border-left-color: #4ae09a;
     }
 
-    /* ----- responsive ----- */
+    /* responsive */
     @media (max-width: 420px) {
-      .miner-container { padding: 18px 12px 24px; }
-      .balance-display .coin { font-size: 2.4rem; }
-      .header-stats { padding: 6px 12px; }
-      .stat-item .value { font-size: 0.95rem; }
+      .app-container { padding: 16px 12px 20px; }
+      .balance-big .coin { font-size: 2.2rem; }
+      .fan-container { width: 110px; height: 110px; }
+      .fan-ring { width: 110px; height: 110px; }
+      .fan-blades { width: 90px; height: 90px; }
+      .blade { width: 30px; height: 10px; }
+      .invite-code { font-size: 1.3rem; }
     }
 
-    .flex { display: flex; }
-    .gap-1 { gap: 6px; }
+    .mt-1 { margin-top: 6px; }
+    .mb-1 { margin-bottom: 6px; }
     .w-full { width: 100%; }
     .text-center { text-align: center; }
-    .mt-1 { margin-top: 8px; }
-    .mb-1 { margin-bottom: 8px; }
+    .gap-1 { gap: 6px; }
   </style>
 </head>
 <body>
-<div class="miner-container" id="app">
 
-  <!-- header stats -->
-  <div class="header-stats">
-    <div class="stat-item">
-      <span class="label-muted">⚡ Speed</span>
-      <span class="value gold" id="speedDisplay">0.0000</span>
+<div class="app-container" id="app">
+
+  <!-- navigation -->
+  <div class="nav-tabs">
+    <button class="nav-tab active" data-screen="home">🏠 Home</button>
+    <button class="nav-tab" data-screen="boost">⚡ Boost</button>
+    <button class="nav-tab" data-screen="invite">👥 Invite</button>
+    <button class="nav-tab" data-screen="withdraw">💸 Withdraw</button>
+  </div>
+
+  <!-- ========== HOME SCREEN ========== -->
+  <div class="screen active" id="screen-home">
+    <!-- rotating fan miner -->
+    <div class="miner-visual">
+      <div class="fan-container">
+        <div class="fan-ring"></div>
+        <div class="fan-blades" id="fanBlades">
+          <div class="blade"></div>
+          <div class="blade"></div>
+          <div class="blade"></div>
+          <div class="blade"></div>
+          <div class="blade"></div>
+        </div>
+        <div class="fan-center"></div>
+      </div>
+      <div class="miner-label">⚡ MINING RIG</div>
     </div>
-    <div class="stat-divider"></div>
-    <div class="stat-item">
-      <span class="label-muted">⏳ Mined</span>
-      <span class="value" id="minedDisplay">0.0000</span>
+
+    <!-- stats row -->
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="label">⚡ Speed</div>
+        <div class="value gold" id="homeSpeed">0.0000</div>
+      </div>
+      <div class="stat-item">
+        <div class="label">⏳ Mined</div>
+        <div class="value" id="homeMined">0.0000</div>
+      </div>
+      <div class="stat-item">
+        <div class="label">Status</div>
+        <div class="value" id="homeStatus" style="font-size:0.8rem; color:#8ab4d0;">Idle</div>
+      </div>
     </div>
-    <div class="stat-divider"></div>
-    <div class="stat-item">
-      <span class="label-muted">Status</span>
-      <span class="value" id="statusText" style="font-size:0.8rem; color:#8ab4d0;">Idle</span>
+
+    <!-- balance -->
+    <div class="balance-big">
+      <div class="label">💰 TOTAL BALANCE</div>
+      <div class="coin" id="homeBalance">0.0000</div>
+    </div>
+
+    <!-- status pill -->
+    <div class="status-pill">
+      <span class="dot" id="statusDot"></span>
+      <span class="status-label" id="statusLabel">⏸️ Mining Stopped</span>
+      <span class="session-time" id="sessionTime">00:00</span>
+    </div>
+
+    <!-- start/stop -->
+    <button class="btn btn-primary" id="toggleMineBtn">
+      <span>▶</span> START MINING
+    </button>
+  </div>
+
+  <!-- ========== BOOST SCREEN ========== -->
+  <div class="screen" id="screen-boost">
+    <div class="boost-header">
+      <h2>⚡ Speed Booster</h2>
+    </div>
+
+    <!-- GPU visual -->
+    <div class="gpu-visual">
+      <div class="gpu-icon">🖥️</div>
+      <div class="gpu-speed-display" id="gpuSpeed">0.0000</div>
+      <div class="gpu-label">coins / second</div>
+      <div style="display:flex; gap:16px; margin-top:8px; font-size:0.7rem; color:#6a8aa8;">
+        <span>🔄 GPU: NVIDIA RTX</span>
+        <span id="gpuLevel">Lv.1</span>
+      </div>
+    </div>
+
+    <!-- timer / estimate -->
+    <div class="boost-timer">
+      <div class="boost-timer-item">
+        <div class="num" id="estTime1">0.1</div>
+        <div class="lbl">coins / 1min</div>
+      </div>
+      <div class="boost-timer-item">
+        <div class="num" id="estTime10">6.0</div>
+        <div class="lbl">coins / 10min</div>
+      </div>
+      <div class="boost-timer-item">
+        <div class="num" id="estTime60">36.0</div>
+        <div class="lbl">coins / 1hr</div>
+      </div>
+    </div>
+
+    <!-- boost upgrade -->
+    <div class="boost-card">
+      <div class="boost-info">
+        <span class="title">🚀 Upgrade Speed</span>
+        <span class="price" id="boostCostDisplay">💰 100 COINS</span>
+        <span style="font-size:0.6rem; color:#6e95b0;">+0.0005 coins/sec</span>
+      </div>
+      <button class="btn-boost" id="boostBtn">⬆ BOOST</button>
+    </div>
+
+    <!-- current level indicator -->
+    <div style="text-align:center; color:#6a8aa8; font-size:0.7rem; margin-top:6px;">
+      Boost level: <span id="boostLevel" style="color:#f7d46a; font-weight:700;">0</span>
     </div>
   </div>
 
-  <!-- balance -->
-  <div class="balance-display">
-    <div class="label">💰 TOTAL BALANCE</div>
-    <div class="coin" id="balanceDisplay">0.0000</div>
+  <!-- ========== INVITE SCREEN ========== -->
+  <div class="screen" id="screen-invite">
+    <div class="invite-header">
+      <h2>👥 Invite & Earn</h2>
+    </div>
+
+    <div class="invite-stats">
+      <div class="invite-stat">
+        <div class="num" id="inviteCount">0</div>
+        <div class="lbl">Total Invites</div>
+      </div>
+      <div class="invite-stat">
+        <div class="num" id="inviteBonus" style="color:#5ce0a0;">+0.0000</div>
+        <div class="lbl">Bonus Speed</div>
+      </div>
+    </div>
+
+    <div class="invite-code-box">
+      <div class="invite-code-label">YOUR REFERRAL CODE</div>
+      <div class="invite-code" id="inviteCode">ECB-7XK9</div>
+    </div>
+
+    <div class="invite-link-box">
+      <input type="text" id="inviteLinkInput" value="https://t.me/ECoinBot?start=ECB-7XK9" readonly>
+      <button id="copyInviteBtn">📋 Copy</button>
+    </div>
+
+    <div class="invite-rewards">
+      <div class="title">🎁 Referral Rewards</div>
+      <div class="reward-item">
+        <span>Per invite</span>
+        <span class="highlight">+0.0005 coins/sec</span>
+      </div>
+      <div class="reward-item">
+        <span>Speed bonus active</span>
+        <span class="highlight" id="inviteRewardActive">+0.0000 coins/sec</span>
+      </div>
+      <div class="reward-item" style="color:#7aaac8; font-size:0.7rem;">
+        <span>Share your code & earn!</span>
+        <span>🚀</span>
+      </div>
+    </div>
   </div>
 
-  <!-- status dot -->
-  <div class="status-pill">
-    <span class="dot" id="statusDot"></span>
-    <span class="status-label" id="statusLabel">⏸️ Mining Stopped</span>
-    <span style="margin-left: auto; color: #62859e; font-size: 0.75rem;" id="sessionTime">00:00</span>
-  </div>
-
-  <!-- start/stop -->
-  <button class="btn btn-primary" id="toggleMineBtn">
-    <span>▶</span> START MINING
-  </button>
-
-  <!-- boost card -->
-  <div class="boost-card">
-    <div class="boost-info">
-      <span class="title">🚀 Upgrade Speed</span>
-      <span class="price" id="boostCostDisplay">💰 100 COINS</span>
-      <span style="font-size:0.65rem; color:#6e95b0;">+0.0005 coins/sec</span>
+  <!-- ========== WITHDRAW SCREEN ========== -->
+  <div class="screen" id="screen-withdraw">
+    <div class="withdraw-card">
+      <div class="title">💸 Instant Withdrawal</div>
+      <div class="form-group">
+        <label>Payment Method</label>
+        <select id="paymentMethod">
+          <option value="mpesa">Vodacom M-Pesa / Tigo Pesa</option>
+          <option value="solana">Solana Wallet (SOL)</option>
+          <option value="usdt">USDT (TRC20)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Phone / Wallet Address</label>
+        <input type="text" id="walletInput" placeholder="e.g. 0712345678 or 0x...">
+      </div>
+      <div class="form-group">
+        <label>Amount (min 100 coins)</label>
+        <input type="number" id="withdrawAmount" placeholder="100" min="100" step="1">
+      </div>
+      <button class="btn btn-withdraw" id="withdrawBtn">⚡ Submit Withdrawal</button>
+      <div style="text-align:center; margin-top:10px; font-size:0.65rem; color:#4a6a82;">
+        Available: <span id="withdrawBalance" style="color:#f7d46a;">0.0000</span> coins
+      </div>
     </div>
-    <button class="btn-boost" id="boostBtn">⬆ BOOST</button>
-  </div>
-
-  <!-- withdrawal card -->
-  <div class="withdraw-card">
-    <div class="title">💸 Instant Withdrawal</div>
-    <div class="form-group">
-      <label>Payment Method</label>
-      <select id="paymentMethod">
-        <option value="mpesa">Vodacom M-Pesa / Tigo Pesa</option>
-        <option value="solana">Solana Wallet (SOL)</option>
-        <option value="usdt">USDT (TRC20)</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>Phone / Wallet Address</label>
-      <input type="text" id="walletInput" placeholder="e.g. 0712345678 or 0x...">
-    </div>
-    <div class="form-group">
-      <label>Amount (min 100 coins)</label>
-      <input type="number" id="withdrawAmount" placeholder="100" min="100" step="1">
-    </div>
-    <button class="btn btn-withdraw" id="withdrawBtn">⚡ Submit Withdrawal</button>
   </div>
 
   <!-- toast container -->
-  <div id="toastContainer" class="w-full" style="min-height: 48px; margin-top: 6px;"></div>
+  <div id="toastContainer" class="w-full" style="min-height:44px; margin-top:6px;"></div>
 
-  <!-- footer -->
-  <div style="margin-top:16px; font-size:0.6rem; color:#2b4b62; text-align:center; border-top:1px solid #1a3142; padding-top:14px;">
-    <span>⛓️ simulated · no real resources · web3 demo</span>
-  </div>
 </div>
 
 <script>
   (function() {
     "use strict";
 
-    // ----- state -----
+    // ----- STATE -----
     let balance = 0.0;
-    let miningSpeed = 0.0005;          // base coins/sec
+    let miningSpeed = 0.0005;
     let totalMined = 0.0;
     let isMining = false;
     let miningInterval = null;
     let sessionInterval = null;
     let sessionSeconds = 0;
+    let boostCount = 0;
 
-    // boost cost
+    // Invite system
+    let inviteCount = 0;
+    const INVITE_BONUS_PER = 0.0005;
+    let inviteBonusSpeed = 0;
+    const REFERRAL_CODE = 'ECB-7XK9';
+
     let boostCost = 100;
     const BOOST_INCREMENT = 0.0005;
 
-    // DOM refs
-    const balanceDisplay = document.getElementById('balanceDisplay');
-    const speedDisplay = document.getElementById('speedDisplay');
-    const minedDisplay = document.getElementById('minedDisplay');
+    // ----- DOM REFS (home) -----
+    const homeBalance = document.getElementById('homeBalance');
+    const homeSpeed = document.getElementById('homeSpeed');
+    const homeMined = document.getElementById('homeMined');
+    const homeStatus = document.getElementById('homeStatus');
     const statusDot = document.getElementById('statusDot');
     const statusLabel = document.getElementById('statusLabel');
-    const statusText = document.getElementById('statusText');
     const sessionTime = document.getElementById('sessionTime');
     const toggleBtn = document.getElementById('toggleMineBtn');
-    const boostBtn = document.getElementById('boostBtn');
-    const boostCostDisplay = document.getElementById('boostCostDisplay');
-    const toastContainer = document.getElementById('toastContainer');
+    const fanBlades = document.getElementById('fanBlades');
 
-    // withdrawal elements
+    // boost screen
+    const gpuSpeed = document.getElementById('gpuSpeed');
+    const boostCostDisplay = document.getElementById('boostCostDisplay');
+    const boostBtn = document.getElementById('boostBtn');
+    const boostLevel = document.getElementById('boostLevel');
+    const estTime1 = document.getElementById('estTime1');
+    const estTime10 = document.getElementById('estTime10');
+    const estTime60 = document.getElementById('estTime60');
+
+    // invite screen
+    const inviteCountEl = document.getElementById('inviteCount');
+    const inviteBonusEl = document.getElementById('inviteBonus');
+    const inviteRewardActive = document.getElementById('inviteRewardActive');
+    const inviteCodeEl = document.getElementById('inviteCode');
+    const inviteLinkInput = document.getElementById('inviteLinkInput');
+    const copyInviteBtn = document.getElementById('copyInviteBtn');
+
+    // withdraw
     const paymentMethod = document.getElementById('paymentMethod');
     const walletInput = document.getElementById('walletInput');
     const withdrawAmount = document.getElementById('withdrawAmount');
     const withdrawBtn = document.getElementById('withdrawBtn');
+    const withdrawBalance = document.getElementById('withdrawBalance');
 
-    // ----- helpers -----
+    // toast
+    const toastContainer = document.getElementById('toastContainer');
+
+    // ----- NAVIGATION -----
+    const tabs = document.querySelectorAll('.nav-tab');
+    const screens = {
+      home: document.getElementById('screen-home'),
+      boost: document.getElementById('screen-boost'),
+      invite: document.getElementById('screen-invite'),
+      withdraw: document.getElementById('screen-withdraw')
+    };
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        const screen = this.dataset.screen;
+        Object.keys(screens).forEach(key => {
+          screens[key].classList.toggle('active', key === screen);
+        });
+        refreshUI();
+      });
+    });
+
+    // ----- HELPERS -----
     function fmt(v) { return Number(v).toFixed(4); }
 
-    // ----- refresh UI (all displays) -----
-    function refreshUI() {
-      balanceDisplay.textContent = fmt(balance);
-      speedDisplay.textContent = fmt(miningSpeed);
-      minedDisplay.textContent = fmt(totalMined);
-      boostCostDisplay.textContent = `💰 ${boostCost} COINS`;
-      // status text in header (already updated via setter)
-    }
-
-    // ----- toast system (user-friendly alert) -----
     function showToast(msg, isSuccess = false) {
       toastContainer.innerHTML = `<div class="toast-message ${isSuccess ? 'toast-success' : ''}">${msg}</div>`;
       if (window.toastTimeout) clearTimeout(window.toastTimeout);
@@ -492,28 +928,76 @@
       }, 5000);
     }
 
-    // ----- mining tick (per second) -----
+    // ----- GET TOTAL SPEED (base + boost + invite bonus) -----
+    function getTotalSpeed() {
+      return miningSpeed + (boostCount * BOOST_INCREMENT) + inviteBonusSpeed;
+    }
+
+    // ----- UPDATE ESTIMATES -----
+    function updateEstimates() {
+      const total = getTotalSpeed();
+      if (total === 0) {
+        estTime1.textContent = '0';
+        estTime10.textContent = '0';
+        estTime60.textContent = '0';
+        return;
+      }
+      const perMin = total * 60;
+      const per10 = perMin * 10;
+      const per60 = perMin * 60;
+      estTime1.textContent = perMin.toFixed(2);
+      estTime10.textContent = per10.toFixed(2);
+      estTime60.textContent = per60.toFixed(2);
+    }
+
+    // ----- REFRESH UI -----
+    function refreshUI() {
+      const totalSpeed = getTotalSpeed();
+
+      // home
+      homeBalance.textContent = fmt(balance);
+      homeSpeed.textContent = fmt(totalSpeed);
+      homeMined.textContent = fmt(totalMined);
+
+      // boost
+      gpuSpeed.textContent = fmt(totalSpeed);
+      boostCostDisplay.textContent = `💰 ${boostCost} COINS`;
+      boostLevel.textContent = boostCount;
+
+      // invite
+      inviteCountEl.textContent = inviteCount;
+      inviteBonusEl.textContent = `+${fmt(inviteBonusSpeed)}`;
+      inviteRewardActive.textContent = `+${fmt(inviteBonusSpeed)} coins/sec`;
+
+      // withdraw
+      withdrawBalance.textContent = fmt(balance);
+
+      // estimates
+      updateEstimates();
+    }
+
+    // ----- MINING TICK -----
     function mineTick() {
       if (!isMining) return;
-      balance += miningSpeed;
-      totalMined += miningSpeed;
+      const totalSpeed = getTotalSpeed();
+      balance += totalSpeed;
+      totalMined += totalSpeed;
       refreshUI();
     }
 
-    // ----- start / stop mining -----
+    // ----- TOGGLE MINING -----
     function toggleMining() {
       if (isMining) {
-        // stop
         isMining = false;
         if (miningInterval) { clearInterval(miningInterval); miningInterval = null; }
         if (sessionInterval) { clearInterval(sessionInterval); sessionInterval = null; }
         statusDot.classList.remove('active');
         statusLabel.textContent = '⏸️ Mining Stopped';
-        statusText.textContent = 'Idle';
+        homeStatus.textContent = 'Idle';
         toggleBtn.innerHTML = '<span>▶</span> START MINING';
         toggleBtn.className = 'btn btn-primary';
+        fanBlades.classList.remove('spinning');
       } else {
-        // start
         isMining = true;
         sessionSeconds = 0;
         sessionTime.textContent = '00:00';
@@ -528,81 +1012,114 @@
 
         statusDot.classList.add('active');
         statusLabel.textContent = '⛏️ Mining...';
-        statusText.textContent = 'Active';
+        homeStatus.textContent = 'Active';
         toggleBtn.innerHTML = '<span>⏹</span> STOP MINING';
         toggleBtn.className = 'btn btn-success';
+        fanBlades.classList.add('spinning');
         showToast('⛏️ Mining started!', true);
       }
       refreshUI();
     }
 
-    // ----- boost speed -----
+    // ----- BOOST -----
     function handleBoost() {
       if (balance < boostCost) {
-        showToast(`❌ Insufficient balance! Need ${boostCost} coins.`);
+        showToast(`❌ Need ${boostCost} coins!`);
         return;
       }
       balance -= boostCost;
-      miningSpeed += BOOST_INCREMENT;
+      boostCount++;
       boostCost = Math.floor(boostCost * 1.35);
       if (boostCost < 100) boostCost = 100;
       refreshUI();
       showToast(`🚀 Speed +${BOOST_INCREMENT} coins/sec!`, true);
     }
 
-    // ----- withdrawal logic -----
-    function handleWithdrawal() {
+    // ----- INVITE SYSTEM -----
+    function simulateInvite() {
+      inviteCount++;
+      inviteBonusSpeed = inviteCount * INVITE_BONUS_PER;
+      refreshUI();
+      showToast(`🎉 You invited someone! +${INVITE_BONUS_PER} speed bonus!`, true);
+    }
+
+    function copyInviteLink() {
+      const text = inviteLinkInput.value;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('📋 Copied to clipboard!', true);
+        }).catch(() => {
+          // fallback
+          inviteLinkInput.select();
+          document.execCommand('copy');
+          showToast('📋 Copied!', true);
+        });
+      } else {
+        inviteLinkInput.select();
+        document.execCommand('copy');
+        showToast('📋 Copied!', true);
+      }
+    }
+
+    // ----- WITHDRAW -----
+    function handleWithdraw() {
       const method = paymentMethod.value;
       const wallet = walletInput.value.trim();
       const amountRaw = parseFloat(withdrawAmount.value);
 
       if (!wallet) {
-        showToast('❌ Please enter a phone number or wallet address.');
+        showToast('❌ Enter phone or wallet address.');
         return;
       }
       if (isNaN(amountRaw) || amountRaw < 100) {
-        showToast('❌ Minimum withdrawal is 100 coins.');
+        showToast('❌ Minimum is 100 coins.');
         return;
       }
       if (amountRaw > balance) {
-        showToast(`❌ Insufficient balance! You have ${fmt(balance)} coins.`);
+        showToast(`❌ You have ${fmt(balance)} coins.`);
         return;
       }
 
-      // deduct coins
       balance -= amountRaw;
       refreshUI();
 
-      // show instant confirmation
       let methodName = 'M-Pesa';
       if (method === 'solana') methodName = 'Solana';
       else if (method === 'usdt') methodName = 'USDT (TRC20)';
 
-      showToast(`✅ Withdrawal of ${amountRaw} coins via ${methodName} to ${wallet} submitted!`, true);
-
-      // clear fields (optional)
+      showToast(`✅ ${amountRaw} coins → ${methodName} to ${wallet}`, true);
       walletInput.value = '';
       withdrawAmount.value = '';
     }
 
-    // ----- event listeners -----
+    // ----- EVENT LISTENERS -----
     toggleBtn.addEventListener('click', toggleMining);
     boostBtn.addEventListener('click', handleBoost);
-    withdrawBtn.addEventListener('click', handleWithdrawal);
+    withdrawBtn.addEventListener('click', handleWithdraw);
+    copyInviteBtn.addEventListener('click', copyInviteLink);
 
-    // ----- initial render -----
+    // Simulate invite on invite code click (for demo)
+    inviteCodeEl.addEventListener('click', function() {
+      simulateInvite();
+    });
+
+    // ----- INIT -----
+    // Set invite code
+    inviteCodeEl.textContent = REFERRAL_CODE;
+    inviteLinkInput.value = `https://t.me/ECoinBot?start=${REFERRAL_CODE}`;
+
     refreshUI();
     statusDot.classList.remove('active');
     statusLabel.textContent = '⏸️ Mining Stopped';
-    statusText.textContent = 'Idle';
+    homeStatus.textContent = 'Idle';
     sessionTime.textContent = '00:00';
+    fanBlades.classList.remove('spinning');
 
-    // intro toast
     setTimeout(() => {
-      showToast('⚡ Start mining & withdraw your coins!', true);
+      showToast('⚡ Start mining & invite friends!', true);
     }, 400);
 
-    // ----- cleanup on page unload -----
+    // ----- CLEANUP -----
     window.addEventListener('beforeunload', function() {
       if (miningInterval) clearInterval(miningInterval);
       if (sessionInterval) clearInterval(sessionInterval);
