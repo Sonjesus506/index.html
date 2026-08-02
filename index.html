@@ -1,1567 +1,2382 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>🌍 BNB Mining · Global</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
-
-    :root {
-      --primary: #f7e05e;
-      --primary-dark: #f9b84a;
-      --bg-main: #0e1a26;
-      --bg-card: #0d1b28;
-      --text-light: #d6edff;
-      --text-muted: #6a8aa8;
-      --border-color: #1e3447;
-      --shadow-color: rgba(247, 224, 94, 0.3);
-    }
-
-    body {
-      background: #080e17;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px;
-    }
-
-    .app-container {
-      max-width: 440px;
-      width: 100%;
-      background: radial-gradient(circle at 30% 10%, #182a3a, #0a121c);
-      border-radius: 48px 48px 28px 28px;
-      padding: 24px 16px 28px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 215, 0, 0.08) inset;
-      border: 1px solid rgba(255, 215, 0, 0.05);
-      position: relative;
-      overflow: hidden;
-      min-height: 700px;
-      transition: all 0.3s ease;
-    }
-
-    /* ----- Theme Colors ----- */
-    .theme-blue { --primary: #4a9eff; --primary-dark: #1a7bff; --shadow-color: rgba(74, 158, 255, 0.3); }
-    .theme-green { --primary: #4ae09a; --primary-dark: #2fb86a; --shadow-color: rgba(74, 224, 154, 0.3); }
-    .theme-purple { --primary: #b47aff; --primary-dark: #9b59b6; --shadow-color: rgba(180, 122, 255, 0.3); }
-    .theme-pink { --primary: #ff6b8a; --primary-dark: #e74c6f; --shadow-color: rgba(255, 107, 138, 0.3); }
-    .theme-orange { --primary: #ff9f4a; --primary-dark: #f39c12; --shadow-color: rgba(255, 159, 74, 0.3); }
-    .theme-red { --primary: #ff4757; --primary-dark: #e74c3c; --shadow-color: rgba(255, 71, 87, 0.3); }
-
-    .bnb-gold {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .bnb-badge {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: #0a121c;
-      padding: 2px 12px;
-      border-radius: 30px;
-      font-size: 0.6rem;
-      font-weight: 800;
-      display: inline-block;
-    }
-
-    .nav-tabs {
-      display: flex;
-      background: #0d1822;
-      border-radius: 60px;
-      padding: 4px;
-      margin-bottom: 18px;
-      border: 1px solid var(--border-color);
-      overflow-x: auto;
-      gap: 2px;
-    }
-
-    .nav-tab {
-      flex: 1;
-      text-align: center;
-      padding: 10px 4px;
-      border-radius: 60px;
-      font-weight: 700;
-      font-size: 0.55rem;
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: all 0.2s;
-      border: none;
-      background: transparent;
-      letter-spacing: 0.3px;
-      white-space: nowrap;
-      min-width: 40px;
-    }
-
-    .nav-tab.active {
-      background: linear-gradient(145deg, var(--primary), var(--primary-dark));
-      color: #0a121c;
-      box-shadow: 0 4px 20px var(--shadow-color);
-    }
-
-    .nav-tab:active {
-      transform: scale(0.96);
-    }
-
-    .screen {
-      display: none;
-      animation: fadeSlide 0.3s ease;
-    }
-
-    .screen.active {
-      display: block;
-    }
-
-    @keyframes fadeSlide {
-      0% { opacity: 0; transform: translateY(10px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ----- Profile / Settings ----- */
-    .profile-header {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      background: rgba(8, 20, 32, 0.5);
-      border-radius: 32px;
-      padding: 16px;
-      border: 1px solid var(--border-color);
-      margin-bottom: 16px;
-    }
-
-    .profile-avatar {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      color: #0a121c;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-
-    .profile-info {
-      flex: 1;
-    }
-
-    .profile-info .name {
-      color: var(--text-light);
-      font-weight: 700;
-      font-size: 1.1rem;
-    }
-
-    .profile-info .level {
-      color: var(--text-muted);
-      font-size: 0.7rem;
-    }
-
-    .profile-info .level span {
-      color: var(--primary);
-      font-weight: 700;
-    }
-
-    .settings-group {
-      background: rgba(8, 20, 32, 0.3);
-      border-radius: 24px;
-      padding: 14px 16px;
-      border: 1px solid var(--border-color);
-      margin-bottom: 12px;
-    }
-
-    .settings-group .title {
-      color: var(--text-muted);
-      font-size: 0.6rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 8px;
-    }
-
-    .settings-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .settings-row:last-child {
-      border-bottom: none;
-    }
-
-    .settings-row label {
-      color: var(--text-light);
-      font-size: 0.8rem;
-    }
-
-    .settings-row select,
-    .settings-row input[type="color"] {
-      background: #0d1b28;
-      border: 1px solid var(--border-color);
-      border-radius: 30px;
-      padding: 6px 12px;
-      color: var(--text-light);
-      font-size: 0.75rem;
-      outline: none;
-      cursor: pointer;
-    }
-
-    .settings-row input[type="color"] {
-      width: 40px;
-      height: 40px;
-      padding: 2px;
-      border-radius: 50%;
-      border: 2px solid var(--border-color);
-    }
-
-    .settings-row select option {
-      background: #0d1b28;
-    }
-
-    /* ----- Home Screen ----- */
-    .miner-visual {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 8px 0 16px;
-      position: relative;
-    }
-
-    .bnb-logo {
-      font-size: 3.5rem;
-      margin-bottom: 2px;
-      text-shadow: 0 0 40px var(--shadow-color);
-    }
-
-    .fan-container {
-      position: relative;
-      width: 140px;
-      height: 140px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .fan-ring {
-      position: absolute;
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      border: 4px solid var(--primary);
-      box-shadow: 0 0 30px var(--shadow-color), inset 0 0 30px var(--shadow-color);
-      background: rgba(8, 24, 40, 0.4);
-    }
-
-    .fan-blades {
-      position: relative;
-      width: 120px;
-      height: 120px;
-      animation: spinFan 2s linear infinite;
-      animation-play-state: paused;
-    }
-
-    .fan-blades.spinning {
-      animation-play-state: running;
-    }
-
-    @keyframes spinFan {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .blade {
-      position: absolute;
-      width: 40px;
-      height: 12px;
-      background: linear-gradient(90deg, var(--primary), var(--primary-dark));
-      border-radius: 20px;
-      top: 50%;
-      left: 50%;
-      transform-origin: 0 50%;
-      box-shadow: 0 0 15px var(--shadow-color);
-    }
-
-    .blade:nth-child(1) { transform: rotate(0deg) translateX(20px); }
-    .blade:nth-child(2) { transform: rotate(72deg) translateX(20px); }
-    .blade:nth-child(3) { transform: rotate(144deg) translateX(20px); }
-    .blade:nth-child(4) { transform: rotate(216deg) translateX(20px); }
-    .blade:nth-child(5) { transform: rotate(288deg) translateX(20px); }
-
-    .fan-center {
-      position: absolute;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: radial-gradient(circle, var(--primary), var(--primary-dark));
-      box-shadow: 0 0 30px var(--shadow-color);
-      border: 2px solid var(--primary);
-      z-index: 2;
-    }
-
-    .miner-label {
-      color: var(--primary);
-      font-size: 0.7rem;
-      margin-top: 6px;
-      letter-spacing: 0.1em;
-      font-weight: 700;
-    }
-
-    .stats-row {
-      display: flex;
-      justify-content: space-around;
-      background: rgba(8, 20, 32, 0.5);
-      backdrop-filter: blur(6px);
-      border-radius: 40px;
-      padding: 10px 8px;
-      border: 1px solid var(--border-color);
-      margin: 4px 0 10px;
-    }
-
-    .stat-item {
-      text-align: center;
-    }
-
-    .stat-item .label {
-      font-size: 0.55rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .stat-item .value {
-      font-weight: 700;
-      font-size: 1rem;
-      color: var(--text-light);
-    }
-
-    .stat-item .value.bnb-gold {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .balance-big {
-      text-align: center;
-      margin: 8px 0 12px;
-    }
-
-    .balance-big .coin {
-      font-size: 2.8rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: -1px;
-    }
-
-    .balance-big .label {
-      font-size: 0.6rem;
-      color: var(--text-muted);
-      letter-spacing: 0.1em;
-    }
-
-    .status-pill {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background: #0e1a24;
-      padding: 8px 16px;
-      border-radius: 60px;
-      margin: 6px 0 14px;
-      border: 1px solid var(--border-color);
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #3d5a6e;
-      transition: 0.2s;
-    }
-
-    .dot.active {
-      background: #3fe07a;
-      box-shadow: 0 0 20px #3fe07a;
-    }
-
-    .status-label {
-      font-weight: 600;
-      color: var(--text-light);
-      font-size: 0.85rem;
-    }
-
-    .session-time {
-      color: var(--text-muted);
-      font-size: 0.75rem;
-    }
-
-    .btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-      padding: 14px 10px;
-      border: none;
-      border-radius: 60px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      background: #1d2f3f;
-      color: var(--text-light);
-      box-shadow: 0 5px 0 #0a141e, 0 8px 24px rgba(0, 0, 0, 0.5);
-      transition: all 0.06s ease;
-      cursor: pointer;
-      border: 1px solid var(--border-color);
-    }
-
-    .btn:active {
-      transform: translateY(4px);
-      box-shadow: 0 1px 0 #0a141e;
-    }
-
-    .btn-primary {
-      background: linear-gradient(145deg, var(--primary), var(--primary-dark));
-      color: #0a121c;
-      border: 1px solid var(--primary);
-      text-shadow: none;
-    }
-
-    .btn-success {
-      background: linear-gradient(145deg, #2fb86a, #167a42);
-      color: white;
-      border: 1px solid #6ae09a;
-    }
-
-    /* ----- Boost Screen ----- */
-    .boost-header h2 {
-      color: var(--primary);
-      font-size: 1.2rem;
-      text-align: center;
-      margin-bottom: 12px;
-    }
-
-    .gpu-visual {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: #0d1a28;
-      border-radius: 32px;
-      padding: 20px 16px;
-      border: 1px solid var(--primary);
-      margin-bottom: 16px;
-    }
-
-    .gpu-speed-display {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--primary);
-      text-shadow: 0 0 20px var(--shadow-color);
-    }
-
-    .gpu-label {
-      color: var(--text-muted);
-      font-size: 0.7rem;
-      letter-spacing: 0.05em;
-    }
-
-    .boost-timer {
-      display: flex;
-      justify-content: space-between;
-      background: #0a1620;
-      border-radius: 40px;
-      padding: 12px 18px;
-      border: 1px solid var(--border-color);
-      margin: 6px 0 14px;
-    }
-
-    .boost-timer-item .num {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--primary);
-    }
-
-    .boost-timer-item .lbl {
-      font-size: 0.55rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-    }
-
-    .boost-card {
-      background: rgba(0, 20, 35, 0.5);
-      border-radius: 32px;
-      padding: 14px 18px;
-      border: 1px solid var(--primary);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      margin: 6px 0 12px;
-    }
-
-    .boost-info .title {
-      font-weight: 600;
-      color: var(--primary);
-      font-size: 0.9rem;
-    }
-
-    .boost-info .price {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--primary);
-    }
-
-    .btn-boost {
-      background: linear-gradient(145deg, var(--primary), var(--primary-dark));
-      border: 1px solid var(--primary);
-      color: #0a121c;
-      padding: 8px 22px;
-      border-radius: 60px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      box-shadow: 0 4px 0 #0d1a24;
-      transition: 0.06s linear;
-      cursor: pointer;
-    }
-
-    .btn-boost:active {
-      transform: translateY(3px);
-      box-shadow: 0 1px 0 #0d1a24;
-    }
-
-    /* ----- Withdraw Screen ----- */
-    .withdraw-card {
-      background: rgba(8, 22, 34, 0.6);
-      backdrop-filter: blur(4px);
-      border-radius: 32px;
-      padding: 18px 16px 20px;
-      border: 1px solid var(--primary);
-    }
-
-    .withdraw-card .title {
-      color: var(--primary);
-      font-weight: 600;
-      font-size: 0.9rem;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .country-badge {
-      background: #0d1b28;
-      border-radius: 40px;
-      padding: 4px 12px;
-      font-size: 0.6rem;
-      color: var(--primary);
-      border: 1px solid var(--primary);
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .form-group {
-      margin-bottom: 12px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 0.65rem;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-      letter-spacing: 0.04em;
-    }
-
-    .form-group select,
-    .form-group input {
-      width: 100%;
-      padding: 11px 14px;
-      background: #0d1b28;
-      border: 1px solid var(--border-color);
-      border-radius: 40px;
-      color: var(--text-light);
-      font-size: 0.9rem;
-      outline: none;
-      transition: 0.15s;
-    }
-
-    .form-group select:focus,
-    .form-group input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 12px var(--shadow-color);
-    }
-
-    .form-group select option {
-      background: #0d1b28;
-    }
-
-    .form-group .phone-prefix {
-      display: flex;
-      align-items: center;
-      background: #0d1b28;
-      border: 1px solid var(--border-color);
-      border-radius: 40px;
-      overflow: hidden;
-    }
-
-    .form-group .phone-prefix span {
-      padding: 11px 14px;
-      color: var(--primary);
-      font-weight: 600;
-      font-size: 0.9rem;
-      background: #0a1620;
-      border-right: 1px solid var(--border-color);
-      white-space: nowrap;
-    }
-
-    .form-group .phone-prefix input {
-      border: none;
-      border-radius: 0 40px 40px 0;
-      padding-left: 8px;
-    }
-
-    .btn-withdraw {
-      background: linear-gradient(145deg, var(--primary), var(--primary-dark));
-      border: 1px solid var(--primary);
-      color: #0a121c;
-      margin-top: 4px;
-      text-shadow: none;
-    }
-
-    .btn-withdraw:active {
-      background: var(--primary-dark);
-    }
-
-    .fee-info {
-      font-size: 0.6rem;
-      color: var(--text-muted);
-      text-align: center;
-      margin-top: 8px;
-      padding: 8px;
-      background: rgba(0, 20, 35, 0.3);
-      border-radius: 30px;
-    }
-
-    .fee-info .highlight {
-      color: var(--primary);
-    }
-
-    .min-withdraw-notice {
-      background: rgba(var(--primary), 0.08);
-      border: 1px solid var(--primary);
-      border-radius: 30px;
-      padding: 6px 12px;
-      text-align: center;
-      color: var(--primary);
-      font-size: 0.65rem;
-      margin-top: 6px;
-    }
-
-    /* ----- Invite Screen ----- */
-    .invite-header h2 {
-      color: var(--primary);
-      font-size: 1.2rem;
-      text-align: center;
-      margin-bottom: 16px;
-    }
-
-    .invite-stats {
-      display: flex;
-      justify-content: space-around;
-      background: rgba(8, 20, 32, 0.5);
-      border-radius: 32px;
-      padding: 16px;
-      border: 1px solid var(--border-color);
-      margin-bottom: 16px;
-    }
-
-    .invite-stat .num {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--primary);
-    }
-
-    .invite-stat .lbl {
-      font-size: 0.6rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-    }
-
-    .invite-code-box {
-      background: #0d1b28;
-      border: 2px dashed var(--primary);
-      border-radius: 40px;
-      padding: 16px;
-      text-align: center;
-      margin-bottom: 16px;
-    }
-
-    .invite-code {
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: var(--primary);
-      letter-spacing: 4px;
-      font-family: 'Courier New', monospace;
-      word-break: break-all;
-    }
-
-    .invite-link-box {
-      display: flex;
-      gap: 8px;
-      background: #0a1620;
-      border-radius: 40px;
-      padding: 4px;
-      border: 1px solid var(--border-color);
-      margin-bottom: 12px;
-    }
-
-    .invite-link-box input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      padding: 10px 14px;
-      color: var(--text-light);
-      font-size: 0.7rem;
-      outline: none;
-      min-width: 0;
-    }
-
-    .invite-link-box button {
-      background: linear-gradient(145deg, var(--primary), var(--primary-dark));
-      border: none;
-      border-radius: 40px;
-      padding: 10px 18px;
-      color: #0a121c;
-      font-weight: 700;
-      font-size: 0.8rem;
-      cursor: pointer;
-      transition: 0.15s;
-      white-space: nowrap;
-    }
-
-    .invite-link-box button:active {
-      transform: scale(0.95);
-    }
-
-    .invite-rewards {
-      background: rgba(0, 20, 35, 0.3);
-      border-radius: 32px;
-      padding: 14px 16px;
-      border: 1px solid var(--primary);
-    }
-
-    .invite-rewards .title {
-      color: var(--primary);
-      font-weight: 600;
-      font-size: 0.85rem;
-      margin-bottom: 8px;
-    }
-
-    .reward-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 6px 0;
-      border-bottom: 1px solid #1a2f40;
-      color: var(--text-muted);
-      font-size: 0.8rem;
-    }
-
-    .reward-item:last-child {
-      border-bottom: none;
-    }
-
-    .reward-item .highlight {
-      color: var(--primary);
-      font-weight: 600;
-    }
-
-    .toast-message {
-      background: #1f2c3a;
-      border-left: 5px solid var(--primary);
-      color: var(--text-light);
-      padding: 12px 18px;
-      border-radius: 40px;
-      font-weight: 500;
-      margin: 10px 0 4px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
-      border: 1px solid var(--border-color);
-      text-align: center;
-      font-size: 0.85rem;
-    }
-
-    .toast-success {
-      border-left-color: #4ae09a;
-    }
-
-    .toast-warning {
-      border-left-color: #f7b84a;
-    }
-
-    @media (max-width: 420px) {
-      .app-container { padding: 16px 12px 20px; }
-      .balance-big .coin { font-size: 2.2rem; }
-      .fan-container { width: 110px; height: 110px; }
-      .fan-ring { width: 110px; height: 110px; }
-      .fan-blades { width: 90px; height: 90px; }
-      .blade { width: 30px; height: 10px; }
-      .invite-code { font-size: 1.3rem; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>🟡 BNB Social Miner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        :root {
+            --primary: #f7e05e;
+            --primary-dark: #f9b84a;
+            --bg-main: #0a121c;
+            --bg-card: #0d1b28;
+            --text-light: #d6edff;
+            --text-muted: #6a8aa8;
+            --border-color: #1e3447;
+            --shadow-color: rgba(247, 224, 94, 0.3);
+            --green: #4ae09a;
+            --red: #ff4757;
+        }
+
+        body {
+            background: #080e17;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .app-container {
+            max-width: 440px;
+            width: 100%;
+            background: radial-gradient(circle at 30% 10%, #182a3a, #0a121c);
+            border-radius: 48px 48px 28px 28px;
+            padding: 20px 14px 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 215, 0, 0.08) inset;
+            border: 1px solid rgba(255, 215, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+            min-height: 680px;
+            transition: all 0.3s ease;
+        }
+
+        .bnb-gold {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .bnb-badge {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #0a121c;
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-size: 0.6rem;
+            font-weight: 800;
+            display: inline-block;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: #0d1822;
+            border-radius: 60px;
+            padding: 4px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+            gap: 2px;
+            flex-wrap: nowrap;
+        }
+
+        .nav-tab {
+            flex: 1;
+            text-align: center;
+            padding: 8px 4px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.5rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            background: transparent;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+            min-width: 35px;
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            color: #0a121c;
+            box-shadow: 0 4px 20px var(--shadow-color);
+        }
+
+        .nav-tab:active {
+            transform: scale(0.96);
+        }
+
+        .screen {
+            display: none;
+            animation: fadeSlide 0.3s ease;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeSlide {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Market Price */
+        .market-price {
+            background: rgba(8, 20, 32, 0.5);
+            border-radius: 40px;
+            padding: 6px 14px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .market-price .price {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .market-price .change {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 20px;
+        }
+
+        .market-price .change.up {
+            color: var(--green);
+            background: rgba(74, 224, 154, 0.15);
+        }
+
+        .market-price .change.down {
+            color: var(--red);
+            background: rgba(255, 71, 87, 0.15);
+        }
+
+        .market-price .label {
+            font-size: 0.45rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* Miner Visual */
+        .miner-visual {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 4px 0 8px;
+            position: relative;
+        }
+
+        .bnb-logo {
+            font-size: 2.8rem;
+            margin-bottom: 2px;
+            text-shadow: 0 0 40px var(--shadow-color);
+        }
+
+        .fan-container {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fan-ring {
+            position: absolute;
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 4px solid var(--primary);
+            box-shadow: 0 0 30px var(--shadow-color), inset 0 0 30px var(--shadow-color);
+            background: rgba(8, 24, 40, 0.4);
+        }
+
+        .fan-blades {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            animation: spinFan 2s linear infinite;
+            animation-play-state: paused;
+        }
+
+        .fan-blades.spinning {
+            animation-play-state: running;
+        }
+
+        @keyframes spinFan {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .blade {
+            position: absolute;
+            width: 28px;
+            height: 9px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            border-radius: 20px;
+            top: 50%;
+            left: 50%;
+            transform-origin: 0 50%;
+            box-shadow: 0 0 15px var(--shadow-color);
+        }
+
+        .blade:nth-child(1) { transform: rotate(0deg) translateX(14px); }
+        .blade:nth-child(2) { transform: rotate(72deg) translateX(14px); }
+        .blade:nth-child(3) { transform: rotate(144deg) translateX(14px); }
+        .blade:nth-child(4) { transform: rotate(216deg) translateX(14px); }
+        .blade:nth-child(5) { transform: rotate(288deg) translateX(14px); }
+
+        .fan-center {
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary), var(--primary-dark));
+            box-shadow: 0 0 30px var(--shadow-color);
+            border: 2px solid var(--primary);
+            z-index: 2;
+        }
+
+        .miner-label {
+            color: var(--primary);
+            font-size: 0.55rem;
+            margin-top: 3px;
+            letter-spacing: 0.1em;
+            font-weight: 700;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(8, 20, 32, 0.5);
+            backdrop-filter: blur(6px);
+            border-radius: 40px;
+            padding: 6px 4px;
+            border: 1px solid var(--border-color);
+            margin: 3px 0 6px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-item .label {
+            font-size: 0.45rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-item .value {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .stat-item .value.bnb-gold {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .balance-big {
+            text-align: center;
+            margin: 4px 0 8px;
+        }
+
+        .balance-big .coin {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+
+        .balance-big .label {
+            font-size: 0.5rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+        }
+
+        .balance-big .sub-label {
+            font-size: 0.45rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .status-pill {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: #0e1a24;
+            padding: 5px 12px;
+            border-radius: 60px;
+            margin: 3px 0 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #3d5a6e;
+            transition: 0.2s;
+        }
+
+        .dot.active {
+            background: #3fe07a;
+            box-shadow: 0 0 20px #3fe07a;
+        }
+
+        .status-label {
+            font-weight: 600;
+            color: var(--text-light);
+            font-size: 0.7rem;
+        }
+
+        .session-time {
+            color: var(--text-muted);
+            font-size: 0.65rem;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            width: 100%;
+            padding: 10px 8px;
+            border: none;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            background: #1d2f3f;
+            color: var(--text-light);
+            box-shadow: 0 4px 0 #0a141e, 0 8px 24px rgba(0, 0, 0, 0.5);
+            transition: all 0.06s ease;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+        }
+
+        .btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #0a141e;
+        }
+
+        .btn-primary {
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            color: #0a121c;
+            border: 1px solid var(--primary);
+            text-shadow: none;
+        }
+
+        .btn-success {
+            background: linear-gradient(145deg, #2fb86a, #167a42);
+            color: white;
+            border: 1px solid #6ae09a;
+        }
+
+        /* SOCIAL CONNECT */
+        .social-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .social-header h2 {
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+
+        .social-header .earnings {
+            color: var(--text-muted);
+            font-size: 0.6rem;
+        }
+
+        .social-header .earnings span {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .social-connect {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .social-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(8, 20, 32, 0.5);
+            border-radius: 40px;
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s;
+        }
+
+        .social-item .icon {
+            font-size: 1.6rem;
+            width: 40px;
+            text-align: center;
+        }
+
+        .social-item .info {
+            flex: 1;
+        }
+
+        .social-item .info .name {
+            color: var(--text-light);
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        .social-item .info .username {
+            color: var(--text-muted);
+            font-size: 0.55rem;
+        }
+
+        .social-item .status-badge {
+            font-size: 0.5rem;
+            padding: 3px 10px;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+
+        .social-item .status-badge.connected {
+            background: rgba(74, 224, 154, 0.2);
+            color: var(--green);
+        }
+
+        .social-item .status-badge.not-connected {
+            background: rgba(255, 71, 87, 0.2);
+            color: var(--red);
+        }
+
+        .social-item .connect-btn {
+            padding: 4px 12px;
+            border-radius: 30px;
+            border: none;
+            font-weight: 600;
+            font-size: 0.6rem;
+            cursor: pointer;
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            color: #0a121c;
+            transition: 0.15s;
+        }
+
+        .social-item .connect-btn:active {
+            transform: scale(0.95);
+        }
+
+        .social-item .connect-btn.connected-btn {
+            background: rgba(74, 224, 154, 0.2);
+            color: var(--green);
+        }
+
+        /* Social Rewards */
+        .social-rewards {
+            background: rgba(8, 20, 32, 0.3);
+            border-radius: 28px;
+            padding: 12px 14px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 10px;
+        }
+
+        .social-rewards .title {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.7rem;
+            margin-bottom: 6px;
+        }
+
+        .reward-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-muted);
+            font-size: 0.65rem;
+        }
+
+        .reward-row:last-child {
+            border-bottom: none;
+        }
+
+        .reward-row .highlight {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .reward-progress {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            margin-top: 4px;
+            overflow: hidden;
+        }
+
+        .reward-progress .fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* GROUPS */
+        .groups-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .groups-header h3 {
+            color: var(--text-light);
+            font-size: 0.8rem;
+        }
+
+        .groups-header .create-btn {
+            padding: 4px 14px;
+            border-radius: 30px;
+            border: none;
+            font-weight: 600;
+            font-size: 0.6rem;
+            cursor: pointer;
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            color: #0a121c;
+        }
+
+        .groups-header .create-btn:active {
+            transform: scale(0.95);
+        }
+
+        .group-card {
+            background: rgba(8, 20, 32, 0.3);
+            border-radius: 28px;
+            padding: 12px 14px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 8px;
+        }
+
+        .group-card .group-name {
+            color: var(--text-light);
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        .group-card .group-info {
+            color: var(--text-muted);
+            font-size: 0.6rem;
+            display: flex;
+            gap: 12px;
+            margin-top: 4px;
+        }
+
+        .group-card .group-info span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .group-card .join-btn {
+            padding: 4px 16px;
+            border-radius: 30px;
+            border: none;
+            font-weight: 600;
+            font-size: 0.6rem;
+            cursor: pointer;
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            color: #0a121c;
+            margin-top: 6px;
+        }
+
+        .group-card .join-btn:active {
+            transform: scale(0.95);
+        }
+
+        .group-card .join-btn.joined {
+            background: rgba(74, 224, 154, 0.2);
+            color: var(--green);
+        }
+
+        /* Boost */
+        .boost-header h2 {
+            color: var(--primary);
+            font-size: 0.95rem;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .gpu-visual {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #0d1a28;
+            border-radius: 28px;
+            padding: 14px;
+            border: 1px solid var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .gpu-speed-display {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: 0 0 20px var(--shadow-color);
+        }
+
+        .gpu-label {
+            color: var(--text-muted);
+            font-size: 0.6rem;
+            letter-spacing: 0.05em;
+        }
+
+        .boost-timer {
+            display: flex;
+            justify-content: space-between;
+            background: #0a1620;
+            border-radius: 40px;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            margin: 3px 0 8px;
+        }
+
+        .boost-timer-item {
+            text-align: center;
+        }
+
+        .boost-timer-item .num {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .boost-timer-item .lbl {
+            font-size: 0.45rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .boost-card {
+            background: rgba(0, 20, 35, 0.5);
+            border-radius: 28px;
+            padding: 10px 12px;
+            border: 1px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin: 3px 0 8px;
+        }
+
+        .boost-info .title {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.75rem;
+        }
+
+        .boost-info .price {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .btn-boost {
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            border: 1px solid var(--primary);
+            color: #0a121c;
+            padding: 5px 16px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            box-shadow: 0 3px 0 #0d1a24;
+            transition: 0.06s linear;
+            cursor: pointer;
+        }
+
+        .btn-boost:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 0 #0d1a24;
+        }
+
+        /* Withdraw */
+        .withdraw-card {
+            background: rgba(8, 22, 34, 0.6);
+            backdrop-filter: blur(4px);
+            border-radius: 28px;
+            padding: 12px 12px 16px;
+            border: 1px solid var(--primary);
+        }
+
+        .withdraw-card .title {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.75rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .country-badge {
+            background: #0d1b28;
+            border-radius: 40px;
+            padding: 2px 10px;
+            font-size: 0.5rem;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .form-group {
+            margin-bottom: 8px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.55rem;
+            color: var(--text-muted);
+            margin-bottom: 3px;
+            letter-spacing: 0.04em;
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 8px 12px;
+            background: #0d1b28;
+            border: 1px solid var(--border-color);
+            border-radius: 40px;
+            color: var(--text-light);
+            font-size: 0.75rem;
+            outline: none;
+            transition: 0.15s;
+        }
+
+        .form-group select:focus,
+        .form-group input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 12px var(--shadow-color);
+        }
+
+        .form-group select option {
+            background: #0d1b28;
+        }
+
+        .form-group .phone-prefix {
+            display: flex;
+            align-items: center;
+            background: #0d1b28;
+            border: 1px solid var(--border-color);
+            border-radius: 40px;
+            overflow: hidden;
+        }
+
+        .form-group .phone-prefix span {
+            padding: 8px 12px;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.75rem;
+            background: #0a1620;
+            border-right: 1px solid var(--border-color);
+            white-space: nowrap;
+        }
+
+        .form-group .phone-prefix input {
+            border: none;
+            border-radius: 0 40px 40px 0;
+            padding-left: 6px;
+        }
+
+        .country-selector {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .country-selector .flag {
+            font-size: 1.3rem;
+        }
+
+        .country-selector select {
+            flex: 1;
+            background: #0d1b28;
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            padding: 6px 10px;
+            color: var(--text-light);
+            font-size: 0.7rem;
+            outline: none;
+        }
+
+        .btn-withdraw {
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            border: 1px solid var(--primary);
+            color: #0a121c;
+            margin-top: 4px;
+            text-shadow: none;
+        }
+
+        .btn-withdraw:active {
+            background: var(--primary-dark);
+        }
+
+        .fee-info {
+            font-size: 0.5rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 6px;
+            padding: 6px;
+            background: rgba(0, 20, 35, 0.3);
+            border-radius: 30px;
+        }
+
+        .fee-info .highlight {
+            color: var(--primary);
+        }
+
+        .min-withdraw-notice {
+            background: rgba(var(--primary), 0.08);
+            border: 1px solid var(--primary);
+            border-radius: 30px;
+            padding: 4px 10px;
+            text-align: center;
+            color: var(--primary);
+            font-size: 0.55rem;
+            margin-top: 4px;
+        }
+
+        /* AI Chat */
+        .ai-chat {
+            background: rgba(8, 20, 32, 0.5);
+            border-radius: 28px;
+            border: 1px solid var(--primary);
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .ai-chat-header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .ai-chat-header .icon {
+            font-size: 1rem;
+        }
+
+        .ai-chat-header .title {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.7rem;
+        }
+
+        .ai-chat-header .status {
+            margin-left: auto;
+            font-size: 0.45rem;
+            color: var(--green);
+        }
+
+        .ai-messages {
+            padding: 8px 12px;
+            max-height: 130px;
+            overflow-y: auto;
+            min-height: 70px;
+        }
+
+        .ai-message {
+            margin-bottom: 4px;
+            padding: 5px 10px;
+            border-radius: 16px;
+            font-size: 0.7rem;
+            max-width: 85%;
+            word-wrap: break-word;
+        }
+
+        .ai-message.bot {
+            background: rgba(247, 224, 94, 0.1);
+            border: 1px solid rgba(247, 224, 94, 0.2);
+            color: var(--text-light);
+            margin-right: auto;
+        }
+
+        .ai-message.user {
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            color: #0a121c;
+            margin-left: auto;
+        }
+
+        .ai-input {
+            display: flex;
+            gap: 4px;
+            padding: 4px 10px 8px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .ai-input input {
+            flex: 1;
+            padding: 6px 12px;
+            background: #0d1b28;
+            border: 1px solid var(--border-color);
+            border-radius: 40px;
+            color: var(--text-light);
+            font-size: 0.7rem;
+            outline: none;
+        }
+
+        .ai-input input:focus {
+            border-color: var(--primary);
+        }
+
+        .ai-input button {
+            padding: 6px 14px;
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            border: none;
+            border-radius: 40px;
+            color: #0a121c;
+            font-weight: 700;
+            font-size: 0.65rem;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .ai-input button:active {
+            transform: scale(0.95);
+        }
+
+        /* Invite */
+        .invite-header h2 {
+            color: var(--primary);
+            font-size: 0.95rem;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .invite-stats {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(8, 20, 32, 0.5);
+            border-radius: 28px;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 10px;
+        }
+
+        .invite-stat .num {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .invite-stat .lbl {
+            font-size: 0.5rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .invite-code-box {
+            background: #0d1b28;
+            border: 2px dashed var(--primary);
+            border-radius: 40px;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .invite-code {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: 4px;
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
+        }
+
+        .invite-code-label {
+            font-size: 0.5rem;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+
+        .invite-link-box {
+            display: flex;
+            gap: 4px;
+            background: #0a1620;
+            border-radius: 40px;
+            padding: 4px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 8px;
+        }
+
+        .invite-link-box input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 6px 10px;
+            color: var(--text-light);
+            font-size: 0.6rem;
+            outline: none;
+            min-width: 0;
+        }
+
+        .invite-link-box button {
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            border: none;
+            border-radius: 40px;
+            padding: 6px 12px;
+            color: #0a121c;
+            font-weight: 700;
+            font-size: 0.65rem;
+            cursor: pointer;
+            transition: 0.15s;
+            white-space: nowrap;
+        }
+
+        .invite-link-box button:active {
+            transform: scale(0.95);
+        }
+
+        .invite-rewards {
+            background: rgba(0, 20, 35, 0.3);
+            border-radius: 28px;
+            padding: 10px 12px;
+            border: 1px solid var(--primary);
+        }
+
+        .invite-rewards .title {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.7rem;
+            margin-bottom: 4px;
+        }
+
+        .reward-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 0;
+            border-bottom: 1px solid #1a2f40;
+            color: var(--text-muted);
+            font-size: 0.65rem;
+        }
+
+        .reward-item:last-child {
+            border-bottom: none;
+        }
+
+        .reward-item .highlight {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Profile */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(8, 20, 32, 0.5);
+            border-radius: 28px;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 10px;
+        }
+
+        .profile-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: #0a121c;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-info .name {
+            color: var(--text-light);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .profile-info .level {
+            color: var(--text-muted);
+            font-size: 0.6rem;
+        }
+
+        .profile-info .level span {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .settings-group {
+            background: rgba(8, 20, 32, 0.3);
+            border-radius: 24px;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 8px;
+        }
+
+        .settings-group .title {
+            color: var(--text-muted);
+            font-size: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 4px;
+        }
+
+        .settings-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .settings-row:last-child {
+            border-bottom: none;
+        }
+
+        .settings-row label {
+            color: var(--text-light);
+            font-size: 0.7rem;
+        }
+
+        .settings-row select,
+        .settings-row input[type="color"] {
+            background: #0d1b28;
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            padding: 4px 10px;
+            color: var(--text-light);
+            font-size: 0.65rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .settings-row input[type="color"] {
+            width: 32px;
+            height: 32px;
+            padding: 2px;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+        }
+
+        .settings-row select option {
+            background: #0d1b28;
+        }
+
+        .theme-row {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            padding-top: 4px;
+        }
+
+        .theme-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            cursor: pointer;
+        }
+
+        .theme-btn:active {
+            transform: scale(0.9);
+        }
+
+        .toast-message {
+            background: #1f2c3a;
+            border-left: 5px solid var(--primary);
+            color: var(--text-light);
+            padding: 8px 14px;
+            border-radius: 40px;
+            font-weight: 500;
+            margin: 6px 0 4px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+            border: 1px solid var(--border-color);
+            text-align: center;
+            font-size: 0.7rem;
+        }
+
+        .toast-success {
+            border-left-color: #4ae09a;
+        }
+
+        @media (max-width: 420px) {
+            .app-container { padding: 12px 8px 16px; }
+            .balance-big .coin { font-size: 1.8rem; }
+            .fan-container { width: 90px; height: 90px; }
+            .fan-ring { width: 90px; height: 90px; }
+            .fan-blades { width: 70px; height: 70px; }
+            .blade { width: 22px; height: 7px; }
+            .blade:nth-child(1) { transform: rotate(0deg) translateX(11px); }
+            .blade:nth-child(2) { transform: rotate(72deg) translateX(11px); }
+            .blade:nth-child(3) { transform: rotate(144deg) translateX(11px); }
+            .blade:nth-child(4) { transform: rotate(216deg) translateX(11px); }
+            .blade:nth-child(5) { transform: rotate(288deg) translateX(11px); }
+            .invite-code { font-size: 1rem; }
+            .nav-tab { font-size: 0.4rem; padding: 5px 2px; min-width: 28px; }
+            .market-price .price { font-size: 0.9rem; }
+        }
+    </style>
 </head>
 <body>
 
 <div class="app-container" id="app">
 
-  <!-- BNB Brand Header -->
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-    <div style="display: flex; align-items: center; gap: 8px;">
-      <span style="font-size: 1.2rem;">🟡</span>
-      <span style="color: var(--primary); font-weight: 800; font-size: 0.9rem;">BNB MINER</span>
-    </div>
-    <span class="bnb-badge">🌍 GLOBAL</span>
-  </div>
-
-  <!-- navigation -->
-  <div class="nav-tabs">
-    <button class="nav-tab active" data-screen="home">🏠 Home</button>
-    <button class="nav-tab" data-screen="boost">⚡ Boost</button>
-    <button class="nav-tab" data-screen="invite">👥 Invite</button>
-    <button class="nav-tab" data-screen="withdraw">💸 Withdraw</button>
-    <button class="nav-tab" data-screen="profile">⚙️ Profile</button>
-  </div>
-
-  <!-- ========== HOME SCREEN ========== -->
-  <div class="screen active" id="screen-home">
-    <div class="miner-visual">
-      <div class="bnb-logo">🟡</div>
-      <div class="fan-container">
-        <div class="fan-ring"></div>
-        <div class="fan-blades" id="fanBlades">
-          <div class="blade"></div>
-          <div class="blade"></div>
-          <div class="blade"></div>
-          <div class="blade"></div>
-          <div class="blade"></div>
+    <!-- Header -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+        <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 1rem;">🟡</span>
+            <span style="color: var(--primary); font-weight: 800; font-size: 0.75rem;">BNB SOCIAL</span>
         </div>
-        <div class="fan-center"></div>
-      </div>
-      <div class="miner-label">⚡ BNB MINING RIG</div>
+        <span class="bnb-badge">🌍 SOCIAL</span>
     </div>
 
-    <div class="stats-row">
-      <div class="stat-item">
-        <div class="label">⚡ Speed</div>
-        <div class="value bnb-gold" id="homeSpeed">0.0000</div>
-      </div>
-      <div class="stat-item">
-        <div class="label">⏳ Mined</div>
-        <div class="value" id="homeMined">0.0000</div>
-      </div>
-      <div class="stat-item">
-        <div class="label">Status</div>
-        <div class="value" id="homeStatus" style="font-size:0.8rem; color:var(--text-muted);">Idle</div>
-      </div>
-    </div>
-
-    <div class="balance-big">
-      <div class="label">💰 BNB BALANCE</div>
-      <div class="coin" id="homeBalance">0.0000</div>
-      <div class="sub-label" style="font-size:0.55rem; color:var(--text-muted); margin-top:2px;">
-        ≈ $<span id="usdValue">0.00</span> USD
-      </div>
-    </div>
-
-    <div class="status-pill">
-      <span class="dot" id="statusDot"></span>
-      <span class="status-label" id="statusLabel">⏸️ Mining Stopped</span>
-      <span class="session-time" id="sessionTime">00:00</span>
-    </div>
-
-    <button class="btn btn-primary" id="toggleMineBtn">
-      <span>▶</span> START MINING
-    </button>
-  </div>
-
-  <!-- ========== BOOST SCREEN ========== -->
-  <div class="screen" id="screen-boost">
-    <div class="boost-header">
-      <h2>⚡ Speed Booster</h2>
-    </div>
-
-    <div class="gpu-visual">
-      <div style="font-size:3.5rem; margin-bottom:4px;">🖥️</div>
-      <div class="gpu-speed-display" id="gpuSpeed">0.0000</div>
-      <div class="gpu-label">BNB / second</div>
-      <div style="display:flex; gap:16px; margin-top:8px; font-size:0.7rem; color:var(--text-muted);">
-        <span>🔄 GPU: NVIDIA RTX</span>
-        <span id="gpuLevel">Lv.1</span>
-      </div>
-    </div>
-
-    <div class="boost-timer">
-      <div class="boost-timer-item">
-        <div class="num" id="estTime1">0.1</div>
-        <div class="lbl">BNB / 1min</div>
-      </div>
-      <div class="boost-timer-item">
-        <div class="num" id="estTime10">6.0</div>
-        <div class="lbl">BNB / 10min</div>
-      </div>
-      <div class="boost-timer-item">
-        <div class="num" id="estTime60">36.0</div>
-        <div class="lbl">BNB / 1hr</div>
-      </div>
-    </div>
-
-    <div class="boost-card">
-      <div class="boost-info">
-        <span class="title">🚀 Upgrade Speed</span>
-        <span class="price" id="boostCostDisplay">💰 100 BNB</span>
-        <span style="font-size:0.6rem; color:var(--text-muted);">+0.0005 BNB/sec</span>
-      </div>
-      <button class="btn-boost" id="boostBtn">⬆ BOOST</button>
-    </div>
-
-    <div style="text-align:center; color:var(--text-muted); font-size:0.7rem; margin-top:6px;">
-      Boost level: <span id="boostLevel" style="color:var(--primary); font-weight:700;">0</span>
-    </div>
-  </div>
-
-  <!-- ========== INVITE SCREEN ========== -->
-  <div class="screen" id="screen-invite">
-    <div class="invite-header">
-      <h2>👥 Invite & Earn</h2>
-    </div>
-
-    <div class="invite-stats">
-      <div class="invite-stat">
-        <div class="num" id="inviteCount">0</div>
-        <div class="lbl">Total Invites</div>
-      </div>
-      <div class="invite-stat">
-        <div class="num" id="inviteBonus" style="color:#5ce0a0;">+0.0000</div>
-        <div class="lbl">Bonus Speed</div>
-      </div>
-    </div>
-
-    <div class="invite-code-box">
-      <div class="invite-code-label">YOUR REFERRAL CODE</div>
-      <div class="invite-code" id="inviteCode">BNB-7XK9</div>
-    </div>
-
-    <div class="invite-link-box">
-      <input type="text" id="inviteLinkInput" value="https://t.me/BNBMinerBot?start=BNB-7XK9" readonly>
-      <button id="copyInviteBtn">📋 Copy</button>
-    </div>
-
-    <div class="invite-rewards">
-      <div class="title">🎁 Referral Rewards</div>
-      <div class="reward-item">
-        <span>Per invite</span>
-        <span class="highlight">+0.0005 BNB/sec</span>
-      </div>
-      <div class="reward-item">
-        <span>Speed bonus active</span>
-        <span class="highlight" id="inviteRewardActive">+0.0000 BNB/sec</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========== WITHDRAW SCREEN ========== -->
-  <div class="screen" id="screen-withdraw">
-    <div class="withdraw-card">
-      <div class="title">
-        💸 Withdraw BNB
-        <span class="country-badge" id="countryBadge">🌍 Auto-Detect</span>
-      </div>
-
-      <div class="form-group">
-        <label>🌍 Withdrawal Method</label>
-        <select id="paymentMethod">
-          <optgroup label="📱 Africa">
-            <option value="mpesa">Vodacom M-Pesa (TZ)</option>
-            <option value="tigo">Tigo Pesa (TZ)</option>
-            <option value="airtel">Airtel Money (TZ)</option>
-            <option value="equitel">Equitel (Kenya)</option>
-            <option value="momo">MTN MoMo (UG)</option>
-            <option value="airtel_ug">Airtel Money (UG)</option>
-          </optgroup>
-          <optgroup label="💳 Asia">
-            <option value="gopay">GoPay (Indonesia)</option>
-            <option value="dana">DANA (Indonesia)</option>
-            <option value="gcash">GCash (Philippines)</option>
-            <option value="paymaya">PayMaya (Philippines)</option>
-            <option value="truewallet">TrueWallet (Thailand)</option>
-          </optgroup>
-          <optgroup label="🌍 Europe & Americas">
-            <option value="paypal">PayPal</option>
-            <option value="stripe">Stripe</option>
-            <option value="wise">Wise / TransferWise</option>
-            <option value="revolut">Revolut</option>
-          </optgroup>
-          <optgroup label="🌐 Crypto">
-            <option value="bnb">BNB (BSC)</option>
-            <option value="solana">Solana (SOL)</option>
-            <option value="usdt_trc20">USDT (TRC20)</option>
-            <option value="usdt_erc20">USDT (ERC20)</option>
-            <option value="bitcoin">Bitcoin (BTC)</option>
-            <option value="ethereum">Ethereum (ETH)</option>
-            <option value="ada">Cardano (ADA)</option>
-            <option value="xrp">Ripple (XRP)</option>
-            <option value="ton">TON (Telegram)</option>
-          </optgroup>
-          <optgroup label="🏦 Bank Transfer">
-            <option value="bank_swift">SWIFT International</option>
-            <option value="bank_sepa">SEPA (Europe)</option>
-            <option value="bank_ach">ACH (USA)</option>
-          </optgroup>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label>📱 Phone / Wallet Address</label>
-        <div class="phone-prefix">
-          <span id="countryPrefix">+255</span>
-          <input type="text" id="walletInput" placeholder="e.g. 796844240 or 0x...">
+    <!-- Market Price -->
+    <div class="market-price">
+        <div>
+            <div class="label">BNB / USD</div>
+            <div class="price" id="bnbPrice">$580.00</div>
         </div>
-      </div>
-
-      <div class="form-group">
-        <label>💰 Amount (BNB)</label>
-        <input type="number" id="withdrawAmount" placeholder="0.5" min="0.5" step="0.01">
-      </div>
-
-      <div class="min-withdraw-notice">
-        ⚠️ Minimum withdrawal: <strong>0.5 BNB</strong>
-      </div>
-
-      <button class="btn btn-withdraw" id="withdrawBtn">⚡ Submit Withdrawal</button>
-
-      <div class="fee-info">
-        💼 <strong>10% Fee</strong> (5% Platform + 5% BNB Network)
-        <div style="display:flex; justify-content:space-around; margin-top:4px; font-size:0.55rem;">
-          <span>You get: <strong style="color:var(--primary);">5%</strong></span>
-          <span>BNB Network: <strong style="color:var(--primary);">5%</strong></span>
+        <div style="text-align:right;">
+            <div class="change up" id="bnbChange">+2.5%</div>
+            <div class="label" id="bnbVolume">Vol: 2.4M</div>
         </div>
-        <br>
-        <span style="font-size:0.55rem;">Available: <span id="withdrawBalance" style="color:var(--primary);">0.0000</span> BNB</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========== PROFILE SCREEN ========== -->
-  <div class="screen" id="screen-profile">
-    <div class="profile-header">
-      <div class="profile-avatar">👤</div>
-      <div class="profile-info">
-        <div class="name" id="userName">BNB Miner</div>
-        <div class="level">Level: <span id="userLevel">1</span> · XP: <span id="userXP">0</span></div>
-        <div style="font-size:0.6rem; color:var(--text-muted);" id="userCountry">🌍 Global Citizen</div>
-      </div>
     </div>
 
-    <div class="settings-group">
-      <div class="title">🌍 Language</div>
-      <div class="settings-row">
-        <label>Select Language</label>
-        <select id="languageSelect">
-          <option value="en">🇬🇧 English</option>
-          <option value="sw">🇹🇿 Kiswahili</option>
-          <option value="fr">🇫🇷 Français</option>
-          <option value="es">🇪🇸 Español</option>
-          <option value="pt">🇵🇹 Português</option>
-          <option value="de">🇩🇪 Deutsch</option>
-          <option value="it">🇮🇹 Italiano</option>
-          <option value="ru">🇷🇺 Русский</option>
-          <option value="zh">🇨🇳 中文</option>
-          <option value="ja">🇯🇵 日本語</option>
-          <option value="ko">🇰🇷 한국어</option>
-          <option value="ar">🇸🇦 العربية</option>
-          <option value="hi">🇮🇳 हिन्दी</option>
-          <option value="id">🇮🇩 Bahasa Indonesia</option>
-          <option value="tl">🇵🇭 Tagalog</option>
-        </select>
-      </div>
+    <!-- Navigation -->
+    <div class="nav-tabs">
+        <button class="nav-tab active" data-screen="home">🏠</button>
+        <button class="nav-tab" data-screen="social">🌐</button>
+        <button class="nav-tab" data-screen="boost">⚡</button>
+        <button class="nav-tab" data-screen="invite">👥</button>
+        <button class="nav-tab" data-screen="withdraw">💸</button>
+        <button class="nav-tab" data-screen="profile">⚙️</button>
+        <button class="nav-tab" data-screen="ai">🤖</button>
     </div>
 
-    <div class="settings-group">
-      <div class="title">🎨 Theme Color</div>
-      <div class="settings-row">
-        <label>Pick Color</label>
-        <input type="color" id="themeColorPicker" value="#f7e05e">
-      </div>
-      <div class="settings-row" style="display:flex; gap:6px; flex-wrap:wrap; padding-top:8px;">
-        <button class="theme-btn" data-theme="default" style="background:#f7e05e; width:32px; height:32px; border-radius:50%; border:2px solid #fff; cursor:pointer;"></button>
-        <button class="theme-btn" data-theme="blue" style="background:#4a9eff; width:32px; height:32px; border-radius:50%; border:2px solid #fff; cursor:pointer;"></button>
-        <button class="theme-btn" data-theme="green" style="background:#4ae09a; width:32px; height:32px; border-radius:50%; border:2px solid #fff; cursor:pointer;"></button>
-        <button class="theme-btn" data-theme="purple" style="background:#b47aff; width:32px; height:32px; border-radius:50%; border:2px solid #fff; cursor:pointer;"></button>
-        <button class="theme-btn" data-theme="pink" style="background:#ff6b8a; width:32px; height:32px; border-radius:50%; border:2px solid #fff; cursor:pointer;"></button>
-        <button class="theme-btn" data-theme="orange" style="background:#ff9f4a; width:32px; height:32px; border-radius:50%; border:2px solid #fff; cursor:pointer;"></button>
-        <button class="theme-btn" data-theme="red" style="background:#ff4757; width:32px; height:32px; border-radius:50%; border:2px solid #fff; cursor:pointer;"></button>
-      </div>
+    <!-- ========== HOME ========== -->
+    <div class="screen active" id="screen-home">
+        <div class="miner-visual">
+            <div class="bnb-logo">🟡</div>
+            <div class="fan-container">
+                <div class="fan-ring"></div>
+                <div class="fan-blades" id="fanBlades">
+                    <div class="blade"></div>
+                    <div class="blade"></div>
+                    <div class="blade"></div>
+                    <div class="blade"></div>
+                    <div class="blade"></div>
+                </div>
+                <div class="fan-center"></div>
+            </div>
+            <div class="miner-label">⚡ BNB SOCIAL MINER</div>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-item">
+                <div class="label">⚡ Speed</div>
+                <div class="value bnb-gold" id="homeSpeed">0.00000010</div>
+            </div>
+            <div class="stat-item">
+                <div class="label">⏳ Mined</div>
+                <div class="value" id="homeMined">0.00000000</div>
+            </div>
+            <div class="stat-item">
+                <div class="label">Status</div>
+                <div class="value" id="homeStatus" style="font-size:0.65rem; color:var(--text-muted);">Idle</div>
+            </div>
+        </div>
+
+        <div class="balance-big">
+            <div class="label">💰 BNB BALANCE</div>
+            <div class="coin" id="homeBalance">0.00000000</div>
+            <div class="sub-label">≈ $<span id="usdValue">0.00</span> USD</div>
+        </div>
+
+        <div class="status-pill">
+            <span class="dot" id="statusDot"></span>
+            <span class="status-label" id="statusLabel">⏸️ Stopped</span>
+            <span class="session-time" id="sessionTime">00:00</span>
+        </div>
+
+        <button class="btn btn-primary" id="toggleMineBtn">
+            <span>▶</span> START MINING
+        </button>
     </div>
 
-    <div class="settings-group">
-      <div class="title">📊 Stats</div>
-      <div class="settings-row">
-        <label>Total Mined</label>
-        <span id="profileMined" style="color:var(--primary);">0.0000 BNB</span>
-      </div>
-      <div class="settings-row">
-        <label>Mining Speed</label>
-        <span id="profileSpeed" style="color:var(--primary);">0.0000 BNB/s</span>
-      </div>
-      <div class="settings-row">
-        <label>Invites</label>
-        <span id="profileInvites" style="color:var(--primary);">0</span>
-      </div>
-      <div class="settings-row">
-        <label>Boost Level</label>
-        <span id="profileBoost" style="color:var(--primary);">0</span>
-      </div>
-    </div>
-  </div>
+    <!-- ========== SOCIAL CONNECT ========== -->
+    <div class="screen" id="screen-social">
+        <div class="social-header">
+            <h2>🌐 Connect Social</h2>
+            <div class="earnings">Earned: <span id="socialEarnings">0.0000</span> BNB</div>
+        </div>
 
-  <!-- toast container -->
-  <div id="toastContainer" class="w-full" style="min-height:44px; margin-top:6px;"></div>
+        <div class="social-connect">
+            <!-- TikTok -->
+            <div class="social-item">
+                <div class="icon">🎵</div>
+                <div class="info">
+                    <div class="name">TikTok</div>
+                    <div class="username" id="tiktokUser">Not connected</div>
+                </div>
+                <button class="connect-btn" id="tiktokBtn">Connect</button>
+            </div>
+
+            <!-- Instagram -->
+            <div class="social-item">
+                <div class="icon">📸</div>
+                <div class="info">
+                    <div class="name">Instagram</div>
+                    <div class="username" id="instagramUser">Not connected</div>
+                </div>
+                <button class="connect-btn" id="instagramBtn">Connect</button>
+            </div>
+
+            <!-- Facebook -->
+            <div class="social-item">
+                <div class="icon">👍</div>
+                <div class="info">
+                    <div class="name">Facebook</div>
+                    <div class="username" id="facebookUser">Not connected</div>
+                </div>
+                <button class="connect-btn" id="facebookBtn">Connect</button>
+            </div>
+
+            <!-- YouTube -->
+            <div class="social-item">
+                <div class="icon">▶️</div>
+                <div class="info">
+                    <div class="name">YouTube</div>
+                    <div class="username" id="youtubeUser">Not connected</div>
+                </div>
+                <button class="connect-btn" id="youtubeBtn">Connect</button>
+            </div>
+
+            <!-- Twitter/X -->
+            <div class="social-item">
+                <div class="icon">🐦</div>
+                <div class="info">
+                    <div class="name">Twitter/X</div>
+                    <div class="username" id="twitterUser">Not connected</div>
+                </div>
+                <button class="connect-btn" id="twitterBtn">Connect</button>
+            </div>
+
+            <!-- Telegram -->
+            <div class="social-item">
+                <div class="icon">✈️</div>
+                <div class="info">
+                    <div class="name">Telegram</div>
+                    <div class="username" id="telegramUser">Not connected</div>
+                </div>
+                <button class="connect-btn" id="telegramBtn">Connect</button>
+            </div>
+        </div>
+
+        <!-- Social Rewards -->
+        <div class="social-rewards">
+            <div class="title">🎁 Social Growth Rewards</div>
+            <div class="reward-row">
+                <span>Connect 1 account</span>
+                <span class="highlight">+0.00000010 BNB/s</span>
+            </div>
+            <div class="reward-row">
+                <span>Connect 3 accounts</span>
+                <span class="highlight">+0.00000030 BNB/s</span>
+            </div>
+            <div class="reward-row">
+                <span>Connect all 6 accounts</span>
+                <span class="highlight">+0.00000100 BNB/s</span>
+            </div>
+            <div class="reward-row">
+                <span>Share your link</span>
+                <span class="highlight">+30 BNB bonus</span>
+            </div>
+            <div class="reward-progress">
+                <div class="fill" id="socialProgress" style="width:0%"></div>
+            </div>
+        </div>
+
+        <!-- Groups -->
+        <div class="groups-header">
+            <h3>👥 Community Groups</h3>
+            <button class="create-btn" id="createGroupBtn">+ Create</button>
+        </div>
+
+        <div id="groupsContainer">
+            <div class="group-card">
+                <div class="group-name">🌍 Global BNB Miners</div>
+                <div class="group-info">
+                    <span>👤 1,234 members</span>
+                    <span>⚡ +0.00000005 BNB/s</span>
+                </div>
+                <button class="join-btn">Join</button>
+            </div>
+            <div class="group-card">
+                <div class="group-name">🇹🇿 Tanzania Miners</div>
+                <div class="group-info">
+                    <span>👤 567 members</span>
+                    <span>⚡ +0.00000003 BNB/s</span>
+                </div>
+                <button class="join-btn">Join</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== BOOST ========== -->
+    <div class="screen" id="screen-boost">
+        <div class="boost-header">
+            <h2>⚡ Speed Booster</h2>
+        </div>
+
+        <div class="gpu-visual">
+            <div style="font-size:2.8rem; margin-bottom:2px;">🖥️</div>
+            <div class="gpu-speed-display" id="gpuSpeed">0.00000010</div>
+            <div class="gpu-label">BNB / second</div>
+            <div style="display:flex; gap:10px; margin-top:4px; font-size:0.55rem; color:var(--text-muted);">
+                <span>🔄 NVIDIA RTX</span>
+                <span id="gpuLevel">Lv.1</span>
+            </div>
+        </div>
+
+        <div class="boost-timer">
+            <div class="boost-timer-item">
+                <div class="num" id="estTime1">0.000006</div>
+                <div class="lbl">BNB / 1min</div>
+            </div>
+            <div class="boost-timer-item">
+                <div class="num" id="estTime10">0.000060</div>
+                <div class="lbl">BNB / 10min</div>
+            </div>
+            <div class="boost-timer-item">
+                <div class="num" id="estTime60">0.000360</div>
+                <div class="lbl">BNB / 1hr</div>
+            </div>
+        </div>
+
+        <div class="boost-card">
+            <div class="boost-info">
+                <span class="title">🚀 Upgrade Speed</span>
+                <span class="price" id="boostCostDisplay">💰 100 BNB</span>
+                <span style="font-size:0.5rem; color:var(--text-muted);">+0.00000010 BNB/s</span>
+            </div>
+            <button class="btn-boost" id="boostBtn">⬆ BOOST</button>
+        </div>
+
+        <div style="text-align:center; color:var(--text-muted); font-size:0.6rem; margin-top:4px;">
+            Boost level: <span id="boostLevel" style="color:var(--primary); font-weight:700;">0</span>
+        </div>
+    </div>
+
+    <!-- ========== INVITE ========== -->
+    <div class="screen" id="screen-invite">
+        <div class="invite-header">
+            <h2>👥 Invite & Earn</h2>
+        </div>
+
+        <div class="invite-stats">
+            <div class="invite-stat">
+                <div class="num" id="inviteCount">0</div>
+                <div class="lbl">Total Invites</div>
+            </div>
+            <div class="invite-stat">
+                <div class="num" id="inviteBonus" style="color:#5ce0a0;">+0.00000000</div>
+                <div class="lbl">Bonus Speed</div>
+            </div>
+        </div>
+
+        <div class="invite-code-box">
+            <div class="invite-code-label">YOUR REFERRAL CODE</div>
+            <div class="invite-code" id="inviteCode">BNB-7XK9</div>
+        </div>
+
+        <div class="invite-link-box">
+            <input type="text" id="inviteLinkInput" value="https://t.me/BNBMinerBot?start=BNB-7XK9" readonly>
+            <button id="copyInviteBtn">📋 Copy</button>
+        </div>
+
+        <div class="invite-rewards">
+            <div class="title">🎁 Referral Rewards</div>
+            <div class="reward-item">
+                <span>Per invite</span>
+                <span class="highlight">+0.00000010 BNB/s</span>
+            </div>
+            <div class="reward-item">
+                <span>Speed bonus active</span>
+                <span class="highlight" id="inviteRewardActive">+0.00000000 BNB/s</span>
+            </div>
+            <div class="reward-item">
+                <span>Share your link</span>
+                <span class="highlight">🎯 30 BNB Bonus</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== WITHDRAW ========== -->
+    <div class="screen" id="screen-withdraw">
+        <div class="withdraw-card">
+            <div class="title">
+                💸 Withdraw BNB
+                <span class="country-badge" id="countryBadge">🌍 Auto</span>
+            </div>
+
+            <div class="form-group">
+                <label>🌍 Select Country</label>
+                <div class="country-selector">
+                    <span class="flag" id="countryFlag">🇹🇿</span>
+                    <select id="countrySelect">
+                        <option value="TZ|+255|🇹🇿">Tanzania (+255)</option>
+                        <option value="KE|+254|🇰🇪">Kenya (+254)</option>
+                        <option value="UG|+256|🇺🇬">Uganda (+256)</option>
+                        <option value="NG|+234|🇳🇬">Nigeria (+234)</option>
+                        <option value="ZA|+27|🇿🇦">South Africa (+27)</option>
+                        <option value="EG|+20|🇪🇬">Egypt (+20)</option>
+                        <option value="GH|+233|🇬🇭">Ghana (+233)</option>
+                        <option value="IN|+91|🇮🇳">India (+91)</option>
+                        <option value="CN|+86|🇨🇳">China (+86)</option>
+                        <option value="JP|+81|🇯🇵">Japan (+81)</option>
+                        <option value="KR|+82|🇰🇷">South Korea (+82)</option>
+                        <option value="SG|+65|🇸🇬">Singapore (+65)</option>
+                        <option value="TH|+66|🇹🇭">Thailand (+66)</option>
+                        <option value="ID|+62|🇮🇩">Indonesia (+62)</option>
+                        <option value="PH|+63|🇵🇭">Philippines (+63)</option>
+                        <option value="GB|+44|🇬🇧">United Kingdom (+44)</option>
+                        <option value="US|+1|🇺🇸">USA (+1)</option>
+                        <option value="CA|+1|🇨🇦">Canada (+1)</option>
+                        <option value="AU|+61|🇦🇺">Australia (+61)</option>
+                        <option value="AE|+971|🇦🇪">UAE (+971)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>📱 Payment Method</label>
+                <select id="paymentMethod">
+                    <option value="mpesa">Vodacom M-Pesa (TZ)</option>
+                    <option value="tigo">Tigo Pesa (TZ)</option>
+                    <option value="airtel">Airtel Money (TZ)</option>
+                    <option value="equitel">Equitel (Kenya)</option>
+                    <option value="momo">MTN MoMo (UG)</option>
+                    <option value="gopay">GoPay (Indonesia)</option>
+                    <option value="gcash">GCash (Philippines)</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="wise">Wise</option>
+                    <option value="bnb">BNB (BSC)</option>
+                    <option value="solana">Solana (SOL)</option>
+                    <option value="usdt_trc20">USDT (TRC20)</option>
+                    <option value="bitcoin">Bitcoin (BTC)</option>
+                    <option value="bank_swift">SWIFT</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>📱 Phone / Wallet Address</label>
+                <div class="phone-prefix">
+                    <span id="countryPrefix">+255</span>
+                    <input type="text" id="walletInput" placeholder="e.g. 796844240">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>💰 Amount (BNB)</label>
+                <input type="number" id="withdrawAmount" placeholder="0.5" min="0.5" step="0.01">
+            </div>
+
+            <div class="min-withdraw-notice">
+                ⚠️ Minimum: <strong>0.5 BNB</strong>
+            </div>
+
+            <button class="btn btn-withdraw" id="withdrawBtn">⚡ Submit</button>
+
+            <div class="fee-info">
+                💼 <strong>10% Fee</strong> (5% Platform + 5% BNB Network)
+                <div style="display:flex; justify-content:space-around; margin-top:2px; font-size:0.45rem;">
+                    <span>You: <strong style="color:var(--primary);">5%</strong></span>
+                    <span>BNB: <strong style="color:var(--primary);">5%</strong></span>
+                </div>
+                <span style="font-size:0.45rem;">Available: <span id="withdrawBalance" style="color:var(--primary);">0.00000000</span> BNB</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== PROFILE ========== -->
+    <div class="screen" id="screen-profile">
+        <div class="profile-header">
+            <div class="profile-avatar">👤</div>
+            <div class="profile-info">
+                <div class="name" id="userName">BNB Miner</div>
+                <div class="level">Level: <span id="userLevel">1</span> · XP: <span id="userXP">0</span></div>
+                <div style="font-size:0.5rem; color:var(--text-muted);" id="userCountry">🌍 Global</div>
+            </div>
+        </div>
+
+        <div class="settings-group">
+            <div class="title">🌍 Language</div>
+            <div class="settings-row">
+                <label>Select Language</label>
+                <select id="languageSelect">
+                    <option value="en">🇬🇧 English</option>
+                    <option value="sw">🇹🇿 Kiswahili</option>
+                    <option value="fr">🇫🇷 Français</option>
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="pt">🇵🇹 Português</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                    <option value="it">🇮🇹 Italiano</option>
+                    <option value="ru">🇷🇺 Русский</option>
+                    <option value="zh">🇨🇳 中文</option>
+                    <option value="ar">🇸🇦 العربية</option>
+                    <option value="hi">🇮🇳 हिन्दी</option>
+                    <option value="id">🇮🇩 Indonesia</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="settings-group">
+            <div class="title">🎨 Theme</div>
+            <div class="settings-row">
+                <label>Pick Color</label>
+                <input type="color" id="themeColorPicker" value="#f7e05e">
+            </div>
+            <div class="theme-row">
+                <button class="theme-btn" style="background:#f7e05e;" data-color="#f7e05e"></button>
+                <button class="theme-btn" style="background:#4a9eff;" data-color="#4a9eff"></button>
+                <button class="theme-btn" style="background:#4ae09a;" data-color="#4ae09a"></button>
+                <button class="theme-btn" style="background:#b47aff;" data-color="#b47aff"></button>
+                <button class="theme-btn" style="background:#ff6b8a;" data-color="#ff6b8a"></button>
+                <button class="theme-btn" style="background:#ff9f4a;" data-color="#ff9f4a"></button>
+                <button class="theme-btn" style="background:#ff4757;" data-color="#ff4757"></button>
+            </div>
+        </div>
+
+        <div class="settings-group">
+            <div class="title">📊 Stats</div>
+            <div class="settings-row">
+                <label>Total Mined</label>
+                <span id="profileMined" style="color:var(--primary);">0.00000000 BNB</span>
+            </div>
+            <div class="settings-row">
+                <label>Mining Speed</label>
+                <span id="profileSpeed" style="color:var(--primary);">0.00000010 BNB/s</span>
+            </div>
+            <div class="settings-row">
+                <label>Invites</label>
+                <span id="profileInvites" style="color:var(--primary);">0</span>
+            </div>
+            <div class="settings-row">
+                <label>Boost Level</label>
+                <span id="profileBoost" style="color:var(--primary);">0</span>
+            </div>
+            <div class="settings-row">
+                <label>Social Connected</label>
+                <span id="profileSocial" style="color:var(--primary);">0/6</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== AI CHAT ========== -->
+    <div class="screen" id="screen-ai">
+        <div class="ai-chat">
+            <div class="ai-chat-header">
+                <span class="icon">🤖</span>
+                <span class="title">DeepSeek AI</span>
+                <span class="status">● Online</span>
+            </div>
+            <div class="ai-messages" id="aiMessages">
+                <div class="ai-message bot">
+                    👋 Hello! I'm your DeepSeek AI assistant.<br>
+                    Ask me about BNB, mining, social connect, or anything!
+                </div>
+            </div>
+            <div class="ai-input">
+                <input type="text" id="aiInput" placeholder="Ask me anything...">
+                <button id="aiSendBtn">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toastContainer" style="min-height:36px; margin-top:4px;"></div>
 
 </div>
 
 <script>
-  (function() {
-    "use strict";
+    (function() {
+        "use strict";
 
-    // ----- STATE -----
-    let balance = 0.0;
-    let miningSpeed = 0.0005;
-    let totalMined = 0.0;
-    let isMining = false;
-    let miningInterval = null;
-    let sessionInterval = null;
-    let sessionSeconds = 0;
-    let boostCount = 0;
-    let inviteCount = 0;
-    let inviteBonusSpeed = 0;
-    const INVITE_BONUS_PER = 0.0005;
-    const REFERRAL_CODE = 'BNB-7XK9';
-    const MIN_WITHDRAW = 0.5;
-    const BNB_USD_RATE = 580;
-    let boostCost = 100;
-    const BOOST_INCREMENT = 0.0005;
+        // ==================== STATE ====================
+        const BASE_SPEED = 0.00000010;
+        let balance = 0.0;
+        let miningSpeed = BASE_SPEED;
+        let totalMined = 0.0;
+        let isMining = false;
+        let miningInterval = null;
+        let sessionInterval = null;
+        let sessionSeconds = 0;
+        let boostCount = 0;
+        let inviteCount = 0;
+        let inviteBonusSpeed = 0;
+        const INVITE_BONUS_PER = 0.00000010;
+        const REFERRAL_CODE = 'BNB-7XK9';
+        const MIN_WITHDRAW = 0.5;
+        let boostCost = 100;
+        const BOOST_INCREMENT = 0.00000010;
 
-    // ----- DOM REFS -----
-    const homeBalance = document.getElementById('homeBalance');
-    const homeSpeed = document.getElementById('homeSpeed');
-    const homeMined = document.getElementById('homeMined');
-    const homeStatus = document.getElementById('homeStatus');
-    const statusDot = document.getElementById('statusDot');
-    const statusLabel = document.getElementById('statusLabel');
-    const sessionTime = document.getElementById('sessionTime');
-    const toggleBtn = document.getElementById('toggleMineBtn');
-    const fanBlades = document.getElementById('fanBlades');
-    const usdValue = document.getElementById('usdValue');
+        // Social Connect
+        let socialConnected = {
+            tiktok: false,
+            instagram: false,
+            facebook: false,
+            youtube: false,
+            twitter: false,
+            telegram: false
+        };
+        let socialEarnings = 0;
+        let socialBonusSpeed = 0;
 
-    const gpuSpeed = document.getElementById('gpuSpeed');
-    const boostCostDisplay = document.getElementById('boostCostDisplay');
-    const boostBtn = document.getElementById('boostBtn');
-    const boostLevel = document.getElementById('boostLevel');
-    const estTime1 = document.getElementById('estTime1');
-    const estTime10 = document.getElementById('estTime10');
-    const estTime60 = document.getElementById('estTime60');
+        // Groups
+        let groups = [
+            { name: '🌍 Global BNB Miners', members: 1234, bonus: 0.00000005, joined: false },
+            { name: '🇹🇿 Tanzania Miners', members: 567, bonus: 0.00000003, joined: false }
+        ];
 
-    const inviteCountEl = document.getElementById('inviteCount');
-    const inviteBonusEl = document.getElementById('inviteBonus');
-    const inviteRewardActive = document.getElementById('inviteRewardActive');
-    const inviteCodeEl = document.getElementById('inviteCode');
-    const inviteLinkInput = document.getElementById('inviteLinkInput');
-    const copyInviteBtn = document.getElementById('copyInviteBtn');
+        // Market
+        let bnbPrice = 580.00;
+        let bnbChange = 2.5;
+        let bnbVolume = 2.4;
 
-    const paymentMethod = document.getElementById('paymentMethod');
-    const walletInput = document.getElementById('walletInput');
-    const withdrawAmount = document.getElementById('withdrawAmount');
-    const withdrawBtn = document.getElementById('withdrawBtn');
-    const withdrawBalance = document.getElementById('withdrawBalance');
-    const countryBadge = document.getElementById('countryBadge');
-    const countryPrefix = document.getElementById('countryPrefix');
+        // ==================== DOM REFS ====================
+        const homeBalance = document.getElementById('homeBalance');
+        const homeSpeed = document.getElementById('homeSpeed');
+        const homeMined = document.getElementById('homeMined');
+        const homeStatus = document.getElementById('homeStatus');
+        const statusDot = document.getElementById('statusDot');
+        const statusLabel = document.getElementById('statusLabel');
+        const sessionTime = document.getElementById('sessionTime');
+        const toggleBtn = document.getElementById('toggleMineBtn');
+        const fanBlades = document.getElementById('fanBlades');
+        const usdValue = document.getElementById('usdValue');
 
-    const profileMined = document.getElementById('profileMined');
-    const profileSpeed = document.getElementById('profileSpeed');
-    const profileInvites = document.getElementById('profileInvites');
-    const profileBoost = document.getElementById('profileBoost');
-    const userLevel = document.getElementById('userLevel');
-    const userXP = document.getElementById('userXP');
-    const userCountry = document.getElementById('userCountry');
+        const bnbPriceEl = document.getElementById('bnbPrice');
+        const bnbChangeEl = document.getElementById('bnbChange');
+        const bnbVolumeEl = document.getElementById('bnbVolume');
 
-    const toastContainer = document.getElementById('toastContainer');
+        const gpuSpeed = document.getElementById('gpuSpeed');
+        const boostCostDisplay = document.getElementById('boostCostDisplay');
+        const boostBtn = document.getElementById('boostBtn');
+        const boostLevel = document.getElementById('boostLevel');
+        const estTime1 = document.getElementById('estTime1');
+        const estTime10 = document.getElementById('estTime10');
+        const estTime60 = document.getElementById('estTime60');
 
-    // ----- NAVIGATION -----
-    const tabs = document.querySelectorAll('.nav-tab');
-    const screens = {
-      home: document.getElementById('screen-home'),
-      boost: document.getElementById('screen-boost'),
-      invite: document.getElementById('screen-invite'),
-      withdraw: document.getElementById('screen-withdraw'),
-      profile: document.getElementById('screen-profile')
-    };
+        const inviteCountEl = document.getElementById('inviteCount');
+        const inviteBonusEl = document.getElementById('inviteBonus');
+        const inviteRewardActive = document.getElementById('inviteRewardActive');
+        const inviteCodeEl = document.getElementById('inviteCode');
+        const inviteLinkInput = document.getElementById('inviteLinkInput');
+        const copyInviteBtn = document.getElementById('copyInviteBtn');
 
-    tabs.forEach(tab => {
-      tab.addEventListener('click', function() {
-        tabs.forEach(t => t.classList.remove('active'));
-        this.classList.add('active');
-        const screen = this.dataset.screen;
-        Object.keys(screens).forEach(key => {
-          screens[key].classList.toggle('active', key === screen);
+        const socialEarningsEl = document.getElementById('socialEarnings');
+        const socialProgress = document.getElementById('socialProgress');
+        const profileSocial = document.getElementById('profileSocial');
+
+        const countrySelect = document.getElementById('countrySelect');
+        const countryFlag = document.getElementById('countryFlag');
+        const countryPrefix = document.getElementById('countryPrefix');
+        const countryBadge = document.getElementById('countryBadge');
+        const paymentMethod = document.getElementById('paymentMethod');
+        const walletInput = document.getElementById('walletInput');
+        const withdrawAmount = document.getElementById('withdrawAmount');
+        const withdrawBtn = document.getElementById('withdrawBtn');
+        const withdrawBalance = document.getElementById('withdrawBalance');
+
+        const profileMined = document.getElementById('profileMined');
+        const profileSpeed = document.getElementById('profileSpeed');
+        const profileInvites = document.getElementById('profileInvites');
+        const profileBoost = document.getElementById('profileBoost');
+        const userLevel = document.getElementById('userLevel');
+        const userXP = document.getElementById('userXP');
+        const userCountry = document.getElementById('userCountry');
+
+        const aiMessages = document.getElementById('aiMessages');
+        const aiInput = document.getElementById('aiInput');
+        const aiSendBtn = document.getElementById('aiSendBtn');
+
+        const toastContainer = document.getElementById('toastContainer');
+
+        // ==================== NAVIGATION ====================
+        const tabs = document.querySelectorAll('.nav-tab');
+        const screens = {
+            home: document.getElementById('screen-home'),
+            social: document.getElementById('screen-social'),
+            boost: document.getElementById('screen-boost'),
+            invite: document.getElementById('screen-invite'),
+            withdraw: document.getElementById('screen-withdraw'),
+            profile: document.getElementById('screen-profile'),
+            ai: document.getElementById('screen-ai')
+        };
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                tabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                const screen = this.dataset.screen;
+                Object.keys(screens).forEach(key => {
+                    screens[key].classList.toggle('active', key === screen);
+                });
+                refreshUI();
+            });
         });
+
+        // ==================== COUNTRY SYSTEM ====================
+        function updateCountry() {
+            const val = countrySelect.value;
+            const parts = val.split('|');
+            const code = parts[0];
+            const prefix = parts[1];
+            const flag = parts[2] || '🌍';
+            
+            countryFlag.textContent = flag;
+            countryPrefix.textContent = prefix;
+            countryBadge.textContent = `${flag} ${code}`;
+            userCountry.textContent = `${flag} ${code}`;
+        }
+
+        countrySelect.addEventListener('change', updateCountry);
+
+        function detectCountry() {
+            const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            const map = {
+                'Africa/Dar_es_Salaam': 'TZ|+255|🇹🇿',
+                'Africa/Nairobi': 'KE|+254|🇰🇪',
+                'Africa/Kampala': 'UG|+256|🇺🇬',
+                'Africa/Lagos': 'NG|+234|🇳🇬',
+                'Africa/Johannesburg': 'ZA|+27|🇿🇦',
+                'Africa/Cairo': 'EG|+20|🇪🇬',
+                'Africa/Accra': 'GH|+233|🇬🇭',
+                'Asia/Kolkata': 'IN|+91|🇮🇳',
+                'Asia/Shanghai': 'CN|+86|🇨🇳',
+                'Asia/Tokyo': 'JP|+81|🇯🇵',
+                'Asia/Seoul': 'KR|+82|🇰🇷',
+                'Asia/Singapore': 'SG|+65|🇸🇬',
+                'Asia/Bangkok': 'TH|+66|🇹🇭',
+                'Asia/Jakarta': 'ID|+62|🇮🇩',
+                'Asia/Manila': 'PH|+63|🇵🇭',
+                'Europe/London': 'GB|+44|🇬🇧',
+                'America/New_York': 'US|+1|🇺🇸',
+                'America/Toronto': 'CA|+1|🇨🇦',
+                'Australia/Sydney': 'AU|+61|🇦🇺',
+                'Asia/Dubai': 'AE|+971|🇦🇪'
+            };
+
+            let detected = 'TZ|+255|🇹🇿';
+            for (const [tz, val] of Object.entries(map)) {
+                if (timezone.includes(tz)) {
+                    detected = val;
+                    break;
+                }
+            }
+            countrySelect.value = detected;
+            updateCountry();
+        }
+        detectCountry();
+
+        // ==================== HELPERS ====================
+        function fmt(v) { return Number(v).toFixed(8); }
+        function fmtShort(v) { return Number(v).toFixed(4); }
+
+        function showToast(msg, isSuccess = false) {
+            toastContainer.innerHTML = `<div class="toast-message ${isSuccess ? 'toast-success' : ''}">${msg}</div>`;
+            if (window.toastTimeout) clearTimeout(window.toastTimeout);
+            window.toastTimeout = setTimeout(() => { toastContainer.innerHTML = ''; }, 5000);
+        }
+
+        function getTotalSpeed() {
+            return miningSpeed + (boostCount * BOOST_INCREMENT) + inviteBonusSpeed + socialBonusSpeed;
+        }
+
+        function getSocialBonus() {
+            let count = 0;
+            for (const key in socialConnected) {
+                if (socialConnected[key]) count++;
+            }
+            if (count >= 6) return 0.00000100;
+            if (count >= 3) return 0.00000030;
+            if (count >= 1) return 0.00000010;
+            return 0;
+        }
+
+        function updateEstimates() {
+            const total = getTotalSpeed();
+            if (total === 0) {
+                estTime1.textContent = '0';
+                estTime10.textContent = '0';
+                estTime60.textContent = '0';
+                return;
+            }
+            estTime1.textContent = (total * 60).toFixed(8);
+            estTime10.textContent = (total * 600).toFixed(8);
+            estTime60.textContent = (total * 3600).toFixed(8);
+        }
+
+        // ==================== MARKET ====================
+        function updateMarket() {
+            const change = (Math.random() - 0.48) * 4;
+            bnbChange = parseFloat((bnbChange + change * 0.1).toFixed(1));
+            if (bnbChange > 15) bnbChange = 15;
+            if (bnbChange < -15) bnbChange = -15;
+            
+            const priceChange = (bnbChange / 100) * bnbPrice * (Math.random() * 0.5 + 0.5);
+            bnbPrice = parseFloat((bnbPrice + priceChange).toFixed(2));
+            if (bnbPrice < 300) bnbPrice = 300;
+            if (bnbPrice > 900) bnbPrice = 900;
+
+            bnbVolume = parseFloat((bnbVolume + (Math.random() - 0.5) * 0.3).toFixed(1));
+            if (bnbVolume < 0.5) bnbVolume = 0.5;
+            if (bnbVolume > 8) bnbVolume = 8;
+
+            bnbPriceEl.textContent = `$${bnbPrice.toFixed(2)}`;
+            bnbChangeEl.textContent = `${bnbChange > 0 ? '+' : ''}${bnbChange.toFixed(1)}%`;
+            bnbChangeEl.className = `change ${bnbChange >= 0 ? 'up' : 'down'}`;
+            bnbVolumeEl.textContent = `Vol: ${bnbVolume.toFixed(1)}M`;
+            refreshUI();
+        }
+        setInterval(updateMarket, 5000);
+        updateMarket();
+
+        // ==================== REFRESH ====================
+        function refreshUI() {
+            const totalSpeed = getTotalSpeed();
+            const usdBalance = balance * bnbPrice;
+            
+            homeBalance.textContent = fmt(balance);
+            homeSpeed.textContent = fmt(totalSpeed);
+            homeMined.textContent = fmt(totalMined);
+            usdValue.textContent = usdBalance.toFixed(2);
+
+            gpuSpeed.textContent = fmt(totalSpeed);
+            boostCostDisplay.textContent = `💰 ${boostCost} BNB`;
+            boostLevel.textContent = boostCount;
+
+            inviteCountEl.textContent = inviteCount;
+            inviteBonusEl.textContent = `+${fmt(inviteBonusSpeed)}`;
+            inviteRewardActive.textContent = `+${fmt(inviteBonusSpeed)} BNB/s`;
+            withdrawBalance.textContent = fmt(balance);
+
+            // Social
+            let count = 0;
+            for (const key in socialConnected) {
+                if (socialConnected[key]) count++;
+            }
+            socialBonusSpeed = getSocialBonus();
+            socialEarningsEl.textContent = fmtShort(socialEarnings);
+            socialProgress.style.width = `${(count / 6) * 100}%`;
+            profileSocial.textContent = `${count}/6`;
+
+            profileMined.textContent = `${fmt(totalMined)} BNB`;
+            profileSpeed.textContent = `${fmt(totalSpeed)} BNB/s`;
+            profileInvites.textContent = inviteCount;
+            profileBoost.textContent = boostCount;
+
+            const level = Math.floor(totalMined / 1);
+            userLevel.textContent = level + 1;
+            userXP.textContent = Math.floor((totalMined % 1) * 100);
+
+            updateEstimates();
+        }
+
+        // ==================== MINING ====================
+        function mineTick() {
+            if (!isMining) return;
+            const totalSpeed = getTotalSpeed();
+            balance += totalSpeed;
+            totalMined += totalSpeed;
+            
+            // Social earnings accumulate
+            if (socialBonusSpeed > 0) {
+                socialEarnings += socialBonusSpeed;
+            }
+            
+            refreshUI();
+        }
+
+        function toggleMining() {
+            if (isMining) {
+                isMining = false;
+                if (miningInterval) { clearInterval(miningInterval); miningInterval = null; }
+                if (sessionInterval) { clearInterval(sessionInterval); sessionInterval = null; }
+                statusDot.classList.remove('active');
+                statusLabel.textContent = '⏸️ Stopped';
+                homeStatus.textContent = 'Idle';
+                toggleBtn.innerHTML = '<span>▶</span> START MINING';
+                toggleBtn.className = 'btn btn-primary';
+                fanBlades.classList.remove('spinning');
+            } else {
+                isMining = true;
+                sessionSeconds = 0;
+                sessionTime.textContent = '00:00';
+                miningInterval = setInterval(mineTick, 1000);
+                sessionInterval = setInterval(() => {
+                    sessionSeconds++;
+                    const m = String(Math.floor(sessionSeconds / 60)).padStart(2, '0');
+                    const s = String(sessionSeconds % 60).padStart(2, '0');
+                    sessionTime.textContent = `${m}:${s}`;
+                }, 1000);
+                statusDot.classList.add('active');
+                statusLabel.textContent = '⛏️ Mining...';
+                homeStatus.textContent = 'Active';
+                toggleBtn.innerHTML = '<span>⏹</span> STOP MINING';
+                toggleBtn.className = 'btn btn-success';
+                fanBlades.classList.add('spinning');
+                showToast('⛏️ Mining started! 0.00000010 BNB/s', true);
+            }
+            refreshUI();
+        }
+
+        // ==================== BOOST ====================
+        function handleBoost() {
+            if (balance < boostCost) {
+                showToast(`❌ Need ${boostCost} BNB!`);
+                return;
+            }
+            balance -= boostCost;
+            boostCount++;
+            boostCost = Math.floor(boostCost * 1.35);
+            if (boostCost < 100) boostCost = 100;
+            refreshUI();
+            showToast(`🚀 Speed +${BOOST_INCREMENT} BNB/s!`, true);
+        }
+
+        // ==================== SOCIAL CONNECT ====================
+        const socialPlatforms = {
+            tiktok: { name: 'TikTok', emoji: '🎵', element: 'tiktokUser', btn: 'tiktokBtn' },
+            instagram: { name: 'Instagram', emoji: '📸', element: 'instagramUser', btn: 'instagramBtn' },
+            facebook: { name: 'Facebook', emoji: '👍', element: 'facebookUser', btn: 'facebookBtn' },
+            youtube: { name: 'YouTube', emoji: '▶️', element: 'youtubeUser', btn: 'youtubeBtn' },
+            twitter: { name: 'Twitter/X', emoji: '🐦', element: 'twitterUser', btn: 'twitterBtn' },
+            telegram: { name: 'Telegram', emoji: '✈️', element: 'telegramUser', btn: 'telegramBtn' }
+        };
+
+        function connectSocial(platform) {
+            if (socialConnected[platform]) {
+                showToast(`✅ ${socialPlatforms[platform].name} already connected!`, true);
+                return;
+            }
+
+            // Simulate connection
+            const username = `${socialPlatforms[platform].name}_user_${Math.floor(Math.random() * 10000)}`;
+            socialConnected[platform] = true;
+            
+            const element = document.getElementById(socialPlatforms[platform].element);
+            element.textContent = `@${username}`;
+            
+            const btn = document.getElementById(socialPlatforms[platform].btn);
+            btn.textContent = '✅ Connected';
+            btn.className = 'connect-btn connected-btn';
+            
+            // Update bonus
+            socialBonusSpeed = getSocialBonus();
+            
+            // Give bonus for connecting
+            const bonus = 0.00000010;
+            balance += bonus;
+            showToast(`🎉 Connected ${socialPlatforms[platform].name}! +${bonus} BNB bonus!`, true);
+            
+            refreshUI();
+        }
+
+        // Social connect buttons
+        document.getElementById('tiktokBtn').addEventListener('click', () => connectSocial('tiktok'));
+        document.getElementById('instagramBtn').addEventListener('click', () => connectSocial('instagram'));
+        document.getElementById('facebookBtn').addEventListener('click', () => connectSocial('facebook'));
+        document.getElementById('youtubeBtn').addEventListener('click', () => connectSocial('youtube'));
+        document.getElementById('twitterBtn').addEventListener('click', () => connectSocial('twitter'));
+        document.getElementById('telegramBtn').addEventListener('click', () => connectSocial('telegram'));
+
+        // ==================== GROUPS ====================
+        document.getElementById('createGroupBtn').addEventListener('click', function() {
+            const name = prompt('Enter group name:');
+            if (name) {
+                groups.push({
+                    name: name,
+                    members: 1,
+                    bonus: 0.00000002,
+                    joined: true
+                });
+                renderGroups();
+                showToast(`✅ Group "${name}" created!`, true);
+            }
+        });
+
+        function renderGroups() {
+            const container = document.getElementById('groupsContainer');
+            container.innerHTML = '';
+            groups.forEach((group, index) => {
+                const div = document.createElement('div');
+                div.className = 'group-card';
+                div.innerHTML = `
+                    <div class="group-name">${group.name}</div>
+                    <div class="group-info">
+                        <span>👤 ${group.members} members</span>
+                        <span>⚡ +${group.bonus.toFixed(8)} BNB/s</span>
+                    </div>
+                    <button class="join-btn ${group.joined ? 'joined' : ''}" data-index="${index}">
+                        ${group.joined ? '✅ Joined' : 'Join'}
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+
+            // Join buttons
+            document.querySelectorAll('.join-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.dataset.index);
+                    if (!groups[index].joined) {
+                        groups[index].joined = true;
+                        groups[index].members++;
+                        // Add bonus
+                        balance += 0.00000010;
+                        showToast(`🎉 Joined ${groups[index].name}!`, true);
+                        renderGroups();
+                        refreshUI();
+                    }
+                });
+            });
+        }
+        renderGroups();
+
+        // ==================== INVITE ====================
+        function simulateInvite() {
+            inviteCount++;
+            inviteBonusSpeed = inviteCount * INVITE_BONUS_PER;
+            // Bonus for inviting
+            if (inviteCount % 5 === 0) {
+                balance += 0.5;
+                showToast(`🎉 5 invites! +0.5 BNB bonus!`, true);
+            }
+            refreshUI();
+            showToast(`🎉 Invite accepted! +${INVITE_BONUS_PER} BNB/s!`, true);
+        }
+
+        function copyInviteLink() {
+            const text = inviteLinkInput.value;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast('📋 Copied!', true);
+                }).catch(() => {
+                    inviteLinkInput.select();
+                    document.execCommand('copy');
+                    showToast('📋 Copied!', true);
+                });
+            } else {
+                inviteLinkInput.select();
+                document.execCommand('copy');
+                showToast('📋 Copied!', true);
+            }
+        }
+
+        // ==================== WITHDRAW ====================
+        function handleWithdraw() {
+            const method = paymentMethod.value;
+            let wallet = walletInput.value.trim();
+
+            const mobileMethods = ['mpesa', 'tigo', 'airtel', 'equitel', 'momo', 'gopay', 'gcash'];
+            const prefix = countryPrefix.textContent;
+
+            if (mobileMethods.includes(method) && !wallet.startsWith('+')) {
+                wallet = wallet.replace(/^\+?[0-9]{1,4}/, '');
+                wallet = wallet.replace(/\s/g, '');
+                if (wallet.length > 0) {
+                    wallet = prefix + wallet;
+                }
+            }
+
+            const amountRaw = parseFloat(withdrawAmount.value);
+
+            if (!wallet || wallet.length < 4) {
+                showToast('❌ Enter valid phone/wallet.');
+                return;
+            }
+            if (isNaN(amountRaw) || amountRaw < MIN_WITHDRAW) {
+                showToast(`❌ Min ${MIN_WITHDRAW} BNB.`);
+                return;
+            }
+            if (amountRaw > balance) {
+                showToast(`❌ You have ${fmt(balance)} BNB.`);
+                return;
+            }
+
+            const platformFee = amountRaw * 0.05;
+            const bnbFee = amountRaw * 0.05;
+            const totalFee = platformFee + bnbFee;
+            const finalAmount = amountRaw - totalFee;
+
+            balance -= amountRaw;
+            refreshUI();
+
+            const methodNames = {
+                'mpesa': 'M-Pesa', 'tigo': 'Tigo', 'airtel': 'Airtel',
+                'equitel': 'Equitel', 'momo': 'MTN MoMo', 'gopay': 'GoPay',
+                'gcash': 'GCash', 'paypal': 'PayPal', 'wise': 'Wise',
+                'bnb': 'BNB', 'solana': 'Solana', 'usdt_trc20': 'USDT',
+                'bitcoin': 'BTC', 'bank_swift': 'SWIFT'
+            };
+            const methodName = methodNames[method] || method;
+
+            showToast(
+                `✅ ${finalAmount.toFixed(4)} BNB → ${methodName}\n📱 ${wallet}\n💼 Fee: ${totalFee.toFixed(4)} BNB`,
+                true
+            );
+
+            walletInput.value = '';
+            withdrawAmount.value = '';
+        }
+
+        // ==================== AI CHAT ====================
+        const aiResponses = [
+            "BNB is at $580. Market is bullish! 📈",
+            "At 0.00000010 BNB/s, you'll mine 0.5 BNB in ~58 days.",
+            "Connect social accounts for bonus speed! 🌐",
+            "Each invite gives +0.00000010 BNB/s! 👥",
+            "Minimum withdrawal is 0.5 BNB. 💸",
+            "Groups give bonus speed. Join one! 🎯",
+            "BNB price prediction: $600-$650 soon! 📊",
+            "Keep mining 24/7 to maximize earnings! 💡"
+        ];
+
+        function sendAIMessage(userMsg) {
+            const userDiv = document.createElement('div');
+            userDiv.className = 'ai-message user';
+            userDiv.textContent = userMsg;
+            aiMessages.appendChild(userDiv);
+
+            setTimeout(() => {
+                const botDiv = document.createElement('div');
+                botDiv.className = 'ai-message bot';
+                
+                let response = aiResponses[Math.floor(Math.random() * aiResponses.length)];
+                
+                if (userMsg.toLowerCase().includes('price') || userMsg.toLowerCase().includes('bnb')) {
+                    response = `BNB is $${bnbPrice.toFixed(2)} (${bnbChange > 0 ? '+' : ''}${bnbChange.toFixed(1)}%) 💹`;
+                }
+                if (userMsg.toLowerCase().includes('speed') || userMsg.toLowerCase().includes('mine')) {
+                    const totalSpeed = getTotalSpeed();
+                    response = `Your speed: ${fmt(totalSpeed)} BNB/s. ${(totalSpeed * 3600).toFixed(8)} BNB/hour ⚡`;
+                }
+                if (userMsg.toLowerCase().includes('balance')) {
+                    response = `Balance: ${fmt(balance)} BNB ($${(balance * bnbPrice).toFixed(2)}) 💰`;
+                }
+                if (userMsg.toLowerCase().includes('social') || userMsg.toLowerCase().includes('connect')) {
+                    let count = 0;
+                    for (const key in socialConnected) {
+                        if (socialConnected[key]) count++;
+                    }
+                    response = `You have ${count}/6 social accounts connected. Bonus speed: ${fmt(getSocialBonus())} BNB/s 🌐`;
+                }
+
+                botDiv.textContent = response;
+                aiMessages.appendChild(botDiv);
+                aiMessages.scrollTop = aiMessages.scrollHeight;
+            }, 500);
+
+            aiMessages.scrollTop = aiMessages.scrollHeight;
+        }
+
+        function handleAI() {
+            const msg = aiInput.value.trim();
+            if (!msg) return;
+            sendAIMessage(msg);
+            aiInput.value = '';
+        }
+
+        aiSendBtn.addEventListener('click', handleAI);
+        aiInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') handleAI();
+        });
+
+        // ==================== THEME ====================
+        function setTheme(color) {
+            const app = document.getElementById('app');
+            app.style.setProperty('--primary', color);
+            app.style.setProperty('--primary-dark', color);
+            app.style.setProperty('--shadow-color', color + '40');
+        }
+
+        document.querySelectorAll('.theme-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const color = this.dataset.color;
+                setTheme(color);
+                document.getElementById('themeColorPicker').value = color;
+            });
+        });
+
+        document.getElementById('themeColorPicker').addEventListener('input', function() {
+            setTheme(this.value);
+        });
+
+        // ==================== LANGUAGE ====================
+        document.getElementById('languageSelect').addEventListener('change', function() {
+            const lang = this.value;
+            const names = {
+                'en': 'English', 'sw': 'Kiswahili', 'fr': 'Français',
+                'es': 'Español', 'pt': 'Português', 'de': 'Deutsch',
+                'it': 'Italiano', 'ru': 'Русский', 'zh': '中文',
+                'ar': 'العربية', 'hi': 'हिन्दी', 'id': 'Indonesia'
+            };
+            showToast(`🌍 ${names[lang] || lang}`, true);
+        });
+
+        // ==================== EVENT LISTENERS ====================
+        toggleBtn.addEventListener('click', toggleMining);
+        boostBtn.addEventListener('click', handleBoost);
+        withdrawBtn.addEventListener('click', handleWithdraw);
+        copyInviteBtn.addEventListener('click', copyInviteLink);
+        inviteCodeEl.addEventListener('click', simulateInvite);
+
+        // ==================== INIT ====================
+        inviteCodeEl.textContent = REFERRAL_CODE;
+        inviteLinkInput.value = `https://t.me/BNBMinerBot?start=${REFERRAL_CODE}`;
+
         refreshUI();
-      });
-    });
-
-    // ----- COUNTRY DETECTION (Worldwide) -----
-    function detectCountry() {
-      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      const countries = {
-        'Africa/Dar_es_Salaam': ['Tanzania', '+255', '🇹🇿'],
-        'Africa/Nairobi': ['Kenya', '+254', '🇰🇪'],
-        'Africa/Kampala': ['Uganda', '+256', '🇺🇬'],
-        'Africa/Lagos': ['Nigeria', '+234', '🇳🇬'],
-        'Africa/Johannesburg': ['South Africa', '+27', '🇿🇦'],
-        'Africa/Cairo': ['Egypt', '+20', '🇪🇬'],
-        'Africa/Accra': ['Ghana', '+233', '🇬🇭'],
-        'Africa/Casablanca': ['Morocco', '+212', '🇲🇦'],
-        'Africa/Tunis': ['Tunisia', '+216', '🇹🇳'],
-        'Asia/Dubai': ['UAE', '+971', '🇦🇪'],
-        'Asia/Kolkata': ['India', '+91', '🇮🇳'],
-        'Asia/Shanghai': ['China', '+86', '🇨🇳'],
-        'Asia/Tokyo': ['Japan', '+81', '🇯🇵'],
-        'Asia/Seoul': ['South Korea', '+82', '🇰🇷'],
-        'Asia/Singapore': ['Singapore', '+65', '🇸🇬'],
-        'Asia/Bangkok': ['Thailand', '+66', '🇹🇭'],
-        'Asia/Jakarta': ['Indonesia', '+62', '🇮🇩'],
-        'Asia/Manila': ['Philippines', '+63', '🇵🇭'],
-        'Asia/Kuala_Lumpur': ['Malaysia', '+60', '🇲🇾'],
-        'Europe/London': ['United Kingdom', '+44', '🇬🇧'],
-        'Europe/Paris': ['France', '+33', '🇫🇷'],
-        'Europe/Berlin': ['Germany', '+49', '🇩🇪'],
-        'Europe/Rome': ['Italy', '+39', '🇮🇹'],
-        'Europe/Madrid': ['Spain', '+34', '🇪🇸'],
-        'Europe/Moscow': ['Russia', '+7', '🇷🇺'],
-        'America/New_York': ['USA', '+1', '🇺🇸'],
-        'America/Los_Angeles': ['USA', '+1', '🇺🇸'],
-        'America/Chicago': ['USA', '+1', '🇺🇸'],
-        'America/Toronto': ['Canada', '+1', '🇨🇦'],
-        'America/Sao_Paulo': ['Brazil', '+55', '🇧🇷'],
-        'America/Mexico_City': ['Mexico', '+52', '🇲🇽'],
-        'America/Buenos_Aires': ['Argentina', '+54', '🇦🇷'],
-        'Australia/Sydney': ['Australia', '+61', '🇦🇺'],
-        'Pacific/Auckland': ['New Zealand', '+64', '🇳🇿']
-      };
-
-      let country = ['Tanzania', '+255', '🇹🇿'];
-      for (const [tz, data] of Object.entries(countries)) {
-        if (timezone.includes(tz)) {
-          country = data;
-          break;
-        }
-      }
-
-      countryBadge.textContent = `${country[2]} ${country[0]}`;
-      countryPrefix.textContent = country[1];
-      userCountry.textContent = `${country[2]} ${country[0]}`;
-    }
-
-    detectCountry();
-
-    // ----- HELPERS -----
-    function fmt(v) { return Number(v).toFixed(4); }
-    function showToast(msg, isSuccess = false) {
-      const cls = `toast-message ${isSuccess ? 'toast-success' : ''}`;
-      toastContainer.innerHTML = `<div class="${cls}">${msg}</div>`;
-      if (window.toastTimeout) clearTimeout(window.toastTimeout);
-      window.toastTimeout = setTimeout(() => {
-        toastContainer.innerHTML = '';
-      }, 5000);
-    }
-
-    function getTotalSpeed() {
-      return miningSpeed + (boostCount * BOOST_INCREMENT) + inviteBonusSpeed;
-    }
-
-    function updateEstimates() {
-      const total = getTotalSpeed();
-      if (total === 0) {
-        estTime1.textContent = '0';
-        estTime10.textContent = '0';
-        estTime60.textContent = '0';
-        return;
-      }
-      estTime1.textContent = (total * 60).toFixed(4);
-      estTime10.textContent = (total * 600).toFixed(4);
-      estTime60.textContent = (total * 3600).toFixed(4);
-    }
-
-    function refreshUI() {
-      const totalSpeed = getTotalSpeed();
-      homeBalance.textContent = fmt(balance);
-      homeSpeed.textContent = fmt(totalSpeed);
-      homeMined.textContent = fmt(totalMined);
-      usdValue.textContent = (balance * BNB_USD_RATE).toFixed(2);
-
-      gpuSpeed.textContent = fmt(totalSpeed);
-      boostCostDisplay.textContent = `💰 ${boostCost} BNB`;
-      boostLevel.textContent = boostCount;
-
-      inviteCountEl.textContent = inviteCount;
-      inviteBonusEl.textContent = `+${fmt(inviteBonusSpeed)}`;
-      inviteRewardActive.textContent = `+${fmt(inviteBonusSpeed)} BNB/sec`;
-      withdrawBalance.textContent = fmt(balance);
-
-      profileMined.textContent = `${fmt(totalMined)} BNB`;
-      profileSpeed.textContent = `${fmt(totalSpeed)} BNB/s`;
-      profileInvites.textContent = inviteCount;
-      profileBoost.textContent = boostCount;
-
-      // Level system (every 10 BNB mined = +1 level)
-      const level = Math.floor(totalMined / 10);
-      userLevel.textContent = level + 1;
-      userXP.textContent = Math.floor(totalMined % 10);
-
-      updateEstimates();
-    }
-
-    // ----- MINING -----
-    function mineTick() {
-      if (!isMining) return;
-      const totalSpeed = getTotalSpeed();
-      balance += totalSpeed;
-      totalMined += totalSpeed;
-      refreshUI();
-    }
-
-    function toggleMining() {
-      if (isMining) {
-        isMining = false;
-        if (miningInterval) { clearInterval(miningInterval); miningInterval = null; }
-        if (sessionInterval) { clearInterval(sessionInterval); sessionInterval = null; }
         statusDot.classList.remove('active');
-        statusLabel.textContent = '⏸️ Mining Stopped';
+        statusLabel.textContent = '⏸️ Stopped';
         homeStatus.textContent = 'Idle';
-        toggleBtn.innerHTML = '<span>▶</span> START MINING';
-        toggleBtn.className = 'btn btn-primary';
-        fanBlades.classList.remove('spinning');
-      } else {
-        isMining = true;
-        sessionSeconds = 0;
         sessionTime.textContent = '00:00';
-        miningInterval = setInterval(mineTick, 1000);
-        sessionInterval = setInterval(() => {
-          sessionSeconds++;
-          const m = String(Math.floor(sessionSeconds / 60)).padStart(2, '0');
-          const s = String(sessionSeconds % 60).padStart(2, '0');
-          sessionTime.textContent = `${m}:${s}`;
-        }, 1000);
-        statusDot.classList.add('active');
-        statusLabel.textContent = '⛏️ Mining...';
-        homeStatus.textContent = 'Active';
-        toggleBtn.innerHTML = '<span>⏹</span> STOP MINING';
-        toggleBtn.className = 'btn btn-success';
-        fanBlades.classList.add('spinning');
-        showToast('⛏️ BNB Mining started!', true);
-      }
-      refreshUI();
-    }
+        fanBlades.classList.remove('spinning');
 
-    // ----- BOOST -----
-    function handleBoost() {
-      if (balance < boostCost) {
-        showToast(`❌ Need ${boostCost} BNB!`);
-        return;
-      }
-      balance -= boostCost;
-      boostCount++;
-      boostCost = Math.floor(boostCost * 1.35);
-      if (boostCost < 100) boostCost = 100;
-      refreshUI();
-      showToast(`🚀 Speed +${BOOST_INCREMENT} BNB/sec!`, true);
-    }
+        setTimeout(() => {
+            showToast('🌍 Welcome! Connect social accounts for bonus speed! 🎯', true);
+        }, 500);
 
-    // ----- INVITE -----
-    function simulateInvite() {
-      inviteCount++;
-      inviteBonusSpeed = inviteCount * INVITE_BONUS_PER;
-      refreshUI();
-      showToast(`🎉 Invite accepted! +${INVITE_BONUS_PER} BNB/sec bonus!`, true);
-    }
-
-    function copyInviteLink() {
-      const text = inviteLinkInput.value;
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(() => {
-          showToast('📋 Copied to clipboard!', true);
-        }).catch(() => {
-          inviteLinkInput.select();
-          document.execCommand('copy');
-          showToast('📋 Copied!', true);
+        // ==================== CLEANUP ====================
+        window.addEventListener('beforeunload', function() {
+            if (miningInterval) clearInterval(miningInterval);
+            if (sessionInterval) clearInterval(sessionInterval);
         });
-      } else {
-        inviteLinkInput.select();
-        document.execCommand('copy');
-        showToast('📋 Copied!', true);
-      }
-    }
 
-    // ----- WITHDRAW -----
-    function handleWithdraw() {
-      const method = paymentMethod.value;
-      let wallet = walletInput.value.trim();
-
-      // Auto-format phone numbers
-      const mobileMethods = ['mpesa', 'tigo', 'airtel', 'equitel', 'momo', 'airtel_ug', 'gopay', 'dana', 'gcash', 'paymaya', 'truewallet'];
-      const prefix = countryPrefix.textContent;
-
-      if (mobileMethods.includes(method) && !wallet.startsWith('+')) {
-        wallet = wallet.replace(/^\+?[0-9]{1,4}/, '');
-        wallet = wallet.replace(/\s/g, '');
-        if (wallet.length > 0) {
-          wallet = prefix + wallet;
-        }
-      }
-
-      const amountRaw = parseFloat(withdrawAmount.value);
-
-      if (!wallet || wallet.length < 4) {
-        showToast('❌ Enter a valid phone number or wallet address.');
-        return;
-      }
-      if (isNaN(amountRaw) || amountRaw < MIN_WITHDRAW) {
-        showToast(`❌ Minimum withdrawal is ${MIN_WITHDRAW} BNB.`);
-        return;
-      }
-      if (amountRaw > balance) {
-        showToast(`❌ You have ${fmt(balance)} BNB.`);
-        return;
-      }
-
-      // 10% fee (5% platform + 5% BNB network)
-      const platformFee = amountRaw * 0.05;
-      const bnbFee = amountRaw * 0.05;
-      const totalFee = platformFee + bnbFee;
-      const finalAmount = amountRaw - totalFee;
-
-      balance -= amountRaw;
-      refreshUI();
-
-      const methodNames = {
-        'mpesa': 'Vodacom M-Pesa', 'tigo': 'Tigo Pesa', 'airtel': 'Airtel Money',
-        'equitel': 'Equitel', 'momo': 'MTN MoMo', 'airtel_ug': 'Airtel Money UG',
-        'gopay': 'GoPay', 'dana': 'DANA', 'gcash': 'GCash',
-        'paymaya': 'PayMaya', 'truewallet': 'TrueWallet',
-        'paypal': 'PayPal', 'stripe': 'Stripe', 'wise': 'Wise', 'revolut': 'Revolut',
-        'bnb': 'BNB', 'solana': 'Solana', 'usdt_trc20': 'USDT (TRC20)',
-        'usdt_erc20': 'USDT (ERC20)', 'bitcoin': 'Bitcoin', 'ethereum': 'Ethereum',
-        'ada': 'Cardano', 'xrp': 'Ripple', 'ton': 'TON',
-        'bank_swift': 'SWIFT', 'bank_sepa': 'SEPA', 'bank_ach': 'ACH'
-      };
-      const methodName = methodNames[method] || method.toUpperCase();
-
-      showToast(
-        `✅ ${finalAmount.toFixed(4)} BNB → ${methodName}\n` +
-        `📱 ${wallet}\n💼 Fee: ${totalFee.toFixed(4)} BNB (5% + 5%)`,
-        true
-      );
-
-      walletInput.value = '';
-      withdrawAmount.value = '';
-    }
-
-    // ----- THEME SYSTEM -----
-    function setTheme(color) {
-      const app = document.getElementById('app');
-      app.style.setProperty('--primary', color);
-      // Darken color for gradient
-      app.style.setProperty('--primary-dark', color);
-      // Update shadow
-      app.style.setProperty('--shadow-color', color + '40');
-    }
-
-    // Theme buttons
-    document.querySelectorAll('.theme-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const color = this.style.background;
-        setTheme(color);
-        document.getElementById('themeColorPicker').value = color;
-      });
-    });
-
-    // Color picker
-    document.getElementById('themeColorPicker').addEventListener('input', function() {
-      setTheme(this.value);
-    });
-
-    // ----- LANGUAGE (Simulated) -----
-    document.getElementById('languageSelect').addEventListener('change', function() {
-      const lang = this.value;
-      const langNames = {
-        'en': '🇬🇧 English', 'sw': '🇹🇿 Kiswahili', 'fr': '🇫🇷 Français',
-        'es': '🇪🇸 Español', 'pt': '🇵🇹 Português', 'de': '🇩🇪 Deutsch',
-        'it': '🇮🇹 Italiano', 'ru': '🇷🇺 Русский', 'zh': '🇨🇳 中文',
-        'ja': '🇯🇵 日本語', 'ko': '🇰🇷 한국어', 'ar': '🇸🇦 العربية',
-        'hi': '🇮🇳 हिन्दी', 'id': '🇮🇩 Bahasa Indonesia', 'tl': '🇵🇭 Tagalog'
-      };
-      showToast(`🌍 Language changed to ${langNames[lang] || lang}`, true);
-    });
-
-    // ----- EVENT LISTENERS -----
-    toggleBtn.addEventListener('click', toggleMining);
-    boostBtn.addEventListener('click', handleBoost);
-    withdrawBtn.addEventListener('click', handleWithdraw);
-    copyInviteBtn.addEventListener('click', copyInviteLink);
-    inviteCodeEl.addEventListener('click', simulateInvite);
-
-    // Payment method change
-    paymentMethod.addEventListener('change', function() {
-      const val = this.value;
-      const mobileMethods = ['mpesa', 'tigo', 'airtel', 'equitel', 'momo', 'airtel_ug', 'gopay', 'dana', 'gcash', 'paymaya', 'truewallet'];
-      if (mobileMethods.includes(val)) {
-        walletInput.placeholder = 'e.g. 796844240';
-      } else if (val.startsWith('bank')) {
-        walletInput.placeholder = 'e.g. Account number or IBAN';
-      } else {
-        walletInput.placeholder = 'e.g. 0x... or wallet address';
-      }
-    });
-
-    // ----- INIT -----
-    inviteCodeEl.textContent = REFERRAL_CODE;
-    inviteLinkInput.value = `https://t.me/BNBMinerBot?start=${REFERRAL_CODE}`;
-
-    refreshUI();
-    statusDot.classList.remove('active');
-    statusLabel.textContent = '⏸️ Mining Stopped';
-    homeStatus.textContent = 'Idle';
-    sessionTime.textContent = '00:00';
-    fanBlades.classList.remove('spinning');
-
-    setTimeout(() => {
-      showToast('🌍 Welcome to Global BNB Mining!', true);
-    }, 400);
-
-    // ----- CLEANUP -----
-    window.addEventListener('beforeunload', function() {
-      if (miningInterval) clearInterval(miningInterval);
-      if (sessionInterval) clearInterval(sessionInterval);
-    });
-
-  })();
+    })();
 </script>
 </body>
 </html>
