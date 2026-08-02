@@ -25,6 +25,12 @@
             --red: #ff4757;
         }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             background: #080e17;
             min-height: 100vh;
@@ -32,6 +38,7 @@
             align-items: center;
             justify-content: center;
             padding: 10px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         .app-container {
@@ -382,7 +389,7 @@
             border: 1px solid #6ae09a;
         }
 
-        /* SOCIAL CONNECT */
+        /* SOCIAL CONNECT - WITH LOGOS */
         .social-header {
             display: flex;
             justify-content: space-between;
@@ -424,10 +431,23 @@
         }
 
         .social-item .icon {
-            font-size: 1.6rem;
             width: 40px;
-            text-align: center;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            border-radius: 50%;
+            flex-shrink: 0;
         }
+
+        /* Social Logo Colors */
+        .social-item .icon.tiktok { background: #000; color: #00f2ea; }
+        .social-item .icon.instagram { background: radial-gradient(circle at 30% 110%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%); color: white; }
+        .social-item .icon.facebook { background: #1877f2; color: white; }
+        .social-item .icon.youtube { background: #ff0000; color: white; }
+        .social-item .icon.twitter { background: #000; color: white; }
+        .social-item .icon.telegram { background: #0088cc; color: white; }
 
         .social-item .info {
             flex: 1;
@@ -609,7 +629,7 @@
             color: var(--green);
         }
 
-        /* Boost */
+        /* Boost - FULL WIDTH BIG BAR */
         .boost-header h2 {
             color: var(--primary);
             font-size: 0.95rem;
@@ -670,23 +690,24 @@
         .boost-card {
             background: rgba(0, 20, 35, 0.5);
             border-radius: 28px;
-            padding: 10px 12px;
+            padding: 14px 16px;
             border: 1px solid var(--primary);
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
             margin: 3px 0 8px;
+            width: 100%;
         }
 
         .boost-info .title {
             font-weight: 600;
             color: var(--primary);
-            font-size: 0.75rem;
+            font-size: 0.8rem;
         }
 
         .boost-info .price {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 600;
             color: var(--primary);
         }
@@ -695,13 +716,14 @@
             background: linear-gradient(145deg, var(--primary), var(--primary-dark));
             border: 1px solid var(--primary);
             color: #0a121c;
-            padding: 5px 16px;
+            padding: 8px 24px;
             border-radius: 60px;
             font-weight: 700;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             box-shadow: 0 3px 0 #0d1a24;
             transition: 0.06s linear;
             cursor: pointer;
+            min-width: 80px;
         }
 
         .btn-boost:active {
@@ -856,6 +878,245 @@
             color: var(--primary);
             font-size: 0.55rem;
             margin-top: 4px;
+        }
+
+        /* PROFILE - WITH PHOTO */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(8, 20, 32, 0.5);
+            border-radius: 28px;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .profile-header:active {
+            transform: scale(0.98);
+        }
+
+        .profile-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #0a121c;
+            font-weight: 700;
+            flex-shrink: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-avatar .camera-icon {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: var(--primary);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            color: #0a121c;
+            border: 2px solid #0a121c;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-info .name {
+            color: var(--text-light);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .profile-info .level {
+            color: var(--text-muted);
+            font-size: 0.6rem;
+        }
+
+        .profile-info .level span {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .profile-info .edit-hint {
+            color: var(--text-muted);
+            font-size: 0.5rem;
+            opacity: 0.6;
+        }
+
+        .settings-group {
+            background: rgba(8, 20, 32, 0.3);
+            border-radius: 24px;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 8px;
+        }
+
+        .settings-group .title {
+            color: var(--text-muted);
+            font-size: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 4px;
+        }
+
+        .settings-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .settings-row:last-child {
+            border-bottom: none;
+        }
+
+        .settings-row label {
+            color: var(--text-light);
+            font-size: 0.7rem;
+        }
+
+        .settings-row select,
+        .settings-row input[type="color"] {
+            background: #0d1b28;
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            padding: 4px 10px;
+            color: var(--text-light);
+            font-size: 0.65rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .settings-row input[type="color"] {
+            width: 32px;
+            height: 32px;
+            padding: 2px;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+        }
+
+        .settings-row select option {
+            background: #0d1b28;
+        }
+
+        .theme-row {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            padding-top: 4px;
+        }
+
+        .theme-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            cursor: pointer;
+        }
+
+        .theme-btn:active {
+            transform: scale(0.9);
+        }
+
+        /* FRIENDS LIST */
+        .friends-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .friends-header h3 {
+            color: var(--text-light);
+            font-size: 0.8rem;
+        }
+
+        .friends-header .add-btn {
+            padding: 4px 14px;
+            border-radius: 30px;
+            border: none;
+            font-weight: 600;
+            font-size: 0.6rem;
+            cursor: pointer;
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            color: #0a121c;
+        }
+
+        .friends-header .add-btn:active {
+            transform: scale(0.95);
+        }
+
+        .friend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(8, 20, 32, 0.3);
+            border-radius: 40px;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 6px;
+        }
+
+        .friend-item .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: #0a121c;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .friend-item .info {
+            flex: 1;
+        }
+
+        .friend-item .info .name {
+            color: var(--text-light);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .friend-item .info .status {
+            color: var(--text-muted);
+            font-size: 0.5rem;
+        }
+
+        .friend-item .online-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+        }
+
+        .friend-item .offline-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-muted);
         }
 
         /* AI Chat */
@@ -1083,128 +1344,6 @@
             font-weight: 600;
         }
 
-        /* Profile */
-        .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(8, 20, 32, 0.5);
-            border-radius: 28px;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 10px;
-        }
-
-        .profile-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            color: #0a121c;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        .profile-info {
-            flex: 1;
-        }
-
-        .profile-info .name {
-            color: var(--text-light);
-            font-weight: 700;
-            font-size: 0.9rem;
-        }
-
-        .profile-info .level {
-            color: var(--text-muted);
-            font-size: 0.6rem;
-        }
-
-        .profile-info .level span {
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        .settings-group {
-            background: rgba(8, 20, 32, 0.3);
-            border-radius: 24px;
-            padding: 10px 12px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 8px;
-        }
-
-        .settings-group .title {
-            color: var(--text-muted);
-            font-size: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 4px;
-        }
-
-        .settings-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 4px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .settings-row:last-child {
-            border-bottom: none;
-        }
-
-        .settings-row label {
-            color: var(--text-light);
-            font-size: 0.7rem;
-        }
-
-        .settings-row select,
-        .settings-row input[type="color"] {
-            background: #0d1b28;
-            border: 1px solid var(--border-color);
-            border-radius: 30px;
-            padding: 4px 10px;
-            color: var(--text-light);
-            font-size: 0.65rem;
-            outline: none;
-            cursor: pointer;
-        }
-
-        .settings-row input[type="color"] {
-            width: 32px;
-            height: 32px;
-            padding: 2px;
-            border-radius: 50%;
-            border: 2px solid var(--border-color);
-        }
-
-        .settings-row select option {
-            background: #0d1b28;
-        }
-
-        .theme-row {
-            display: flex;
-            gap: 4px;
-            flex-wrap: wrap;
-            padding-top: 4px;
-        }
-
-        .theme-btn {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            border: 2px solid #fff;
-            cursor: pointer;
-        }
-
-        .theme-btn:active {
-            transform: scale(0.9);
-        }
-
         .toast-message {
             background: #1f2c3a;
             border-left: 5px solid var(--primary);
@@ -1238,6 +1377,7 @@
             .invite-code { font-size: 1rem; }
             .nav-tab { font-size: 0.4rem; padding: 5px 2px; min-width: 28px; }
             .market-price .price { font-size: 0.9rem; }
+            .social-item .icon { width: 32px; height: 32px; font-size: 1.4rem; }
         }
     </style>
 </head>
@@ -1251,7 +1391,7 @@
             <span style="font-size: 1rem;">🟡</span>
             <span style="color: var(--primary); font-weight: 800; font-size: 0.75rem;">BNB SOCIAL</span>
         </div>
-        <span class="bnb-badge">🌍 SOCIAL</span>
+        <span class="bnb-badge">🌍 PRO</span>
     </div>
 
     <!-- Market Price -->
@@ -1327,7 +1467,7 @@
         </button>
     </div>
 
-    <!-- ========== SOCIAL CONNECT ========== -->
+    <!-- ========== SOCIAL CONNECT WITH LOGOS ========== -->
     <div class="screen" id="screen-social">
         <div class="social-header">
             <h2>🌐 Connect Social</h2>
@@ -1337,7 +1477,7 @@
         <div class="social-connect">
             <!-- TikTok -->
             <div class="social-item">
-                <div class="icon">🎵</div>
+                <div class="icon tiktok">♬</div>
                 <div class="info">
                     <div class="name">TikTok</div>
                     <div class="username" id="tiktokUser">Not connected</div>
@@ -1347,7 +1487,7 @@
 
             <!-- Instagram -->
             <div class="social-item">
-                <div class="icon">📸</div>
+                <div class="icon instagram">📷</div>
                 <div class="info">
                     <div class="name">Instagram</div>
                     <div class="username" id="instagramUser">Not connected</div>
@@ -1357,7 +1497,7 @@
 
             <!-- Facebook -->
             <div class="social-item">
-                <div class="icon">👍</div>
+                <div class="icon facebook">f</div>
                 <div class="info">
                     <div class="name">Facebook</div>
                     <div class="username" id="facebookUser">Not connected</div>
@@ -1367,7 +1507,7 @@
 
             <!-- YouTube -->
             <div class="social-item">
-                <div class="icon">▶️</div>
+                <div class="icon youtube">▶</div>
                 <div class="info">
                     <div class="name">YouTube</div>
                     <div class="username" id="youtubeUser">Not connected</div>
@@ -1377,7 +1517,7 @@
 
             <!-- Twitter/X -->
             <div class="social-item">
-                <div class="icon">🐦</div>
+                <div class="icon twitter">🐦</div>
                 <div class="info">
                     <div class="name">Twitter/X</div>
                     <div class="username" id="twitterUser">Not connected</div>
@@ -1387,7 +1527,7 @@
 
             <!-- Telegram -->
             <div class="social-item">
-                <div class="icon">✈️</div>
+                <div class="icon telegram">✈</div>
                 <div class="info">
                     <div class="name">Telegram</div>
                     <div class="username" id="telegramUser">Not connected</div>
@@ -1446,7 +1586,7 @@
         </div>
     </div>
 
-    <!-- ========== BOOST ========== -->
+    <!-- ========== BOOST - BIG BAR ========== -->
     <div class="screen" id="screen-boost">
         <div class="boost-header">
             <h2>⚡ Speed Booster</h2>
@@ -1477,10 +1617,11 @@
             </div>
         </div>
 
+        <!-- BIG BOOST BAR - FULL WIDTH -->
         <div class="boost-card">
             <div class="boost-info">
                 <span class="title">🚀 Upgrade Speed</span>
-                <span class="price" id="boostCostDisplay">💰 100 BNB</span>
+                <span class="price" id="boostCostDisplay">💰 10 BNB</span>
                 <span style="font-size:0.5rem; color:var(--text-muted);">+0.00000010 BNB/s</span>
             </div>
             <button class="btn-boost" id="boostBtn">⬆ BOOST</button>
@@ -1622,16 +1763,23 @@
         </div>
     </div>
 
-    <!-- ========== PROFILE ========== -->
+    <!-- ========== PROFILE WITH PHOTO ========== -->
     <div class="screen" id="screen-profile">
-        <div class="profile-header">
-            <div class="profile-avatar">👤</div>
+        <div class="profile-header" id="profileClick">
+            <div class="profile-avatar" id="profileAvatar">
+                👤
+                <span class="camera-icon">📷</span>
+            </div>
             <div class="profile-info">
                 <div class="name" id="userName">BNB Miner</div>
                 <div class="level">Level: <span id="userLevel">1</span> · XP: <span id="userXP">0</span></div>
+                <div class="edit-hint">👆 Tap to edit profile</div>
                 <div style="font-size:0.5rem; color:var(--text-muted);" id="userCountry">🌍 Global</div>
             </div>
         </div>
+
+        <!-- Hidden file input for photo -->
+        <input type="file" id="photoInput" accept="image/*" style="display:none;">
 
         <div class="settings-group">
             <div class="title">🌍 Language</div>
@@ -1694,6 +1842,41 @@
                 <span id="profileSocial" style="color:var(--primary);">0/6</span>
             </div>
         </div>
+
+        <!-- Friends List -->
+        <div class="settings-group">
+            <div class="title">👥 Friends</div>
+            <div class="friends-header">
+                <h3>Your Friends</h3>
+                <button class="add-btn" id="addFriendBtn">+ Add</button>
+            </div>
+            <div id="friendsList">
+                <div class="friend-item">
+                    <div class="avatar">👤</div>
+                    <div class="info">
+                        <div class="name">Alex B.</div>
+                        <div class="status">Online · Mining</div>
+                    </div>
+                    <span class="online-dot"></span>
+                </div>
+                <div class="friend-item">
+                    <div class="avatar">👤</div>
+                    <div class="info">
+                        <div class="name">Sarah K.</div>
+                        <div class="status">Last seen 2h ago</div>
+                    </div>
+                    <span class="offline-dot"></span>
+                </div>
+                <div class="friend-item">
+                    <div class="avatar">👤</div>
+                    <div class="info">
+                        <div class="name">James M.</div>
+                        <div class="status">Online · Active</div>
+                    </div>
+                    <span class="online-dot"></span>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- ========== AI CHAT ========== -->
@@ -1741,7 +1924,7 @@
         const INVITE_BONUS_PER = 0.00000010;
         const REFERRAL_CODE = 'BNB-7XK9';
         const MIN_WITHDRAW = 0.5;
-        let boostCost = 100;
+        let boostCost = 10; // Reduced from 100 to 10 BNB
         const BOOST_INCREMENT = 0.00000010;
 
         // Social Connect
@@ -1756,10 +1939,21 @@
         let socialEarnings = 0;
         let socialBonusSpeed = 0;
 
+        // Profile
+        let profilePhoto = null;
+        let userName = 'BNB Miner';
+
         // Groups
         let groups = [
             { name: '🌍 Global BNB Miners', members: 1234, bonus: 0.00000005, joined: false },
             { name: '🇹🇿 Tanzania Miners', members: 567, bonus: 0.00000003, joined: false }
+        ];
+
+        // Friends
+        let friends = [
+            { name: 'Alex B.', status: 'Online · Mining', online: true },
+            { name: 'Sarah K.', status: 'Last seen 2h ago', online: false },
+            { name: 'James M.', status: 'Online · Active', online: true }
         ];
 
         // Market
@@ -1819,6 +2013,10 @@
         const userLevel = document.getElementById('userLevel');
         const userXP = document.getElementById('userXP');
         const userCountry = document.getElementById('userCountry');
+        const profileAvatar = document.getElementById('profileAvatar');
+        const profileClick = document.getElementById('profileClick');
+        const photoInput = document.getElementById('photoInput');
+        const userNameEl = document.getElementById('userName');
 
         const aiMessages = document.getElementById('aiMessages');
         const aiInput = document.getElementById('aiInput');
@@ -2014,7 +2212,6 @@
             balance += totalSpeed;
             totalMined += totalSpeed;
             
-            // Social earnings accumulate
             if (socialBonusSpeed > 0) {
                 socialEarnings += socialBonusSpeed;
             }
@@ -2063,20 +2260,20 @@
             }
             balance -= boostCost;
             boostCount++;
-            boostCost = Math.floor(boostCost * 1.35);
-            if (boostCost < 100) boostCost = 100;
+            boostCost = Math.floor(boostCost * 1.2); // Slower increase
+            if (boostCost < 10) boostCost = 10;
             refreshUI();
             showToast(`🚀 Speed +${BOOST_INCREMENT} BNB/s!`, true);
         }
 
         // ==================== SOCIAL CONNECT ====================
         const socialPlatforms = {
-            tiktok: { name: 'TikTok', emoji: '🎵', element: 'tiktokUser', btn: 'tiktokBtn' },
-            instagram: { name: 'Instagram', emoji: '📸', element: 'instagramUser', btn: 'instagramBtn' },
-            facebook: { name: 'Facebook', emoji: '👍', element: 'facebookUser', btn: 'facebookBtn' },
-            youtube: { name: 'YouTube', emoji: '▶️', element: 'youtubeUser', btn: 'youtubeBtn' },
-            twitter: { name: 'Twitter/X', emoji: '🐦', element: 'twitterUser', btn: 'twitterBtn' },
-            telegram: { name: 'Telegram', emoji: '✈️', element: 'telegramUser', btn: 'telegramBtn' }
+            tiktok: { name: 'TikTok', element: 'tiktokUser', btn: 'tiktokBtn' },
+            instagram: { name: 'Instagram', element: 'instagramUser', btn: 'instagramBtn' },
+            facebook: { name: 'Facebook', element: 'facebookUser', btn: 'facebookBtn' },
+            youtube: { name: 'YouTube', element: 'youtubeUser', btn: 'youtubeBtn' },
+            twitter: { name: 'Twitter/X', element: 'twitterUser', btn: 'twitterBtn' },
+            telegram: { name: 'Telegram', element: 'telegramUser', btn: 'telegramBtn' }
         };
 
         function connectSocial(platform) {
@@ -2085,7 +2282,6 @@
                 return;
             }
 
-            // Simulate connection
             const username = `${socialPlatforms[platform].name}_user_${Math.floor(Math.random() * 10000)}`;
             socialConnected[platform] = true;
             
@@ -2096,10 +2292,8 @@
             btn.textContent = '✅ Connected';
             btn.className = 'connect-btn connected-btn';
             
-            // Update bonus
             socialBonusSpeed = getSocialBonus();
             
-            // Give bonus for connecting
             const bonus = 0.00000010;
             balance += bonus;
             showToast(`🎉 Connected ${socialPlatforms[platform].name}! +${bonus} BNB bonus!`, true);
@@ -2107,13 +2301,30 @@
             refreshUI();
         }
 
-        // Social connect buttons
         document.getElementById('tiktokBtn').addEventListener('click', () => connectSocial('tiktok'));
         document.getElementById('instagramBtn').addEventListener('click', () => connectSocial('instagram'));
         document.getElementById('facebookBtn').addEventListener('click', () => connectSocial('facebook'));
         document.getElementById('youtubeBtn').addEventListener('click', () => connectSocial('youtube'));
         document.getElementById('twitterBtn').addEventListener('click', () => connectSocial('twitter'));
         document.getElementById('telegramBtn').addEventListener('click', () => connectSocial('telegram'));
+
+        // ==================== PROFILE PHOTO ====================
+        profileClick.addEventListener('click', function() {
+            photoInput.click();
+        });
+
+        photoInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    profileAvatar.innerHTML = `<img src="${event.target.result}" alt="Profile">`;
+                    profileAvatar.style.background = 'none';
+                    showToast('📸 Profile photo updated!', true);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
 
         // ==================== GROUPS ====================
         document.getElementById('createGroupBtn').addEventListener('click', function() {
@@ -2149,14 +2360,12 @@
                 container.appendChild(div);
             });
 
-            // Join buttons
             document.querySelectorAll('.join-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const index = parseInt(this.dataset.index);
                     if (!groups[index].joined) {
                         groups[index].joined = true;
                         groups[index].members++;
-                        // Add bonus
                         balance += 0.00000010;
                         showToast(`🎉 Joined ${groups[index].name}!`, true);
                         renderGroups();
@@ -2167,11 +2376,43 @@
         }
         renderGroups();
 
+        // ==================== FRIENDS ====================
+        document.getElementById('addFriendBtn').addEventListener('click', function() {
+            const name = prompt('Enter friend\'s name:');
+            if (name) {
+                friends.push({
+                    name: name,
+                    status: 'Online · Active',
+                    online: true
+                });
+                renderFriends();
+                showToast(`✅ ${name} added as friend!`, true);
+            }
+        });
+
+        function renderFriends() {
+            const container = document.getElementById('friendsList');
+            container.innerHTML = '';
+            friends.forEach((friend) => {
+                const div = document.createElement('div');
+                div.className = 'friend-item';
+                div.innerHTML = `
+                    <div class="avatar">👤</div>
+                    <div class="info">
+                        <div class="name">${friend.name}</div>
+                        <div class="status">${friend.status}</div>
+                    </div>
+                    <span class="${friend.online ? 'online-dot' : 'offline-dot'}"></span>
+                `;
+                container.appendChild(div);
+            });
+        }
+        renderFriends();
+
         // ==================== INVITE ====================
         function simulateInvite() {
             inviteCount++;
             inviteBonusSpeed = inviteCount * INVITE_BONUS_PER;
-            // Bonus for inviting
             if (inviteCount % 5 === 0) {
                 balance += 0.5;
                 showToast(`🎉 5 invites! +0.5 BNB bonus!`, true);
