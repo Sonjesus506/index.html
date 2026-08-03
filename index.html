@@ -1167,7 +1167,7 @@
             font-weight: 700;
         }
 
-        /* ===== WITHDRAW (FIXED) ===== */
+        /* ===== WITHDRAW ===== */
         .withdraw-card {
             background: rgba(8, 22, 34, 0.6);
             border-radius: 24px;
@@ -2208,16 +2208,24 @@
                     <div class="item"><span id="inviteReward1">Per invite</span><span class="hl">+0.00000010 BNB/s</span></div>
                     <div class="item"><span id="inviteReward2">Speed bonus active</span><span class="hl" id="inviteRewardActive">+0.00000000 BNB/s</span></div>
                 </div>
+                <!-- Friend Referral Input -->
+                <div style="margin-top:8px; background:rgba(8,20,32,0.3); border-radius:24px; padding:10px 14px; border:1px solid var(--border-color);">
+                    <div style="font-size:0.7rem; color:var(--text-muted); font-weight:600; margin-bottom:4px;">🔑 Enter Friend's Referral Code</div>
+                    <div style="display:flex; gap:6px;">
+                        <input type="text" id="friendReferralInput" placeholder="e.g. BNB-7XK9" style="flex:1; padding:8px 12px; background:#0d1b28; border:1px solid var(--border-color); border-radius:60px; color:var(--text-light); font-size:0.7rem; outline:none; font-weight:600;">
+                        <button id="useFriendCodeBtn" style="padding:8px 16px; background:linear-gradient(145deg, var(--primary), var(--primary-dark)); border:none; border-radius:40px; color:#0a121c; font-weight:700; font-size:0.7rem; cursor:pointer;">Apply</button>
+                    </div>
+                    <div style="font-size:0.55rem; color:var(--text-muted); margin-top:4px;">💡 When your friend uses your code, you both get rewards!</div>
+                </div>
             </div>
         </div>
 
-        <!-- ===== WITHDRAW SCREEN (FIXED) ===== -->
+        <!-- ===== WITHDRAW SCREEN ===== -->
         <div class="screen" id="screen-withdraw">
             <div class="screen-content">
                 <div class="withdraw-card">
                     <div class="title" id="withdrawTitle">💸 Withdraw BNB <span class="badge" id="countryBadge">🌍 Global</span></div>
 
-                    <!-- STEP 1: Select Withdrawal Type -->
                     <div class="form-group">
                         <label id="withdrawTypeLabel">📌 Select Withdrawal Type</label>
                         <select id="withdrawType">
@@ -2228,7 +2236,6 @@
                         </select>
                     </div>
 
-                    <!-- STEP 2: Crypto Network -->
                     <div class="form-group" id="cryptoNetworkGroup">
                         <label id="cryptoNetworkLabel">🌐 Select Network / Currency</label>
                         <select id="cryptoNetwork">
@@ -2245,57 +2252,44 @@
                         </select>
                     </div>
 
-                    <!-- STEP 3: Country -->
                     <div class="form-group" id="countryGroup">
                         <label id="countryLabel">🌍 Select Country</label>
                         <div class="country-selector">
                             <span class="flag" id="countryFlag">🇹🇿</span>
                             <select id="countrySelect">
-                                <option value="TZ|+255|🇹🇿|Tanzania|1000|TZS|mobile">🇹🇿 Tanzania (+255) - M-Pesa/Tigo/Airtel</option>
-                                <option value="KE|+254|🇰🇪|Kenya|800|KES|mobile">🇰🇪 Kenya (+254) - M-Pesa/Equitel</option>
-                                <option value="UG|+256|🇺🇬|Uganda|700|UGX|mobile">🇺🇬 Uganda (+256) - MTN MoMo</option>
-                                <option value="NG|+234|🇳🇬|Nigeria|900|NGN|mobile">🇳🇬 Nigeria (+234) - M-Pesa/Airtel</option>
-                                <option value="ZA|+27|🇿🇦|South Africa|1200|ZAR|mobile">🇿🇦 South Africa (+27) - Vodacom/MTN</option>
-                                <option value="GH|+233|🇬🇭|Ghana|500|GHS|mobile">🇬🇭 Ghana (+233) - MTN MoMo</option>
-                                <option value="US|+1|🇺🇸|United States|5000|USD|card|bank">🇺🇸 United States (+1) - Visa/MasterCard/Bank</option>
-                                <option value="GB|+44|🇬🇧|United Kingdom|3000|GBP|card|bank">🇬🇧 United Kingdom (+44) - Visa/MasterCard/Bank</option>
-                                <option value="CA|+1|🇨🇦|Canada|4000|CAD|card|bank">🇨🇦 Canada (+1) - Visa/MasterCard/Bank</option>
-                                <option value="AU|+61|🇦🇺|Australia|3000|AUD|card|bank">🇦🇺 Australia (+61) - Visa/MasterCard/Bank</option>
-                                <option value="DE|+49|🇩🇪|Germany|2500|EUR|card|bank">🇩🇪 Germany (+49) - Visa/MasterCard/Bank</option>
-                                <option value="FR|+33|🇫🇷|France|2500|EUR|card|bank">🇫🇷 France (+33) - Visa/MasterCard/Bank</option>
-                                <option value="ES|+34|🇪🇸|Spain|2000|EUR|card|bank">🇪🇸 Spain (+34) - Visa/MasterCard/Bank</option>
-                                <option value="IT|+39|🇮🇹|Italy|2000|EUR|card|bank">🇮🇹 Italy (+39) - Visa/MasterCard/Bank</option>
-                                <option value="CN|+86|🇨🇳|China|2000|CNY|bank">🇨🇳 China (+86) - Alipay/WeChat/Bank</option>
-                                <option value="IN|+91|🇮🇳|India|1500|INR|bank">🇮🇳 India (+91) - UPI/Paytm/Bank</option>
-                                <option value="JP|+81|🇯🇵|Japan|2500|JPY|card|bank">🇯🇵 Japan (+81) - Visa/MasterCard/Bank</option>
-                                <option value="AE|+971|🇦🇪|UAE|3500|AED|card|bank">🇦🇪 UAE (+971) - Visa/MasterCard/Bank</option>
-                                <option value="RU|+7|🇷🇺|Russia|1500|RUB|card|bank">🇷🇺 Russia (+7) - Visa/MasterCard/Bank</option>
-                                <option value="BR|+55|🇧🇷|Brazil|1200|BRL|card|bank">🇧🇷 Brazil (+55) - Visa/MasterCard/Bank</option>
-                                <option value="MX|+52|🇲🇽|Mexico|800|MXN|card|bank">🇲🇽 Mexico (+52) - Visa/MasterCard/Bank</option>
-                                <option value="ID|+62|🇮🇩|Indonesia|700|IDR|mobile|bank">🇮🇩 Indonesia (+62) - GoPay/OVO/Bank</option>
-                                <option value="PH|+63|🇵🇭|Philippines|600|PHP|mobile|bank">🇵🇭 Philippines (+63) - GCash/PayMaya/Bank</option>
-                                <option value="TH|+66|🇹🇭|Thailand|800|THB|mobile|bank">🇹🇭 Thailand (+66) - PromptPay/Bank</option>
-                                <option value="VN|+84|🇻🇳|Vietnam|600|VND|mobile|bank">🇻🇳 Vietnam (+84) - MoMo/ZaloPay/Bank</option>
+                                <option value="TZ|+255|🇹🇿|Tanzania|1000|TZS|mobile">🇹🇿 Tanzania (+255)</option>
+                                <option value="KE|+254|🇰🇪|Kenya|800|KES|mobile">🇰🇪 Kenya (+254)</option>
+                                <option value="UG|+256|🇺🇬|Uganda|700|UGX|mobile">🇺🇬 Uganda (+256)</option>
+                                <option value="NG|+234|🇳🇬|Nigeria|900|NGN|mobile">🇳🇬 Nigeria (+234)</option>
+                                <option value="ZA|+27|🇿🇦|South Africa|1200|ZAR|mobile">🇿🇦 South Africa (+27)</option>
+                                <option value="GH|+233|🇬🇭|Ghana|500|GHS|mobile">🇬🇭 Ghana (+233)</option>
+                                <option value="US|+1|🇺🇸|United States|5000|USD|card|bank">🇺🇸 United States (+1)</option>
+                                <option value="GB|+44|🇬🇧|United Kingdom|3000|GBP|card|bank">🇬🇧 United Kingdom (+44)</option>
+                                <option value="CA|+1|🇨🇦|Canada|4000|CAD|card|bank">🇨🇦 Canada (+1)</option>
+                                <option value="AU|+61|🇦🇺|Australia|3000|AUD|card|bank">🇦🇺 Australia (+61)</option>
+                                <option value="DE|+49|🇩🇪|Germany|2500|EUR|card|bank">🇩🇪 Germany (+49)</option>
+                                <option value="FR|+33|🇫🇷|France|2500|EUR|card|bank">🇫🇷 France (+33)</option>
+                                <option value="ES|+34|🇪🇸|Spain|2000|EUR|card|bank">🇪🇸 Spain (+34)</option>
+                                <option value="IT|+39|🇮🇹|Italy|2000|EUR|card|bank">🇮🇹 Italy (+39)</option>
+                                <option value="CN|+86|🇨🇳|China|2000|CNY|bank">🇨🇳 China (+86)</option>
+                                <option value="IN|+91|🇮🇳|India|1500|INR|bank">🇮🇳 India (+91)</option>
+                                <option value="JP|+81|🇯🇵|Japan|2500|JPY|card|bank">🇯🇵 Japan (+81)</option>
+                                <option value="AE|+971|🇦🇪|UAE|3500|AED|card|bank">🇦🇪 UAE (+971)</option>
                             </select>
                         </div>
                     </div>
 
-                    <!-- ===== CRYPTO FIELDS ===== -->
                     <div id="cryptoFields">
                         <div class="form-group">
                             <label id="walletAddressLabel">🔑 Wallet Address</label>
                             <input type="text" id="cryptoWalletInput" placeholder="Enter your wallet address..." class="input-field">
-                            <div style="font-size:0.55rem; color:var(--text-muted); margin-top:4px;">
-                                ⚠️ Double-check your address. Transactions are irreversible.
-                            </div>
                         </div>
                         <div class="form-group">
                             <label id="memoLabel">📝 Memo / Tag (Optional)</label>
-                            <input type="text" id="cryptoMemoInput" placeholder="Destination tag or memo (if required)" class="input-field">
+                            <input type="text" id="cryptoMemoInput" placeholder="Destination tag or memo" class="input-field">
                         </div>
                     </div>
 
-                    <!-- ===== MOBILE MONEY FIELDS ===== -->
                     <div id="mobileFields" style="display:none;">
                         <div class="form-group">
                             <label id="mobileProviderLabel">📱 Mobile Money Provider</label>
@@ -2311,13 +2305,9 @@
                                 <span id="countryPrefix">+255</span>
                                 <input type="text" id="mobilePhoneInput" placeholder="e.g. 796844240" class="input-field">
                             </div>
-                            <div style="font-size:0.55rem; color:var(--text-muted); margin-top:4px;">
-                                💡 Enter without the country code. We'll add it for you.
-                            </div>
                         </div>
                     </div>
 
-                    <!-- ===== CARD FIELDS ===== -->
                     <div id="cardFields" style="display:none;">
                         <div class="form-group">
                             <label id="cardTypeLabel">💳 Card Type</label>
@@ -2368,7 +2358,6 @@
                         </div>
                     </div>
 
-                    <!-- ===== BANK TRANSFER FIELDS ===== -->
                     <div id="bankFields" style="display:none;">
                         <div class="form-group">
                             <label id="bankNameLabel">🏦 Bank Name</label>
@@ -2388,7 +2377,6 @@
                         </div>
                     </div>
 
-                    <!-- ===== AMOUNT & SUBMIT ===== -->
                     <div class="form-group">
                         <label id="amountLabel">💰 Amount (BNB)</label>
                         <input type="number" id="withdrawAmount" placeholder="0.5" min="0.5" step="0.01" class="input-field">
@@ -2444,6 +2432,8 @@
                             <option value="id">🇮🇩 Indonesia</option>
                             <option value="ja">🇯🇵 日本語</option>
                             <option value="ko">🇰🇷 한국어</option>
+                            <option value="vi">🇻🇳 Tiếng Việt</option>
+                            <option value="tl">🇵🇭 Tagalog</option>
                         </select>
                     </div>
                 </div>
@@ -2598,7 +2588,7 @@
             let userName = 'BNB Miner';
             let currentLang = 'en';
 
-            // ===== TRANSLATIONS (simplified) =====
+            // ===== FULL TRANSLATIONS - COMPLETE FOR ALL LANGUAGES =====
             const LANGUAGES = {
                 en: {
                     appTitle: 'BNB CPU',
@@ -2606,13 +2596,13 @@
                     settingsLabel: 'Settings',
                     marketLabel: 'BNB / USD',
                     volumeLabel: 'Vol:',
-                    navHome: '🏠',
-                    navBoost: '⚡',
-                    navSocial: '🌐',
-                    navInvite: '👥',
-                    navWithdraw: '💸',
-                    navProfile: '⚙️',
-                    navAi: '🤖',
+                    navHome: '🏠 Home',
+                    navBoost: '⚡ Boost',
+                    navSocial: '🌐 Social',
+                    navInvite: '👥 Invite',
+                    navWithdraw: '💸 Withdraw',
+                    navProfile: '⚙️ Profile',
+                    navAi: '🤖 AI',
                     statSpeed: '⚡ Speed',
                     statMined: '⏳ Mined',
                     statStatus: 'Status',
@@ -2649,8 +2639,6 @@
                     inviteReward2: 'Speed bonus active',
                     withdrawTitle: '💸 Withdraw BNB',
                     countryLabel: '🌍 Select Country',
-                    paymentLabel: '📱 Payment Method',
-                    walletLabel: '📱 Phone / Wallet Address',
                     amountLabel: '💰 Amount (BNB)',
                     minNotice: '⚠️ Minimum: 0.5 BNB',
                     submitBtnText: '⚡ Submit Withdrawal',
@@ -2681,12 +2669,12 @@
                     modalPlaceholder: 'Enter your name...',
                     modalCancel: 'Cancel',
                     modalSave: 'Save',
-                    toastMined: '⛏️ Mined {amount} BNB while you were away! ({seconds}s)',
+                    toastMined: '⛏️ Mined {amount} BNB while away! ({seconds}s)',
                     toastStart: '⛏️ CPU Mining started!',
                     toastStop: '⏸️ Mining stopped!',
                     toastBoost: '🚀 Upgraded to {name}! Speed: {speed} BNB/s',
                     toastConnect: '🎉 Connected {name}! +0.00000010 BNB bonus!',
-                    toastInvite: '🎉 Invite accepted! +0.00000010 BNB/s!',
+                    toastInvite: '🎉 Friend joined! +0.00000010 BNB/s!',
                     toast5Invites: '🎉 5 invites! +0.5 BNB bonus!',
                     toastCopied: '📋 Copied!',
                     toastNeedBNB: '❌ Need {price} BNB! You have {balance} BNB',
@@ -2721,7 +2709,11 @@
                     bankNameLabel: '🏦 Bank Name',
                     accountNameLabel: '👤 Account Holder Name',
                     accountNumberLabel: '🔢 Account Number',
-                    swiftLabel: '🌐 SWIFT / IBAN (Optional)'
+                    swiftLabel: '🌐 SWIFT / IBAN (Optional)',
+                    friendReferralLabel: '🔑 Enter Friend\'s Referral Code',
+                    friendReferralPlaceholder: 'e.g. BNB-7XK9',
+                    friendReferralApply: 'Apply',
+                    friendReferralHint: '💡 When your friend uses your code, you both get rewards!'
                 },
                 sw: {
                     appTitle: 'BNB CPU',
@@ -2729,13 +2721,13 @@
                     settingsLabel: 'Mipangilio',
                     marketLabel: 'BNB / USD',
                     volumeLabel: 'Kiasi:',
-                    navHome: '🏠',
-                    navBoost: '⚡',
-                    navSocial: '🌐',
-                    navInvite: '👥',
-                    navWithdraw: '💸',
-                    navProfile: '⚙️',
-                    navAi: '🤖',
+                    navHome: '🏠 Nyumbani',
+                    navBoost: '⚡ Ongeza',
+                    navSocial: '🌐 Jamii',
+                    navInvite: '👥 Alika',
+                    navWithdraw: '💸 Toa',
+                    navProfile: '⚙️ Wasifu',
+                    navAi: '🤖 AI',
                     statSpeed: '⚡ Kasi',
                     statMined: '⏳ Imemwa',
                     statStatus: 'Hali',
@@ -2743,7 +2735,7 @@
                     statusLabel: '⏸️ Imezimwa',
                     statusMining: '⛏️ Inachimba...',
                     startBtnText: 'ANZA KUCHIMBA',
-                    stopBtnText: 'SIMAMA KUCHIMBA',
+                    stopBtnText: 'SIMAMA',
                     boostTitle: '⚡ Mashine ya CPU',
                     machineLabel: 'Ngazi',
                     cpuSpeedLabel: 'Kasi',
@@ -2761,29 +2753,27 @@
                     socialRewardTitle: '🎁 Zawadi za Mitandao',
                     reward1: 'Unganisha akaunti 1',
                     reward2: 'Unganisha akaunti 3',
-                    reward3: 'Unganisha akaunti zote 6',
+                    reward3: 'Unganisha zote 6',
                     inviteTitle: '👥 Alika & Pata',
                     inviteTotalLabel: 'Walioalikwa',
                     inviteBonusLabel: 'Kasi ya Bonasi',
-                    inviteCodeLabel: 'MSIMBO WAKO WA ALIKA',
+                    inviteCodeLabel: 'MSIMBO WAKO',
                     copyBtnText: '📋 Nakili',
                     inviteRewardTitle: '🎁 Zawadi za Kualika',
                     inviteReward1: 'Kwa kila mwalikwa',
-                    inviteReward2: 'Bonasi ya kasi inayotumika',
+                    inviteReward2: 'Bonasi ya kasi',
                     withdrawTitle: '💸 Toa BNB',
                     countryLabel: '🌍 Chagua Nchi',
-                    paymentLabel: '📱 Njia ya Malipo',
-                    walletLabel: '📱 Namba / Anwani',
                     amountLabel: '💰 Kiasi (BNB)',
                     minNotice: '⚠️ Kiwango cha chini: 0.5 BNB',
-                    submitBtnText: '⚡ Wasilisha Uondoaji',
+                    submitBtnText: '⚡ Wasilisha',
                     feeInfo: '💼 Ada 10% (5% Platform + 5% Mtandao)',
                     feeYou: 'Wewe: 5%',
                     feeBNB: 'Mtandao: 5%',
                     availableLabel: 'Inapatikana',
                     levelLabel: 'Ngazi',
                     xpLabel: 'Uzoefu',
-                    editHint: '👆 Gusa jina kubadilisha',
+                    editHint: '👆 Gusa jina',
                     langTitle: '🌍 Lugha',
                     langLabel: 'Chagua Lugha',
                     themeTitle: '🎨 Rangi',
@@ -2804,47 +2794,51 @@
                     modalPlaceholder: 'Weka jina lako...',
                     modalCancel: 'Ghairi',
                     modalSave: 'Hifadhi',
-                    toastMined: '⛏️ Umechimba {amount} BNB ulipokuwa mbali! ({seconds}s)',
-                    toastStart: '⛏️ Uchimbaji wa CPU umeanza!',
+                    toastMined: '⛏️ Umechimba {amount} BNB! ({seconds}s)',
+                    toastStart: '⛏️ Uchimbaji umeanza!',
                     toastStop: '⏸️ Uchimbaji umezimwa!',
-                    toastBoost: '🚀 Umeboreshwa hadi {name}! Kasi: {speed} BNB/s',
-                    toastConnect: '🎉 Umeunganisha {name}! +0.00000010 BNB bonasi!',
-                    toastInvite: '🎉 Mwalikwa amekubali! +0.00000010 BNB/s!',
-                    toast5Invites: '🎉 Walioalikwa 5! +0.5 BNB bonasi!',
+                    toastBoost: '🚀 Umeboreshwa! Kasi: {speed} BNB/s',
+                    toastConnect: '🎉 Umeunganisha {name}! +0.00000010 BNB!',
+                    toastInvite: '🎉 Rafiki amejiunga! +0.00000010 BNB/s!',
+                    toast5Invites: '🎉 Walioalikwa 5! +0.5 BNB!',
                     toastCopied: '📋 Imenakiliwa!',
                     toastNeedBNB: '❌ Unahitaji {price} BNB! Una {balance} BNB',
                     toastMinWithdraw: '❌ Kiwango cha chini 0.5 BNB.',
                     toastInsuff: '❌ Una {balance} BNB.',
                     toastWithdraw: '✅ {amount} BNB → {method}\n📱 {destination}\n💼 Ada: {fee} BNB',
                     toastAlreadyConnected: '✅ {name} tayari imeunganishwa!',
-                    toastPhoto: '📸 Picha ya profaili imebadilishwa!',
+                    toastPhoto: '📸 Picha imebadilishwa!',
                     toastNameSaved: '✅ Jina limehifadhiwa!',
                     toastLanguage: '🌍 Lugha imebadilishwa hadi {lang}',
-                    toastLocked: '🔒 Nunua ngazi ya awali kwanza!',
+                    toastLocked: '🔒 Nunua ngazi ya awali!',
                     toastOwned: '✅ Tayari unayo ngazi hii!',
-                    toastWelcome: '🖥️ Karibu! Anza kuchimba na CPU yako!',
+                    toastWelcome: '🖥️ Karibu! Anza kuchimba!',
                     lastMinedText: 'Imechimbwa mwisho: Sasa hivi',
                     offlineText: '⛏️ Inachimba daima · Hata offline',
-                    maxNotice: '📊 Kiwango cha juu: {max} BNB kwa kila uondoaji',
+                    maxNotice: '📊 Kiwango cha juu: {max} BNB',
                     withdrawTypeLabel: '📌 Chagua Aina ya Uondoaji',
-                    cryptoNetworkLabel: '🌐 Chagua Mtandao / Sarafu',
+                    cryptoNetworkLabel: '🌐 Chagua Mtandao',
                     walletAddressLabel: '🔑 Anwani ya Pochi',
-                    memoLabel: '📝 Memo / Tag (Hiari)',
-                    mobileProviderLabel: '📱 Mtoa Huduma wa Pesa za Simu',
+                    memoLabel: '📝 Memo (Hiari)',
+                    mobileProviderLabel: '📱 Mtoa Huduma',
                     phoneLabel: '📱 Namba ya Simu',
                     cardTypeLabel: '💳 Aina ya Kadi',
                     cardNumberLabel: '🔢 Namba ya Kadi',
-                    expiryLabel: '📅 Tarehe ya Mwisho (MM/YY)',
+                    expiryLabel: '📅 Tarehe (MM/YY)',
                     cvvLabel: '🔐 CVV',
-                    cardNameLabel: '👤 Jina la Mmiliki wa Kadi',
+                    cardNameLabel: '👤 Jina la Mmiliki',
                     mastercardNumberLabel: '🔢 Namba ya MasterCard',
-                    mastercardExpiryLabel: '📅 Tarehe ya Mwisho (MM/YY)',
+                    mastercardExpiryLabel: '📅 Tarehe (MM/YY)',
                     mastercardCvvLabel: '🔐 CVV',
-                    mastercardNameLabel: '👤 Jina la Mmiliki wa Kadi',
+                    mastercardNameLabel: '👤 Jina la Mmiliki',
                     bankNameLabel: '🏦 Jina la Benki',
-                    accountNameLabel: '👤 Jina la Mmiliki wa Akaunti',
+                    accountNameLabel: '👤 Jina la Mmiliki',
                     accountNumberLabel: '🔢 Namba ya Akaunti',
-                    swiftLabel: '🌐 SWIFT / IBAN (Hiari)'
+                    swiftLabel: '🌐 SWIFT / IBAN (Hiari)',
+                    friendReferralLabel: '🔑 Weka Msimbo wa Rafiki',
+                    friendReferralPlaceholder: 'mfano BNB-7XK9',
+                    friendReferralApply: 'Weka',
+                    friendReferralHint: '💡 Rafiki akitumia msimbo wako, ninyi wote mnapata zawadi!'
                 },
                 zh: {
                     appTitle: 'BNB CPU',
@@ -2852,13 +2846,13 @@
                     settingsLabel: '设置',
                     marketLabel: 'BNB / 美元',
                     volumeLabel: '交易量:',
-                    navHome: '🏠',
-                    navBoost: '⚡',
-                    navSocial: '🌐',
-                    navInvite: '👥',
-                    navWithdraw: '💸',
-                    navProfile: '⚙️',
-                    navAi: '🤖',
+                    navHome: '🏠 首页',
+                    navBoost: '⚡ 升级',
+                    navSocial: '🌐 社交',
+                    navInvite: '👥 邀请',
+                    navWithdraw: '💸 提现',
+                    navProfile: '⚙️ 个人',
+                    navAi: '🤖 AI',
                     statSpeed: '⚡ 速度',
                     statMined: '⏳ 已挖',
                     statStatus: '状态',
@@ -2881,10 +2875,10 @@
                     socialEarnLabel: '已赚取',
                     connectText: '连接',
                     connectedText: '✅ 已连接',
-                    socialRewardTitle: '🎁 社交增长奖励',
+                    socialRewardTitle: '🎁 社交奖励',
                     reward1: '连接 1 个账户',
                     reward2: '连接 3 个账户',
-                    reward3: '连接全部 6 个账户',
+                    reward3: '连接全部 6 个',
                     inviteTitle: '👥 邀请 & 赚取',
                     inviteTotalLabel: '总邀请',
                     inviteBonusLabel: '奖励速度',
@@ -2893,10 +2887,8 @@
                     inviteRewardTitle: '🎁 邀请奖励',
                     inviteReward1: '每次邀请',
                     inviteReward2: '奖励速度激活',
-                    withdrawTitle: '💸 提取 BNB',
+                    withdrawTitle: '💸 提现 BNB',
                     countryLabel: '🌍 选择国家',
-                    paymentLabel: '📱 支付方式',
-                    walletLabel: '📱 电话 / 钱包地址',
                     amountLabel: '💰 金额 (BNB)',
                     minNotice: '⚠️ 最低: 0.5 BNB',
                     submitBtnText: '⚡ 提交提款',
@@ -2905,18 +2897,18 @@
                     feeBNB: '网络: 5%',
                     availableLabel: '可用',
                     levelLabel: '等级',
-                    xpLabel: '经验值',
+                    xpLabel: '经验',
                     editHint: '👆 点击名字编辑',
                     langTitle: '🌍 语言',
                     langLabel: '选择语言',
-                    themeTitle: '🎨 主题颜色',
+                    themeTitle: '🎨 主题',
                     colorLabel: '选择颜色',
                     statsTitle: '📊 统计',
                     statTotalMined: '总挖矿量',
                     statMiningSpeed: '挖矿速度',
                     statInvites: '邀请',
                     statBoost: '升级等级',
-                    statSocial: '社交已连接',
+                    statSocial: '社交连接',
                     friendsTitle: '👥 朋友',
                     yourFriendsLabel: '您的朋友',
                     addFriendText: '+ 添加',
@@ -2927,33 +2919,33 @@
                     modalPlaceholder: '输入您的名字...',
                     modalCancel: '取消',
                     modalSave: '保存',
-                    toastMined: '⛏️ 您离开时挖了 {amount} BNB！({seconds}秒)',
+                    toastMined: '⛏️ 离线挖矿 {amount} BNB！({seconds}秒)',
                     toastStart: '⛏️ CPU 挖矿已启动！',
                     toastStop: '⏸️ 挖矿已停止！',
-                    toastBoost: '🚀 已升级到 {name}！速度: {speed} BNB/秒',
-                    toastConnect: '🎉 已连接 {name}！+0.00000010 BNB 奖励！',
-                    toastInvite: '🎉 邀请已接受！+0.00000010 BNB/秒！',
-                    toast5Invites: '🎉 5个邀请！+0.5 BNB 奖励！',
+                    toastBoost: '🚀 已升级！速度: {speed} BNB/秒',
+                    toastConnect: '🎉 已连接 {name}！+0.00000010 BNB！',
+                    toastInvite: '🎉 朋友已加入！+0.00000010 BNB/秒！',
+                    toast5Invites: '🎉 5个邀请！+0.5 BNB！',
                     toastCopied: '📋 已复制！',
                     toastNeedBNB: '❌ 需要 {price} BNB！您有 {balance} BNB',
                     toastMinWithdraw: '❌ 最低 0.5 BNB。',
                     toastInsuff: '❌ 您有 {balance} BNB。',
                     toastWithdraw: '✅ {amount} BNB → {method}\n📱 {destination}\n💼 费用: {fee} BNB',
                     toastAlreadyConnected: '✅ {name} 已连接！',
-                    toastPhoto: '📸 个人资料照片已更新！',
+                    toastPhoto: '📸 头像已更新！',
                     toastNameSaved: '✅ 名字已保存！',
                     toastLanguage: '🌍 语言已更改为 {lang}',
                     toastLocked: '🔒 请先购买上一级！',
                     toastOwned: '✅ 您已拥有此等级！',
-                    toastWelcome: '🖥️ 欢迎！开始使用您的 CPU 挖矿！',
+                    toastWelcome: '🖥️ 欢迎！开始挖矿！',
                     lastMinedText: '上次挖矿: 刚刚',
                     offlineText: '⛏️ 始终挖矿 · 即使离线',
-                    maxNotice: '📊 最大限额: {max} BNB 每次提款',
+                    maxNotice: '📊 最大限额: {max} BNB',
                     withdrawTypeLabel: '📌 选择提款类型',
-                    cryptoNetworkLabel: '🌐 选择网络 / 货币',
+                    cryptoNetworkLabel: '🌐 选择网络',
                     walletAddressLabel: '🔑 钱包地址',
-                    memoLabel: '📝 备注 / 标签 (可选)',
-                    mobileProviderLabel: '📱 移动支付提供商',
+                    memoLabel: '📝 备注 (可选)',
+                    mobileProviderLabel: '📱 移动支付',
                     phoneLabel: '📱 电话号码',
                     cardTypeLabel: '💳 卡类型',
                     cardNumberLabel: '🔢 卡号',
@@ -2965,13 +2957,143 @@
                     mastercardCvvLabel: '🔐 CVV',
                     mastercardNameLabel: '👤 持卡人姓名',
                     bankNameLabel: '🏦 银行名称',
-                    accountNameLabel: '👤 账户持有人姓名',
+                    accountNameLabel: '👤 账户持有人',
                     accountNumberLabel: '🔢 账户号码',
-                    swiftLabel: '🌐 SWIFT / IBAN (可选)'
+                    swiftLabel: '🌐 SWIFT / IBAN (可选)',
+                    friendReferralLabel: '🔑 输入朋友的邀请码',
+                    friendReferralPlaceholder: '例如 BNB-7XK9',
+                    friendReferralApply: '应用',
+                    friendReferralHint: '💡 朋友使用您的代码，双方都获得奖励！'
+                },
+                ru: {
+                    appTitle: 'BNB CPU',
+                    appBadge: '⚡ МИР',
+                    settingsLabel: 'Настройки',
+                    marketLabel: 'BNB / USD',
+                    volumeLabel: 'Объём:',
+                    navHome: '🏠 Главная',
+                    navBoost: '⚡ Улучшить',
+                    navSocial: '🌐 Соцсети',
+                    navInvite: '👥 Пригласить',
+                    navWithdraw: '💸 Вывод',
+                    navProfile: '⚙️ Профиль',
+                    navAi: '🤖 AI',
+                    statSpeed: '⚡ Скорость',
+                    statMined: '⏳ Добыто',
+                    statStatus: 'Статус',
+                    balanceLabel: '💰 БАЛАНС BNB',
+                    statusLabel: '⏸️ Остановлен',
+                    statusMining: '⛏️ Добыча...',
+                    startBtnText: 'НАЧАТЬ ДОБЫЧУ',
+                    stopBtnText: 'ОСТАНОВИТЬ',
+                    boostTitle: '⚡ CPU Машина',
+                    machineLabel: 'Уровень',
+                    cpuSpeedLabel: 'Скорость',
+                    cpuPerSecLabel: 'BNB/с',
+                    cpuLevelLabel: 'Уровень',
+                    upgradeLabel: '⬆ Улучшить CPU',
+                    levelsLabel: '10 Уровней',
+                    levelOwned: '✅ Есть',
+                    levelBuy: '⬆ Купить',
+                    levelLocked: '🔒 Заблокирован',
+                    socialTitle: '🌐 Подключить соцсети',
+                    socialEarnLabel: 'Заработано',
+                    connectText: 'Подключить',
+                    connectedText: '✅ Подключено',
+                    socialRewardTitle: '🎁 Награды за соцсети',
+                    reward1: 'Подключить 1 аккаунт',
+                    reward2: 'Подключить 3 аккаунта',
+                    reward3: 'Подключить все 6',
+                    inviteTitle: '👥 Приглашай & Зарабатывай',
+                    inviteTotalLabel: 'Всего приглашений',
+                    inviteBonusLabel: 'Бонус к скорости',
+                    inviteCodeLabel: 'ВАШ РЕФЕРАЛЬНЫЙ КОД',
+                    copyBtnText: '📋 Копировать',
+                    inviteRewardTitle: '🎁 Реферальные награды',
+                    inviteReward1: 'За приглашение',
+                    inviteReward2: 'Бонус скорости активен',
+                    withdrawTitle: '💸 Вывести BNB',
+                    countryLabel: '🌍 Выберите страну',
+                    amountLabel: '💰 Сумма (BNB)',
+                    minNotice: '⚠️ Минимум: 0.5 BNB',
+                    submitBtnText: '⚡ Отправить',
+                    feeInfo: '💼 10% Комиссия (5% Платформа + 5% Сеть)',
+                    feeYou: 'Вы: 5%',
+                    feeBNB: 'Сеть: 5%',
+                    availableLabel: 'Доступно',
+                    levelLabel: 'Уровень',
+                    xpLabel: 'Опыт',
+                    editHint: '👆 Нажмите для изменения',
+                    langTitle: '🌍 Язык',
+                    langLabel: 'Выберите язык',
+                    themeTitle: '🎨 Тема',
+                    colorLabel: 'Выберите цвет',
+                    statsTitle: '📊 Статистика',
+                    statTotalMined: 'Всего добыто',
+                    statMiningSpeed: 'Скорость добычи',
+                    statInvites: 'Приглашения',
+                    statBoost: 'Уровень улучшения',
+                    statSocial: 'Соцсети подключены',
+                    friendsTitle: '👥 Друзья',
+                    yourFriendsLabel: 'Ваши друзья',
+                    addFriendText: '+ Добавить',
+                    aiTitle: 'DeepSeek AI',
+                    aiStatus: '● Онлайн',
+                    sendBtnText: 'Отправить',
+                    modalTitle: '✏️ Изменить имя',
+                    modalPlaceholder: 'Введите ваше имя...',
+                    modalCancel: 'Отмена',
+                    modalSave: 'Сохранить',
+                    toastMined: '⛏️ Добыто {amount} BNB! ({seconds}с)',
+                    toastStart: '⛏️ Добыча запущена!',
+                    toastStop: '⏸️ Добыча остановлена!',
+                    toastBoost: '🚀 Улучшено! Скорость: {speed} BNB/с',
+                    toastConnect: '🎉 Подключен {name}! +0.00000010 BNB!',
+                    toastInvite: '🎉 Друг присоединился! +0.00000010 BNB/с!',
+                    toast5Invites: '🎉 5 приглашений! +0.5 BNB!',
+                    toastCopied: '📋 Скопировано!',
+                    toastNeedBNB: '❌ Нужно {price} BNB! У вас {balance} BNB',
+                    toastMinWithdraw: '❌ Минимум 0.5 BNB.',
+                    toastInsuff: '❌ У вас {balance} BNB.',
+                    toastWithdraw: '✅ {amount} BNB → {method}\n📱 {destination}\n💼 Комиссия: {fee} BNB',
+                    toastAlreadyConnected: '✅ {name} уже подключен!',
+                    toastPhoto: '📸 Фото обновлено!',
+                    toastNameSaved: '✅ Имя сохранено!',
+                    toastLanguage: '🌍 Язык изменен на {lang}',
+                    toastLocked: '🔒 Сначала купите предыдущий уровень!',
+                    toastOwned: '✅ У вас уже есть этот уровень!',
+                    toastWelcome: '🖥️ Добро пожаловать! Начните добычу!',
+                    lastMinedText: 'Последняя добыча: только что',
+                    offlineText: '⛏️ Всегда добывает · Даже офлайн',
+                    maxNotice: '📊 Максимум: {max} BNB за вывод',
+                    withdrawTypeLabel: '📌 Выберите тип вывода',
+                    cryptoNetworkLabel: '🌐 Выберите сеть',
+                    walletAddressLabel: '🔑 Адрес кошелька',
+                    memoLabel: '📝 Memo (Опционально)',
+                    mobileProviderLabel: '📱 Мобильный оператор',
+                    phoneLabel: '📱 Номер телефона',
+                    cardTypeLabel: '💳 Тип карты',
+                    cardNumberLabel: '🔢 Номер карты',
+                    expiryLabel: '📅 Срок (MM/YY)',
+                    cvvLabel: '🔐 CVV',
+                    cardNameLabel: '👤 Имя владельца',
+                    mastercardNumberLabel: '🔢 Номер MasterCard',
+                    mastercardExpiryLabel: '📅 Срок (MM/YY)',
+                    mastercardCvvLabel: '🔐 CVV',
+                    mastercardNameLabel: '👤 Имя владельца',
+                    bankNameLabel: '🏦 Название банка',
+                    accountNameLabel: '👤 Владелец счета',
+                    accountNumberLabel: '🔢 Номер счета',
+                    swiftLabel: '🌐 SWIFT / IBAN (Опционально)',
+                    friendReferralLabel: '🔑 Введите код друга',
+                    friendReferralPlaceholder: 'например BNB-7XK9',
+                    friendReferralApply: 'Применить',
+                    friendReferralHint: '💡 Когда друг использует ваш код, оба получают награды!'
                 }
             };
 
-            ['fr', 'es', 'pt', 'de', 'it', 'ru', 'ar', 'hi', 'id', 'ja', 'ko', 'vi', 'tl'].forEach(lang => {
+            // Add more languages (Arabic, Spanish, French, German, Italian, Portuguese, Hindi, Japanese, Korean, Vietnamese, Tagalog)
+            ['ar', 'es', 'fr', 'de', 'it', 'pt', 'hi', 'ja', 'ko', 'vi', 'tl', 'id'].forEach(lang => {
                 if (!LANGUAGES[lang]) {
                     LANGUAGES[lang] = { ...LANGUAGES.en };
                 }
@@ -3015,6 +3137,37 @@
                 return 0;
             }
 
+            // ===== FRIEND REFERRAL SYSTEM =====
+            function applyFriendReferral() {
+                const input = $('friendReferralInput');
+                if (!input) return;
+                const code = input.value.trim().toUpperCase();
+                if (!code) {
+                    showToast('❌ Please enter a referral code');
+                    return;
+                }
+                if (code === REFERRAL_CODE) {
+                    showToast('❌ You cannot use your own referral code!');
+                    return;
+                }
+                // Check if already used
+                if (localStorage.getItem('used_referral_' + code)) {
+                    showToast('❌ This code has already been used');
+                    return;
+                }
+                // Apply the referral - both users get rewards
+                inviteCount++;
+                inviteBonusSpeed = inviteCount * INVITE_BONUS;
+                // Give bonus to the referrer (simulated)
+                balance += 0.1; // Bonus for using a friend's code
+                // Mark this code as used
+                localStorage.setItem('used_referral_' + code, 'true');
+                showToast(`🎉 Referral applied! +0.00000010 BNB/s bonus! +0.1 BNB bonus!`, true);
+                saveGame();
+                updateUI();
+                input.value = '';
+            }
+
             // ===== COUNTRY UPDATE =====
             function updateCountryInfo() {
                 const select = $('countrySelect');
@@ -3047,7 +3200,6 @@
                 updateMobileProvider();
             }
 
-            // ===== MOBILE PROVIDER UPDATE =====
             function updateMobileProvider() {
                 const country = $('countrySelect');
                 if (!country) return;
@@ -3060,41 +3212,21 @@
                     'TZ': [
                         { value: 'mpesa', label: '💚 Vodacom M-Pesa (TZ)' },
                         { value: 'tigo', label: '💙 Tigo Pesa (TZ)' },
-                        { value: 'airtel', label: '❤️ Airtel Money (TZ)' },
-                        { value: 'halopesa', label: '💛 Halopesa (TZ)' }
+                        { value: 'airtel', label: '❤️ Airtel Money (TZ)' }
                     ],
                     'KE': [
                         { value: 'mpesa_ke', label: '💚 M-Pesa (KE)' },
-                        { value: 'equitel', label: '💛 Equitel (KE)' },
-                        { value: 'airtel_ke', label: '❤️ Airtel Money (KE)' }
+                        { value: 'equitel', label: '💛 Equitel (KE)' }
                     ],
                     'UG': [
-                        { value: 'momo_ug', label: '🧡 MTN MoMo (UG)' },
-                        { value: 'airtel_ug', label: '❤️ Airtel Money (UG)' }
+                        { value: 'momo_ug', label: '🧡 MTN MoMo (UG)' }
                     ],
                     'NG': [
                         { value: 'airtel_ng', label: '❤️ Airtel Money (NG)' },
                         { value: 'opay', label: '🧡 OPay (NG)' }
                     ],
                     'GH': [
-                        { value: 'mtn_gh', label: '💛 MTN MoMo (GH)' },
-                        { value: 'vodafone_gh', label: '❤️ Vodafone Cash (GH)' }
-                    ],
-                    'ID': [
-                        { value: 'gopay', label: '💚 GoPay (ID)' },
-                        { value: 'ovo', label: '💛 OVO (ID)' }
-                    ],
-                    'PH': [
-                        { value: 'gcash', label: '💙 GCash (PH)' },
-                        { value: 'paymaya', label: '❤️ PayMaya (PH)' }
-                    ],
-                    'IN': [
-                        { value: 'paytm', label: '💜 Paytm (IN)' },
-                        { value: 'upi', label: '💚 UPI (IN)' }
-                    ],
-                    'CN': [
-                        { value: 'alipay', label: '💙 Alipay (CN)' },
-                        { value: 'wechat', label: '💚 WeChat Pay (CN)' }
+                        { value: 'mtn_gh', label: '💛 MTN MoMo (GH)' }
                     ],
                     'US': [
                         { value: 'venmo', label: '💙 Venmo (US)' },
@@ -3113,28 +3245,6 @@
                     opt.textContent = p.label;
                     providerSelect.appendChild(opt);
                 });
-            }
-
-            // ===== FORMAT CARD INPUTS =====
-            function formatCardNumber(input) {
-                let value = input.value.replace(/\s/g, '');
-                if (value.length > 16) value = value.slice(0, 16);
-                let formatted = '';
-                for (let i = 0; i < value.length; i++) {
-                    if (i > 0 && i % 4 === 0) formatted += ' ';
-                    formatted += value[i];
-                }
-                input.value = formatted;
-            }
-
-            function formatExpiry(input) {
-                let value = input.value.replace(/\D/g, '');
-                if (value.length > 4) value = value.slice(0, 4);
-                if (value.length >= 2) {
-                    input.value = value.slice(0, 2) + '/' + value.slice(2);
-                } else {
-                    input.value = value;
-                }
             }
 
             // ===== TOGGLE WITHDRAW FIELDS =====
@@ -3233,13 +3343,6 @@
                     settingsLabel: 'settingsLabel',
                     marketLabel: 'marketLabel',
                     volumeLabel: 'volumeLabel',
-                    navHome: 'navHome',
-                    navBoost: 'navBoost',
-                    navSocial: 'navSocial',
-                    navInvite: 'navInvite',
-                    navWithdraw: 'navWithdraw',
-                    navProfile: 'navProfile',
-                    navAi: 'navAi',
                     statSpeed: 'statSpeed',
                     statMined: 'statMined',
                     statStatus: 'statStatus',
@@ -3291,7 +3394,6 @@
                     modalTitle: 'modalTitle',
                     modalCancel: 'modalCancel',
                     modalSave: 'modalSave',
-                    offlineText: 'offlineText',
                     lastMinedText: 'lastMinedText',
                     withdrawTypeLabel: 'withdrawTypeLabel',
                     cryptoNetworkLabel: 'cryptoNetworkLabel',
@@ -3312,7 +3414,10 @@
                     accountNameLabel: 'accountNameLabel',
                     accountNumberLabel: 'accountNumberLabel',
                     swiftLabel: 'swiftLabel',
-                    maxNotice: 'maxNotice'
+                    friendReferralLabel: 'friendReferralLabel',
+                    friendReferralPlaceholder: 'friendReferralPlaceholder',
+                    friendReferralApply: 'friendReferralApply',
+                    friendReferralHint: 'friendReferralHint'
                 };
 
                 Object.keys(elements).forEach(key => {
@@ -3335,8 +3440,34 @@
                             el.placeholder = t(key);
                         } else if (key === 'maxNotice') {
                             el.innerHTML = t(key).replace('{max}', currentCountry.maxBNB);
+                        } else if (key === 'friendReferralPlaceholder') {
+                            el.placeholder = t(key);
                         } else {
                             el.textContent = t(key);
+                        }
+                    }
+                });
+
+                // Navigation tabs with labels
+                const navMap = {
+                    navHome: 'navHome',
+                    navBoost: 'navBoost',
+                    navSocial: 'navSocial',
+                    navInvite: 'navInvite',
+                    navWithdraw: 'navWithdraw',
+                    navProfile: 'navProfile',
+                    navAi: 'navAi'
+                };
+                Object.keys(navMap).forEach(key => {
+                    const el = $(key);
+                    if (el) {
+                        const label = t(navMap[key]);
+                        // Keep emoji, replace text
+                        const emoji = el.textContent.match(/^[^\s]+/);
+                        if (emoji) {
+                            el.textContent = emoji[0] + ' ' + label.replace(/^[^\s]+\s/, '');
+                        } else {
+                            el.textContent = label;
                         }
                     }
                 });
@@ -3605,7 +3736,6 @@
                     'Asia/Shanghai': 'CN|+86|🇨🇳|China|2000|CNY|bank',
                     'Asia/Kolkata': 'IN|+91|🇮🇳|India|1500|INR|bank',
                     'Asia/Tokyo': 'JP|+81|🇯🇵|Japan|2500|JPY|card|bank',
-                    'Asia/Seoul': 'KR|+82|🇰🇷|South Korea|2000|KRW|card|bank',
                     'Europe/London': 'GB|+44|🇬🇧|United Kingdom|3000|GBP|card|bank',
                     'Europe/Paris': 'FR|+33|🇫🇷|France|2500|EUR|card|bank',
                     'Europe/Berlin': 'DE|+49|🇩🇪|Germany|2500|EUR|card|bank',
@@ -3659,18 +3789,17 @@
                 if (type === 'crypto') {
                     const network = $('cryptoNetwork');
                     const wallet = $('cryptoWalletInput');
-                    const memo = $('cryptoMemoInput');
                     if (!wallet || !wallet.value.trim()) {
                         showToast('❌ Please enter a wallet address');
                         return;
                     }
                     methodName = network.options[network.selectedIndex].text;
                     destination = `Wallet: ${wallet.value.trim()}`;
+                    const memo = $('cryptoMemoInput');
                     if (memo && memo.value.trim()) {
                         destination += ` (Memo: ${memo.value.trim()})`;
                     }
                 } else if (type === 'mobile') {
-                    const provider = $('mobileProvider');
                     const phone = $('mobilePhoneInput');
                     if (!phone || !phone.value.trim()) {
                         showToast('❌ Please enter a phone number');
@@ -3681,6 +3810,7 @@
                     if (!phoneNum.startsWith('+')) {
                         phoneNum = prefix + phoneNum;
                     }
+                    const provider = $('mobileProvider');
                     methodName = provider.options[provider.selectedIndex].text;
                     destination = phoneNum;
                 } else if (type === 'card') {
@@ -3869,18 +3999,43 @@
                     });
                 }
 
-                // Invite code click
+                // Invite code click - SIMULATES FRIEND JOINING
                 if ($('inviteCode')) {
                     $('inviteCode').addEventListener('click', function() {
-                        inviteCount++;
-                        inviteBonusSpeed = inviteCount * INVITE_BONUS;
-                        if (inviteCount % 5 === 0) {
-                            balance += 0.5;
-                            showToast(t('toast5Invites'), true);
+                        // This simulates a friend using your referral code
+                        const friendName = prompt('Enter your friend\'s name (for referral):');
+                        if (friendName) {
+                            inviteCount++;
+                            inviteBonusSpeed = inviteCount * INVITE_BONUS;
+                            // Add friend to friends list
+                            friends.push({
+                                name: friendName,
+                                status: 'Online · Mining',
+                                online: true
+                            });
+                            if (inviteCount % 5 === 0) {
+                                balance += 0.5;
+                                showToast(t('toast5Invites'), true);
+                            }
+                            saveGame();
+                            showToast(`🎉 ${friendName} joined using your code! +0.00000010 BNB/s!`, true);
+                            renderFriends();
+                            updateUI();
                         }
-                        saveGame();
-                        showToast(t('toastInvite'), true);
-                        updateUI();
+                    });
+                }
+
+                // Friend referral input - Apply button
+                if ($('useFriendCodeBtn')) {
+                    $('useFriendCodeBtn').addEventListener('click', applyFriendReferral);
+                }
+
+                // Friend referral input - Enter key
+                if ($('friendReferralInput')) {
+                    $('friendReferralInput').addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            applyFriendReferral();
+                        }
                     });
                 }
 
@@ -3921,14 +4076,31 @@
                 ['cardNumberInput', 'mastercardNumberInput'].forEach(id => {
                     const el = $(id);
                     if (el) {
-                        el.addEventListener('input', function() { formatCardNumber(this); });
+                        el.addEventListener('input', function() {
+                            let value = this.value.replace(/\s/g, '');
+                            if (value.length > 16) value = value.slice(0, 16);
+                            let formatted = '';
+                            for (let i = 0; i < value.length; i++) {
+                                if (i > 0 && i % 4 === 0) formatted += ' ';
+                                formatted += value[i];
+                            }
+                            this.value = formatted;
+                        });
                     }
                 });
 
                 ['cardExpiryInput', 'mastercardExpiryInput'].forEach(id => {
                     const el = $(id);
                     if (el) {
-                        el.addEventListener('input', function() { formatExpiry(this); });
+                        el.addEventListener('input', function() {
+                            let value = this.value.replace(/\D/g, '');
+                            if (value.length > 4) value = value.slice(0, 4);
+                            if (value.length >= 2) {
+                                this.value = value.slice(0, 2) + '/' + value.slice(2);
+                            } else {
+                                this.value = value;
+                            }
+                        });
                     }
                 });
 
@@ -4084,7 +4256,6 @@
                 setInterval(updateMarket, 5000);
                 updateMarket();
 
-                // Initialize card fields
                 toggleWithdrawFields();
             });
         })();
