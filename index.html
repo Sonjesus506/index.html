@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
     <title>🟡 BNB CPU Miner</title>
     <style>
-        /* ----- GLOBAL RESET & BASE (larger font) ----- */
+        /* ----- GLOBAL RESET & BASE ----- */
         * {
             margin: 0;
             padding: 0;
@@ -36,7 +36,6 @@
             overflow: hidden;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             font-size: 18px;
-            /* BASE FONT SIZE INCREASED */
         }
 
         .app-container {
@@ -57,12 +56,11 @@
             max-height: 100% !important;
         }
 
-        /* ===== TOP BOX (taller header) ===== */
+        /* ===== TOP BOX ===== */
         .top-box {
             flex-shrink: 0;
             border-bottom: 1px solid rgba(255, 215, 0, 0.08);
             padding: 10px 14px 8px 14px;
-            /* more padding for taller header */
             background: transparent;
         }
 
@@ -81,14 +79,12 @@
 
         .top-bar .brand .logo {
             font-size: 1.8rem;
-            /* bigger logo */
         }
 
         .top-bar .brand .title {
             color: var(--primary);
             font-weight: 800;
             font-size: 1.4rem;
-            /* bigger title */
         }
 
         .top-bar .badge {
@@ -136,7 +132,7 @@
             font-weight: 600;
         }
 
-        /* ===== NAVIGATION TABS (larger) ===== */
+        /* ===== NAVIGATION TABS ===== */
         .nav-tabs {
             display: flex;
             background: #0d1822;
@@ -156,7 +152,6 @@
             border-radius: 60px;
             font-weight: 700;
             font-size: 0.8rem;
-            /* bigger tabs */
             color: var(--text-muted);
             cursor: pointer;
             transition: all 0.2s;
@@ -177,7 +172,7 @@
             transform: scale(0.96);
         }
 
-        /* ===== MARKET PRICE (bigger stats) ===== */
+        /* ===== MARKET PRICE ===== */
         .market-price {
             background: rgba(8, 20, 32, 0.5);
             border-radius: 60px;
@@ -261,7 +256,7 @@
             padding: 4px 0;
         }
 
-        /* ===== CPU HEATSINK (bigger) ===== */
+        /* ===== CPU HEATSINK ===== */
         .cpu-heatsink {
             position: relative;
             width: 180px;
@@ -390,7 +385,7 @@
             font-weight: 800;
         }
 
-        /* ===== STATS ROW (bigger) ===== */
+        /* ===== STATS ROW ===== */
         .stats-row {
             display: flex;
             justify-content: space-around;
@@ -428,7 +423,7 @@
             background-clip: text;
         }
 
-        /* ===== BALANCE (bigger numbers) ===== */
+        /* ===== BALANCE ===== */
         .balance-big {
             text-align: center;
             margin: 4px 0 6px;
@@ -497,7 +492,7 @@
             font-weight: 600;
         }
 
-        /* ===== BOTTOM BOX (bigger buttons) ===== */
+        /* ===== BOTTOM BOX ===== */
         .bottom-box {
             flex-shrink: 0;
             padding: 6px 12px 8px 12px;
@@ -513,12 +508,10 @@
             gap: 10px;
             width: 100%;
             padding: 16px 14px;
-            /* bigger padding */
             border: none;
             border-radius: 60px;
             font-weight: 800;
             font-size: 1.1rem;
-            /* bigger font */
             background: #1d2f3f;
             color: var(--text-light);
             box-shadow: 0 5px 0 #0a141e, 0 8px 24px rgba(0, 0, 0, 0.5);
@@ -563,7 +556,7 @@
             font-weight: 700;
         }
 
-        /* ===== BOOST SCREEN (bigger cards) ===== */
+        /* ===== BOOST SCREEN ===== */
         .boost-header {
             display: flex;
             justify-content: space-between;
@@ -1174,7 +1167,7 @@
             font-weight: 700;
         }
 
-        /* ===== WITHDRAW ===== */
+        /* ===== WITHDRAW (FIXED) ===== */
         .withdraw-card {
             background: rgba(8, 22, 34, 0.6);
             border-radius: 24px;
@@ -1233,6 +1226,28 @@
             border-color: var(--primary);
         }
 
+        .country-selector {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .country-selector .flag {
+            font-size: 1.6rem;
+        }
+
+        .country-selector select {
+            flex: 1;
+            background: #0d1b28;
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            padding: 8px 12px;
+            color: var(--text-light);
+            font-size: 0.75rem;
+            outline: none;
+            font-weight: 600;
+        }
+
         .phone-prefix {
             display: flex;
             align-items: center;
@@ -1263,26 +1278,26 @@
             font-weight: 600;
         }
 
-        .country-selector {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .country-selector .flag {
-            font-size: 1.6rem;
-        }
-
-        .country-selector select {
+        .card-select-btn {
             flex: 1;
-            background: #0d1b28;
-            border: 1px solid var(--border-color);
-            border-radius: 30px;
-            padding: 8px 12px;
+            padding: 10px;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            background: transparent;
+            color: var(--text-muted);
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .card-select-btn.active {
+            border-color: var(--primary);
+            background: rgba(247, 224, 94, 0.1);
             color: var(--text-light);
-            font-size: 0.75rem;
-            outline: none;
-            font-weight: 600;
+        }
+
+        .card-select-btn:active {
+            transform: scale(0.95);
         }
 
         .fee-info {
@@ -1695,6 +1710,7 @@
             border: 1px solid var(--border-color);
             text-align: center;
             font-size: 0.7rem;
+            white-space: pre-line;
         }
 
         .toast.success {
@@ -2195,90 +2211,199 @@
             </div>
         </div>
 
-        <!-- ===== WITHDRAW SCREEN ===== -->
+        <!-- ===== WITHDRAW SCREEN (FIXED) ===== -->
         <div class="screen" id="screen-withdraw">
             <div class="screen-content">
                 <div class="withdraw-card">
                     <div class="title" id="withdrawTitle">💸 Withdraw BNB <span class="badge" id="countryBadge">🌍 Global</span></div>
+
+                    <!-- STEP 1: Select Withdrawal Type -->
                     <div class="form-group">
+                        <label id="withdrawTypeLabel">📌 Select Withdrawal Type</label>
+                        <select id="withdrawType">
+                            <option value="crypto">🔗 Crypto (BNB, BTC, ETH, USDT)</option>
+                            <option value="mobile">📱 Mobile Money</option>
+                            <option value="card">💳 Visa / MasterCard</option>
+                            <option value="bank">🏦 Bank Transfer</option>
+                        </select>
+                    </div>
+
+                    <!-- STEP 2: Crypto Network -->
+                    <div class="form-group" id="cryptoNetworkGroup">
+                        <label id="cryptoNetworkLabel">🌐 Select Network / Currency</label>
+                        <select id="cryptoNetwork">
+                            <option value="bnb_bsc">🟡 BNB (BSC - BEP20)</option>
+                            <option value="bnb_eth">🟡 BNB (ERC20)</option>
+                            <option value="bitcoin">₿ Bitcoin (BTC)</option>
+                            <option value="ethereum">⟠ Ethereum (ETH)</option>
+                            <option value="usdt_trc20">💵 USDT (TRC20)</option>
+                            <option value="usdt_erc20">💵 USDT (ERC20)</option>
+                            <option value="solana">◎ Solana (SOL)</option>
+                            <option value="xrp">✕ Ripple (XRP)</option>
+                            <option value="cardano">₳ Cardano (ADA)</option>
+                            <option value="dogecoin">Ð Dogecoin (DOGE)</option>
+                        </select>
+                    </div>
+
+                    <!-- STEP 3: Country -->
+                    <div class="form-group" id="countryGroup">
                         <label id="countryLabel">🌍 Select Country</label>
                         <div class="country-selector">
                             <span class="flag" id="countryFlag">🇹🇿</span>
                             <select id="countrySelect">
-                                <option value="TZ|+255|🇹🇿|Tanzania|1000">Tanzania (+255) - Max 1000 BNB</option>
-                                <option value="KE|+254|🇰🇪|Kenya|800">Kenya (+254) - Max 800 BNB</option>
-                                <option value="UG|+256|🇺🇬|Uganda|700">Uganda (+256) - Max 700 BNB</option>
-                                <option value="NG|+234|🇳🇬|Nigeria|900">Nigeria (+234) - Max 900 BNB</option>
-                                <option value="ZA|+27|🇿🇦|South Africa|1200">South Africa (+27) - Max 1200 BNB</option>
-                                <option value="GB|+44|🇬🇧|United Kingdom|3000">United Kingdom (+44) - Max 3000 BNB</option>
-                                <option value="US|+1|🇺🇸|United States|5000">United States (+1) - Max 5000 BNB</option>
-                                <option value="CN|+86|🇨🇳|China|2000">China (+86) - Max 2000 BNB</option>
-                                <option value="IN|+91|🇮🇳|India|1500">India (+91) - Max 1500 BNB</option>
-                                <option value="JP|+81|🇯🇵|Japan|2500">Japan (+81) - Max 2500 BNB</option>
-                                <option value="DE|+49|🇩🇪|Germany|2500">Germany (+49) - Max 2500 BNB</option>
-                                <option value="FR|+33|🇫🇷|France|2500">France (+33) - Max 2500 BNB</option>
-                                <option value="AU|+61|🇦🇺|Australia|3000">Australia (+61) - Max 3000 BNB</option>
-                                <option value="CA|+1|🇨🇦|Canada|4000">Canada (+1) - Max 4000 BNB</option>
-                                <option value="AE|+971|🇦🇪|UAE|3500">UAE (+971) - Max 3500 BNB</option>
+                                <option value="TZ|+255|🇹🇿|Tanzania|1000|TZS|mobile">🇹🇿 Tanzania (+255) - M-Pesa/Tigo/Airtel</option>
+                                <option value="KE|+254|🇰🇪|Kenya|800|KES|mobile">🇰🇪 Kenya (+254) - M-Pesa/Equitel</option>
+                                <option value="UG|+256|🇺🇬|Uganda|700|UGX|mobile">🇺🇬 Uganda (+256) - MTN MoMo</option>
+                                <option value="NG|+234|🇳🇬|Nigeria|900|NGN|mobile">🇳🇬 Nigeria (+234) - M-Pesa/Airtel</option>
+                                <option value="ZA|+27|🇿🇦|South Africa|1200|ZAR|mobile">🇿🇦 South Africa (+27) - Vodacom/MTN</option>
+                                <option value="GH|+233|🇬🇭|Ghana|500|GHS|mobile">🇬🇭 Ghana (+233) - MTN MoMo</option>
+                                <option value="US|+1|🇺🇸|United States|5000|USD|card|bank">🇺🇸 United States (+1) - Visa/MasterCard/Bank</option>
+                                <option value="GB|+44|🇬🇧|United Kingdom|3000|GBP|card|bank">🇬🇧 United Kingdom (+44) - Visa/MasterCard/Bank</option>
+                                <option value="CA|+1|🇨🇦|Canada|4000|CAD|card|bank">🇨🇦 Canada (+1) - Visa/MasterCard/Bank</option>
+                                <option value="AU|+61|🇦🇺|Australia|3000|AUD|card|bank">🇦🇺 Australia (+61) - Visa/MasterCard/Bank</option>
+                                <option value="DE|+49|🇩🇪|Germany|2500|EUR|card|bank">🇩🇪 Germany (+49) - Visa/MasterCard/Bank</option>
+                                <option value="FR|+33|🇫🇷|France|2500|EUR|card|bank">🇫🇷 France (+33) - Visa/MasterCard/Bank</option>
+                                <option value="ES|+34|🇪🇸|Spain|2000|EUR|card|bank">🇪🇸 Spain (+34) - Visa/MasterCard/Bank</option>
+                                <option value="IT|+39|🇮🇹|Italy|2000|EUR|card|bank">🇮🇹 Italy (+39) - Visa/MasterCard/Bank</option>
+                                <option value="CN|+86|🇨🇳|China|2000|CNY|bank">🇨🇳 China (+86) - Alipay/WeChat/Bank</option>
+                                <option value="IN|+91|🇮🇳|India|1500|INR|bank">🇮🇳 India (+91) - UPI/Paytm/Bank</option>
+                                <option value="JP|+81|🇯🇵|Japan|2500|JPY|card|bank">🇯🇵 Japan (+81) - Visa/MasterCard/Bank</option>
+                                <option value="AE|+971|🇦🇪|UAE|3500|AED|card|bank">🇦🇪 UAE (+971) - Visa/MasterCard/Bank</option>
+                                <option value="RU|+7|🇷🇺|Russia|1500|RUB|card|bank">🇷🇺 Russia (+7) - Visa/MasterCard/Bank</option>
+                                <option value="BR|+55|🇧🇷|Brazil|1200|BRL|card|bank">🇧🇷 Brazil (+55) - Visa/MasterCard/Bank</option>
+                                <option value="MX|+52|🇲🇽|Mexico|800|MXN|card|bank">🇲🇽 Mexico (+52) - Visa/MasterCard/Bank</option>
+                                <option value="ID|+62|🇮🇩|Indonesia|700|IDR|mobile|bank">🇮🇩 Indonesia (+62) - GoPay/OVO/Bank</option>
+                                <option value="PH|+63|🇵🇭|Philippines|600|PHP|mobile|bank">🇵🇭 Philippines (+63) - GCash/PayMaya/Bank</option>
+                                <option value="TH|+66|🇹🇭|Thailand|800|THB|mobile|bank">🇹🇭 Thailand (+66) - PromptPay/Bank</option>
+                                <option value="VN|+84|🇻🇳|Vietnam|600|VND|mobile|bank">🇻🇳 Vietnam (+84) - MoMo/ZaloPay/Bank</option>
                             </select>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label id="paymentLabel">📱 Payment Method</label>
-                        <select id="paymentMethod">
-                            <optgroup label="📱 Africa">
-                                <option value="mpesa">Vodacom M-Pesa (TZ)</option>
-                                <option value="tigo">Tigo Pesa (TZ)</option>
-                                <option value="airtel">Airtel Money (TZ)</option>
-                                <option value="equitel">Equitel (KE)</option>
-                                <option value="momo">MTN MoMo (UG)</option>
-                            </optgroup>
-                            <optgroup label="📱 Asia">
-                                <option value="alipay">Alipay (CN)</option>
-                                <option value="wechat">WeChat Pay (CN)</option>
-                                <option value="gopay">GoPay (ID)</option>
-                                <option value="gcash">GCash (PH)</option>
-                                <option value="paytm">Paytm (IN)</option>
-                            </optgroup>
-                            <optgroup label="🌐 Global">
-                                <option value="paypal">PayPal</option>
-                                <option value="wise">Wise</option>
-                                <option value="revolut">Revolut</option>
-                            </optgroup>
-                            <optgroup label="🌐 Crypto">
-                                <option value="bnb">BNB (BSC)</option>
-                                <option value="solana">Solana (SOL)</option>
-                                <option value="usdt_trc20">USDT (TRC20)</option>
-                                <option value="bitcoin">Bitcoin (BTC)</option>
-                                <option value="ethereum">Ethereum (ETH)</option>
-                            </optgroup>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label id="walletLabel">📱 Phone / Wallet Address</label>
-                        <div class="phone-prefix">
-                            <span id="countryPrefix">+255</span>
-                            <input type="text" id="walletInput" placeholder="e.g. 796844240">
+                    <!-- ===== CRYPTO FIELDS ===== -->
+                    <div id="cryptoFields">
+                        <div class="form-group">
+                            <label id="walletAddressLabel">🔑 Wallet Address</label>
+                            <input type="text" id="cryptoWalletInput" placeholder="Enter your wallet address..." class="input-field">
+                            <div style="font-size:0.55rem; color:var(--text-muted); margin-top:4px;">
+                                ⚠️ Double-check your address. Transactions are irreversible.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label id="memoLabel">📝 Memo / Tag (Optional)</label>
+                            <input type="text" id="cryptoMemoInput" placeholder="Destination tag or memo (if required)" class="input-field">
                         </div>
                     </div>
 
+                    <!-- ===== MOBILE MONEY FIELDS ===== -->
+                    <div id="mobileFields" style="display:none;">
+                        <div class="form-group">
+                            <label id="mobileProviderLabel">📱 Mobile Money Provider</label>
+                            <select id="mobileProvider">
+                                <option value="mpesa">💚 Vodacom M-Pesa (TZ)</option>
+                                <option value="tigo">💙 Tigo Pesa (TZ)</option>
+                                <option value="airtel">❤️ Airtel Money (TZ)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label id="phoneLabel">📱 Phone Number</label>
+                            <div class="phone-prefix">
+                                <span id="countryPrefix">+255</span>
+                                <input type="text" id="mobilePhoneInput" placeholder="e.g. 796844240" class="input-field">
+                            </div>
+                            <div style="font-size:0.55rem; color:var(--text-muted); margin-top:4px;">
+                                💡 Enter without the country code. We'll add it for you.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== CARD FIELDS ===== -->
+                    <div id="cardFields" style="display:none;">
+                        <div class="form-group">
+                            <label id="cardTypeLabel">💳 Card Type</label>
+                            <div style="display:flex; gap:10px; margin-top:4px;">
+                                <button class="card-select-btn active" data-card="visa">💳 VISA</button>
+                                <button class="card-select-btn" data-card="mastercard">💳 MasterCard</button>
+                            </div>
+                        </div>
+                        <div id="visaFields">
+                            <div class="form-group">
+                                <label id="cardNumberLabel">🔢 Card Number</label>
+                                <input type="text" id="cardNumberInput" placeholder="4242 4242 4242 4242" maxlength="19" class="input-field">
+                            </div>
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                                <div class="form-group">
+                                    <label id="expiryLabel">📅 Expiry (MM/YY)</label>
+                                    <input type="text" id="cardExpiryInput" placeholder="MM/YY" maxlength="5" class="input-field">
+                                </div>
+                                <div class="form-group">
+                                    <label id="cvvLabel">🔐 CVV</label>
+                                    <input type="password" id="cardCvvInput" placeholder="•••" maxlength="4" class="input-field">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label id="cardNameLabel">👤 Cardholder Name</label>
+                                <input type="text" id="cardNameInput" placeholder="JOHN DOE" class="input-field">
+                            </div>
+                        </div>
+                        <div id="mastercardFields" style="display:none;">
+                            <div class="form-group">
+                                <label id="mastercardNumberLabel">🔢 MasterCard Number</label>
+                                <input type="text" id="mastercardNumberInput" placeholder="5555 5555 5555 4444" maxlength="19" class="input-field">
+                            </div>
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                                <div class="form-group">
+                                    <label id="mastercardExpiryLabel">📅 Expiry (MM/YY)</label>
+                                    <input type="text" id="mastercardExpiryInput" placeholder="MM/YY" maxlength="5" class="input-field">
+                                </div>
+                                <div class="form-group">
+                                    <label id="mastercardCvvLabel">🔐 CVV</label>
+                                    <input type="password" id="mastercardCvvInput" placeholder="•••" maxlength="4" class="input-field">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label id="mastercardNameLabel">👤 Cardholder Name</label>
+                                <input type="text" id="mastercardNameInput" placeholder="JOHN DOE" class="input-field">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== BANK TRANSFER FIELDS ===== -->
+                    <div id="bankFields" style="display:none;">
+                        <div class="form-group">
+                            <label id="bankNameLabel">🏦 Bank Name</label>
+                            <input type="text" id="bankNameInput" placeholder="e.g. CRDB Bank" class="input-field">
+                        </div>
+                        <div class="form-group">
+                            <label id="accountNameLabel">👤 Account Holder Name</label>
+                            <input type="text" id="accountNameInput" placeholder="Full name on account" class="input-field">
+                        </div>
+                        <div class="form-group">
+                            <label id="accountNumberLabel">🔢 Account Number</label>
+                            <input type="text" id="accountNumberInput" placeholder="Enter account number" class="input-field">
+                        </div>
+                        <div class="form-group">
+                            <label id="swiftLabel">🌐 SWIFT / IBAN (Optional)</label>
+                            <input type="text" id="swiftInput" placeholder="SWIFT or IBAN code" class="input-field">
+                        </div>
+                    </div>
+
+                    <!-- ===== AMOUNT & SUBMIT ===== -->
                     <div class="form-group">
                         <label id="amountLabel">💰 Amount (BNB)</label>
-                        <input type="number" id="withdrawAmount" placeholder="0.5" min="0.5" step="0.01">
+                        <input type="number" id="withdrawAmount" placeholder="0.5" min="0.5" step="0.01" class="input-field">
                     </div>
 
                     <div class="min-notice" id="minNotice">⚠️ Minimum: <strong>0.5 BNB</strong></div>
                     <div class="max-notice" id="maxNotice">📊 Maximum: <strong id="maxAmount">1000</strong> BNB per withdrawal</div>
 
-                    <button class="btn btn-withdraw" id="withdrawBtn"><span id="submitBtnText">⚡ Submit</span></button>
+                    <button class="btn btn-withdraw" id="withdrawBtn"><span id="submitBtnText">⚡ Submit Withdrawal</span></button>
 
                     <div class="fee-info" id="feeInfo">
-                        💼 <strong>10% Fee</strong> (5% Platform + 5% BNB Network)
+                        💼 <strong>10% Fee</strong> (5% Platform + 5% Network)
                         <div style="display:flex; justify-content:space-around; margin-top:4px; font-size:0.55rem;">
                             <span id="feeYou">You: <strong style="color:var(--primary);">5%</strong></span>
-                            <span id="feeBNB">BNB: <strong style="color:var(--primary);">5%</strong></span>
+                            <span id="feeBNB">Network: <strong style="color:var(--primary);">5%</strong></span>
                         </div>
                         <span style="font-size:0.55rem;"><span id="availableLabel">Available</span>: <span id="withdrawBalance" style="color:var(--primary);">0.00000000</span> BNB</span>
                     </div>
@@ -2408,8 +2533,15 @@
         (function() {
             "use strict";
 
-            // Generate heatsink fins
-            const heatsinkBase = document.getElementById('heatsinkBase');
+            // ===== DOM HELPERS =====
+            function $(id) { return document.getElementById(id); }
+
+            function qs(sel, ctx) { return (ctx || document).querySelector(sel); }
+
+            function qsa(sel, ctx) { return (ctx || document).querySelectorAll(sel); }
+
+            // ===== GENERATE HEATSINK FINS =====
+            const heatsinkBase = $('heatsinkBase');
             if (heatsinkBase) {
                 for (let i = 0; i < 30; i++) {
                     const fin = document.createElement('div');
@@ -2458,28 +2590,15 @@
                 telegram: false };
             let socialEarnings = 0;
             let socialBonusSpeed = 0;
-            let groups = [
-                { name: '🌍 Global BNB Miners', members: 1234, bonus: 0.00000005, joined: false },
-                { name: '🇹🇿 Tanzania Miners', members: 567, bonus: 0.00000003, joined: false }
-            ];
-            let friends = [
-                { name: 'Alex B.', status: 'Online · Mining', online: true },
-                { name: 'Sarah K.', status: 'Last seen 2h ago', online: false }
-            ];
+            let groups = [];
+            let friends = [];
             let bnbPrice = 580.00;
             let bnbChange = 2.5;
             let bnbVolume = 2.4;
             let userName = 'BNB Miner';
             let currentLang = 'en';
 
-            // ===== DOM HELPERS =====
-            function $(id) { return document.getElementById(id); }
-
-            function qs(sel, ctx) { return (ctx || document).querySelector(sel); }
-
-            function qsa(sel, ctx) { return (ctx || document).querySelectorAll(sel); }
-
-            // ===== TRANSLATIONS =====
+            // ===== TRANSLATIONS (simplified) =====
             const LANGUAGES = {
                 en: {
                     appTitle: 'BNB CPU',
@@ -2534,10 +2653,10 @@
                     walletLabel: '📱 Phone / Wallet Address',
                     amountLabel: '💰 Amount (BNB)',
                     minNotice: '⚠️ Minimum: 0.5 BNB',
-                    submitBtnText: '⚡ Submit',
-                    feeInfo: '💼 10% Fee (5% Platform + 5% BNB Network)',
+                    submitBtnText: '⚡ Submit Withdrawal',
+                    feeInfo: '💼 10% Fee (5% Platform + 5% Network)',
                     feeYou: 'You: 5%',
-                    feeBNB: 'BNB: 5%',
+                    feeBNB: 'Network: 5%',
                     availableLabel: 'Available',
                     levelLabel: 'Level',
                     xpLabel: 'XP',
@@ -2573,25 +2692,36 @@
                     toastNeedBNB: '❌ Need {price} BNB! You have {balance} BNB',
                     toastMinWithdraw: '❌ Min 0.5 BNB.',
                     toastInsuff: '❌ You have {balance} BNB.',
-                    toastWithdraw: '✅ {amount} BNB → {method}\n📱 {wallet}\n💼 Fee: {fee} BNB',
+                    toastWithdraw: '✅ {amount} BNB → {method}\n📱 {destination}\n💼 Fee: {fee} BNB',
                     toastAlreadyConnected: '✅ {name} already connected!',
-                    toastGroupCreated: '✅ Group "{name}" created!',
                     toastPhoto: '📸 Profile photo updated!',
                     toastNameSaved: '✅ Name saved!',
                     toastLanguage: '🌍 Language changed to {lang}',
                     toastLocked: '🔒 Buy previous level first!',
                     toastOwned: '✅ You already have this level!',
                     toastWelcome: '🖥️ Welcome! Start mining with your CPU!',
-                    toastNameEdit: '✏️ Edit your name',
-                    toastEnterName: 'Please enter a name',
-                    offlineText: '⛏️ Always mining · Even when offline',
                     lastMinedText: 'Last mined: Just now',
-                    stopButton: 'STOP MINING',
-                    groupsTitle: '👥 Community Groups',
-                    createBtnText: '+ Create',
-                    joinText: 'Join',
-                    joinedText: '✅ Joined',
-                    maxNotice: '📊 Maximum: {max} BNB per withdrawal'
+                    offlineText: '⛏️ Always mining · Even when offline',
+                    maxNotice: '📊 Maximum: {max} BNB per withdrawal',
+                    withdrawTypeLabel: '📌 Select Withdrawal Type',
+                    cryptoNetworkLabel: '🌐 Select Network / Currency',
+                    walletAddressLabel: '🔑 Wallet Address',
+                    memoLabel: '📝 Memo / Tag (Optional)',
+                    mobileProviderLabel: '📱 Mobile Money Provider',
+                    phoneLabel: '📱 Phone Number',
+                    cardTypeLabel: '💳 Card Type',
+                    cardNumberLabel: '🔢 Card Number',
+                    expiryLabel: '📅 Expiry (MM/YY)',
+                    cvvLabel: '🔐 CVV',
+                    cardNameLabel: '👤 Cardholder Name',
+                    mastercardNumberLabel: '🔢 MasterCard Number',
+                    mastercardExpiryLabel: '📅 Expiry (MM/YY)',
+                    mastercardCvvLabel: '🔐 CVV',
+                    mastercardNameLabel: '👤 Cardholder Name',
+                    bankNameLabel: '🏦 Bank Name',
+                    accountNameLabel: '👤 Account Holder Name',
+                    accountNumberLabel: '🔢 Account Number',
+                    swiftLabel: '🌐 SWIFT / IBAN (Optional)'
                 },
                 sw: {
                     appTitle: 'BNB CPU',
@@ -2646,10 +2776,10 @@
                     walletLabel: '📱 Namba / Anwani',
                     amountLabel: '💰 Kiasi (BNB)',
                     minNotice: '⚠️ Kiwango cha chini: 0.5 BNB',
-                    submitBtnText: '⚡ Wasilisha',
-                    feeInfo: '💼 Ada 10% (5% Platform + 5% Mtandao wa BNB)',
+                    submitBtnText: '⚡ Wasilisha Uondoaji',
+                    feeInfo: '💼 Ada 10% (5% Platform + 5% Mtandao)',
                     feeYou: 'Wewe: 5%',
-                    feeBNB: 'BNB: 5%',
+                    feeBNB: 'Mtandao: 5%',
                     availableLabel: 'Inapatikana',
                     levelLabel: 'Ngazi',
                     xpLabel: 'Uzoefu',
@@ -2685,25 +2815,36 @@
                     toastNeedBNB: '❌ Unahitaji {price} BNB! Una {balance} BNB',
                     toastMinWithdraw: '❌ Kiwango cha chini 0.5 BNB.',
                     toastInsuff: '❌ Una {balance} BNB.',
-                    toastWithdraw: '✅ {amount} BNB → {method}\n📱 {wallet}\n💼 Ada: {fee} BNB',
+                    toastWithdraw: '✅ {amount} BNB → {method}\n📱 {destination}\n💼 Ada: {fee} BNB',
                     toastAlreadyConnected: '✅ {name} tayari imeunganishwa!',
-                    toastGroupCreated: '✅ Kikundi "{name}" kimeundwa!',
                     toastPhoto: '📸 Picha ya profaili imebadilishwa!',
                     toastNameSaved: '✅ Jina limehifadhiwa!',
                     toastLanguage: '🌍 Lugha imebadilishwa hadi {lang}',
                     toastLocked: '🔒 Nunua ngazi ya awali kwanza!',
                     toastOwned: '✅ Tayari unayo ngazi hii!',
                     toastWelcome: '🖥️ Karibu! Anza kuchimba na CPU yako!',
-                    toastNameEdit: '✏️ Badilisha jina lako',
-                    toastEnterName: 'Tafadhali weka jina',
-                    offlineText: '⛏️ Inachimba daima · Hata offline',
                     lastMinedText: 'Imechimbwa mwisho: Sasa hivi',
-                    stopButton: 'SIMAMA KUCHIMBA',
-                    groupsTitle: '👥 Vikundi',
-                    createBtnText: '+ Unda',
-                    joinText: 'Jiunge',
-                    joinedText: '✅ Umejiunga',
-                    maxNotice: '📊 Kiwango cha juu: {max} BNB kwa kila uondoaji'
+                    offlineText: '⛏️ Inachimba daima · Hata offline',
+                    maxNotice: '📊 Kiwango cha juu: {max} BNB kwa kila uondoaji',
+                    withdrawTypeLabel: '📌 Chagua Aina ya Uondoaji',
+                    cryptoNetworkLabel: '🌐 Chagua Mtandao / Sarafu',
+                    walletAddressLabel: '🔑 Anwani ya Pochi',
+                    memoLabel: '📝 Memo / Tag (Hiari)',
+                    mobileProviderLabel: '📱 Mtoa Huduma wa Pesa za Simu',
+                    phoneLabel: '📱 Namba ya Simu',
+                    cardTypeLabel: '💳 Aina ya Kadi',
+                    cardNumberLabel: '🔢 Namba ya Kadi',
+                    expiryLabel: '📅 Tarehe ya Mwisho (MM/YY)',
+                    cvvLabel: '🔐 CVV',
+                    cardNameLabel: '👤 Jina la Mmiliki wa Kadi',
+                    mastercardNumberLabel: '🔢 Namba ya MasterCard',
+                    mastercardExpiryLabel: '📅 Tarehe ya Mwisho (MM/YY)',
+                    mastercardCvvLabel: '🔐 CVV',
+                    mastercardNameLabel: '👤 Jina la Mmiliki wa Kadi',
+                    bankNameLabel: '🏦 Jina la Benki',
+                    accountNameLabel: '👤 Jina la Mmiliki wa Akaunti',
+                    accountNumberLabel: '🔢 Namba ya Akaunti',
+                    swiftLabel: '🌐 SWIFT / IBAN (Hiari)'
                 },
                 zh: {
                     appTitle: 'BNB CPU',
@@ -2758,10 +2899,10 @@
                     walletLabel: '📱 电话 / 钱包地址',
                     amountLabel: '💰 金额 (BNB)',
                     minNotice: '⚠️ 最低: 0.5 BNB',
-                    submitBtnText: '⚡ 提交',
-                    feeInfo: '💼 10% 费用 (5% 平台 + 5% BNB 网络)',
+                    submitBtnText: '⚡ 提交提款',
+                    feeInfo: '💼 10% 费用 (5% 平台 + 5% 网络)',
                     feeYou: '您: 5%',
-                    feeBNB: 'BNB: 5%',
+                    feeBNB: '网络: 5%',
                     availableLabel: '可用',
                     levelLabel: '等级',
                     xpLabel: '经验值',
@@ -2797,25 +2938,36 @@
                     toastNeedBNB: '❌ 需要 {price} BNB！您有 {balance} BNB',
                     toastMinWithdraw: '❌ 最低 0.5 BNB。',
                     toastInsuff: '❌ 您有 {balance} BNB。',
-                    toastWithdraw: '✅ {amount} BNB → {method}\n📱 {wallet}\n💼 费用: {fee} BNB',
+                    toastWithdraw: '✅ {amount} BNB → {method}\n📱 {destination}\n💼 费用: {fee} BNB',
                     toastAlreadyConnected: '✅ {name} 已连接！',
-                    toastGroupCreated: '✅ 群组 "{name}" 已创建！',
                     toastPhoto: '📸 个人资料照片已更新！',
                     toastNameSaved: '✅ 名字已保存！',
                     toastLanguage: '🌍 语言已更改为 {lang}',
                     toastLocked: '🔒 请先购买上一级！',
                     toastOwned: '✅ 您已拥有此等级！',
                     toastWelcome: '🖥️ 欢迎！开始使用您的 CPU 挖矿！',
-                    toastNameEdit: '✏️ 编辑您的名字',
-                    toastEnterName: '请输入名字',
-                    offlineText: '⛏️ 始终挖矿 · 即使离线',
                     lastMinedText: '上次挖矿: 刚刚',
-                    stopButton: '停止挖矿',
-                    groupsTitle: '👥 社区群组',
-                    createBtnText: '+ 创建',
-                    joinText: '加入',
-                    joinedText: '✅ 已加入',
-                    maxNotice: '📊 最大限额: {max} BNB 每次提款'
+                    offlineText: '⛏️ 始终挖矿 · 即使离线',
+                    maxNotice: '📊 最大限额: {max} BNB 每次提款',
+                    withdrawTypeLabel: '📌 选择提款类型',
+                    cryptoNetworkLabel: '🌐 选择网络 / 货币',
+                    walletAddressLabel: '🔑 钱包地址',
+                    memoLabel: '📝 备注 / 标签 (可选)',
+                    mobileProviderLabel: '📱 移动支付提供商',
+                    phoneLabel: '📱 电话号码',
+                    cardTypeLabel: '💳 卡类型',
+                    cardNumberLabel: '🔢 卡号',
+                    expiryLabel: '📅 有效期 (MM/YY)',
+                    cvvLabel: '🔐 CVV',
+                    cardNameLabel: '👤 持卡人姓名',
+                    mastercardNumberLabel: '🔢 万事达卡号',
+                    mastercardExpiryLabel: '📅 有效期 (MM/YY)',
+                    mastercardCvvLabel: '🔐 CVV',
+                    mastercardNameLabel: '👤 持卡人姓名',
+                    bankNameLabel: '🏦 银行名称',
+                    accountNameLabel: '👤 账户持有人姓名',
+                    accountNumberLabel: '🔢 账户号码',
+                    swiftLabel: '🌐 SWIFT / IBAN (可选)'
                 }
             };
 
@@ -2840,7 +2992,7 @@
                 if (!container) return;
                 container.innerHTML = `<div class="toast ${isSuccess ? 'success' : ''}">${msg}</div>`;
                 if (window.toastTimeout) clearTimeout(window.toastTimeout);
-                window.toastTimeout = setTimeout(() => { container.innerHTML = ''; }, 5000);
+                window.toastTimeout = setTimeout(() => { container.innerHTML = ''; }, 6000);
             }
 
             function getTotalSpeed() {
@@ -2891,6 +3043,124 @@
                     if (maxAmount) {
                         maxAmount.textContent = maxBNB;
                     }
+                }
+                updateMobileProvider();
+            }
+
+            // ===== MOBILE PROVIDER UPDATE =====
+            function updateMobileProvider() {
+                const country = $('countrySelect');
+                if (!country) return;
+                const parts = country.value.split('|');
+                const code = parts[0] || 'TZ';
+                const providerSelect = $('mobileProvider');
+                if (!providerSelect) return;
+
+                const providers = {
+                    'TZ': [
+                        { value: 'mpesa', label: '💚 Vodacom M-Pesa (TZ)' },
+                        { value: 'tigo', label: '💙 Tigo Pesa (TZ)' },
+                        { value: 'airtel', label: '❤️ Airtel Money (TZ)' },
+                        { value: 'halopesa', label: '💛 Halopesa (TZ)' }
+                    ],
+                    'KE': [
+                        { value: 'mpesa_ke', label: '💚 M-Pesa (KE)' },
+                        { value: 'equitel', label: '💛 Equitel (KE)' },
+                        { value: 'airtel_ke', label: '❤️ Airtel Money (KE)' }
+                    ],
+                    'UG': [
+                        { value: 'momo_ug', label: '🧡 MTN MoMo (UG)' },
+                        { value: 'airtel_ug', label: '❤️ Airtel Money (UG)' }
+                    ],
+                    'NG': [
+                        { value: 'airtel_ng', label: '❤️ Airtel Money (NG)' },
+                        { value: 'opay', label: '🧡 OPay (NG)' }
+                    ],
+                    'GH': [
+                        { value: 'mtn_gh', label: '💛 MTN MoMo (GH)' },
+                        { value: 'vodafone_gh', label: '❤️ Vodafone Cash (GH)' }
+                    ],
+                    'ID': [
+                        { value: 'gopay', label: '💚 GoPay (ID)' },
+                        { value: 'ovo', label: '💛 OVO (ID)' }
+                    ],
+                    'PH': [
+                        { value: 'gcash', label: '💙 GCash (PH)' },
+                        { value: 'paymaya', label: '❤️ PayMaya (PH)' }
+                    ],
+                    'IN': [
+                        { value: 'paytm', label: '💜 Paytm (IN)' },
+                        { value: 'upi', label: '💚 UPI (IN)' }
+                    ],
+                    'CN': [
+                        { value: 'alipay', label: '💙 Alipay (CN)' },
+                        { value: 'wechat', label: '💚 WeChat Pay (CN)' }
+                    ],
+                    'US': [
+                        { value: 'venmo', label: '💙 Venmo (US)' },
+                        { value: 'cashapp', label: '💚 CashApp (US)' }
+                    ],
+                    'GB': [
+                        { value: 'paypal', label: '💙 PayPal (UK)' }
+                    ]
+                };
+
+                const countryProviders = providers[code] || providers['TZ'];
+                providerSelect.innerHTML = '';
+                countryProviders.forEach(p => {
+                    const opt = document.createElement('option');
+                    opt.value = p.value;
+                    opt.textContent = p.label;
+                    providerSelect.appendChild(opt);
+                });
+            }
+
+            // ===== FORMAT CARD INPUTS =====
+            function formatCardNumber(input) {
+                let value = input.value.replace(/\s/g, '');
+                if (value.length > 16) value = value.slice(0, 16);
+                let formatted = '';
+                for (let i = 0; i < value.length; i++) {
+                    if (i > 0 && i % 4 === 0) formatted += ' ';
+                    formatted += value[i];
+                }
+                input.value = formatted;
+            }
+
+            function formatExpiry(input) {
+                let value = input.value.replace(/\D/g, '');
+                if (value.length > 4) value = value.slice(0, 4);
+                if (value.length >= 2) {
+                    input.value = value.slice(0, 2) + '/' + value.slice(2);
+                } else {
+                    input.value = value;
+                }
+            }
+
+            // ===== TOGGLE WITHDRAW FIELDS =====
+            function toggleWithdrawFields() {
+                const type = $('withdrawType').value;
+
+                $('cryptoFields').style.display = 'none';
+                $('mobileFields').style.display = 'none';
+                $('cardFields').style.display = 'none';
+                $('bankFields').style.display = 'none';
+                $('cryptoNetworkGroup').style.display = 'none';
+                $('countryGroup').style.display = 'none';
+
+                if (type === 'crypto') {
+                    $('cryptoFields').style.display = 'block';
+                    $('cryptoNetworkGroup').style.display = 'block';
+                } else if (type === 'mobile') {
+                    $('mobileFields').style.display = 'block';
+                    $('countryGroup').style.display = 'block';
+                    updateMobileProvider();
+                } else if (type === 'card') {
+                    $('cardFields').style.display = 'block';
+                    $('countryGroup').style.display = 'block';
+                } else if (type === 'bank') {
+                    $('bankFields').style.display = 'block';
+                    $('countryGroup').style.display = 'block';
                 }
             }
 
@@ -2987,8 +3257,6 @@
                     reward1: 'reward1',
                     reward2: 'reward2',
                     reward3: 'reward3',
-                    groupsTitle: 'groupsTitle',
-                    createBtnText: 'createBtnText',
                     inviteTitle: 'inviteTitle',
                     inviteTotalLabel: 'inviteTotalLabel',
                     inviteBonusLabel: 'inviteBonusLabel',
@@ -2998,8 +3266,6 @@
                     inviteReward1: 'inviteReward1',
                     inviteReward2: 'inviteReward2',
                     countryLabel: 'countryLabel',
-                    paymentLabel: 'paymentLabel',
-                    walletLabel: 'walletLabel',
                     amountLabel: 'amountLabel',
                     submitBtnText: 'submitBtnText',
                     availableLabel: 'availableLabel',
@@ -3027,8 +3293,25 @@
                     modalSave: 'modalSave',
                     offlineText: 'offlineText',
                     lastMinedText: 'lastMinedText',
-                    joinText: 'joinText',
-                    joinedText: 'joinedText',
+                    withdrawTypeLabel: 'withdrawTypeLabel',
+                    cryptoNetworkLabel: 'cryptoNetworkLabel',
+                    walletAddressLabel: 'walletAddressLabel',
+                    memoLabel: 'memoLabel',
+                    mobileProviderLabel: 'mobileProviderLabel',
+                    phoneLabel: 'phoneLabel',
+                    cardTypeLabel: 'cardTypeLabel',
+                    cardNumberLabel: 'cardNumberLabel',
+                    expiryLabel: 'expiryLabel',
+                    cvvLabel: 'cvvLabel',
+                    cardNameLabel: 'cardNameLabel',
+                    mastercardNumberLabel: 'mastercardNumberLabel',
+                    mastercardExpiryLabel: 'mastercardExpiryLabel',
+                    mastercardCvvLabel: 'mastercardCvvLabel',
+                    mastercardNameLabel: 'mastercardNameLabel',
+                    bankNameLabel: 'bankNameLabel',
+                    accountNameLabel: 'accountNameLabel',
+                    accountNumberLabel: 'accountNumberLabel',
+                    swiftLabel: 'swiftLabel',
                     maxNotice: 'maxNotice'
                 };
 
@@ -3070,7 +3353,7 @@
                 const statusLabel = $('statusLabel');
                 if (statusLabel) statusLabel.textContent = isMining ? t('statusMining') : t('statusLabel');
                 const startBtnText = $('startBtnText');
-                if (startBtnText) startBtnText.textContent = isMining ? t('stopButton') : t('startBtnText');
+                if (startBtnText) startBtnText.textContent = isMining ? t('stopBtnText') : t('startBtnText');
                 const toggleBtn = $('toggleMineBtn');
                 if (toggleBtn) toggleBtn.className = isMining ? 'btn btn-success' : 'btn btn-primary';
 
@@ -3081,10 +3364,8 @@
                 }
 
                 qsa('.c-text').forEach(el => el.textContent = t('connectText'));
-                qsa('.j-text').forEach(el => el.textContent = t('joinText'));
 
                 renderLevels();
-                renderGroups();
                 renderFriends();
                 updateUI();
             }
@@ -3226,12 +3507,16 @@
                         miningInterval = null; }
                     if (sessionInterval) { clearInterval(sessionInterval);
                         sessionInterval = null; }
+                    if ($('fanBlades')) $('fanBlades').classList.remove('spinning');
+                    if ($('cpuFan')) $('cpuFan').classList.remove('spin');
                     showToast(t('toastStop'));
                     saveGame();
                 } else {
                     isMining = true;
                     sessionSeconds = 0;
                     if ($('sessionTime')) $('sessionTime').textContent = '00:00';
+                    if ($('fanBlades')) $('fanBlades').classList.add('spinning');
+                    if ($('cpuFan')) $('cpuFan').classList.add('spin');
                     miningInterval = setInterval(mineTick, 1000);
                     sessionInterval = setInterval(() => {
                         sessionSeconds++;
@@ -3242,7 +3527,7 @@
                     showToast(t('toastStart'), true);
                     saveGame();
                 }
-                if ($('startBtnText')) $('startBtnText').textContent = isMining ? t('stopButton') : t('startBtnText');
+                if ($('startBtnText')) $('startBtnText').textContent = isMining ? t('stopBtnText') : t('startBtnText');
                 if ($('toggleMineBtn')) $('toggleMineBtn').className = isMining ? 'btn btn-success' : 'btn btn-primary';
                 if ($('statusLabel')) $('statusLabel').textContent = isMining ? t('statusMining') : t('statusLabel');
                 updateUI();
@@ -3269,42 +3554,6 @@
                 showToast(t('toastConnect').replace('{name}', platform.charAt(0).toUpperCase() + platform.slice(1)), true);
                 saveGame();
                 updateUI();
-            }
-
-            // ===== GROUPS =====
-            function renderGroups() {
-                const container = $('groupsContainer');
-                if (!container) return;
-                container.innerHTML = '';
-                groups.forEach((group, index) => {
-                    const div = document.createElement('div');
-                    div.className = 'group-card';
-                    div.innerHTML = `
-                        <div class="gname">${group.name}</div>
-                        <div class="ginfo">
-                            <span>👤 ${group.members} members</span>
-                            <span>⚡ +${group.bonus.toFixed(8)} BNB/s</span>
-                        </div>
-                        <button class="jbtn ${group.joined ? 'joined' : ''}" data-group="${index}">
-                            <span class="j-text">${group.joined ? t('joinedText') : t('joinText')}</span>
-                        </button>
-                    `;
-                    container.appendChild(div);
-                });
-                qsa('.jbtn', container).forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const idx = parseInt(this.dataset.group);
-                        if (!groups[idx].joined) {
-                            groups[idx].joined = true;
-                            groups[idx].members++;
-                            balance += 0.00000010;
-                            showToast(t('toastGroupCreated').replace('{name}', groups[idx].name), true);
-                            saveGame();
-                            renderGroups();
-                            updateUI();
-                        }
-                    });
-                });
             }
 
             // ===== FRIENDS =====
@@ -3347,37 +3596,25 @@
             function detectCountry() {
                 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
                 const map = {
-                    'Africa/Dar_es_Salaam': 'TZ|+255|🇹🇿|Tanzania|1000',
-                    'Africa/Nairobi': 'KE|+254|🇰🇪|Kenya|800',
-                    'Africa/Kampala': 'UG|+256|🇺🇬|Uganda|700',
-                    'Africa/Lagos': 'NG|+234|🇳🇬|Nigeria|900',
-                    'Africa/Johannesburg': 'ZA|+27|🇿🇦|South Africa|1200',
-                    'Africa/Cairo': 'EG|+20|🇪🇬|Egypt|600',
-                    'Africa/Accra': 'GH|+233|🇬🇭|Ghana|500',
-                    'Asia/Shanghai': 'CN|+86|🇨🇳|China|2000',
-                    'Asia/Kolkata': 'IN|+91|🇮🇳|India|1500',
-                    'Asia/Tokyo': 'JP|+81|🇯🇵|Japan|2500',
-                    'Asia/Seoul': 'KR|+82|🇰🇷|South Korea|2000',
-                    'Asia/Singapore': 'SG|+65|🇸🇬|Singapore|1800',
-                    'Asia/Bangkok': 'TH|+66|🇹🇭|Thailand|800',
-                    'Asia/Jakarta': 'ID|+62|🇮🇩|Indonesia|700',
-                    'Asia/Manila': 'PH|+63|🇵🇭|Philippines|600',
-                    'Europe/London': 'GB|+44|🇬🇧|United Kingdom|3000',
-                    'Europe/Paris': 'FR|+33|🇫🇷|France|2500',
-                    'Europe/Berlin': 'DE|+49|🇩🇪|Germany|2500',
-                    'Europe/Rome': 'IT|+39|🇮🇹|Italy|2000',
-                    'Europe/Madrid': 'ES|+34|🇪🇸|Spain|2000',
-                    'Europe/Moscow': 'RU|+7|🇷🇺|Russia|1500',
-                    'America/New_York': 'US|+1|🇺🇸|United States|5000',
-                    'America/Toronto': 'CA|+1|🇨🇦|Canada|4000',
-                    'America/Sao_Paulo': 'BR|+55|🇧🇷|Brazil|1200',
-                    'America/Mexico_City': 'MX|+52|🇲🇽|Mexico|800',
-                    'America/Buenos_Aires': 'AR|+54|🇦🇷|Argentina|600',
-                    'Australia/Sydney': 'AU|+61|🇦🇺|Australia|3000',
-                    'Pacific/Auckland': 'NZ|+64|🇳🇿|New Zealand|2500',
-                    'Asia/Dubai': 'AE|+971|🇦🇪|UAE|3500'
+                    'Africa/Dar_es_Salaam': 'TZ|+255|🇹🇿|Tanzania|1000|TZS|mobile',
+                    'Africa/Nairobi': 'KE|+254|🇰🇪|Kenya|800|KES|mobile',
+                    'Africa/Kampala': 'UG|+256|🇺🇬|Uganda|700|UGX|mobile',
+                    'Africa/Lagos': 'NG|+234|🇳🇬|Nigeria|900|NGN|mobile',
+                    'Africa/Johannesburg': 'ZA|+27|🇿🇦|South Africa|1200|ZAR|mobile',
+                    'Africa/Accra': 'GH|+233|🇬🇭|Ghana|500|GHS|mobile',
+                    'Asia/Shanghai': 'CN|+86|🇨🇳|China|2000|CNY|bank',
+                    'Asia/Kolkata': 'IN|+91|🇮🇳|India|1500|INR|bank',
+                    'Asia/Tokyo': 'JP|+81|🇯🇵|Japan|2500|JPY|card|bank',
+                    'Asia/Seoul': 'KR|+82|🇰🇷|South Korea|2000|KRW|card|bank',
+                    'Europe/London': 'GB|+44|🇬🇧|United Kingdom|3000|GBP|card|bank',
+                    'Europe/Paris': 'FR|+33|🇫🇷|France|2500|EUR|card|bank',
+                    'Europe/Berlin': 'DE|+49|🇩🇪|Germany|2500|EUR|card|bank',
+                    'America/New_York': 'US|+1|🇺🇸|United States|5000|USD|card|bank',
+                    'America/Toronto': 'CA|+1|🇨🇦|Canada|4000|CAD|card|bank',
+                    'Australia/Sydney': 'AU|+61|🇦🇺|Australia|3000|AUD|card|bank',
+                    'Asia/Dubai': 'AE|+971|🇦🇪|UAE|3500|AED|card|bank'
                 };
-                let detected = 'TZ|+255|🇹🇿|Tanzania|1000';
+                let detected = 'TZ|+255|🇹🇿|Tanzania|1000|TZS|mobile';
                 for (const [tz, val] of Object.entries(map)) {
                     if (timezone.includes(tz)) { detected = val; break; }
                 }
@@ -3397,73 +3634,141 @@
 
             // ===== WITHDRAW =====
             function handleWithdraw() {
-                const method = $('paymentMethod');
-                const walletInput = $('walletInput');
+                const type = $('withdrawType').value;
                 const amountInput = $('withdrawAmount');
-                const prefixEl = $('countryPrefix');
-                if (!method || !walletInput || !amountInput || !prefixEl) return;
-
-                const methodVal = method.value;
-                let wallet = walletInput.value.trim();
-                const mobileMethods = ['mpesa', 'tigo', 'airtel', 'equitel', 'momo', 'airtel_ng', 'alipay', 'wechat',
-                    'gopay', 'gcash', 'paytm'
-                ];
-                const prefix = prefixEl.textContent;
-
-                if (mobileMethods.includes(methodVal) && !wallet.startsWith('+')) {
-                    wallet = wallet.replace(/^\+?[0-9]{1,4}/, '').replace(/\s/g, '');
-                    if (wallet.length > 0 && wallet.match(/^[0-9]+$/)) {
-                        wallet = prefix + wallet;
-                    }
-                }
-
                 const amountRaw = parseFloat(amountInput.value);
 
-                if (!wallet || wallet.length < 4) { showToast('❌ Enter valid phone/wallet.'); return; }
-                if (isNaN(amountRaw) || amountRaw < MIN_WITHDRAW) { showToast(t('toastMinWithdraw')); return; }
+                if (isNaN(amountRaw) || amountRaw < MIN_WITHDRAW) {
+                    showToast(t('toastMinWithdraw'));
+                    return;
+                }
+
                 if (amountRaw > currentCountry.maxBNB) {
                     showToast(`❌ Maximum withdrawal for ${currentCountry.name} is ${currentCountry.maxBNB} BNB`);
                     return;
                 }
-                if (amountRaw > balance) { showToast(t('toastInsuff').replace('{balance}', fmt(balance))); return; }
+
+                if (amountRaw > balance) {
+                    showToast(t('toastInsuff').replace('{balance}', fmt(balance)));
+                    return;
+                }
+
+                let destination = '';
+                let methodName = '';
+
+                if (type === 'crypto') {
+                    const network = $('cryptoNetwork');
+                    const wallet = $('cryptoWalletInput');
+                    const memo = $('cryptoMemoInput');
+                    if (!wallet || !wallet.value.trim()) {
+                        showToast('❌ Please enter a wallet address');
+                        return;
+                    }
+                    methodName = network.options[network.selectedIndex].text;
+                    destination = `Wallet: ${wallet.value.trim()}`;
+                    if (memo && memo.value.trim()) {
+                        destination += ` (Memo: ${memo.value.trim()})`;
+                    }
+                } else if (type === 'mobile') {
+                    const provider = $('mobileProvider');
+                    const phone = $('mobilePhoneInput');
+                    if (!phone || !phone.value.trim()) {
+                        showToast('❌ Please enter a phone number');
+                        return;
+                    }
+                    const prefix = $('countryPrefix').textContent;
+                    let phoneNum = phone.value.trim().replace(/\s/g, '');
+                    if (!phoneNum.startsWith('+')) {
+                        phoneNum = prefix + phoneNum;
+                    }
+                    methodName = provider.options[provider.selectedIndex].text;
+                    destination = phoneNum;
+                } else if (type === 'card') {
+                    const isVisa = $('visaFields').style.display !== 'none';
+                    let cardNum, expiry, cvv, name;
+                    if (isVisa) {
+                        cardNum = $('cardNumberInput');
+                        expiry = $('cardExpiryInput');
+                        cvv = $('cardCvvInput');
+                        name = $('cardNameInput');
+                        methodName = 'VISA Card';
+                    } else {
+                        cardNum = $('mastercardNumberInput');
+                        expiry = $('mastercardExpiryInput');
+                        cvv = $('mastercardCvvInput');
+                        name = $('mastercardNameInput');
+                        methodName = 'MasterCard';
+                    }
+                    if (!cardNum || !cardNum.value.trim() || cardNum.value.replace(/\s/g, '').length < 16) {
+                        showToast('❌ Please enter a valid card number');
+                        return;
+                    }
+                    if (!expiry || !expiry.value.trim() || expiry.value.length < 5) {
+                        showToast('❌ Please enter expiry date (MM/YY)');
+                        return;
+                    }
+                    if (!cvv || !cvv.value.trim() || cvv.value.length < 3) {
+                        showToast('❌ Please enter CVV');
+                        return;
+                    }
+                    if (!name || !name.value.trim()) {
+                        showToast('❌ Please enter cardholder name');
+                        return;
+                    }
+                    destination = `Card: ****${cardNum.value.replace(/\s/g, '').slice(-4)}`;
+                } else if (type === 'bank') {
+                    const bank = $('bankNameInput');
+                    const accName = $('accountNameInput');
+                    const accNum = $('accountNumberInput');
+                    if (!bank || !bank.value.trim()) {
+                        showToast('❌ Please enter bank name');
+                        return;
+                    }
+                    if (!accName || !accName.value.trim()) {
+                        showToast('❌ Please enter account holder name');
+                        return;
+                    }
+                    if (!accNum || !accNum.value.trim()) {
+                        showToast('❌ Please enter account number');
+                        return;
+                    }
+                    methodName = 'Bank Transfer';
+                    destination = `${bank.value.trim()} · ${accName.value.trim()} · ${accNum.value.trim()}`;
+                }
 
                 const platformFee = amountRaw * 0.05;
-                const bnbFee = amountRaw * 0.05;
-                const totalFee = platformFee + bnbFee;
+                const networkFee = amountRaw * 0.05;
+                const totalFee = platformFee + networkFee;
                 const finalAmount = amountRaw - totalFee;
 
                 balance -= amountRaw;
                 saveGame();
 
-                const methodNames = {
-                    'mpesa': 'Vodacom M-Pesa',
-                    'tigo': 'Tigo Pesa',
-                    'airtel': 'Airtel Money',
-                    'equitel': 'Equitel',
-                    'momo': 'MTN MoMo',
-                    'airtel_ng': 'Airtel Money NG',
-                    'alipay': 'Alipay',
-                    'wechat': 'WeChat Pay',
-                    'gopay': 'GoPay',
-                    'gcash': 'GCash',
-                    'paytm': 'Paytm',
-                    'paypal': 'PayPal',
-                    'wise': 'Wise',
-                    'revolut': 'Revolut',
-                    'bnb': 'BNB',
-                    'solana': 'Solana',
-                    'usdt_trc20': 'USDT (TRC20)',
-                    'bitcoin': 'Bitcoin',
-                    'ethereum': 'Ethereum',
-                    'bank_swift': 'SWIFT'
-                };
-                const methodName = methodNames[methodVal] || methodVal;
+                showToast(
+                    `✅ Withdrawal Submitted!\n` +
+                    `💰 ${finalAmount.toFixed(4)} BNB → ${methodName}\n` +
+                    `📱 ${destination}\n` +
+                    `💼 Fee: ${totalFee.toFixed(4)} BNB (5% Platform + 5% Network)`,
+                    true
+                );
 
-                showToast(t('toastWithdraw').replace('{amount}', finalAmount.toFixed(4)).replace('{method}', methodName)
-                    .replace('{wallet}', wallet).replace('{fee}', totalFee.toFixed(4)), true);
-
-                walletInput.value = '';
                 amountInput.value = '';
+                if ($('cryptoWalletInput')) $('cryptoWalletInput').value = '';
+                if ($('cryptoMemoInput')) $('cryptoMemoInput').value = '';
+                if ($('mobilePhoneInput')) $('mobilePhoneInput').value = '';
+                if ($('cardNumberInput')) $('cardNumberInput').value = '';
+                if ($('cardExpiryInput')) $('cardExpiryInput').value = '';
+                if ($('cardCvvInput')) $('cardCvvInput').value = '';
+                if ($('cardNameInput')) $('cardNameInput').value = '';
+                if ($('mastercardNumberInput')) $('mastercardNumberInput').value = '';
+                if ($('mastercardExpiryInput')) $('mastercardExpiryInput').value = '';
+                if ($('mastercardCvvInput')) $('mastercardCvvInput').value = '';
+                if ($('mastercardNameInput')) $('mastercardNameInput').value = '';
+                if ($('bankNameInput')) $('bankNameInput').value = '';
+                if ($('accountNameInput')) $('accountNameInput').value = '';
+                if ($('accountNumberInput')) $('accountNumberInput').value = '';
+                if ($('swiftInput')) $('swiftInput').value = '';
+
                 updateUI();
             }
 
@@ -3479,12 +3784,13 @@
                 userDiv.className = 'msg user';
                 userDiv.textContent = msg;
                 messages.appendChild(userDiv);
+                messages.scrollTop = messages.scrollHeight;
+                input.value = '';
 
                 setTimeout(() => {
                     const botDiv = document.createElement('div');
                     botDiv.className = 'msg bot';
-                    let response =
-                        `BNB is at $${bnbPrice.toFixed(2)} (${bnbChange > 0 ? '+' : ''}${bnbChange.toFixed(1)}%) 💹`;
+                    let response = `BNB is at $${bnbPrice.toFixed(2)} (${bnbChange > 0 ? '+' : ''}${bnbChange.toFixed(1)}%) 💹`;
                     const lower = msg.toLowerCase();
                     if (lower.includes('speed') || lower.includes('mine')) {
                         const speed = getTotalSpeed();
@@ -3493,92 +3799,36 @@
                         response = `Balance: ${fmt(balance)} BNB ($${(balance * bnbPrice).toFixed(2)}) 💰`;
                     } else if (lower.includes('social')) {
                         const count = getSocialCount();
-                        response =
-                            `You have ${count}/6 social accounts connected. Bonus speed: ${fmt(getSocialBonus())} BNB/s 🌐`;
-                    } else if (lower.includes('invite') || lower.includes('referral')) {
-                        response =
-                            `Your referral code is ${REFERRAL_CODE}. Share it to earn +0.00000010 BNB/s per invite! 👥`;
-                    } else if (lower.includes('withdraw')) {
-                        response =
-                            `Min ${MIN_WITHDRAW} BNB, Max ${currentCountry.maxBNB} BNB for ${currentCountry.name}. Fee 10%. 💸`;
+                        response = `Social connected: ${count}/6. Bonus: ${fmt(getSocialBonus())} BNB/s 🌐`;
+                    } else if (lower.includes('invite') || lower.includes('refer')) {
+                        response = `Invites: ${inviteCount}. Bonus speed: ${fmt(inviteBonusSpeed)} BNB/s 👥`;
                     } else {
-                        const responses = [
-                            `BNB is at $${bnbPrice.toFixed(2)} 📈`,
-                            `Your CPU is mining at ${fmt(getTotalSpeed())} BNB/s ⚡`,
-                            'Connect social accounts for bonus speed! 🌐',
-                            'Each invite gives +0.00000010 BNB/s! 👥',
-                            `Min ${MIN_WITHDRAW} BNB, Max ${currentCountry.maxBNB} BNB. 💸`,
-                            'CPU Level 10 gives 0.00001500 BNB/s! 🚀',
-                            'Change language in Profile settings 🌍',
-                            'Your balance is saved automatically 💾'
-                        ];
-                        response = responses[Math.floor(Math.random() * responses.length)];
+                        response =
+                            `I'm your AI assistant! 💡 Ask me about:\n- Balance, Speed, Social, Invites, or BNB price!`;
                     }
                     botDiv.textContent = response;
                     messages.appendChild(botDiv);
                     messages.scrollTop = messages.scrollHeight;
-                }, 500);
-
-                messages.scrollTop = messages.scrollHeight;
-                input.value = '';
+                }, 600);
             }
 
-            // ===== NAVIGATION =====
-            function initNavigation() {
-                const navBtns = qsa('.nav-tab');
-                const screens = {
-                    home: 'screen-home',
-                    boost: 'screen-boost',
-                    social: 'screen-social',
-                    invite: 'screen-invite',
-                    withdraw: 'screen-withdraw',
-                    profile: 'screen-profile',
-                    ai: 'screen-ai'
-                };
-                navBtns.forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        navBtns.forEach(b => b.classList.remove('active'));
+            // ===== EVENT LISTENERS =====
+            document.addEventListener('DOMContentLoaded', function() {
+
+                // Navigation
+                const navTabs = qsa('.nav-tab');
+                navTabs.forEach(tab => {
+                    tab.addEventListener('click', function() {
+                        navTabs.forEach(t => t.classList.remove('active'));
                         this.classList.add('active');
-                        const screen = this.dataset.screen;
-                        Object.keys(screens).forEach(key => {
-                            const el = $(screens[key]);
-                            if (el) {
-                                if (key === screen) el.classList.add('active');
-                                else el.classList.remove('active');
-                            }
-                        });
-                        const bottomBox = $('bottomBox');
-                        if (bottomBox) {
-                            bottomBox.style.display = screen === 'home' ? 'block' : 'none';
-                        }
-                        updateUI();
+                        const screenId = this.dataset.screen;
+                        qsa('.screen').forEach(s => s.classList.remove('active'));
+                        const target = $(`screen-${screenId}`);
+                        if (target) target.classList.add('active');
                     });
                 });
-            }
 
-            // ===== INIT =====
-            function init() {
-                const lastSave = loadGame();
-                if (lastSave) calculateOfflineMining();
-
-                if ($('languageSelect')) $('languageSelect').value = currentLang;
-
-                if ($('inviteCode')) $('inviteCode').textContent = REFERRAL_CODE;
-                if ($('inviteLinkInput')) $('inviteLinkInput').value =
-                `https://t.me/BNBMinerBot?start=${REFERRAL_CODE}`;
-
-                detectCountry();
-                translateAll();
-                updateUI();
-
-                setTimeout(() => {
-                    showToast(t('toastWelcome'), true);
-                }, 600);
-
-                setInterval(saveGame, 10000);
-                setInterval(updateMarket, 5000);
-                updateMarket();
-
+                // Settings icon -> Profile
                 if ($('settingsIcon')) {
                     $('settingsIcon').addEventListener('click', function() {
                         const profileTab = $('navProfile');
@@ -3586,19 +3836,17 @@
                     });
                 }
 
-                initNavigation();
-            }
-
-            // ===== EVENT LISTENERS =====
-            document.addEventListener('DOMContentLoaded', function() {
+                // Mining toggle
                 if ($('toggleMineBtn')) $('toggleMineBtn').addEventListener('click', toggleMining);
 
+                // Social connect
                 qsa('[data-platform]').forEach(btn => {
                     btn.addEventListener('click', function() {
                         connectSocial(this.dataset.platform);
                     });
                 });
 
+                // Copy invite
                 if ($('copyInviteBtn')) {
                     $('copyInviteBtn').addEventListener('click', function() {
                         const input = $('inviteLinkInput');
@@ -3607,9 +3855,11 @@
                             if (navigator.clipboard && navigator.clipboard.writeText) {
                                 navigator.clipboard.writeText(val).then(() => showToast(t('toastCopied'),
                                     true))
-                                    .catch(() => { input.select();
+                                    .catch(() => {
+                                        input.select();
                                         document.execCommand('copy');
-                                        showToast(t('toastCopied'), true); });
+                                        showToast(t('toastCopied'), true);
+                                    });
                             } else {
                                 input.select();
                                 document.execCommand('copy');
@@ -3619,40 +3869,70 @@
                     });
                 }
 
+                // Invite code click
                 if ($('inviteCode')) {
                     $('inviteCode').addEventListener('click', function() {
                         inviteCount++;
                         inviteBonusSpeed = inviteCount * INVITE_BONUS;
-                        if (inviteCount % 5 === 0) { balance += 0.5;
-                            showToast(t('toast5Invites'), true); }
+                        if (inviteCount % 5 === 0) {
+                            balance += 0.5;
+                            showToast(t('toast5Invites'), true);
+                        }
                         saveGame();
                         showToast(t('toastInvite'), true);
                         updateUI();
                     });
                 }
 
+                // Withdraw
                 if ($('withdrawBtn')) $('withdrawBtn').addEventListener('click', handleWithdraw);
 
+                // Country select
                 if ($('countrySelect')) {
                     $('countrySelect').addEventListener('change', function() {
                         updateCountryInfo();
-                        translateAll();
                     });
                 }
 
-                if ($('createGroupBtn')) {
-                    $('createGroupBtn').addEventListener('click', function() {
-                        const name = prompt('Enter group name:');
-                        if (name) {
-                            groups.push({ name, members: 1, bonus: 0.00000002, joined: true });
-                            saveGame();
-                            showToast(t('toastGroupCreated').replace('{name}', name), true);
-                            renderGroups();
-                            updateUI();
+                // Withdraw type toggle
+                if ($('withdrawType')) {
+                    $('withdrawType').addEventListener('change', toggleWithdrawFields);
+                }
+
+                // Card type toggle
+                qsa('.card-select-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        qsa('.card-select-btn').forEach(b => {
+                            b.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                        const cardType = this.dataset.card;
+                        if (cardType === 'visa') {
+                            $('visaFields').style.display = 'block';
+                            $('mastercardFields').style.display = 'none';
+                        } else {
+                            $('visaFields').style.display = 'none';
+                            $('mastercardFields').style.display = 'block';
                         }
                     });
-                }
+                });
 
+                // Card input formatting
+                ['cardNumberInput', 'mastercardNumberInput'].forEach(id => {
+                    const el = $(id);
+                    if (el) {
+                        el.addEventListener('input', function() { formatCardNumber(this); });
+                    }
+                });
+
+                ['cardExpiryInput', 'mastercardExpiryInput'].forEach(id => {
+                    const el = $(id);
+                    if (el) {
+                        el.addEventListener('input', function() { formatExpiry(this); });
+                    }
+                });
+
+                // Add friend
                 if ($('addFriendBtn')) {
                     $('addFriendBtn').addEventListener('click', function() {
                         const name = prompt('Enter friend\'s name:');
@@ -3666,6 +3946,7 @@
                     });
                 }
 
+                // Name edit
                 if ($('userName')) {
                     $('userName').addEventListener('click', function() {
                         const modal = $('nameEditModal');
@@ -3676,42 +3957,36 @@
                         }
                     });
                 }
+
                 if ($('cancelNameBtn')) {
                     $('cancelNameBtn').addEventListener('click', function() {
-                        const modal = $('nameEditModal');
-                        if (modal) modal.classList.remove('show');
+                        $('nameEditModal').classList.remove('show');
                     });
                 }
+
                 if ($('saveNameBtn')) {
                     $('saveNameBtn').addEventListener('click', function() {
                         const input = $('nameInput');
-                        const modal = $('nameEditModal');
-                        if (input && modal) {
+                        if (input) {
                             const newName = input.value.trim() || 'BNB Miner';
                             userName = newName;
                             if ($('userName')) $('userName').textContent = userName;
-                            modal.classList.remove('show');
+                            $('nameEditModal').classList.remove('show');
                             showToast(t('toastNameSaved'), true);
                             saveGame();
                             updateUI();
                         }
                     });
                 }
-                if ($('nameInput')) {
-                    $('nameInput').addEventListener('keypress', function(e) {
-                        if (e.key === 'Enter') {
-                            const btn = $('saveNameBtn');
-                            if (btn) btn.click();
-                        }
-                    });
-                }
 
+                // Photo upload
                 if ($('profileAvatar')) {
                     $('profileAvatar').addEventListener('click', function() {
                         const input = $('photoInput');
                         if (input) input.click();
                     });
                 }
+
                 if ($('photoInput')) {
                     $('photoInput').addEventListener('change', function(e) {
                         const file = e.target.files[0];
@@ -3732,6 +4007,7 @@
                     });
                 }
 
+                // Language
                 if ($('languageSelect')) {
                     $('languageSelect').addEventListener('change', function() {
                         currentLang = this.value;
@@ -3760,6 +4036,7 @@
                     });
                 }
 
+                // Theme
                 qsa('.theme-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                         const color = this.dataset.color;
@@ -3767,12 +4044,14 @@
                         if ($('themeColorPicker')) $('themeColorPicker').value = color;
                     });
                 });
+
                 if ($('themeColorPicker')) {
                     $('themeColorPicker').addEventListener('input', function() {
                         setTheme(this.value);
                     });
                 }
 
+                // AI
                 if ($('aiSendBtn')) $('aiSendBtn').addEventListener('click', handleAI);
                 if ($('aiInput')) {
                     $('aiInput').addEventListener('keypress', function(e) {
@@ -3783,7 +4062,30 @@
                     });
                 }
 
-                init();
+                // ===== INIT =====
+                const lastSave = loadGame();
+                if (lastSave) calculateOfflineMining();
+
+                if ($('languageSelect')) $('languageSelect').value = currentLang;
+
+                if ($('inviteCode')) $('inviteCode').textContent = REFERRAL_CODE;
+                if ($('inviteLinkInput')) $('inviteLinkInput').value =
+                    `https://t.me/BNBMinerBot?start=${REFERRAL_CODE}`;
+
+                detectCountry();
+                translateAll();
+                updateUI();
+
+                setTimeout(() => {
+                    showToast(t('toastWelcome'), true);
+                }, 600);
+
+                setInterval(saveGame, 10000);
+                setInterval(updateMarket, 5000);
+                updateMarket();
+
+                // Initialize card fields
+                toggleWithdrawFields();
             });
         })();
     </script>
