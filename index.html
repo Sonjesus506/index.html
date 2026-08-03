@@ -5,411 +5,272 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>🟡 BNB CPU Miner</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         :root {
             --primary: #f7e05e;
             --primary-dark: #f9b84a;
-            --bg-main: #0a121c;
-            --bg-card: #0d1b28;
-            --text-light: #d6edff;
-            --text-muted: #6a8aa8;
-            --border-color: #1e3447;
-            --shadow-color: rgba(247, 224, 94, 0.3);
+            --bg: #0a121c;
+            --text: #d6edff;
+            --muted: #6a8aa8;
+            --border: #1e3447;
             --green: #4ae09a;
             --red: #ff4757;
         }
-
-        body {
-            background: #080e17;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-        }
-
-        .app-container {
-            max-width: 440px;
-            width: 100%;
-            background: radial-gradient(circle at 30% 10%, #182a3a, #0a121c);
-            border-radius: 48px 48px 28px 28px;
-            padding: 20px 14px 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 215, 0, 0.08) inset;
-            border: 1px solid rgba(255, 215, 0, 0.05);
-            position: relative;
-            overflow: hidden;
-            min-height: 680px;
-            transition: all 0.3s ease;
-        }
-
-        .cpu-machine {
-            background: rgba(8, 20, 32, 0.6);
-            border-radius: 28px;
-            padding: 16px;
-            border: 2px solid var(--border-color);
-            margin-bottom: 10px;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.5s ease;
-        }
-        .cpu-machine.level-1 { border-color: #4a9eff; }
-        .cpu-machine.level-2 { border-color: #4ae09a; }
-        .cpu-machine.level-3 { border-color: #f7e05e; }
-        .cpu-machine.level-4 { border-color: #ff9f4a; }
-        .cpu-machine.level-5 { border-color: #ff6b8a; }
-        .cpu-machine.level-6 { border-color: #b47aff; }
-        .cpu-machine.level-7 { border-color: #00f2ea; }
-        .cpu-machine.level-8 { border-color: #ff4757; }
-        .cpu-machine.level-9 { border-color: #ffd700; }
-        .cpu-machine.level-10 { border-color: #ff6b6b; }
-
-        .cpu-machine .machine-label {
-            position: absolute;
-            top: 8px;
-            right: 12px;
-            font-size: 0.5rem;
-            color: var(--text-muted);
-            background: rgba(0,0,0,0.3);
-            padding: 2px 10px;
-            border-radius: 30px;
-        }
-        .cpu-machine .machine-label .level-badge { color: var(--primary); font-weight: 700; }
-
-        .cpu-visual { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px 0; }
-        .cpu-chip { width: 120px; height: 120px; background: #0d1b28; border-radius: 20px; border: 3px solid var(--border-color); position: relative; display: flex; align-items: center; justify-content: center; transition: all 0.5s ease; margin: 5px auto; }
-        .cpu-chip .chip-inner { width: 80px; height: 80px; background: radial-gradient(circle at 30% 30%, #1a2f40, #0a121c); border-radius: 12px; border: 2px solid var(--border-color); display: flex; align-items: center; justify-content: center; flex-direction: column; transition: all 0.5s ease; }
-        .cpu-chip .chip-inner .cpu-icon { font-size: 2rem; transition: all 0.5s ease; }
-        .cpu-chip .chip-inner .cpu-text { font-size: 0.4rem; color: var(--text-muted); margin-top: 2px; text-align: center; }
-
-        .cpu-fan {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            animation: spinFan 1.5s linear infinite;
-            animation-play-state: paused;
-        }
-        .cpu-fan.spinning { animation-play-state: running; }
-        @keyframes spinFan {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .cpu-fan .fan-blade {
-            position: absolute;
-            width: 8px;
-            height: 35px;
-            background: linear-gradient(180deg, var(--primary), var(--primary-dark));
-            border-radius: 10px;
-            top: 50%;
-            left: 50%;
-            transform-origin: 50% 0%;
-            opacity: 0.7;
-            box-shadow: 0 0 10px var(--shadow-color);
-        }
-        .cpu-fan .fan-blade:nth-child(1) { transform: rotate(0deg) translateX(-4px) translateY(-50%); }
-        .cpu-fan .fan-blade:nth-child(2) { transform: rotate(72deg) translateX(-4px) translateY(-50%); }
-        .cpu-fan .fan-blade:nth-child(3) { transform: rotate(144deg) translateX(-4px) translateY(-50%); }
-        .cpu-fan .fan-blade:nth-child(4) { transform: rotate(216deg) translateX(-4px) translateY(-50%); }
-        .cpu-fan .fan-blade:nth-child(5) { transform: rotate(288deg) translateX(-4px) translateY(-50%); }
-        .cpu-fan .fan-center {
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--primary), var(--primary-dark));
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 20px var(--shadow-color);
-            z-index: 2;
-        }
-
-        .cpu-leds { display: flex; gap: 4px; margin-top: 6px; }
-        .cpu-led { width: 6px; height: 6px; border-radius: 50%; background: var(--text-muted); transition: all 0.3s ease; }
-        .cpu-led.active { background: var(--green); box-shadow: 0 0 10px var(--green); }
-        .cpu-led.speed-1 { background: #4a9eff; box-shadow: 0 0 10px #4a9eff; }
-        .cpu-led.speed-2 { background: #4ae09a; box-shadow: 0 0 10px #4ae09a; }
-        .cpu-led.speed-3 { background: #f7e05e; box-shadow: 0 0 10px #f7e05e; }
-        .cpu-led.speed-4 { background: #ff9f4a; box-shadow: 0 0 10px #ff9f4a; }
-        .cpu-led.speed-5 { background: #ff6b8a; box-shadow: 0 0 10px #ff6b8a; }
-
-        .cpu-info { display: flex; justify-content: space-around; width: 100%; margin-top: 8px; padding: 6px; background: rgba(0,0,0,0.3); border-radius: 40px; }
-        .cpu-info-item { text-align: center; }
-        .cpu-info-item .label { font-size: 0.4rem; color: var(--text-muted); text-transform: uppercase; }
-        .cpu-info-item .value { font-size: 0.75rem; font-weight: 700; color: var(--text-light); }
-        .cpu-info-item .value.gold { color: var(--primary); }
-
-        .boost-levels { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; }
-        .level-item { background: rgba(8, 20, 32, 0.4); border-radius: 16px; padding: 8px 10px; border: 1px solid var(--border-color); text-align: center; transition: all 0.3s ease; cursor: pointer; }
-        .level-item:hover { border-color: var(--primary); }
-        .level-item.active { border-color: var(--primary); background: rgba(247, 224, 94, 0.1); }
-        .level-item .level-num { font-size: 0.65rem; font-weight: 700; color: var(--text-light); }
-        .level-item .level-speed { font-size: 0.5rem; color: var(--primary); }
-        .level-item .level-price { font-size: 0.5rem; color: var(--text-muted); }
-        .level-item .level-buy { margin-top: 4px; padding: 3px 12px; border-radius: 30px; border: none; font-weight: 600; font-size: 0.5rem; background: linear-gradient(145deg, var(--primary), var(--primary-dark)); color: #0a121c; cursor: pointer; width: 100%; }
-        .level-item .level-buy:active { transform: scale(0.95); }
-        .level-item .level-buy.owned { background: rgba(74, 224, 154, 0.2); color: var(--green); }
-
-        .nav-tabs { display: flex; background: #0d1822; border-radius: 60px; padding: 4px; margin-bottom: 10px; border: 1px solid var(--border-color); overflow-x: auto; gap: 2px; flex-wrap: nowrap; }
-        .nav-tab { flex: 1; text-align: center; padding: 8px 4px; border-radius: 60px; font-weight: 700; font-size: 0.5rem; color: var(--text-muted); cursor: pointer; transition: all 0.2s; border: none; background: transparent; letter-spacing: 0.3px; white-space: nowrap; min-width: 35px; }
-        .nav-tab.active { background: linear-gradient(145deg, var(--primary), var(--primary-dark)); color: #0a121c; box-shadow: 0 4px 20px var(--shadow-color); }
-        .nav-tab:active { transform: scale(0.96); }
-
-        .screen { display: none; animation: fadeSlide 0.3s ease; }
+        body { background: #080e17; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 10px; }
+        .app { max-width: 440px; width: 100%; background: radial-gradient(circle at 30% 10%, #182a3a, #0a121c); border-radius: 48px; padding: 20px 14px 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.85); border: 1px solid rgba(255,215,0,0.05); min-height: 680px; }
+        .gold { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .badge { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #0a121c; padding: 2px 12px; border-radius: 30px; font-size: 0.6rem; font-weight: 800; display: inline-block; }
+        .nav { display: flex; background: #0d1822; border-radius: 60px; padding: 4px; margin-bottom: 10px; border: 1px solid var(--border); overflow-x: auto; gap: 2px; }
+        .nav button { flex: 1; text-align: center; padding: 8px 4px; border-radius: 60px; font-weight: 700; font-size: 0.5rem; color: var(--muted); cursor: pointer; border: none; background: transparent; min-width: 35px; }
+        .nav button.active { background: linear-gradient(145deg, var(--primary), var(--primary-dark)); color: #0a121c; box-shadow: 0 4px 20px rgba(247,224,94,0.3); }
+        .screen { display: none; animation: fade 0.3s ease; }
         .screen.active { display: block; }
-        @keyframes fadeSlide { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
-
-        .market-price { background: rgba(8, 20, 32, 0.5); border-radius: 40px; padding: 6px 14px; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-        .market-price .price { font-size: 1.1rem; font-weight: 700; color: var(--text-light); }
-        .market-price .change { font-size: 0.7rem; font-weight: 600; padding: 2px 10px; border-radius: 20px; }
-        .market-price .change.up { color: var(--green); background: rgba(74, 224, 154, 0.15); }
-        .market-price .change.down { color: var(--red); background: rgba(255, 71, 87, 0.15); }
-        .market-price .label { font-size: 0.45rem; color: var(--text-muted); text-transform: uppercase; }
-
-        .miner-visual { display: flex; flex-direction: column; align-items: center; margin: 4px 0 8px; position: relative; }
-        .bnb-logo { font-size: 2.8rem; margin-bottom: 2px; text-shadow: 0 0 40px var(--shadow-color); }
-        .fan-container { position: relative; width: 110px; height: 110px; display: flex; align-items: center; justify-content: center; }
-        .fan-ring { position: absolute; width: 110px; height: 110px; border-radius: 50%; border: 4px solid var(--primary); box-shadow: 0 0 30px var(--shadow-color), inset 0 0 30px var(--shadow-color); background: rgba(8, 24, 40, 0.4); }
-        .fan-blades { position: relative; width: 90px; height: 90px; animation: spinFan 2s linear infinite; animation-play-state: paused; }
-        .fan-blades.spinning { animation-play-state: running; }
-        .blade { position: absolute; width: 28px; height: 9px; background: linear-gradient(90deg, var(--primary), var(--primary-dark)); border-radius: 20px; top: 50%; left: 50%; transform-origin: 0 50%; box-shadow: 0 0 15px var(--shadow-color); }
+        @keyframes fade { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
+        .market { background: rgba(8,20,32,0.5); border-radius: 40px; padding: 6px 14px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+        .market .price { font-size: 1.1rem; font-weight: 700; color: var(--text); }
+        .market .change { font-size: 0.7rem; font-weight: 600; padding: 2px 10px; border-radius: 20px; }
+        .market .change.up { color: var(--green); background: rgba(74,224,154,0.15); }
+        .market .change.down { color: var(--red); background: rgba(255,71,87,0.15); }
+        .market .label { font-size: 0.45rem; color: var(--muted); text-transform: uppercase; }
+        .fan-box { display: flex; flex-direction: column; align-items: center; margin: 4px 0 8px; }
+        .fan-wrap { position: relative; width: 110px; height: 110px; }
+        .fan-ring { position: absolute; width: 110px; height: 110px; border-radius: 50%; border: 4px solid var(--primary); box-shadow: 0 0 30px rgba(247,224,94,0.15); background: rgba(8,24,40,0.4); }
+        .fan-blades { position: relative; width: 90px; height: 90px; animation: spin 2s linear infinite; animation-play-state: paused; margin: 10px; }
+        .fan-blades.spin { animation-play-state: running; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .blade { position: absolute; width: 28px; height: 9px; background: linear-gradient(90deg, var(--primary), var(--primary-dark)); border-radius: 20px; top: 50%; left: 50%; transform-origin: 0 50%; box-shadow: 0 0 15px rgba(247,224,94,0.3); }
         .blade:nth-child(1) { transform: rotate(0deg) translateX(14px); }
         .blade:nth-child(2) { transform: rotate(72deg) translateX(14px); }
         .blade:nth-child(3) { transform: rotate(144deg) translateX(14px); }
         .blade:nth-child(4) { transform: rotate(216deg) translateX(14px); }
         .blade:nth-child(5) { transform: rotate(288deg) translateX(14px); }
-        .fan-center { position: absolute; width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle, var(--primary), var(--primary-dark)); box-shadow: 0 0 30px var(--shadow-color); border: 2px solid var(--primary); z-index: 2; }
-        .miner-label { color: var(--primary); font-size: 0.55rem; margin-top: 3px; letter-spacing: 0.1em; font-weight: 700; }
-
-        .stats-row { display: flex; justify-content: space-around; background: rgba(8, 20, 32, 0.5); backdrop-filter: blur(6px); border-radius: 40px; padding: 6px 4px; border: 1px solid var(--border-color); margin: 3px 0 6px; }
-        .stat-item { text-align: center; }
-        .stat-item .label { font-size: 0.45rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
-        .stat-item .value { font-weight: 700; font-size: 0.85rem; color: var(--text-light); }
-        .stat-item .value.bnb-gold { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-
-        .balance-big { text-align: center; margin: 4px 0 8px; }
-        .balance-big .coin { font-size: 2.2rem; font-weight: 800; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -1px; }
-        .balance-big .label { font-size: 0.5rem; color: var(--text-muted); letter-spacing: 0.1em; }
-        .balance-big .sub-label { font-size: 0.45rem; color: var(--text-muted); margin-top: 2px; }
-
-        .status-pill { display: flex; align-items: center; justify-content: center; gap: 6px; background: #0e1a24; padding: 5px 12px; border-radius: 60px; margin: 3px 0 8px; border: 1px solid var(--border-color); }
-        .dot { width: 8px; height: 8px; border-radius: 50%; background: #3d5a6e; transition: 0.2s; }
-        .dot.active { background: #3fe07a; box-shadow: 0 0 20px #3fe07a; }
-        .status-label { font-weight: 600; color: var(--text-light); font-size: 0.7rem; }
-        .session-time { color: var(--text-muted); font-size: 0.65rem; }
-
-        .btn { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 10px 8px; border: none; border-radius: 60px; font-weight: 700; font-size: 0.8rem; background: #1d2f3f; color: var(--text-light); box-shadow: 0 4px 0 #0a141e, 0 8px 24px rgba(0, 0, 0, 0.5); transition: all 0.06s ease; cursor: pointer; border: 1px solid var(--border-color); }
+        .fan-center { position: absolute; width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle, var(--primary), var(--primary-dark)); box-shadow: 0 0 30px rgba(247,224,94,0.5); border: 2px solid var(--primary); top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; }
+        .stats { display: flex; justify-content: space-around; background: rgba(8,20,32,0.5); border-radius: 40px; padding: 6px 4px; border: 1px solid var(--border); margin: 3px 0 6px; }
+        .stats .item { text-align: center; }
+        .stats .item .lbl { font-size: 0.45rem; color: var(--muted); text-transform: uppercase; }
+        .stats .item .val { font-weight: 700; font-size: 0.85rem; color: var(--text); }
+        .stats .item .val.gold { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .balance { text-align: center; margin: 4px 0 8px; }
+        .balance .coin { font-size: 2.2rem; font-weight: 800; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -1px; }
+        .balance .lbl { font-size: 0.5rem; color: var(--muted); letter-spacing: 0.1em; }
+        .balance .sub { font-size: 0.45rem; color: var(--muted); margin-top: 2px; }
+        .pill { display: flex; align-items: center; justify-content: center; gap: 6px; background: #0e1a24; padding: 5px 12px; border-radius: 60px; margin: 3px 0 8px; border: 1px solid var(--border); }
+        .pill .dot { width: 8px; height: 8px; border-radius: 50%; background: #3d5a6e; transition: 0.2s; }
+        .pill .dot.active { background: var(--green); box-shadow: 0 0 20px var(--green); }
+        .pill .status { font-weight: 600; color: var(--text); font-size: 0.7rem; }
+        .pill .time { color: var(--muted); font-size: 0.65rem; }
+        .btn { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 10px 8px; border: none; border-radius: 60px; font-weight: 700; font-size: 0.8rem; background: #1d2f3f; color: var(--text); box-shadow: 0 4px 0 #0a141e; cursor: pointer; border: 1px solid var(--border); transition: all 0.06s ease; }
         .btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #0a141e; }
-        .btn-primary { background: linear-gradient(145deg, var(--primary), var(--primary-dark)); color: #0a121c; border: 1px solid var(--primary); text-shadow: none; }
+        .btn-primary { background: linear-gradient(145deg, var(--primary), var(--primary-dark)); color: #0a121c; border: 1px solid var(--primary); }
         .btn-success { background: linear-gradient(145deg, #2fb86a, #167a42); color: white; border: 1px solid #6ae09a; }
-
+        .toast { background: #1f2c3a; border-left: 5px solid var(--primary); color: var(--text); padding: 8px 14px; border-radius: 40px; font-weight: 500; margin: 6px 0 4px; box-shadow: 0 8px 24px rgba(0,0,0,0.6); border: 1px solid var(--border); text-align: center; font-size: 0.7rem; }
+        .toast.success { border-left-color: var(--green); }
+        .offline-badge { margin-top:8px; padding:6px 12px; background:rgba(74,224,154,0.05); border:1px solid rgba(74,224,154,0.2); border-radius:40px; text-align:center; font-size:0.55rem; color:var(--muted); }
+        .offline-badge span { color:var(--green); }
+        /* Boost */
+        .boost-title { color: var(--primary); font-size: 0.95rem; text-align: center; margin-bottom: 8px; }
+        .cpu-box { background: rgba(8,20,32,0.6); border-radius: 28px; padding: 16px; border: 2px solid var(--border); margin-bottom: 10px; }
+        .cpu-box .lvl { position: absolute; top: 8px; right: 12px; font-size: 0.5rem; color: var(--muted); background: rgba(0,0,0,0.3); padding: 2px 10px; border-radius: 30px; }
+        .cpu-box .lvl .num { color: var(--primary); font-weight: 700; }
+        .cpu-visual { display: flex; flex-direction: column; align-items: center; padding: 10px 0; }
+        .cpu-chip { width: 120px; height: 120px; background: #0d1b28; border-radius: 20px; border: 3px solid var(--border); position: relative; display: flex; align-items: center; justify-content: center; margin: 5px auto; }
+        .cpu-chip .inner { width: 80px; height: 80px; background: radial-gradient(circle at 30% 30%, #1a2f40, #0a121c); border-radius: 12px; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; flex-direction: column; }
+        .cpu-chip .inner .icon { font-size: 2rem; }
+        .cpu-chip .inner .name { font-size: 0.4rem; color: var(--muted); margin-top: 2px; text-align: center; }
+        .cpu-fan2 { position: absolute; width: 100px; height: 100px; animation: spin 1.5s linear infinite; animation-play-state: paused; }
+        .cpu-fan2.spin { animation-play-state: running; }
+        .cpu-fan2 .fb { position: absolute; width: 8px; height: 35px; background: linear-gradient(180deg, var(--primary), var(--primary-dark)); border-radius: 10px; top: 50%; left: 50%; transform-origin: 50% 0%; opacity: 0.7; box-shadow: 0 0 10px rgba(247,224,94,0.3); }
+        .cpu-fan2 .fb:nth-child(1) { transform: rotate(0deg) translateX(-4px) translateY(-50%); }
+        .cpu-fan2 .fb:nth-child(2) { transform: rotate(72deg) translateX(-4px) translateY(-50%); }
+        .cpu-fan2 .fb:nth-child(3) { transform: rotate(144deg) translateX(-4px) translateY(-50%); }
+        .cpu-fan2 .fb:nth-child(4) { transform: rotate(216deg) translateX(-4px) translateY(-50%); }
+        .cpu-fan2 .fb:nth-child(5) { transform: rotate(288deg) translateX(-4px) translateY(-50%); }
+        .cpu-fan2 .fc { position: absolute; width: 16px; height: 16px; border-radius: 50%; background: radial-gradient(circle, var(--primary), var(--primary-dark)); top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 20px rgba(247,224,94,0.3); z-index: 2; }
+        .leds { display: flex; gap: 4px; margin-top: 6px; }
+        .led { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); transition: all 0.3s ease; }
+        .led.speed-1 { background: #4a9eff; box-shadow: 0 0 10px #4a9eff; }
+        .led.speed-2 { background: #4ae09a; box-shadow: 0 0 10px #4ae09a; }
+        .led.speed-3 { background: #f7e05e; box-shadow: 0 0 10px #f7e05e; }
+        .led.speed-4 { background: #ff9f4a; box-shadow: 0 0 10px #ff9f4a; }
+        .led.speed-5 { background: #ff6b8a; box-shadow: 0 0 10px #ff6b8a; }
+        .cpu-info2 { display: flex; justify-content: space-around; width: 100%; margin-top: 8px; padding: 6px; background: rgba(0,0,0,0.3); border-radius: 40px; }
+        .cpu-info2 .ci { text-align: center; }
+        .cpu-info2 .ci .lbl { font-size: 0.4rem; color: var(--muted); text-transform: uppercase; }
+        .cpu-info2 .ci .val { font-size: 0.75rem; font-weight: 700; color: var(--text); }
+        .cpu-info2 .ci .val.gold { color: var(--primary); }
+        .levels { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; }
+        .level-item { background: rgba(8,20,32,0.4); border-radius: 16px; padding: 8px 10px; border: 1px solid var(--border); text-align: center; }
+        .level-item.active { border-color: var(--primary); background: rgba(247,224,94,0.1); }
+        .level-item .ln { font-size: 0.65rem; font-weight: 700; color: var(--text); }
+        .level-item .ls { font-size: 0.5rem; color: var(--primary); }
+        .level-item .lp { font-size: 0.5rem; color: var(--muted); }
+        .level-item .lb { margin-top: 4px; padding: 3px 12px; border-radius: 30px; border: none; font-weight: 600; font-size: 0.5rem; background: linear-gradient(145deg, var(--primary), var(--primary-dark)); color: #0a121c; cursor: pointer; width: 100%; }
+        .level-item .lb:active { transform: scale(0.95); }
+        .level-item .lb.owned { background: rgba(74,224,154,0.2); color: var(--green); }
+        /* Social */
         .social-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .social-header h2 { color: var(--primary); font-size: 0.95rem; }
-        .social-header .earnings { color: var(--text-muted); font-size: 0.6rem; }
+        .social-header .earnings { color: var(--muted); font-size: 0.6rem; }
         .social-header .earnings span { color: var(--primary); font-weight: 700; }
-
-        .social-connect { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
-        .social-item { display: flex; align-items: center; gap: 10px; background: rgba(8, 20, 32, 0.5); border-radius: 40px; padding: 10px 14px; border: 1px solid var(--border-color); transition: all 0.2s; }
-        .social-item .icon { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border-radius: 50%; flex-shrink: 0; }
-        .social-item .icon.tiktok { background: #000; color: #00f2ea; }
-        .social-item .icon.instagram { background: radial-gradient(circle at 30% 110%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%); color: white; }
-        .social-item .icon.facebook { background: #1877f2; color: white; }
-        .social-item .icon.youtube { background: #ff0000; color: white; }
-        .social-item .icon.twitter { background: #000; color: white; }
-        .social-item .icon.telegram { background: #0088cc; color: white; }
+        .social-item { display: flex; align-items: center; gap: 10px; background: rgba(8,20,32,0.5); border-radius: 40px; padding: 10px 14px; border: 1px solid var(--border); margin-bottom: 6px; }
+        .social-item .ic { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border-radius: 50%; flex-shrink: 0; }
+        .social-item .ic.tiktok { background: #000; color: #00f2ea; }
+        .social-item .ic.instagram { background: radial-gradient(circle at 30% 110%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%); color: white; }
+        .social-item .ic.facebook { background: #1877f2; color: white; }
+        .social-item .ic.youtube { background: #ff0000; color: white; }
+        .social-item .ic.twitter { background: #000; color: white; }
+        .social-item .ic.telegram { background: #0088cc; color: white; }
         .social-item .info { flex: 1; }
-        .social-item .info .name { color: var(--text-light); font-weight: 600; font-size: 0.75rem; }
-        .social-item .info .username { color: var(--text-muted); font-size: 0.55rem; }
-        .social-item .connect-btn { padding: 4px 12px; border-radius: 30px; border: none; font-weight: 600; font-size: 0.6rem; cursor: pointer; background: linear-gradient(145deg, var(--primary), var(--primary-dark)); color: #0a121c; transition: 0.15s; }
-        .social-item .connect-btn:active { transform: scale(0.95); }
-        .social-item .connect-btn.connected-btn { background: rgba(74, 224, 154, 0.2); color: var(--green); }
-
-        .social-rewards { background: rgba(8, 20, 32, 0.3); border-radius: 28px; padding: 12px 14px; border: 1px solid var(--border-color); margin-bottom: 10px; }
+        .social-item .info .name { color: var(--text); font-weight: 600; font-size: 0.75rem; }
+        .social-item .info .uname { color: var(--muted); font-size: 0.55rem; }
+        .social-item .cbtn { padding: 4px 12px; border-radius: 30px; border: none; font-weight: 600; font-size: 0.6rem; cursor: pointer; background: linear-gradient(145deg, var(--primary), var(--primary-dark)); color: #0a121c; }
+        .social-item .cbtn:active { transform: scale(0.95); }
+        .social-item .cbtn.connected { background: rgba(74,224,154,0.2); color: var(--green); }
+        .social-rewards { background: rgba(8,20,32,0.3); border-radius: 28px; padding: 12px 14px; border: 1px solid var(--border); margin-bottom: 10px; }
         .social-rewards .title { color: var(--primary); font-weight: 700; font-size: 0.7rem; margin-bottom: 6px; }
-        .reward-row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-muted); font-size: 0.65rem; }
+        .reward-row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--muted); font-size: 0.65rem; }
         .reward-row:last-child { border-bottom: none; }
-        .reward-row .highlight { color: var(--primary); font-weight: 600; }
-        .reward-progress { width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-top: 4px; overflow: hidden; }
-        .reward-progress .fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--primary-dark)); border-radius: 10px; transition: width 0.5s ease; }
-
+        .reward-row .hl { color: var(--primary); font-weight: 600; }
+        .progress { width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-top: 4px; overflow: hidden; }
+        .progress .fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--primary-dark)); border-radius: 10px; transition: width 0.5s ease; }
         .groups-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .groups-header h3 { color: var(--text-light); font-size: 0.8rem; }
+        .groups-header h3 { color: var(--text); font-size: 0.8rem; }
         .groups-header .create-btn { padding: 4px 14px; border-radius: 30px; border: none; font-weight: 600; font-size: 0.6rem; cursor: pointer; background: linear-gradient(145deg, var(--primary), var(--primary-dark)); color: #0a121c; }
-        .groups-header .create-btn:active { transform: scale(0.95); }
-
-        .group-card { background: rgba(8, 20, 32, 0.3); border-radius: 28px; padding: 12px 14px; border: 1px solid var(--border-color); margin-bottom: 8px; }
-        .group-card .group-name { color: var(--text-light); font-weight: 700; font-size: 0.8rem; }
-        .group-card .group-info { color: var(--text-muted); font-size: 0.6rem; display: flex; gap: 12px; margin-top: 4px; }
-        .group-card .group-info span { display: flex; align-items: center; gap: 4px; }
-        .group-card .join-btn { padding: 4px 16px; border-radius: 30px; border: none; font-weight: 600; font-size: 0.6rem; cursor: pointer; background: linear-gradient(145deg, var(--primary), var(--primary-dark)); color: #0a121c; margin-top: 6px; }
-        .group-card .join-btn:active { transform: scale(0.95); }
-        .group-card .join-btn.joined { background: rgba(74, 224, 154, 0.2); color: var(--green); }
-
-        .withdraw-card { background: rgba(8, 22, 34, 0.6); backdrop-filter: blur(4px); border-radius: 28px; padding: 12px 12px 16px; border: 1px solid var(--primary); }
+        .group-card { background: rgba(8,20,32,0.3); border-radius: 28px; padding: 12px 14px; border: 1px solid var(--border); margin-bottom: 8px; }
+        .group-card .gname { color: var(--text); font-weight: 700; font-size: 0.8rem; }
+        .group-card .ginfo { color: var(--muted); font-size: 0.6rem; display: flex; gap: 12px; margin-top: 4px; }
+        .group-card .jbtn { padding: 4px 16px; border-radius: 30px; border: none; font-weight: 600; font-size: 0.6rem; cursor: pointer; background: linear-gradient(145deg, var(--primary), var(--primary-dark)); color: #0a121c; margin-top: 6px; }
+        .group-card .jbtn:active { transform: scale(0.95); }
+        .group-card .jbtn.joined { background: rgba(74,224,154,0.2); color: var(--green); }
+        /* Withdraw */
+        .withdraw-card { background: rgba(8,22,34,0.6); border-radius: 28px; padding: 12px 12px 16px; border: 1px solid var(--primary); }
         .withdraw-card .title { color: var(--primary); font-weight: 600; font-size: 0.75rem; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-        .country-badge { background: #0d1b28; border-radius: 40px; padding: 2px 10px; font-size: 0.5rem; color: var(--primary); border: 1px solid var(--primary); display: inline-flex; align-items: center; gap: 3px; }
-
+        .withdraw-card .badge { background: #0d1b28; border-radius: 40px; padding: 2px 10px; font-size: 0.5rem; color: var(--primary); border: 1px solid var(--primary); }
         .form-group { margin-bottom: 8px; }
-        .form-group label { display: block; font-size: 0.55rem; color: var(--text-muted); margin-bottom: 3px; letter-spacing: 0.04em; }
-        .form-group select, .form-group input { width: 100%; padding: 8px 12px; background: #0d1b28; border: 1px solid var(--border-color); border-radius: 40px; color: var(--text-light); font-size: 0.75rem; outline: none; transition: 0.15s; }
-        .form-group select:focus, .form-group input:focus { border-color: var(--primary); box-shadow: 0 0 12px var(--shadow-color); }
-        .form-group select option { background: #0d1b28; }
-        .form-group .phone-prefix { display: flex; align-items: center; background: #0d1b28; border: 1px solid var(--border-color); border-radius: 40px; overflow: hidden; }
-        .form-group .phone-prefix span { padding: 8px 12px; color: var(--primary); font-weight: 600; font-size: 0.75rem; background: #0a1620; border-right: 1px solid var(--border-color); white-space: nowrap; }
-        .form-group .phone-prefix input { border: none; border-radius: 0 40px 40px 0; padding-left: 6px; }
-
+        .form-group label { display: block; font-size: 0.55rem; color: var(--muted); margin-bottom: 3px; }
+        .form-group select, .form-group input { width: 100%; padding: 8px 12px; background: #0d1b28; border: 1px solid var(--border); border-radius: 40px; color: var(--text); font-size: 0.75rem; outline: none; }
+        .form-group select:focus, .form-group input:focus { border-color: var(--primary); }
+        .phone-prefix { display: flex; align-items: center; background: #0d1b28; border: 1px solid var(--border); border-radius: 40px; overflow: hidden; }
+        .phone-prefix span { padding: 8px 12px; color: var(--primary); font-weight: 600; font-size: 0.75rem; background: #0a1620; border-right: 1px solid var(--border); }
+        .phone-prefix input { border: none; border-radius: 0 40px 40px 0; padding-left: 6px; background: transparent; color: var(--text); outline: none; flex: 1; }
         .country-selector { display: flex; gap: 6px; align-items: center; }
         .country-selector .flag { font-size: 1.3rem; }
-        .country-selector select { flex: 1; background: #0d1b28; border: 1px solid var(--border-color); border-radius: 30px; padding: 6px 10px; color: var(--text-light); font-size: 0.7rem; outline: none; }
-
-        .btn-withdraw { background: linear-gradient(145deg, var(--primary), var(--primary-dark)); border: 1px solid var(--primary); color: #0a121c; margin-top: 4px; text-shadow: none; }
-        .btn-withdraw:active { background: var(--primary-dark); }
-
-        .fee-info { font-size: 0.5rem; color: var(--text-muted); text-align: center; margin-top: 6px; padding: 6px; background: rgba(0, 20, 35, 0.3); border-radius: 30px; }
-        .fee-info .highlight { color: var(--primary); }
-        .min-withdraw-notice { background: rgba(var(--primary), 0.08); border: 1px solid var(--primary); border-radius: 30px; padding: 4px 10px; text-align: center; color: var(--primary); font-size: 0.55rem; margin-top: 4px; }
-
-        .profile-header { display: flex; align-items: center; gap: 12px; background: rgba(8, 20, 32, 0.5); border-radius: 28px; padding: 12px; border: 1px solid var(--border-color); margin-bottom: 10px; }
+        .country-selector select { flex: 1; background: #0d1b28; border: 1px solid var(--border); border-radius: 30px; padding: 6px 10px; color: var(--text); font-size: 0.7rem; outline: none; }
+        .btn-withdraw { background: linear-gradient(145deg, var(--primary), var(--primary-dark)); border: 1px solid var(--primary); color: #0a121c; margin-top: 4px; }
+        .fee-info { font-size: 0.5rem; color: var(--muted); text-align: center; margin-top: 6px; padding: 6px; background: rgba(0,20,35,0.3); border-radius: 30px; }
+        .fee-info .hl { color: var(--primary); }
+        .min-notice { background: rgba(247,224,94,0.08); border: 1px solid var(--primary); border-radius: 30px; padding: 4px 10px; text-align: center; color: var(--primary); font-size: 0.55rem; margin-top: 4px; }
+        /* Profile */
+        .profile-header { display: flex; align-items: center; gap: 12px; background: rgba(8,20,32,0.5); border-radius: 28px; padding: 12px; border: 1px solid var(--border); margin-bottom: 10px; }
         .profile-avatar { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: #0a121c; font-weight: 700; flex-shrink: 0; overflow: hidden; position: relative; cursor: pointer; }
         .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
-        .profile-avatar .camera-icon { position: absolute; bottom: 0; right: 0; background: var(--primary); border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; color: #0a121c; border: 2px solid #0a121c; }
+        .profile-avatar .cam { position: absolute; bottom: 0; right: 0; background: var(--primary); border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; color: #0a121c; border: 2px solid #0a121c; }
         .profile-info { flex: 1; }
-        .profile-info .name { color: var(--text-light); font-weight: 700; font-size: 0.9rem; cursor: pointer; }
+        .profile-info .name { color: var(--text); font-weight: 700; font-size: 0.9rem; cursor: pointer; }
         .profile-info .name:hover { color: var(--primary); }
-        .profile-info .level { color: var(--text-muted); font-size: 0.6rem; }
+        .profile-info .level { color: var(--muted); font-size: 0.6rem; }
         .profile-info .level span { color: var(--primary); font-weight: 700; }
-        .profile-info .edit-hint { color: var(--text-muted); font-size: 0.5rem; opacity: 0.6; }
-
-        .settings-group { background: rgba(8, 20, 32, 0.3); border-radius: 24px; padding: 10px 12px; border: 1px solid var(--border-color); margin-bottom: 8px; }
-        .settings-group .title { color: var(--text-muted); font-size: 0.5rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+        .profile-info .hint { color: var(--muted); font-size: 0.5rem; opacity: 0.6; }
+        .settings-group { background: rgba(8,20,32,0.3); border-radius: 24px; padding: 10px 12px; border: 1px solid var(--border); margin-bottom: 8px; }
+        .settings-group .title { color: var(--muted); font-size: 0.5rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
         .settings-row { display: flex; align-items: center; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .settings-row:last-child { border-bottom: none; }
-        .settings-row label { color: var(--text-light); font-size: 0.7rem; }
-        .settings-row select, .settings-row input[type="color"] { background: #0d1b28; border: 1px solid var(--border-color); border-radius: 30px; padding: 4px 10px; color: var(--text-light); font-size: 0.65rem; outline: none; cursor: pointer; }
-        .settings-row input[type="color"] { width: 32px; height: 32px; padding: 2px; border-radius: 50%; border: 2px solid var(--border-color); }
-        .settings-row select option { background: #0d1b28; }
-
+        .settings-row label { color: var(--text); font-size: 0.7rem; }
+        .settings-row select, .settings-row input[type="color"] { background: #0d1b28; border: 1px solid var(--border); border-radius: 30px; padding: 4px 10px; color: var(--text); font-size: 0.65rem; outline: none; cursor: pointer; }
+        .settings-row input[type="color"] { width: 32px; height: 32px; padding: 2px; border-radius: 50%; border: 2px solid var(--border); }
         .theme-row { display: flex; gap: 4px; flex-wrap: wrap; padding-top: 4px; }
         .theme-btn { width: 28px; height: 28px; border-radius: 50%; border: 2px solid #fff; cursor: pointer; }
         .theme-btn:active { transform: scale(0.9); }
-
-        .name-edit-modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 999; align-items: center; justify-content: center; padding: 20px; }
-        .name-edit-modal.show { display: flex; }
-        .name-edit-modal .modal-content { background: #0d1b28; border-radius: 32px; padding: 24px; max-width: 340px; width: 100%; border: 1px solid var(--border-color); }
-        .name-edit-modal .modal-title { color: var(--text-light); font-weight: 700; font-size: 1rem; margin-bottom: 12px; text-align: center; }
-        .name-edit-modal input { width: 100%; padding: 12px 16px; background: #0a1620; border: 1px solid var(--border-color); border-radius: 40px; color: var(--text-light); font-size: 0.9rem; outline: none; margin-bottom: 12px; }
-        .name-edit-modal input:focus { border-color: var(--primary); }
-        .name-edit-modal .modal-buttons { display: flex; gap: 8px; }
-        .name-edit-modal .modal-buttons button { flex: 1; padding: 10px; border: none; border-radius: 40px; font-weight: 700; font-size: 0.8rem; cursor: pointer; }
-        .name-edit-modal .modal-buttons .save-btn { background: linear-gradient(145deg, var(--primary), var(--primary-dark)); color: #0a121c; }
-        .name-edit-modal .modal-buttons .cancel-btn { background: #1d2f3f; color: var(--text-light); }
-        .name-edit-modal .modal-buttons button:active { transform: scale(0.95); }
-
+        .friend-item { display: flex; align-items: center; gap: 10px; background: rgba(8,20,32,0.3); border-radius: 40px; padding: 8px 12px; border: 1px solid var(--border); margin-bottom: 6px; }
+        .friend-item .fav { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #0a121c; font-weight: 700; flex-shrink: 0; }
+        .friend-item .finfo { flex: 1; }
+        .friend-item .finfo .fname { color: var(--text); font-size: 0.75rem; font-weight: 600; }
+        .friend-item .finfo .fstatus { color: var(--muted); font-size: 0.5rem; }
+        .friend-item .online { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+        .friend-item .offline { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
         .friends-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .friends-header h3 { color: var(--text-light); font-size: 0.8rem; }
+        .friends-header h3 { color: var(--text); font-size: 0.8rem; }
         .friends-header .add-btn { padding: 4px 14px; border-radius: 30px; border: none; font-weight: 600; font-size: 0.6rem; cursor: pointer; background: linear-gradient(145deg, var(--primary), var(--primary-dark)); color: #0a121c; }
-        .friends-header .add-btn:active { transform: scale(0.95); }
-
-        .friend-item { display: flex; align-items: center; gap: 10px; background: rgba(8, 20, 32, 0.3); border-radius: 40px; padding: 8px 12px; border: 1px solid var(--border-color); margin-bottom: 6px; }
-        .friend-item .avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #0a121c; font-weight: 700; flex-shrink: 0; }
-        .friend-item .info { flex: 1; }
-        .friend-item .info .name { color: var(--text-light); font-size: 0.75rem; font-weight: 600; }
-        .friend-item .info .status { color: var(--text-muted); font-size: 0.5rem; }
-        .friend-item .online-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
-        .friend-item .offline-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-muted); }
-
-        .ai-chat { background: rgba(8, 20, 32, 0.5); border-radius: 28px; border: 1px solid var(--primary); overflow: hidden; margin-top: 4px; }
-        .ai-chat-header { background: rgba(0, 0, 0, 0.3); padding: 6px 12px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid var(--border-color); }
-        .ai-chat-header .icon { font-size: 1rem; }
-        .ai-chat-header .title { color: var(--primary); font-weight: 700; font-size: 0.7rem; }
-        .ai-chat-header .status { margin-left: auto; font-size: 0.45rem; color: var(--green); }
-        .ai-messages { padding: 8px 12px; max-height: 130px; overflow-y: auto; min-height: 70px; }
-        .ai-message { margin-bottom: 4px; padding: 5px 10px; border-radius: 16px; font-size: 0.7rem; max-width: 85%; word-wrap: break-word; }
-        .ai-message.bot { background: rgba(247, 224, 94, 0.1); border: 1px solid rgba(247, 224, 94, 0.2); color: var(--text-light); margin-right: auto; }
-        .ai-message.user { background: linear-gradient(145deg, var(--primary), var(--primary-dark)); color: #0a121c; margin-left: auto; }
-        .ai-input { display: flex; gap: 4px; padding: 4px 10px 8px; border-top: 1px solid var(--border-color); }
-        .ai-input input { flex: 1; padding: 6px 12px; background: #0d1b28; border: 1px solid var(--border-color); border-radius: 40px; color: var(--text-light); font-size: 0.7rem; outline: none; }
+        /* AI */
+        .ai-chat { background: rgba(8,20,32,0.5); border-radius: 28px; border: 1px solid var(--primary); overflow: hidden; margin-top: 4px; }
+        .ai-chat .head { background: rgba(0,0,0,0.3); padding: 6px 12px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid var(--border); }
+        .ai-chat .head .icon { font-size: 1rem; }
+        .ai-chat .head .title { color: var(--primary); font-weight: 700; font-size: 0.7rem; }
+        .ai-chat .head .status { margin-left: auto; font-size: 0.45rem; color: var(--green); }
+        .ai-msgs { padding: 8px 12px; max-height: 130px; overflow-y: auto; min-height: 70px; }
+        .ai-msgs .msg { margin-bottom: 4px; padding: 5px 10px; border-radius: 16px; font-size: 0.7rem; max-width: 85%; word-wrap: break-word; }
+        .ai-msgs .msg.bot { background: rgba(247,224,94,0.1); border: 1px solid rgba(247,224,94,0.2); color: var(--text); margin-right: auto; }
+        .ai-msgs .msg.user { background: linear-gradient(145deg, var(--primary), var(--primary-dark)); color: #0a121c; margin-left: auto; }
+        .ai-input { display: flex; gap: 4px; padding: 4px 10px 8px; border-top: 1px solid var(--border); }
+        .ai-input input { flex: 1; padding: 6px 12px; background: #0d1b28; border: 1px solid var(--border); border-radius: 40px; color: var(--text); font-size: 0.7rem; outline: none; }
         .ai-input input:focus { border-color: var(--primary); }
-        .ai-input button { padding: 6px 14px; background: linear-gradient(145deg, var(--primary), var(--primary-dark)); border: none; border-radius: 40px; color: #0a121c; font-weight: 700; font-size: 0.65rem; cursor: pointer; white-space: nowrap; }
+        .ai-input button { padding: 6px 14px; background: linear-gradient(145deg, var(--primary), var(--primary-dark)); border: none; border-radius: 40px; color: #0a121c; font-weight: 700; font-size: 0.65rem; cursor: pointer; }
         .ai-input button:active { transform: scale(0.95); }
-
+        /* Invite */
         .invite-header h2 { color: var(--primary); font-size: 0.95rem; text-align: center; margin-bottom: 8px; }
-        .invite-stats { display: flex; justify-content: space-around; background: rgba(8, 20, 32, 0.5); border-radius: 28px; padding: 10px; border: 1px solid var(--border-color); margin-bottom: 10px; }
-        .invite-stat .num { font-size: 1.3rem; font-weight: 700; color: var(--primary); }
-        .invite-stat .lbl { font-size: 0.5rem; color: var(--text-muted); text-transform: uppercase; }
+        .invite-stats { display: flex; justify-content: space-around; background: rgba(8,20,32,0.5); border-radius: 28px; padding: 10px; border: 1px solid var(--border); margin-bottom: 10px; }
+        .invite-stats .num { font-size: 1.3rem; font-weight: 700; color: var(--primary); }
+        .invite-stats .lbl { font-size: 0.5rem; color: var(--muted); text-transform: uppercase; }
         .invite-code-box { background: #0d1b28; border: 2px dashed var(--primary); border-radius: 40px; padding: 10px; text-align: center; margin-bottom: 10px; }
-        .invite-code { font-size: 1.3rem; font-weight: 800; color: var(--primary); letter-spacing: 4px; font-family: 'Courier New', monospace; word-break: break-all; }
-        .invite-code-label { font-size: 0.5rem; color: var(--text-muted); margin-bottom: 2px; }
-        .invite-link-box { display: flex; gap: 4px; background: #0a1620; border-radius: 40px; padding: 4px; border: 1px solid var(--border-color); margin-bottom: 8px; }
-        .invite-link-box input { flex: 1; background: transparent; border: none; padding: 6px 10px; color: var(--text-light); font-size: 0.6rem; outline: none; min-width: 0; }
-        .invite-link-box button { background: linear-gradient(145deg, var(--primary), var(--primary-dark)); border: none; border-radius: 40px; padding: 6px 12px; color: #0a121c; font-weight: 700; font-size: 0.65rem; cursor: pointer; transition: 0.15s; white-space: nowrap; }
+        .invite-code { font-size: 1.3rem; font-weight: 800; color: var(--primary); letter-spacing: 4px; font-family: 'Courier New', monospace; word-break: break-all; cursor: pointer; }
+        .invite-code-label { font-size: 0.5rem; color: var(--muted); margin-bottom: 2px; }
+        .invite-link-box { display: flex; gap: 4px; background: #0a1620; border-radius: 40px; padding: 4px; border: 1px solid var(--border); margin-bottom: 8px; }
+        .invite-link-box input { flex: 1; background: transparent; border: none; padding: 6px 10px; color: var(--text); font-size: 0.6rem; outline: none; min-width: 0; }
+        .invite-link-box button { background: linear-gradient(145deg, var(--primary), var(--primary-dark)); border: none; border-radius: 40px; padding: 6px 12px; color: #0a121c; font-weight: 700; font-size: 0.65rem; cursor: pointer; }
         .invite-link-box button:active { transform: scale(0.95); }
-        .invite-rewards { background: rgba(0, 20, 35, 0.3); border-radius: 28px; padding: 10px 12px; border: 1px solid var(--primary); }
+        .invite-rewards { background: rgba(0,20,35,0.3); border-radius: 28px; padding: 10px 12px; border: 1px solid var(--primary); }
         .invite-rewards .title { color: var(--primary); font-weight: 600; font-size: 0.7rem; margin-bottom: 4px; }
-        .reward-item { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px solid #1a2f40; color: var(--text-muted); font-size: 0.65rem; }
-        .reward-item:last-child { border-bottom: none; }
-        .reward-item .highlight { color: var(--primary); font-weight: 600; }
-
-        .toast-message { background: #1f2c3a; border-left: 5px solid var(--primary); color: var(--text-light); padding: 8px 14px; border-radius: 40px; font-weight: 500; margin: 6px 0 4px; box-shadow: 0 8px 24px rgba(0,0,0,0.6); border: 1px solid var(--border-color); text-align: center; font-size: 0.7rem; }
-        .toast-success { border-left-color: #4ae09a; }
-
+        .invite-rewards .item { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px solid #1a2f40; color: var(--muted); font-size: 0.65rem; }
+        .invite-rewards .item:last-child { border-bottom: none; }
+        .invite-rewards .item .hl { color: var(--primary); font-weight: 600; }
+        /* Modal */
+        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 999; align-items: center; justify-content: center; padding: 20px; }
+        .modal.show { display: flex; }
+        .modal .content { background: #0d1b28; border-radius: 32px; padding: 24px; max-width: 340px; width: 100%; border: 1px solid var(--border); }
+        .modal .content .mtitle { color: var(--text); font-weight: 700; font-size: 1rem; margin-bottom: 12px; text-align: center; }
+        .modal .content input { width: 100%; padding: 12px 16px; background: #0a1620; border: 1px solid var(--border); border-radius: 40px; color: var(--text); font-size: 0.9rem; outline: none; margin-bottom: 12px; }
+        .modal .content input:focus { border-color: var(--primary); }
+        .modal .content .btns { display: flex; gap: 8px; }
+        .modal .content .btns button { flex: 1; padding: 10px; border: none; border-radius: 40px; font-weight: 700; font-size: 0.8rem; cursor: pointer; }
+        .modal .content .btns .save { background: linear-gradient(145deg, var(--primary), var(--primary-dark)); color: #0a121c; }
+        .modal .content .btns .cancel { background: #1d2f3f; color: var(--text); }
+        .modal .content .btns button:active { transform: scale(0.95); }
         @media (max-width: 420px) {
-            .app-container { padding: 12px 8px 16px; }
-            .balance-big .coin { font-size: 1.8rem; }
-            .fan-container { width: 90px; height: 90px; }
+            .app { padding: 12px 8px 16px; }
+            .balance .coin { font-size: 1.8rem; }
+            .fan-wrap { width: 90px; height: 90px; }
             .fan-ring { width: 90px; height: 90px; }
-            .fan-blades { width: 70px; height: 70px; }
+            .fan-blades { width: 70px; height: 70px; margin: 10px; }
             .blade { width: 22px; height: 7px; }
             .blade:nth-child(1) { transform: rotate(0deg) translateX(11px); }
             .blade:nth-child(2) { transform: rotate(72deg) translateX(11px); }
             .blade:nth-child(3) { transform: rotate(144deg) translateX(11px); }
             .blade:nth-child(4) { transform: rotate(216deg) translateX(11px); }
             .blade:nth-child(5) { transform: rotate(288deg) translateX(11px); }
-            .invite-code { font-size: 1rem; }
-            .nav-tab { font-size: 0.4rem; padding: 5px 2px; min-width: 28px; }
-            .market-price .price { font-size: 0.9rem; }
-            .social-item .icon { width: 32px; height: 32px; font-size: 1.4rem; }
+            .nav button { font-size: 0.4rem; padding: 5px 2px; min-width: 28px; }
             .cpu-chip { width: 90px; height: 90px; }
-            .cpu-chip .chip-inner { width: 60px; height: 60px; }
-            .cpu-fan { width: 80px; height: 80px; }
-            .cpu-fan .fan-blade { height: 28px; width: 6px; }
-            .boost-levels { grid-template-columns: 1fr 1fr; }
-            .name-edit-modal .modal-content { padding: 16px; }
+            .cpu-chip .inner { width: 60px; height: 60px; }
+            .cpu-fan2 { width: 80px; height: 80px; }
+            .cpu-fan2 .fb { height: 28px; width: 6px; }
+            .levels { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
 <body>
 
-<div class="app-container" id="app">
-
-    <!-- Name Edit Modal -->
-    <div class="name-edit-modal" id="nameEditModal">
-        <div class="modal-content">
-            <div class="modal-title" id="modalTitle">✏️ Edit Name</div>
-            <input type="text" id="nameInput" placeholder="Enter your name..." maxlength="30">
-            <div class="modal-buttons">
-                <button class="cancel-btn" id="cancelNameBtn">Cancel</button>
-                <button class="save-btn" id="saveNameBtn">Save</button>
-            </div>
-        </div>
-    </div>
+<div class="app" id="app">
 
     <!-- Header -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-        <div style="display: flex; align-items: center; gap: 6px;">
-            <span style="font-size: 1rem;">🟡</span>
-            <span style="color: var(--primary); font-weight: 800; font-size: 0.75rem;" id="appTitle">BNB CPU</span>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+        <div style="display:flex; align-items:center; gap:6px;">
+            <span style="font-size:1rem;">🟡</span>
+            <span style="color:var(--primary); font-weight:800; font-size:0.75rem;" id="appTitle">BNB CPU</span>
         </div>
-        <span class="bnb-badge" id="appBadge">⚡ PERSISTENT</span>
+        <span class="badge" id="appBadge">⚡ PERSISTENT</span>
     </div>
 
-    <!-- Market Price -->
-    <div class="market-price">
+    <!-- Market -->
+    <div class="market">
         <div>
             <div class="label" id="marketLabel">BNB / USD</div>
             <div class="price" id="bnbPrice">$580.00</div>
@@ -421,150 +282,126 @@
     </div>
 
     <!-- Navigation -->
-    <div class="nav-tabs">
-        <button class="nav-tab active" data-screen="home" id="navHome">🏠</button>
-        <button class="nav-tab" data-screen="boost" id="navBoost">⚡</button>
-        <button class="nav-tab" data-screen="social" id="navSocial">🌐</button>
-        <button class="nav-tab" data-screen="invite" id="navInvite">👥</button>
-        <button class="nav-tab" data-screen="withdraw" id="navWithdraw">💸</button>
-        <button class="nav-tab" data-screen="profile" id="navProfile">⚙️</button>
-        <button class="nav-tab" data-screen="ai" id="navAi">🤖</button>
+    <div class="nav">
+        <button class="active" data-screen="home" id="navHome">🏠</button>
+        <button data-screen="boost" id="navBoost">⚡</button>
+        <button data-screen="social" id="navSocial">🌐</button>
+        <button data-screen="invite" id="navInvite">👥</button>
+        <button data-screen="withdraw" id="navWithdraw">💸</button>
+        <button data-screen="profile" id="navProfile">⚙️</button>
+        <button data-screen="ai" id="navAi">🤖</button>
     </div>
 
-    <!-- HOME SCREEN -->
+    <!-- HOME -->
     <div class="screen active" id="screen-home">
-        <div class="miner-visual">
-            <div class="bnb-logo">🟡</div>
-            <div class="fan-container">
+        <div class="fan-box">
+            <div style="font-size:2.8rem; margin-bottom:2px;">🟡</div>
+            <div class="fan-wrap">
                 <div class="fan-ring"></div>
                 <div class="fan-blades" id="fanBlades">
                     <div class="blade"></div><div class="blade"></div><div class="blade"></div><div class="blade"></div><div class="blade"></div>
                 </div>
                 <div class="fan-center"></div>
             </div>
-            <div class="miner-label" id="minerLabel">⚡ BNB CPU MINER</div>
+            <div style="color:var(--primary); font-size:0.55rem; margin-top:3px; letter-spacing:0.1em; font-weight:700;" id="minerLabel">⚡ BNB CPU MINER</div>
         </div>
 
-        <div class="stats-row">
-            <div class="stat-item">
-                <div class="label" id="statSpeed">⚡ Speed</div>
-                <div class="value bnb-gold" id="homeSpeed">0.00000010</div>
-            </div>
-            <div class="stat-item">
-                <div class="label" id="statMined">⏳ Mined</div>
-                <div class="value" id="homeMined">0.00000000</div>
-            </div>
-            <div class="stat-item">
-                <div class="label" id="statStatus">Status</div>
-                <div class="value" id="homeStatus" style="font-size:0.65rem; color:var(--text-muted);">Idle</div>
-            </div>
+        <div class="stats">
+            <div class="item"><div class="lbl" id="statSpeed">⚡ Speed</div><div class="val gold" id="homeSpeed">0.00000010</div></div>
+            <div class="item"><div class="lbl" id="statMined">⏳ Mined</div><div class="val" id="homeMined">0.00000000</div></div>
+            <div class="item"><div class="lbl" id="statStatus">Status</div><div class="val" id="homeStatus" style="font-size:0.65rem; color:var(--muted);">Idle</div></div>
         </div>
 
-        <div class="balance-big">
-            <div class="label" id="balanceLabel">💰 BNB BALANCE</div>
+        <div class="balance">
+            <div class="lbl" id="balanceLabel">💰 BNB BALANCE</div>
             <div class="coin" id="homeBalance">0.00000000</div>
-            <div class="sub-label">≈ $<span id="usdValue">0.00</span> USD</div>
-            <div class="sub-label" style="font-size:0.4rem; color:var(--text-muted);" id="lastMined">Last mined: Just now</div>
+            <div class="sub">≈ $<span id="usdValue">0.00</span> USD</div>
+            <div class="sub" style="font-size:0.4rem; color:var(--muted);" id="lastMined">Last mined: Just now</div>
         </div>
 
-        <div class="status-pill">
+        <div class="pill">
             <span class="dot" id="statusDot"></span>
-            <span class="status-label" id="statusLabel">⏸️ Stopped</span>
-            <span class="session-time" id="sessionTime">00:00</span>
+            <span class="status" id="statusLabel">⏸️ Stopped</span>
+            <span class="time" id="sessionTime">00:00</span>
         </div>
 
         <button class="btn btn-primary" id="toggleMineBtn">
             <span>▶</span> <span id="startBtnText">START MINING</span>
         </button>
 
-        <div style="margin-top:8px; padding:6px 12px; background:rgba(74,224,154,0.05); border:1px solid rgba(74,224,154,0.2); border-radius:40px; text-align:center;">
-            <span style="font-size:0.55rem; color:var(--text-muted);" id="offlineText">⛏️ <span style="color:var(--green);">Always mining</span> · Even when offline</span>
-        </div>
+        <div class="offline-badge">⛏️ <span>Always mining</span> · Even when offline</div>
     </div>
 
-    <!-- BOOST SCREEN -->
+    <!-- BOOST -->
     <div class="screen" id="screen-boost">
-        <div class="boost-header">
-            <h2 id="boostTitle">⚡ CPU Mining Machine</h2>
-        </div>
-        <div class="cpu-machine level-1" id="cpuMachine">
-            <div class="machine-label" id="machineLabel">Level <span class="level-badge" id="cpuLevelDisplay">1</span></div>
+        <div class="boost-title" id="boostTitle">⚡ CPU Mining Machine</div>
+        <div class="cpu-box" id="cpuMachine">
+            <div class="lvl">Level <span class="num" id="cpuLevelDisplay">1</span></div>
             <div class="cpu-visual">
                 <div class="cpu-chip">
-                    <div class="cpu-fan" id="cpuFan">
-                        <div class="fan-blade"></div><div class="fan-blade"></div><div class="fan-blade"></div><div class="fan-blade"></div><div class="fan-blade"></div>
-                        <div class="fan-center"></div>
+                    <div class="cpu-fan2" id="cpuFan">
+                        <div class="fb"></div><div class="fb"></div><div class="fb"></div><div class="fb"></div><div class="fb"></div>
+                        <div class="fc"></div>
                     </div>
-                    <div class="chip-inner">
-                        <div class="cpu-icon" id="cpuIcon">🖥️</div>
-                        <div class="cpu-text" id="cpuName">Intel Core i3</div>
+                    <div class="inner">
+                        <div class="icon" id="cpuIcon">🖥️</div>
+                        <div class="name" id="cpuName">Intel Core i3</div>
                     </div>
                 </div>
-                <div class="cpu-leds" id="cpuLeds">
-                    <div class="cpu-led active"></div><div class="cpu-led"></div><div class="cpu-led"></div><div class="cpu-led"></div><div class="cpu-led"></div>
+                <div class="leds" id="cpuLeds">
+                    <div class="led speed-1"></div><div class="led"></div><div class="led"></div><div class="led"></div><div class="led"></div>
                 </div>
-                <div class="cpu-info">
-                    <div class="cpu-info-item">
-                        <div class="label" id="cpuSpeedLabel">Speed</div>
-                        <div class="value gold" id="cpuSpeedDisplay">0.00000010</div>
-                    </div>
-                    <div class="cpu-info-item">
-                        <div class="label" id="cpuPerSecLabel">BNB/s</div>
-                        <div class="value" id="cpuLevelSpeed">0.00000010</div>
-                    </div>
-                    <div class="cpu-info-item">
-                        <div class="label" id="cpuLevelLabel">Level</div>
-                        <div class="value" id="cpuLevelNum">1/10</div>
-                    </div>
+                <div class="cpu-info2">
+                    <div class="ci"><div class="lbl" id="cpuSpeedLabel">Speed</div><div class="val gold" id="cpuSpeedDisplay">0.00000010</div></div>
+                    <div class="ci"><div class="lbl" id="cpuPerSecLabel">BNB/s</div><div class="val" id="cpuLevelSpeed">0.00000010</div></div>
+                    <div class="ci"><div class="lbl" id="cpuLevelLabel">Level</div><div class="val" id="cpuLevelNum">1/10</div></div>
                 </div>
             </div>
         </div>
-        <div style="margin-top: 8px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                <span style="color:var(--text-light); font-size:0.7rem; font-weight:600;" id="upgradeLabel">⬆ Upgrade CPU</span>
-                <span style="color:var(--text-muted); font-size:0.5rem;" id="levelsLabel">10 Levels</span>
-            </div>
-            <div class="boost-levels" id="boostLevels"></div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; margin-top:8px;">
+            <span style="color:var(--text-light); font-size:0.7rem; font-weight:600;" id="upgradeLabel">⬆ Upgrade CPU</span>
+            <span style="color:var(--muted); font-size:0.5rem;" id="levelsLabel">10 Levels</span>
         </div>
+        <div class="levels" id="boostLevels"></div>
     </div>
 
-    <!-- SOCIAL SCREEN -->
+    <!-- SOCIAL -->
     <div class="screen" id="screen-social">
         <div class="social-header">
             <h2 id="socialTitle">🌐 Connect Social</h2>
             <div class="earnings"><span id="socialEarnLabel">Earned</span>: <span id="socialEarnings">0.0000</span> BNB</div>
         </div>
-        <div class="social-connect">
-            <div class="social-item"><div class="icon tiktok">♬</div><div class="info"><div class="name">TikTok</div><div class="username" id="tiktokUser">Not connected</div></div><button class="connect-btn" id="tiktokBtn"><span id="connectText">Connect</span></button></div>
-            <div class="social-item"><div class="icon instagram">📷</div><div class="info"><div class="name">Instagram</div><div class="username" id="instagramUser">Not connected</div></div><button class="connect-btn" id="instagramBtn"><span id="connectText2">Connect</span></button></div>
-            <div class="social-item"><div class="icon facebook">f</div><div class="info"><div class="name">Facebook</div><div class="username" id="facebookUser">Not connected</div></div><button class="connect-btn" id="facebookBtn"><span id="connectText3">Connect</span></button></div>
-            <div class="social-item"><div class="icon youtube">▶</div><div class="info"><div class="name">YouTube</div><div class="username" id="youtubeUser">Not connected</div></div><button class="connect-btn" id="youtubeBtn"><span id="connectText4">Connect</span></button></div>
-            <div class="social-item"><div class="icon twitter">🐦</div><div class="info"><div class="name">Twitter/X</div><div class="username" id="twitterUser">Not connected</div></div><button class="connect-btn" id="twitterBtn"><span id="connectText5">Connect</span></button></div>
-            <div class="social-item"><div class="icon telegram">✈</div><div class="info"><div class="name">Telegram</div><div class="username" id="telegramUser">Not connected</div></div><button class="connect-btn" id="telegramBtn"><span id="connectText6">Connect</span></button></div>
+        <div id="socialContainer">
+            <div class="social-item"><div class="ic tiktok">♬</div><div class="info"><div class="name">TikTok</div><div class="uname" id="tiktokUser">Not connected</div></div><button class="cbtn" data-platform="tiktok"><span class="c-text">Connect</span></button></div>
+            <div class="social-item"><div class="ic instagram">📷</div><div class="info"><div class="name">Instagram</div><div class="uname" id="instagramUser">Not connected</div></div><button class="cbtn" data-platform="instagram"><span class="c-text">Connect</span></button></div>
+            <div class="social-item"><div class="ic facebook">f</div><div class="info"><div class="name">Facebook</div><div class="uname" id="facebookUser">Not connected</div></div><button class="cbtn" data-platform="facebook"><span class="c-text">Connect</span></button></div>
+            <div class="social-item"><div class="ic youtube">▶</div><div class="info"><div class="name">YouTube</div><div class="uname" id="youtubeUser">Not connected</div></div><button class="cbtn" data-platform="youtube"><span class="c-text">Connect</span></button></div>
+            <div class="social-item"><div class="ic twitter">🐦</div><div class="info"><div class="name">Twitter/X</div><div class="uname" id="twitterUser">Not connected</div></div><button class="cbtn" data-platform="twitter"><span class="c-text">Connect</span></button></div>
+            <div class="social-item"><div class="ic telegram">✈</div><div class="info"><div class="name">Telegram</div><div class="uname" id="telegramUser">Not connected</div></div><button class="cbtn" data-platform="telegram"><span class="c-text">Connect</span></button></div>
         </div>
         <div class="social-rewards">
             <div class="title" id="socialRewardTitle">🎁 Social Growth Rewards</div>
-            <div class="reward-row"><span id="reward1">Connect 1 account</span><span class="highlight">+0.00000010 BNB/s</span></div>
-            <div class="reward-row"><span id="reward2">Connect 3 accounts</span><span class="highlight">+0.00000030 BNB/s</span></div>
-            <div class="reward-row"><span id="reward3">Connect all 6 accounts</span><span class="highlight">+0.00000100 BNB/s</span></div>
-            <div class="reward-progress"><div class="fill" id="socialProgress" style="width:0%"></div></div>
+            <div class="reward-row"><span id="reward1">Connect 1 account</span><span class="hl">+0.00000010 BNB/s</span></div>
+            <div class="reward-row"><span id="reward2">Connect 3 accounts</span><span class="hl">+0.00000030 BNB/s</span></div>
+            <div class="reward-row"><span id="reward3">Connect all 6 accounts</span><span class="hl">+0.00000100 BNB/s</span></div>
+            <div class="progress"><div class="fill" id="socialProgress" style="width:0%"></div></div>
         </div>
         <div class="groups-header">
             <h3 id="groupsTitle">👥 Community Groups</h3>
             <button class="create-btn" id="createGroupBtn"><span id="createBtnText">+ Create</span></button>
         </div>
         <div id="groupsContainer">
-            <div class="group-card"><div class="group-name">🌍 Global BNB Miners</div><div class="group-info"><span>👤 1,234 members</span><span>⚡ +0.00000005 BNB/s</span></div><button class="join-btn"><span id="joinText">Join</span></button></div>
-            <div class="group-card"><div class="group-name">🇹🇿 Tanzania Miners</div><div class="group-info"><span>👤 567 members</span><span>⚡ +0.00000003 BNB/s</span></div><button class="join-btn"><span id="joinText2">Join</span></button></div>
+            <div class="group-card"><div class="gname">🌍 Global BNB Miners</div><div class="ginfo"><span>👤 1,234 members</span><span>⚡ +0.00000005 BNB/s</span></div><button class="jbtn" data-group="0"><span class="j-text">Join</span></button></div>
+            <div class="group-card"><div class="gname">🇹🇿 Tanzania Miners</div><div class="ginfo"><span>👤 567 members</span><span>⚡ +0.00000003 BNB/s</span></div><button class="jbtn" data-group="1"><span class="j-text">Join</span></button></div>
         </div>
     </div>
 
-    <!-- INVITE SCREEN -->
+    <!-- INVITE -->
     <div class="screen" id="screen-invite">
         <div class="invite-header"><h2 id="inviteTitle">👥 Invite & Earn</h2></div>
         <div class="invite-stats">
-            <div class="invite-stat"><div class="num" id="inviteCount">0</div><div class="lbl" id="inviteTotalLabel">Total Invites</div></div>
-            <div class="invite-stat"><div class="num" id="inviteBonus" style="color:#5ce0a0;">+0.00000000</div><div class="lbl" id="inviteBonusLabel">Bonus Speed</div></div>
+            <div><div class="num" id="inviteCount">0</div><div class="lbl" id="inviteTotalLabel">Total Invites</div></div>
+            <div><div class="num" id="inviteBonus" style="color:#5ce0a0;">+0.00000000</div><div class="lbl" id="inviteBonusLabel">Bonus Speed</div></div>
         </div>
         <div class="invite-code-box">
             <div class="invite-code-label" id="inviteCodeLabel">YOUR REFERRAL CODE</div>
@@ -576,15 +413,15 @@
         </div>
         <div class="invite-rewards">
             <div class="title" id="inviteRewardTitle">🎁 Referral Rewards</div>
-            <div class="reward-item"><span id="inviteReward1">Per invite</span><span class="highlight">+0.00000010 BNB/s</span></div>
-            <div class="reward-item"><span id="inviteReward2">Speed bonus active</span><span class="highlight" id="inviteRewardActive">+0.00000000 BNB/s</span></div>
+            <div class="item"><span id="inviteReward1">Per invite</span><span class="hl">+0.00000010 BNB/s</span></div>
+            <div class="item"><span id="inviteReward2">Speed bonus active</span><span class="hl" id="inviteRewardActive">+0.00000000 BNB/s</span></div>
         </div>
     </div>
 
-    <!-- WITHDRAW SCREEN -->
+    <!-- WITHDRAW -->
     <div class="screen" id="screen-withdraw">
         <div class="withdraw-card">
-            <div class="title" id="withdrawTitle">💸 Withdraw BNB <span class="country-badge" id="countryBadge">🌍 Auto</span></div>
+            <div class="title" id="withdrawTitle">💸 Withdraw BNB <span class="badge" id="countryBadge">🌍 Auto</span></div>
             <div class="form-group">
                 <label id="countryLabel">🌍 Select Country</label>
                 <div class="country-selector">
@@ -643,7 +480,7 @@
                 <label id="amountLabel">💰 Amount (BNB)</label>
                 <input type="number" id="withdrawAmount" placeholder="0.5" min="0.5" step="0.01">
             </div>
-            <div class="min-withdraw-notice" id="minNotice">⚠️ Minimum: <strong>0.5 BNB</strong></div>
+            <div class="min-notice" id="minNotice">⚠️ Minimum: <strong>0.5 BNB</strong></div>
             <button class="btn btn-withdraw" id="withdrawBtn"><span id="submitBtnText">⚡ Submit</span></button>
             <div class="fee-info" id="feeInfo">
                 💼 <strong>10% Fee</strong> (5% Platform + 5% BNB Network)
@@ -656,15 +493,15 @@
         </div>
     </div>
 
-    <!-- PROFILE SCREEN -->
+    <!-- PROFILE -->
     <div class="screen" id="screen-profile">
         <div class="profile-header">
-            <div class="profile-avatar" id="profileAvatar">👤<span class="camera-icon">📷</span></div>
+            <div class="profile-avatar" id="profileAvatar">👤<span class="cam">📷</span></div>
             <div class="profile-info">
                 <div class="name" id="userName">BNB Miner</div>
                 <div class="level"><span id="levelLabel">Level</span>: <span id="userLevel">1</span> · <span id="xpLabel">XP</span>: <span id="userXP">0</span></div>
-                <div class="edit-hint" id="editHint">👆 Tap name to edit</div>
-                <div style="font-size:0.5rem; color:var(--text-muted);" id="userCountry">🌍 Global</div>
+                <div class="hint" id="editHint">👆 Tap name to edit</div>
+                <div style="font-size:0.5rem; color:var(--muted);" id="userCountry">🌍 Global</div>
             </div>
         </div>
         <input type="file" id="photoInput" accept="image/*" style="display:none;">
@@ -723,22 +560,22 @@
                 <button class="add-btn" id="addFriendBtn"><span id="addFriendText">+ Add</span></button>
             </div>
             <div id="friendsList">
-                <div class="friend-item"><div class="avatar">👤</div><div class="info"><div class="name">Alex B.</div><div class="status">Online · Mining</div></div><span class="online-dot"></span></div>
-                <div class="friend-item"><div class="avatar">👤</div><div class="info"><div class="name">Sarah K.</div><div class="status">Last seen 2h ago</div></div><span class="offline-dot"></span></div>
+                <div class="friend-item"><div class="fav">👤</div><div class="finfo"><div class="fname">Alex B.</div><div class="fstatus">Online · Mining</div></div><span class="online"></span></div>
+                <div class="friend-item"><div class="fav">👤</div><div class="finfo"><div class="fname">Sarah K.</div><div class="fstatus">Last seen 2h ago</div></div><span class="offline"></span></div>
             </div>
         </div>
     </div>
 
-    <!-- AI CHAT SCREEN -->
+    <!-- AI CHAT -->
     <div class="screen" id="screen-ai">
         <div class="ai-chat">
-            <div class="ai-chat-header">
+            <div class="head">
                 <span class="icon">🤖</span>
                 <span class="title" id="aiTitle">DeepSeek AI</span>
                 <span class="status" id="aiStatus">● Online</span>
             </div>
-            <div class="ai-messages" id="aiMessages">
-                <div class="ai-message bot" id="aiWelcome">👋 Hello! I'm your DeepSeek AI assistant.<br>Ask me about BNB, CPU mining, or anything!</div>
+            <div class="ai-msgs" id="aiMessages">
+                <div class="msg bot" id="aiWelcome">👋 Hello! I'm your DeepSeek AI assistant.<br>Ask me about BNB, CPU mining, or anything!</div>
             </div>
             <div class="ai-input">
                 <input type="text" id="aiInput" placeholder="Ask me anything...">
@@ -748,7 +585,19 @@
     </div>
 
     <!-- Toast -->
-    <div id="toastContainer" style="min-height:36px; margin-top:4px;"></div>
+    <div id="toastContainer"></div>
+
+    <!-- Modal -->
+    <div class="modal" id="nameEditModal">
+        <div class="content">
+            <div class="mtitle" id="modalTitle">✏️ Edit Name</div>
+            <input type="text" id="nameInput" placeholder="Enter your name..." maxlength="30">
+            <div class="btns">
+                <button class="cancel" id="cancelNameBtn">Cancel</button>
+                <button class="save" id="saveNameBtn">Save</button>
+            </div>
+        </div>
+    </div>
 
 </div>
 
@@ -756,7 +605,59 @@
     (function() {
         "use strict";
 
-        // ==================== COMPLETE TRANSLATIONS ====================
+        // ==================== STATE ====================
+        const BASE_SPEED = 0.00000010;
+        let balance = 0;
+        let totalMined = 0;
+        let isMining = false;
+        let miningInterval = null;
+        let sessionInterval = null;
+        let sessionSeconds = 0;
+        let boostLevel = 0;
+        let inviteCount = 0;
+        let inviteBonusSpeed = 0;
+        const INVITE_BONUS = 0.00000010;
+        const REFERRAL_CODE = 'BNB-7XK9';
+        const MIN_WITHDRAW = 0.5;
+        let boostCost = 10;
+        const BOOST_INCREMENT = 0.00000010;
+
+        const LEVELS = [
+            { level: 1, name: 'Intel Core i3', speed: 0.00000010, price: 10, icon: '🖥️' },
+            { level: 2, name: 'Intel Core i5', speed: 0.00000025, price: 25, icon: '🖥️' },
+            { level: 3, name: 'Intel Core i7', speed: 0.00000050, price: 50, icon: '🖥️' },
+            { level: 4, name: 'Intel Core i9', speed: 0.00000100, price: 100, icon: '🖥️' },
+            { level: 5, name: 'AMD Ryzen 5', speed: 0.00000150, price: 150, icon: '🖥️' },
+            { level: 6, name: 'AMD Ryzen 7', speed: 0.00000250, price: 250, icon: '🖥️' },
+            { level: 7, name: 'AMD Ryzen 9', speed: 0.00000400, price: 400, icon: '🖥️' },
+            { level: 8, name: 'NVIDIA RTX 3060', speed: 0.00000600, price: 600, icon: '💻' },
+            { level: 9, name: 'NVIDIA RTX 4080', speed: 0.00000900, price: 900, icon: '💻' },
+            { level: 10, name: 'NVIDIA RTX 4090', speed: 0.00001500, price: 1500, icon: '💻' }
+        ];
+
+        let socialConnected = { tiktok: false, instagram: false, facebook: false, youtube: false, twitter: false, telegram: false };
+        let socialEarnings = 0;
+        let socialBonusSpeed = 0;
+        let groups = [
+            { name: '🌍 Global BNB Miners', members: 1234, bonus: 0.00000005, joined: false },
+            { name: '🇹🇿 Tanzania Miners', members: 567, bonus: 0.00000003, joined: false }
+        ];
+        let friends = [
+            { name: 'Alex B.', status: 'Online · Mining', online: true },
+            { name: 'Sarah K.', status: 'Last seen 2h ago', online: false }
+        ];
+        let bnbPrice = 580.00;
+        let bnbChange = 2.5;
+        let bnbVolume = 2.4;
+        let userName = 'BNB Miner';
+        let currentLang = 'en';
+
+        // ==================== DOM HELPERS ====================
+        function $(id) { return document.getElementById(id); }
+        function qs(sel, ctx) { return (ctx || document).querySelector(sel); }
+        function qsa(sel, ctx) { return (ctx || document).querySelectorAll(sel); }
+
+        // ==================== TRANSLATIONS ====================
         const LANGUAGES = {
             en: {
                 appTitle: 'BNB CPU', appBadge: '⚡ PERSISTENT',
@@ -767,7 +668,6 @@
                 balanceLabel: '💰 BNB BALANCE',
                 statusLabel: '⏸️ Stopped', statusMining: '⛏️ Mining...',
                 startBtnText: 'START MINING', stopBtnText: 'STOP MINING',
-                offlineText: '⛏️ Always mining · Even when offline',
                 boostTitle: '⚡ CPU Mining Machine',
                 machineLabel: 'Level', cpuSpeedLabel: 'Speed', cpuPerSecLabel: 'BNB/s', cpuLevelLabel: 'Level',
                 upgradeLabel: '⬆ Upgrade CPU', levelsLabel: '10 Levels',
@@ -826,7 +726,6 @@
                 toastLanguage: '🌍 Language changed to {lang}',
                 toastLocked: '🔒 Buy previous level first!',
                 toastOwned: '✅ You already have this level!',
-                toastOffline: '⛏️ Your mining continues even when offline!',
                 toastWelcome: '🖥️ Welcome! Start mining with your CPU!',
                 toastNameEdit: '✏️ Edit your name',
                 toastEnterName: 'Please enter a name'
@@ -840,7 +739,6 @@
                 balanceLabel: '💰 SALIO LA BNB',
                 statusLabel: '⏸️ Imezimwa', statusMining: '⛏️ Inachimba...',
                 startBtnText: 'ANZA KUCHIMBA', stopBtnText: 'SIMAMA KUCHIMBA',
-                offlineText: '⛏️ Inachimba daima · Hata offline',
                 boostTitle: '⚡ Mashine ya CPU',
                 machineLabel: 'Ngazi', cpuSpeedLabel: 'Kasi', cpuPerSecLabel: 'BNB/s', cpuLevelLabel: 'Ngazi',
                 upgradeLabel: '⬆ Boresha CPU', levelsLabel: 'Ngazi 10',
@@ -899,231 +797,64 @@
                 toastLanguage: '🌍 Lugha imebadilishwa hadi {lang}',
                 toastLocked: '🔒 Nunua ngazi ya awali kwanza!',
                 toastOwned: '✅ Tayari unayo ngazi hii!',
-                toastOffline: '⛏️ Uchimbaji wako unaendelea hata offline!',
                 toastWelcome: '🖥️ Karibu! Anza kuchimba na CPU yako!',
                 toastNameEdit: '✏️ Badilisha jina lako',
                 toastEnterName: 'Tafadhali weka jina'
-            },
-            fr: {
-                appTitle: 'BNB CPU', appBadge: '⚡ PERSISTANT',
-                marketLabel: 'BNB / USD', volumeLabel: 'Vol:',
-                navHome: '🏠', navBoost: '⚡', navSocial: '🌐', navInvite: '👥', navWithdraw: '💸', navProfile: '⚙️', navAi: '🤖',
-                minerLabel: '⚡ MINEUR CPU BNB',
-                statSpeed: '⚡ Vitesse', statMined: '⏳ Extrait', statStatus: 'Statut',
-                balanceLabel: '💰 SOLDE BNB',
-                statusLabel: '⏸️ Arrêté', statusMining: '⛏️ Minage...',
-                startBtnText: 'COMMENCER MINAGE', stopBtnText: 'ARRÊTER MINAGE',
-                offlineText: '⛏️ Minage permanent · Même hors ligne',
-                boostTitle: '⚡ Machine CPU',
-                machineLabel: 'Niveau', cpuSpeedLabel: 'Vitesse', cpuPerSecLabel: 'BNB/s', cpuLevelLabel: 'Niveau',
-                upgradeLabel: '⬆ Améliorer CPU', levelsLabel: '10 Niveaux',
-                levelOwned: '✅ Possédé', levelBuy: '⬆ Acheter', levelLocked: '🔒 Verrouillé',
-                socialTitle: '🌐 Connecter Social', socialEarnLabel: 'Gagné',
-                connectText: 'Connecter', connectedText: '✅ Connecté',
-                socialRewardTitle: '🎁 Récompenses Sociales',
-                reward1: 'Connecter 1 compte', reward2: 'Connecter 3 comptes', reward3: 'Connecter 6 comptes',
-                groupsTitle: '👥 Groupes Communautaires', createBtnText: '+ Créer',
-                joinText: 'Rejoindre', joinedText: '✅ Rejoint',
-                inviteTitle: '👥 Inviter & Gagner',
-                inviteTotalLabel: 'Total Invitations', inviteBonusLabel: 'Bonus Vitesse',
-                inviteCodeLabel: 'VOTRE CODE DE PARRAINAGE',
-                copyBtnText: '📋 Copier',
-                inviteRewardTitle: '🎁 Récompenses de Parrainage',
-                inviteReward1: 'Par invitation', inviteReward2: 'Bonus vitesse actif',
-                withdrawTitle: '💸 Retirer BNB',
-                countryLabel: '🌍 Sélectionner Pays',
-                paymentLabel: '📱 Méthode de Paiement',
-                walletLabel: '📱 Téléphone / Adresse Wallet',
-                amountLabel: '💰 Montant (BNB)',
-                minNotice: '⚠️ Minimum: 0.5 BNB',
-                submitBtnText: '⚡ Soumettre',
-                feeInfo: '💼 Frais 10% (5% Plateforme + 5% Réseau BNB)',
-                feeYou: 'Vous: 5%', feeBNB: 'BNB: 5%',
-                availableLabel: 'Disponible',
-                levelLabel: 'Niveau', xpLabel: 'XP', editHint: '👆 Appuyez pour modifier',
-                langTitle: '🌍 Langue', langLabel: 'Choisir Langue',
-                themeTitle: '🎨 Thème', colorLabel: 'Choisir Couleur',
-                statsTitle: '📊 Statistiques',
-                statTotalMined: 'Total Extrait', statMiningSpeed: 'Vitesse Minage',
-                statInvites: 'Invitations', statBoost: 'Niveau Boost', statSocial: 'Connecté Social',
-                friendsTitle: '👥 Amis', yourFriendsLabel: 'Vos Amis', addFriendText: '+ Ajouter',
-                aiTitle: 'DeepSeek AI', aiStatus: '● En ligne',
-                sendBtnText: 'Envoyer',
-                modalTitle: '✏️ Modifier Nom', modalPlaceholder: 'Entrez votre nom...',
-                modalCancel: 'Annuler', modalSave: 'Enregistrer',
-                toastMined: '⛏️ Extrait {amount} BNB pendant votre absence! ({seconds}s)',
-                toastStart: '⛏️ Minage CPU démarré!',
-                toastStop: '⏸️ Minage arrêté!',
-                toastBoost: '🚀 Amélioré à {name}! Vitesse: {speed} BNB/s',
-                toastConnect: '🎉 Connecté {name}! +0.00000010 BNB bonus!',
-                toastGroup: '🎉 Rejoint {name}!',
-                toastFriend: '✅ {name} ajouté comme ami!',
-                toastInvite: '🎉 Invitation acceptée! +0.00000010 BNB/s!',
-                toast5Invites: '🎉 5 invitations! +0.5 BNB bonus!',
-                toastCopied: '📋 Copié!',
-                toastNeedBNB: '❌ Besoin de {price} BNB! Vous avez {balance} BNB',
-                toastMinWithdraw: '❌ Min 0.5 BNB.',
-                toastInsuff: '❌ Vous avez {balance} BNB.',
-                toastWithdraw: '✅ {amount} BNB → {method}\n📱 {wallet}\n💼 Frais: {fee} BNB',
-                toastAlreadyConnected: '✅ {name} déjà connecté!',
-                toastGroupCreated: '✅ Groupe "{name}" créé!',
-                toastPhoto: '📸 Photo de profil mise à jour!',
-                toastNameSaved: '✅ Nom enregistré!',
-                toastLanguage: '🌍 Langue changée en {lang}',
-                toastLocked: '🔒 Achetez le niveau précédent d\'abord!',
-                toastOwned: '✅ Vous avez déjà ce niveau!',
-                toastOffline: '⛏️ Votre minage continue même hors ligne!',
-                toastWelcome: '🖥️ Bienvenue! Commencez à miner avec votre CPU!',
-                toastNameEdit: '✏️ Modifier votre nom',
-                toastEnterName: 'Veuillez entrer un nom'
             }
         };
 
-        // Add more languages (es, pt, de, it, ru, zh, ar, hi, id) - simplified for brevity
-        // They work the same way with all keys translated
+        // Add more languages as needed - same structure
 
-        // ==================== STATE ====================
-        const SAVE_KEY = 'bnb_cpu_miner_save';
-        let currentLang = 'en';
-        let userName = 'BNB Miner';
-        const BASE_SPEED = 0.00000010;
-        let balance = 0.0;
-        let totalMined = 0.0;
-        let isMining = false;
-        let miningInterval = null;
-        let sessionInterval = null;
-        let sessionSeconds = 0;
-        let boostLevel = 0;
-        let inviteCount = 0;
-        let inviteBonusSpeed = 0;
-        const INVITE_BONUS_PER = 0.00000010;
-        const REFERRAL_CODE = 'BNB-7XK9';
-        const MIN_WITHDRAW = 0.5;
-
-        const LEVELS = [
-            { level: 1, name: 'Intel Core i3', speed: 0.00000010, price: 10, icon: '🖥️' },
-            { level: 2, name: 'Intel Core i5', speed: 0.00000025, price: 25, icon: '🖥️' },
-            { level: 3, name: 'Intel Core i7', speed: 0.00000050, price: 50, icon: '🖥️' },
-            { level: 4, name: 'Intel Core i9', speed: 0.00000100, price: 100, icon: '🖥️' },
-            { level: 5, name: 'AMD Ryzen 5', speed: 0.00000150, price: 150, icon: '🖥️' },
-            { level: 6, name: 'AMD Ryzen 7', speed: 0.00000250, price: 250, icon: '🖥️' },
-            { level: 7, name: 'AMD Ryzen 9', speed: 0.00000400, price: 400, icon: '🖥️' },
-            { level: 8, name: 'NVIDIA RTX 3060', speed: 0.00000600, price: 600, icon: '💻' },
-            { level: 9, name: 'NVIDIA RTX 4080', speed: 0.00000900, price: 900, icon: '💻' },
-            { level: 10, name: 'NVIDIA RTX 4090', speed: 0.00001500, price: 1500, icon: '💻' }
-        ];
-
-        let socialConnected = { tiktok: false, instagram: false, facebook: false, youtube: false, twitter: false, telegram: false };
-        let socialEarnings = 0;
-        let socialBonusSpeed = 0;
-        let groups = [
-            { name: '🌍 Global BNB Miners', members: 1234, bonus: 0.00000005, joined: false },
-            { name: '🇹🇿 Tanzania Miners', members: 567, bonus: 0.00000003, joined: false }
-        ];
-        let friends = [
-            { name: 'Alex B.', status: 'Online · Mining', online: true },
-            { name: 'Sarah K.', status: 'Last seen 2h ago', online: false }
-        ];
-        let bnbPrice = 580.00, bnbChange = 2.5, bnbVolume = 2.4;
-
-        // ==================== DOM HELPERS ====================
-        const $ = id => document.getElementById(id);
-
-        // ==================== TRANSLATION ====================
         function t(key) {
             const lang = LANGUAGES[currentLang] || LANGUAGES.en;
             return lang[key] || LANGUAGES.en[key] || key;
         }
 
-        function translateAll() {
-            const keys = [
-                'appTitle','appBadge','marketLabel','volumeLabel','navHome','navBoost','navSocial',
-                'navInvite','navWithdraw','navProfile','navAi','minerLabel','statSpeed','statMined',
-                'statStatus','balanceLabel','statusLabel','startBtnText','stopBtnText','offlineText',
-                'boostTitle','machineLabel','cpuSpeedLabel','cpuPerSecLabel','cpuLevelLabel',
-                'upgradeLabel','levelsLabel','socialTitle','socialEarnLabel','connectText',
-                'socialRewardTitle','reward1','reward2','reward3','groupsTitle','createBtnText',
-                'joinText','inviteTitle','inviteTotalLabel','inviteBonusLabel','inviteCodeLabel',
-                'copyBtnText','inviteRewardTitle','inviteReward1','inviteReward2','withdrawTitle',
-                'countryLabel','paymentLabel','walletLabel','amountLabel','minNotice','submitBtnText',
-                'feeInfo','feeYou','feeBNB','availableLabel','levelLabel','xpLabel','editHint',
-                'langTitle','langLabel','themeTitle','colorLabel','statsTitle','statTotalMined',
-                'statMiningSpeed','statInvites','statBoost','statSocial','friendsTitle','yourFriendsLabel',
-                'addFriendText','aiTitle','aiStatus','sendBtnText','modalTitle','modalPlaceholder',
-                'modalCancel','modalSave','connectedText','joinedText','levelOwned','levelBuy','levelLocked'
-            ];
-            
-            keys.forEach(key => {
-                const el = document.getElementById(key);
-                if (el) {
-                    if (key === 'offlineText') {
-                        el.innerHTML = `⛏️ <span style="color:var(--green);">${t(key).split('·')[0].trim()}</span> · ${t(key).split('·')[1]?.trim() || ''}`;
-                    } else if (key === 'withdrawTitle') {
-                        el.innerHTML = `💸 ${t(key).replace('💸 ', '')} <span class="country-badge" id="countryBadge">🌍 Auto</span>`;
-                    } else if (key === 'minNotice') {
-                        el.innerHTML = `⚠️ ${t(key)}`;
-                    } else if (key === 'feeInfo') {
-                        el.innerHTML = `💼 <strong>${t(key).replace('💼 ', '')}</strong>
-                            <div style="display:flex; justify-content:space-around; margin-top:2px; font-size:0.45rem;">
-                                <span id="feeYou">${t('feeYou')}</span>
-                                <span id="feeBNB">${t('feeBNB')}</span>
-                            </div>
-                            <span style="font-size:0.45rem;">${t('availableLabel')}: <span id="withdrawBalance" style="color:var(--primary);">${fmt(balance)}</span> BNB</span>`;
-                    } else if (key === 'machineLabel') {
-                        el.innerHTML = `${t(key)} <span class="level-badge" id="cpuLevelDisplay">${boostLevel + 1}</span>`;
-                    } else if (key === 'modalPlaceholder') {
-                        el.placeholder = t(key);
-                    } else {
-                        el.textContent = t(key);
-                    }
-                }
-            });
+        // ==================== HELPERS ====================
+        function fmt(v) { return Number(v).toFixed(8); }
+        function fmtShort(v) { return Number(v).toFixed(4); }
 
-            // Update status based on mining state
-            if (isMining) {
-                const statusLabel = document.getElementById('statusLabel');
-                if (statusLabel) statusLabel.textContent = t('statusMining');
-                const startBtnText = document.getElementById('startBtnText');
-                if (startBtnText) startBtnText.textContent = t('stopBtnText');
-                const toggleBtn = document.getElementById('toggleMineBtn');
-                if (toggleBtn) toggleBtn.className = 'btn btn-success';
-            } else {
-                const statusLabel = document.getElementById('statusLabel');
-                if (statusLabel) statusLabel.textContent = t('statusLabel');
-                const startBtnText = document.getElementById('startBtnText');
-                if (startBtnText) startBtnText.textContent = t('startBtnText');
-                const toggleBtn = document.getElementById('toggleMineBtn');
-                if (toggleBtn) toggleBtn.className = 'btn btn-primary';
-            }
+        function showToast(msg, isSuccess) {
+            const container = $('toastContainer');
+            if (!container) return;
+            container.innerHTML = `<div class="toast ${isSuccess ? 'success' : ''}">${msg}</div>`;
+            if (window.toastTimeout) clearTimeout(window.toastTimeout);
+            window.toastTimeout = setTimeout(() => { container.innerHTML = ''; }, 5000);
+        }
 
-            // Update connect buttons
-            document.querySelectorAll('#connectText, #connectText2, #connectText3, #connectText4, #connectText5, #connectText6')
-                .forEach(el => el.textContent = t('connectText'));
-            
-            // Update join buttons
-            document.querySelectorAll('#joinText, #joinText2')
-                .forEach(el => el.textContent = t('joinText'));
+        function getTotalSpeed() {
+            const levelSpeed = boostLevel > 0 ? LEVELS[boostLevel - 1].speed : BASE_SPEED;
+            return levelSpeed + inviteBonusSpeed + socialBonusSpeed;
+        }
 
-            renderLevels();
-            renderGroups();
-            renderFriends();
-            refreshUI();
+        function getSocialCount() {
+            let count = 0;
+            for (const key in socialConnected) if (socialConnected[key]) count++;
+            return count;
+        }
+
+        function getSocialBonus() {
+            const count = getSocialCount();
+            if (count >= 6) return 0.00000100;
+            if (count >= 3) return 0.00000030;
+            if (count >= 1) return 0.00000010;
+            return 0;
         }
 
         // ==================== SAVE/LOAD ====================
         function saveGame() {
             try {
-                localStorage.setItem(SAVE_KEY, JSON.stringify({
+                localStorage.setItem('bnb_miner_data', JSON.stringify({
                     balance, totalMined, boostLevel, inviteCount, inviteBonusSpeed,
-                    socialConnected, socialEarnings, friends, groups, userName, currentLang,
-                    lastSaveTime: Date.now()
+                    socialConnected, socialEarnings, groups, friends, userName, currentLang,
+                    lastSave: Date.now()
                 }));
             } catch(e) {}
         }
 
         function loadGame() {
             try {
-                const data = localStorage.getItem(SAVE_KEY);
+                const data = localStorage.getItem('bnb_miner_data');
                 if (data) {
                     const parsed = JSON.parse(data);
                     balance = parsed.balance || 0;
@@ -1133,91 +864,193 @@
                     inviteBonusSpeed = parsed.inviteBonusSpeed || 0;
                     socialConnected = parsed.socialConnected || socialConnected;
                     socialEarnings = parsed.socialEarnings || 0;
-                    friends = parsed.friends || friends;
                     groups = parsed.groups || groups;
+                    friends = parsed.friends || friends;
                     userName = parsed.userName || 'BNB Miner';
                     currentLang = parsed.currentLang || 'en';
-                    return parsed.lastSaveTime || Date.now();
+                    return parsed.lastSave || Date.now();
                 }
             } catch(e) {}
             return null;
         }
 
-        // ==================== OFFLINE MINING ====================
         function calculateOfflineMining() {
             const lastSave = loadGame();
             if (lastSave) {
-                const now = Date.now();
-                const diffSeconds = (now - lastSave) / 1000;
-                if (diffSeconds > 3) {
-                    const totalSpeed = getCurrentSpeed();
-                    const minedOffline = totalSpeed * diffSeconds;
-                    if (minedOffline > 0.00000001) {
-                        balance += minedOffline;
-                        totalMined += minedOffline;
+                const diff = (Date.now() - lastSave) / 1000;
+                if (diff > 3) {
+                    const speed = getTotalSpeed();
+                    const mined = speed * diff;
+                    if (mined > 0.00000001) {
+                        balance += mined;
+                        totalMined += mined;
                         const msg = t('toastMined')
-                            .replace('{amount}', fmt(minedOffline))
-                            .replace('{seconds}', Math.floor(diffSeconds));
+                            .replace('{amount}', fmt(mined))
+                            .replace('{seconds}', Math.floor(diff));
                         showToast(msg, true);
-                        return minedOffline;
+                        return mined;
                     }
                 }
             }
             return 0;
         }
 
-        // ==================== HELPERS ====================
-        function fmt(v) { return Number(v).toFixed(8); }
-        function fmtShort(v) { return Number(v).toFixed(4); }
-
-        function showToast(msg, isSuccess = false) {
-            const container = document.getElementById('toastContainer');
-            container.innerHTML = `<div class="toast-message ${isSuccess ? 'toast-success' : ''}">${msg}</div>`;
-            if (window.toastTimeout) clearTimeout(window.toastTimeout);
-            window.toastTimeout = setTimeout(() => { container.innerHTML = ''; }, 5000);
-        }
-
-        function getCurrentSpeed() {
-            const levelSpeed = boostLevel > 0 ? LEVELS[boostLevel - 1].speed : BASE_SPEED;
-            return levelSpeed + inviteBonusSpeed + socialBonusSpeed;
-        }
-
-        function getSocialBonus() {
-            let count = 0;
-            for (const key in socialConnected) if (socialConnected[key]) count++;
-            if (count >= 6) return 0.00000100;
-            if (count >= 3) return 0.00000030;
-            if (count >= 1) return 0.00000010;
-            return 0;
+        // ==================== UI UPDATE ====================
+        function updateUI() {
+            const speed = getTotalSpeed();
+            const usd = balance * bnbPrice;
+            
+            // Home
+            const homeBalance = $('homeBalance');
+            if (homeBalance) homeBalance.textContent = fmt(balance);
+            const homeSpeed = $('homeSpeed');
+            if (homeSpeed) homeSpeed.textContent = fmt(speed);
+            const homeMined = $('homeMined');
+            if (homeMined) homeMined.textContent = fmt(totalMined);
+            const usdValue = $('usdValue');
+            if (usdValue) usdValue.textContent = usd.toFixed(2);
+            const homeStatus = $('homeStatus');
+            if (homeStatus) homeStatus.textContent = isMining ? 'Active' : 'Idle';
+            
+            const dot = $('statusDot');
+            if (dot) {
+                if (isMining) dot.classList.add('active');
+                else dot.classList.remove('active');
+            }
+            
+            const statusLabel = $('statusLabel');
+            if (statusLabel) statusLabel.textContent = isMining ? t('statusMining') : t('statusLabel');
+            
+            const startBtnText = $('startBtnText');
+            if (startBtnText) startBtnText.textContent = isMining ? t('stopBtnText') : t('startBtnText');
+            
+            const toggleBtn = $('toggleMineBtn');
+            if (toggleBtn) {
+                toggleBtn.className = isMining ? 'btn btn-success' : 'btn btn-primary';
+            }
+            
+            const fan = $('fanBlades');
+            if (fan) {
+                if (isMining) fan.classList.add('spin');
+                else fan.classList.remove('spin');
+            }
+            
+            const cpuFan = $('cpuFan');
+            if (cpuFan) {
+                if (isMining) cpuFan.classList.add('spin');
+                else cpuFan.classList.remove('spin');
+            }
+            
+            // CPU Machine
+            const level = boostLevel > 0 ? LEVELS[boostLevel - 1] : LEVELS[0];
+            const cpuLevelDisplay = $('cpuLevelDisplay');
+            if (cpuLevelDisplay) cpuLevelDisplay.textContent = boostLevel + 1;
+            const cpuIcon = $('cpuIcon');
+            if (cpuIcon) cpuIcon.textContent = level.icon;
+            const cpuName = $('cpuName');
+            if (cpuName) cpuName.textContent = level.name;
+            const cpuSpeedDisplay = $('cpuSpeedDisplay');
+            if (cpuSpeedDisplay) cpuSpeedDisplay.textContent = fmt(speed);
+            const cpuLevelNum = $('cpuLevelNum');
+            if (cpuLevelNum) cpuLevelNum.textContent = `${boostLevel + 1}/10`;
+            
+            // LEDs
+            const leds = qsa('.led', $('cpuLeds'));
+            const ledCount = Math.min(boostLevel + 1, 5);
+            leds.forEach((led, i) => {
+                led.className = i < ledCount ? `led speed-${i + 1}` : 'led';
+            });
+            
+            // CPU Machine border
+            const cpuMachine = $('cpuMachine');
+            if (cpuMachine) {
+                const colors = ['#4a9eff', '#4ae09a', '#f7e05e', '#ff9f4a', '#ff6b8a', '#b47aff', '#00f2ea', '#ff4757', '#ffd700', '#ff6b6b'];
+                cpuMachine.style.borderColor = colors[Math.min(boostLevel, 9)] || '#f7e05e';
+            }
+            
+            // Boost levels
+            renderLevels();
+            
+            // Social
+            const count = getSocialCount();
+            socialBonusSpeed = getSocialBonus();
+            const socialEarningsEl = $('socialEarnings');
+            if (socialEarningsEl) socialEarningsEl.textContent = fmtShort(socialEarnings);
+            const socialProgress = $('socialProgress');
+            if (socialProgress) socialProgress.style.width = `${(count / 6) * 100}%`;
+            const profileSocial = $('profileSocial');
+            if (profileSocial) profileSocial.textContent = `${count}/6`;
+            
+            // Invite
+            const inviteCountEl = $('inviteCount');
+            if (inviteCountEl) inviteCountEl.textContent = inviteCount;
+            const inviteBonusEl = $('inviteBonus');
+            if (inviteBonusEl) inviteBonusEl.textContent = `+${fmt(inviteBonusSpeed)}`;
+            const inviteRewardActive = $('inviteRewardActive');
+            if (inviteRewardActive) inviteRewardActive.textContent = `+${fmt(inviteBonusSpeed)} BNB/s`;
+            
+            // Withdraw
+            const withdrawBalance = $('withdrawBalance');
+            if (withdrawBalance) withdrawBalance.textContent = fmt(balance);
+            
+            // Profile
+            const userNameEl = $('userName');
+            if (userNameEl) userNameEl.textContent = userName;
+            const profileMined = $('profileMined');
+            if (profileMined) profileMined.textContent = `${fmt(totalMined)} BNB`;
+            const profileSpeed = $('profileSpeed');
+            if (profileSpeed) profileSpeed.textContent = `${fmt(speed)} BNB/s`;
+            const profileInvites = $('profileInvites');
+            if (profileInvites) profileInvites.textContent = inviteCount;
+            const profileBoost = $('profileBoost');
+            if (profileBoost) profileBoost.textContent = boostLevel;
+            
+            const levelNum = Math.floor(totalMined / 1);
+            const userLevel = $('userLevel');
+            if (userLevel) userLevel.textContent = levelNum + 1;
+            const userXP = $('userXP');
+            if (userXP) userXP.textContent = Math.floor((totalMined % 1) * 100);
+            
+            // Market
+            const bnbPriceEl = $('bnbPrice');
+            if (bnbPriceEl) bnbPriceEl.textContent = `$${bnbPrice.toFixed(2)}`;
+            const bnbChangeEl = $('bnbChange');
+            if (bnbChangeEl) {
+                bnbChangeEl.textContent = `${bnbChange > 0 ? '+' : ''}${bnbChange.toFixed(1)}%`;
+                bnbChangeEl.className = `change ${bnbChange >= 0 ? 'up' : 'down'}`;
+            }
+            const volumeLabel = $('volumeLabel');
+            if (volumeLabel) volumeLabel.textContent = `${t('volumeLabel')} ${bnbVolume.toFixed(1)}M`;
         }
 
         // ==================== RENDER LEVELS ====================
         function renderLevels() {
-            const container = document.getElementById('boostLevels');
+            const container = $('boostLevels');
             if (!container) return;
             container.innerHTML = '';
             LEVELS.forEach((level) => {
-                const isOwned = boostLevel >= level.level;
-                const isCurrent = boostLevel === level.level - 1;
+                const owned = boostLevel >= level.level;
+                const current = boostLevel === level.level - 1;
                 let btnText = t('levelLocked');
-                if (isOwned) btnText = t('levelOwned');
-                else if (isCurrent) btnText = t('levelBuy');
+                if (owned) btnText = t('levelOwned');
+                else if (current) btnText = t('levelBuy');
                 const div = document.createElement('div');
-                div.className = `level-item ${isOwned ? 'active' : ''}`;
+                div.className = `level-item ${owned ? 'active' : ''}`;
                 div.innerHTML = `
-                    <div class="level-num">${t('machineLabel')} ${level.level}</div>
+                    <div class="ln">${t('machineLabel')} ${level.level}</div>
                     <div style="font-size:0.8rem; margin:2px 0;">${level.icon}</div>
-                    <div class="level-speed">${fmt(level.speed)} BNB/s</div>
-                    <div class="level-price">💰 ${level.price} BNB</div>
-                    <button class="level-buy ${isOwned ? 'owned' : ''}" data-level="${level.level}" ${isOwned ? 'disabled' : ''}>
+                    <div class="ls">${fmt(level.speed)} BNB/s</div>
+                    <div class="lp">💰 ${level.price} BNB</div>
+                    <button class="lb ${owned ? 'owned' : ''}" data-level="${level.level}" ${owned ? 'disabled' : ''}>
                         ${btnText}
                     </button>
                 `;
                 container.appendChild(div);
             });
-            document.querySelectorAll('.level-buy:not([disabled])').forEach(btn => {
+            qsa('.lb:not([disabled])', container).forEach(btn => {
                 btn.addEventListener('click', function() {
-                    buyLevel(parseInt(this.dataset.level));
+                    const lvl = parseInt(this.dataset.level);
+                    buyLevel(lvl);
                 });
             });
         }
@@ -1233,146 +1066,19 @@
             }
             balance -= level.price;
             boostLevel = levelNum;
-            updateCPUMachine();
-            refreshUI();
-            renderLevels();
             saveGame();
             showToast(t('toastBoost').replace('{name}', level.name).replace('{speed}', fmt(level.speed)), true);
-        }
-
-        function updateCPUMachine() {
-            const level = boostLevel > 0 ? LEVELS[boostLevel - 1] : LEVELS[0];
-            const speed = getCurrentSpeed();
-            const machine = document.getElementById('cpuMachine');
-            if (!machine) return;
-            machine.className = `cpu-machine level-${Math.min(boostLevel + 1, 10)}`;
-            const levelDisplay = document.getElementById('cpuLevelDisplay');
-            if (levelDisplay) levelDisplay.textContent = boostLevel + 1;
-            const icon = document.getElementById('cpuIcon');
-            if (icon) icon.textContent = level.icon;
-            const name = document.getElementById('cpuName');
-            if (name) name.textContent = level.name;
-            const speedDisplay = document.getElementById('cpuSpeedDisplay');
-            if (speedDisplay) speedDisplay.textContent = fmt(speed);
-            const levelNum = document.getElementById('cpuLevelNum');
-            if (levelNum) levelNum.textContent = `${boostLevel + 1}/10`;
-            
-            const leds = document.querySelectorAll('#cpuLeds .cpu-led');
-            const ledCount = Math.min(boostLevel + 1, 5);
-            leds.forEach((led, i) => {
-                led.className = i < ledCount ? `cpu-led speed-${i + 1}` : 'cpu-led';
-            });
-            
-            const fan = document.getElementById('cpuFan');
-            if (fan) {
-                const fanSpeed = 1.5 - (boostLevel * 0.1);
-                fan.style.animationDuration = `${Math.max(0.5, fanSpeed)}s`;
-            }
-            
-            const colors = ['#4a9eff', '#4ae09a', '#f7e05e', '#ff9f4a', '#ff6b8a', '#b47aff', '#00f2ea', '#ff4757', '#ffd700', '#ff6b6b'];
-            machine.style.borderColor = colors[Math.min(boostLevel, 9)] || '#f7e05e';
-        }
-
-        // ==================== MARKET ====================
-        function updateMarket() {
-            const change = (Math.random() - 0.48) * 4;
-            bnbChange = parseFloat((bnbChange + change * 0.1).toFixed(1));
-            if (bnbChange > 15) bnbChange = 15;
-            if (bnbChange < -15) bnbChange = -15;
-            const priceChange = (bnbChange / 100) * bnbPrice * (Math.random() * 0.5 + 0.5);
-            bnbPrice = parseFloat((bnbPrice + priceChange).toFixed(2));
-            if (bnbPrice < 300) bnbPrice = 300;
-            if (bnbPrice > 900) bnbPrice = 900;
-            bnbVolume = parseFloat((bnbVolume + (Math.random() - 0.5) * 0.3).toFixed(1));
-            if (bnbVolume < 0.5) bnbVolume = 0.5;
-            if (bnbVolume > 8) bnbVolume = 8;
-            const priceEl = document.getElementById('bnbPrice');
-            if (priceEl) priceEl.textContent = `$${bnbPrice.toFixed(2)}`;
-            const changeEl = document.getElementById('bnbChange');
-            if (changeEl) {
-                changeEl.textContent = `${bnbChange > 0 ? '+' : ''}${bnbChange.toFixed(1)}%`;
-                changeEl.className = `change ${bnbChange >= 0 ? 'up' : 'down'}`;
-            }
-            const volumeEl = document.getElementById('bnbVolume');
-            if (volumeEl) volumeEl.textContent = `${t('volumeLabel')} ${bnbVolume.toFixed(1)}M`;
-            refreshUI();
-        }
-        setInterval(updateMarket, 5000);
-        updateMarket();
-
-        // ==================== REFRESH ====================
-        function refreshUI() {
-            const totalSpeed = getCurrentSpeed();
-            const usdBalance = balance * bnbPrice;
-            
-            const homeBalance = document.getElementById('homeBalance');
-            if (homeBalance) homeBalance.textContent = fmt(balance);
-            const homeSpeed = document.getElementById('homeSpeed');
-            if (homeSpeed) homeSpeed.textContent = fmt(totalSpeed);
-            const homeMined = document.getElementById('homeMined');
-            if (homeMined) homeMined.textContent = fmt(totalMined);
-            const usdValue = document.getElementById('usdValue');
-            if (usdValue) usdValue.textContent = usdBalance.toFixed(2);
-            const homeStatus = document.getElementById('homeStatus');
-            if (homeStatus) homeStatus.textContent = isMining ? 'Active' : 'Idle';
-            
-            const statusDot = document.getElementById('statusDot');
-            if (statusDot) {
-                if (isMining) {
-                    statusDot.classList.add('active');
-                } else {
-                    statusDot.classList.remove('active');
-                }
-            }
-            
-            const userNameEl = document.getElementById('userName');
-            if (userNameEl) userNameEl.textContent = userName;
-            
-            const profileMined = document.getElementById('profileMined');
-            if (profileMined) profileMined.textContent = `${fmt(totalMined)} BNB`;
-            const profileSpeed = document.getElementById('profileSpeed');
-            if (profileSpeed) profileSpeed.textContent = `${fmt(totalSpeed)} BNB/s`;
-            const profileInvites = document.getElementById('profileInvites');
-            if (profileInvites) profileInvites.textContent = inviteCount;
-            const profileBoost = document.getElementById('profileBoost');
-            if (profileBoost) profileBoost.textContent = boostLevel;
-            
-            const levelNum = Math.floor(totalMined / 1);
-            const userLevel = document.getElementById('userLevel');
-            if (userLevel) userLevel.textContent = levelNum + 1;
-            const userXP = document.getElementById('userXP');
-            if (userXP) userXP.textContent = Math.floor((totalMined % 1) * 100);
-            
-            let count = 0;
-            for (const key in socialConnected) if (socialConnected[key]) count++;
-            socialBonusSpeed = getSocialBonus();
-            const socialEarnings = document.getElementById('socialEarnings');
-            if (socialEarnings) socialEarnings.textContent = fmtShort(socialEarnings);
-            const socialProgress = document.getElementById('socialProgress');
-            if (socialProgress) socialProgress.style.width = `${(count / 6) * 100}%`;
-            const profileSocial = document.getElementById('profileSocial');
-            if (profileSocial) profileSocial.textContent = `${count}/6`;
-            
-            const inviteCountEl = document.getElementById('inviteCount');
-            if (inviteCountEl) inviteCountEl.textContent = inviteCount;
-            const inviteBonus = document.getElementById('inviteBonus');
-            if (inviteBonus) inviteBonus.textContent = `+${fmt(inviteBonusSpeed)}`;
-            const inviteRewardActive = document.getElementById('inviteRewardActive');
-            if (inviteRewardActive) inviteRewardActive.textContent = `+${fmt(inviteBonusSpeed)} BNB/s`;
-            const withdrawBalance = document.getElementById('withdrawBalance');
-            if (withdrawBalance) withdrawBalance.textContent = fmt(balance);
-            
-            updateCPUMachine();
+            updateUI();
         }
 
         // ==================== MINING ====================
         function mineTick() {
             if (!isMining) return;
-            const totalSpeed = getCurrentSpeed();
-            balance += totalSpeed;
-            totalMined += totalSpeed;
+            const speed = getTotalSpeed();
+            balance += speed;
+            totalMined += speed;
             if (socialBonusSpeed > 0) socialEarnings += socialBonusSpeed;
-            refreshUI();
+            updateUI();
             saveGame();
         }
 
@@ -1386,111 +1092,76 @@
             } else {
                 isMining = true;
                 sessionSeconds = 0;
-                const sessionTime = document.getElementById('sessionTime');
+                const sessionTime = $('sessionTime');
                 if (sessionTime) sessionTime.textContent = '00:00';
                 miningInterval = setInterval(mineTick, 1000);
                 sessionInterval = setInterval(() => {
                     sessionSeconds++;
                     const m = String(Math.floor(sessionSeconds / 60)).padStart(2, '0');
                     const s = String(sessionSeconds % 60).padStart(2, '0');
-                    const st = document.getElementById('sessionTime');
+                    const st = $('sessionTime');
                     if (st) st.textContent = `${m}:${s}`;
                 }, 1000);
                 showToast(t('toastStart'), true);
                 saveGame();
             }
-            refreshUI();
-            translateAll();
+            updateUI();
         }
 
         // ==================== SOCIAL CONNECT ====================
-        const socialPlatforms = {
-            tiktok: { name: 'TikTok', element: 'tiktokUser', btn: 'tiktokBtn' },
-            instagram: { name: 'Instagram', element: 'instagramUser', btn: 'instagramBtn' },
-            facebook: { name: 'Facebook', element: 'facebookUser', btn: 'facebookBtn' },
-            youtube: { name: 'YouTube', element: 'youtubeUser', btn: 'youtubeBtn' },
-            twitter: { name: 'Twitter/X', element: 'twitterUser', btn: 'twitterBtn' },
-            telegram: { name: 'Telegram', element: 'telegramUser', btn: 'telegramBtn' }
-        };
-
         function connectSocial(platform) {
             if (socialConnected[platform]) {
-                showToast(t('toastAlreadyConnected').replace('{name}', socialPlatforms[platform].name), true);
+                showToast(t('toastAlreadyConnected').replace('{name}', platform.charAt(0).toUpperCase() + platform.slice(1)), true);
                 return;
             }
-            const username = `${socialPlatforms[platform].name}_user_${Math.floor(Math.random() * 10000)}`;
+            const username = `${platform}_user_${Math.floor(Math.random() * 10000)}`;
             socialConnected[platform] = true;
-            const element = document.getElementById(socialPlatforms[platform].element);
-            if (element) element.textContent = `@${username}`;
-            const btn = document.getElementById(socialPlatforms[platform].btn);
+            const userEl = $(`${platform}User`);
+            if (userEl) userEl.textContent = `@${username}`;
+            const btn = qs(`[data-platform="${platform}"]`);
             if (btn) {
-                btn.innerHTML = `<span>${t('connectedText')}</span>`;
-                btn.className = 'connect-btn connected-btn';
+                const span = btn.querySelector('.c-text');
+                if (span) span.textContent = t('connectedText');
+                btn.classList.add('connected');
             }
             socialBonusSpeed = getSocialBonus();
-            const bonus = 0.00000010;
-            balance += bonus;
-            showToast(t('toastConnect').replace('{name}', socialPlatforms[platform].name), true);
-            refreshUI();
+            balance += 0.00000010;
+            showToast(t('toastConnect').replace('{name}', platform.charAt(0).toUpperCase() + platform.slice(1)), true);
             saveGame();
-        }
-
-        // ==================== NAME EDIT ====================
-        function showNameEdit() {
-            const input = document.getElementById('nameInput');
-            if (input) input.value = userName;
-            const modal = document.getElementById('nameEditModal');
-            if (modal) modal.classList.add('show');
-        }
-
-        function hideNameEdit() {
-            const modal = document.getElementById('nameEditModal');
-            if (modal) modal.classList.remove('show');
-        }
-
-        function saveName() {
-            const input = document.getElementById('nameInput');
-            const newName = (input ? input.value.trim() : '') || 'BNB Miner';
-            userName = newName;
-            const nameEl = document.getElementById('userName');
-            if (nameEl) nameEl.textContent = userName;
-            hideNameEdit();
-            showToast(t('toastNameSaved'), true);
-            saveGame();
-            refreshUI();
+            updateUI();
         }
 
         // ==================== GROUPS ====================
         function renderGroups() {
-            const container = document.getElementById('groupsContainer');
+            const container = $('groupsContainer');
             if (!container) return;
             container.innerHTML = '';
             groups.forEach((group, index) => {
                 const div = document.createElement('div');
                 div.className = 'group-card';
                 div.innerHTML = `
-                    <div class="group-name">${group.name}</div>
-                    <div class="group-info">
+                    <div class="gname">${group.name}</div>
+                    <div class="ginfo">
                         <span>👤 ${group.members} members</span>
                         <span>⚡ +${group.bonus.toFixed(8)} BNB/s</span>
                     </div>
-                    <button class="join-btn ${group.joined ? 'joined' : ''}" data-index="${index}">
-                        ${group.joined ? t('joinedText') : t('joinText')}
+                    <button class="jbtn ${group.joined ? 'joined' : ''}" data-group="${index}">
+                        <span class="j-text">${group.joined ? t('joinedText') : t('joinText')}</span>
                     </button>
                 `;
                 container.appendChild(div);
             });
-            document.querySelectorAll('.join-btn').forEach(btn => {
+            qsa('.jbtn', container).forEach(btn => {
                 btn.addEventListener('click', function() {
-                    const index = parseInt(this.dataset.index);
-                    if (!groups[index].joined) {
-                        groups[index].joined = true;
-                        groups[index].members++;
+                    const idx = parseInt(this.dataset.group);
+                    if (!groups[idx].joined) {
+                        groups[idx].joined = true;
+                        groups[idx].members++;
                         balance += 0.00000010;
-                        showToast(t('toastGroup').replace('{name}', groups[index].name), true);
-                        renderGroups();
-                        refreshUI();
+                        showToast(t('toastGroup').replace('{name}', groups[idx].name), true);
                         saveGame();
+                        renderGroups();
+                        updateUI();
                     }
                 });
             });
@@ -1498,313 +1169,121 @@
 
         // ==================== FRIENDS ====================
         function renderFriends() {
-            const container = document.getElementById('friendsList');
+            const container = $('friendsList');
             if (!container) return;
             container.innerHTML = '';
             friends.forEach((friend) => {
                 const div = document.createElement('div');
                 div.className = 'friend-item';
                 div.innerHTML = `
-                    <div class="avatar">👤</div>
-                    <div class="info">
-                        <div class="name">${friend.name}</div>
-                        <div class="status">${friend.status}</div>
+                    <div class="fav">👤</div>
+                    <div class="finfo">
+                        <div class="fname">${friend.name}</div>
+                        <div class="fstatus">${friend.status}</div>
                     </div>
-                    <span class="${friend.online ? 'online-dot' : 'offline-dot'}"></span>
+                    <span class="${friend.online ? 'online' : 'offline'}"></span>
                 `;
                 container.appendChild(div);
             });
         }
 
-        // ==================== EVENT LISTENERS ====================
-        document.addEventListener('DOMContentLoaded', function() {
-            // Toggle mining
-            const toggleBtn = document.getElementById('toggleMineBtn');
-            if (toggleBtn) toggleBtn.addEventListener('click', toggleMining);
-            
-            // Name edit
-            const nameEl = document.getElementById('userName');
-            if (nameEl) nameEl.addEventListener('click', showNameEdit);
-            const cancelBtn = document.getElementById('cancelNameBtn');
-            if (cancelBtn) cancelBtn.addEventListener('click', hideNameEdit);
-            const saveBtn = document.getElementById('saveNameBtn');
-            if (saveBtn) saveBtn.addEventListener('click', saveName);
-            const nameInput = document.getElementById('nameInput');
-            if (nameInput) nameInput.addEventListener('keypress', function(e) { if (e.key === 'Enter') saveName(); });
-            
-            // Profile photo
-            const avatar = document.getElementById('profileAvatar');
-            if (avatar) avatar.addEventListener('click', function() { document.getElementById('photoInput').click(); });
-            const photoInput = document.getElementById('photoInput');
-            if (photoInput) {
-                photoInput.addEventListener('change', function(e) {
-                    const file = e.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function(event) {
-                            if (avatar) {
-                                avatar.innerHTML = `<img src="${event.target.result}" alt="Profile"><span class="camera-icon">📷</span>`;
-                                avatar.style.background = 'none';
-                            }
-                            showToast(t('toastPhoto'), true);
-                            saveGame();
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                });
-            }
-            
-            // Social connect buttons
-            ['tiktok', 'instagram', 'facebook', 'youtube', 'twitter', 'telegram'].forEach(p => {
-                const btn = document.getElementById(`${p}Btn`);
-                if (btn) btn.addEventListener('click', () => connectSocial(p));
-            });
-            
-            // Copy invite
-            const copyBtn = document.getElementById('copyInviteBtn');
-            if (copyBtn) {
-                copyBtn.addEventListener('click', function() {
-                    const text = document.getElementById('inviteLinkInput');
-                    if (text) {
-                        const val = text.value;
-                        if (navigator.clipboard && navigator.clipboard.writeText) {
-                            navigator.clipboard.writeText(val).then(() => showToast(t('toastCopied'), true))
-                                .catch(() => { text.select(); document.execCommand('copy'); showToast(t('toastCopied'), true); });
-                        } else {
-                            text.select();
-                            document.execCommand('copy');
-                            showToast(t('toastCopied'), true);
-                        }
-                    }
-                });
-            }
-            
-            // Invite code click
-            const inviteCode = document.getElementById('inviteCode');
-            if (inviteCode) {
-                inviteCode.addEventListener('click', function() {
-                    inviteCount++;
-                    inviteBonusSpeed = inviteCount * INVITE_BONUS_PER;
-                    if (inviteCount % 5 === 0) { balance += 0.5; showToast(t('toast5Invites'), true); }
-                    refreshUI();
-                    saveGame();
-                    showToast(t('toastInvite'), true);
-                });
-            }
-            
-            // Withdraw
-            const withdrawBtn = document.getElementById('withdrawBtn');
-            if (withdrawBtn) {
-                withdrawBtn.addEventListener('click', function() {
-                    const method = document.getElementById('paymentMethod');
-                    const walletInput = document.getElementById('walletInput');
-                    const amountInput = document.getElementById('withdrawAmount');
-                    const prefixEl = document.getElementById('countryPrefix');
-                    
-                    if (!method || !walletInput || !amountInput || !prefixEl) return;
-                    
-                    const methodVal = method.value;
-                    let wallet = walletInput.value.trim();
-                    const mobileMethods = ['mpesa', 'tigo', 'airtel', 'equitel', 'momo', 'gopay', 'gcash'];
-                    const prefix = prefixEl.textContent;
-                    
-                    if (mobileMethods.includes(methodVal) && !wallet.startsWith('+')) {
-                        wallet = wallet.replace(/^\+?[0-9]{1,4}/, '').replace(/\s/g, '');
-                        if (wallet.length > 0) wallet = prefix + wallet;
-                    }
-                    
-                    const amountRaw = parseFloat(amountInput.value);
-                    
-                    if (!wallet || wallet.length < 4) { showToast('❌ Enter valid phone/wallet.'); return; }
-                    if (isNaN(amountRaw) || amountRaw < MIN_WITHDRAW) { showToast(t('toastMinWithdraw')); return; }
-                    if (amountRaw > balance) { showToast(t('toastInsuff').replace('{balance}', fmt(balance))); return; }
-                    
-                    const platformFee = amountRaw * 0.05;
-                    const bnbFee = amountRaw * 0.05;
-                    const totalFee = platformFee + bnbFee;
-                    const finalAmount = amountRaw - totalFee;
-                    
-                    balance -= amountRaw;
-                    refreshUI();
-                    saveGame();
-                    
-                    const methodNames = { 'mpesa': 'M-Pesa', 'tigo': 'Tigo', 'airtel': 'Airtel', 'equitel': 'Equitel', 'momo': 'MTN MoMo', 'gopay': 'GoPay', 'gcash': 'GCash', 'paypal': 'PayPal', 'wise': 'Wise', 'bnb': 'BNB', 'solana': 'Solana', 'usdt_trc20': 'USDT', 'bitcoin': 'BTC', 'bank_swift': 'SWIFT' };
-                    const methodName = methodNames[methodVal] || methodVal;
-                    
-                    showToast(t('toastWithdraw').replace('{amount}', finalAmount.toFixed(4)).replace('{method}', methodName).replace('{wallet}', wallet).replace('{fee}', totalFee.toFixed(4)), true);
-                    
-                    walletInput.value = '';
-                    amountInput.value = '';
-                });
-            }
-            
-            // Groups
-            const createGroupBtn = document.getElementById('createGroupBtn');
-            if (createGroupBtn) {
-                createGroupBtn.addEventListener('click', function() {
-                    const name = prompt('Enter group name:');
-                    if (name) {
-                        groups.push({ name, members: 1, bonus: 0.00000002, joined: true });
-                        renderGroups();
-                        saveGame();
-                        showToast(t('toastGroupCreated').replace('{name}', name), true);
-                    }
-                });
-            }
-            
-            // Friends
-            const addFriendBtn = document.getElementById('addFriendBtn');
-            if (addFriendBtn) {
-                addFriendBtn.addEventListener('click', function() {
-                    const name = prompt('Enter friend\'s name:');
-                    if (name) {
-                        friends.push({ name, status: 'Online · Active', online: true });
-                        renderFriends();
-                        saveGame();
-                        showToast(t('toastFriend').replace('{name}', name), true);
-                    }
-                });
-            }
-            
-            // AI Chat
-            const aiSendBtn = document.getElementById('aiSendBtn');
-            if (aiSendBtn) {
-                aiSendBtn.addEventListener('click', function() {
-                    const input = document.getElementById('aiInput');
-                    const messages = document.getElementById('aiMessages');
-                    if (!input || !messages) return;
-                    const msg = input.value.trim();
-                    if (!msg) return;
-                    
-                    const userDiv = document.createElement('div');
-                    userDiv.className = 'ai-message user';
-                    userDiv.textContent = msg;
-                    messages.appendChild(userDiv);
-                    
-                    setTimeout(() => {
-                        const botDiv = document.createElement('div');
-                        botDiv.className = 'ai-message bot';
-                        let response = `BNB is at $${bnbPrice.toFixed(2)} (${bnbChange > 0 ? '+' : ''}${bnbChange.toFixed(1)}%) 💹`;
-                        if (msg.toLowerCase().includes('speed') || msg.toLowerCase().includes('mine')) {
-                            const totalSpeed = getCurrentSpeed();
-                            response = `Your CPU speed: ${fmt(totalSpeed)} BNB/s. Level ${boostLevel + 1}/10 ⚡`;
-                        } else if (msg.toLowerCase().includes('balance')) {
-                            response = `Balance: ${fmt(balance)} BNB ($${(balance * bnbPrice).toFixed(2)}) 💰`;
-                        } else if (msg.toLowerCase().includes('offline') || msg.toLowerCase().includes('away')) {
-                            response = t('toastOffline');
-                        } else {
-                            const responses = [
-                                `BNB is at $${bnbPrice.toFixed(2)} 📈`,
-                                `Your CPU is mining at ${fmt(getCurrentSpeed())} BNB/s ⚡`,
-                                'Connect social accounts for bonus speed! 🌐',
-                                'Each invite gives +0.00000010 BNB/s! 👥',
-                                'Minimum withdrawal is 0.5 BNB. 💸',
-                                'CPU Level 10 gives 0.00001500 BNB/s! 🚀'
-                            ];
-                            response = responses[Math.floor(Math.random() * responses.length)];
-                        }
-                        botDiv.textContent = response;
-                        messages.appendChild(botDiv);
-                        messages.scrollTop = messages.scrollHeight;
-                    }, 500);
-                    
-                    messages.scrollTop = messages.scrollHeight;
-                    input.value = '';
-                });
-            }
-            
-            const aiInput = document.getElementById('aiInput');
-            if (aiInput) {
-                aiInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        const btn = document.getElementById('aiSendBtn');
-                        if (btn) btn.click();
-                    }
-                });
-            }
-            
-            // Theme
-            document.querySelectorAll('.theme-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const color = this.dataset.color;
-                    setTheme(color);
-                    const picker = document.getElementById('themeColorPicker');
-                    if (picker) picker.value = color;
-                });
-            });
-            
-            const colorPicker = document.getElementById('themeColorPicker');
-            if (colorPicker) {
-                colorPicker.addEventListener('input', function() { setTheme(this.value); });
-            }
-            
-            // Language
-            const langSelect = document.getElementById('languageSelect');
-            if (langSelect) {
-                langSelect.addEventListener('change', function() {
-                    currentLang = this.value;
-                    translateAll();
-                    renderLevels();
-                    refreshUI();
-                    const langName = LANGUAGES[currentLang]?.name || currentLang;
-                    showToast(t('toastLanguage').replace('{lang}', langName), true);
-                    saveGame();
-                });
-            }
-            
-            // Country
-            const countrySelect = document.getElementById('countrySelect');
-            if (countrySelect) {
-                countrySelect.addEventListener('change', updateCountry);
-            }
-            
-            // Navigation
-            const navTabs = document.querySelectorAll('.nav-tab');
-            const screenMap = { home: 'screen-home', boost: 'screen-boost', social: 'screen-social', invite: 'screen-invite', withdraw: 'screen-withdraw', profile: 'screen-profile', ai: 'screen-ai' };
-            navTabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    navTabs.forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-                    const screen = this.dataset.screen;
-                    Object.keys(screenMap).forEach(key => {
-                        const el = document.getElementById(screenMap[key]);
-                        if (el) el.classList.toggle('active', key === screen);
-                    });
-                    refreshUI();
-                    renderLevels();
-                });
-            });
-        });
+        // ==================== MARKET ====================
+        function updateMarket() {
+            const change = (Math.random() - 0.48) * 4;
+            bnbChange = parseFloat((bnbChange + change * 0.1).toFixed(1));
+            if (bnbChange > 15) bnbChange = 15;
+            if (bnbChange < -15) bnbChange = -15;
+            const pc = (bnbChange / 100) * bnbPrice * (Math.random() * 0.5 + 0.5);
+            bnbPrice = parseFloat((bnbPrice + pc).toFixed(2));
+            if (bnbPrice < 300) bnbPrice = 300;
+            if (bnbPrice > 900) bnbPrice = 900;
+            bnbVolume = parseFloat((bnbVolume + (Math.random() - 0.5) * 0.3).toFixed(1));
+            if (bnbVolume < 0.5) bnbVolume = 0.5;
+            if (bnbVolume > 8) bnbVolume = 8;
+            updateUI();
+        }
 
-        // ==================== THEME ====================
-        function setTheme(color) {
-            const app = document.getElementById('app');
-            if (app) {
-                app.style.setProperty('--primary', color);
-                app.style.setProperty('--primary-dark', color);
-                app.style.setProperty('--shadow-color', color + '40');
-            }
+        // ==================== LANGUAGE ====================
+        function translateAll() {
+            const keys = [
+                'appTitle','appBadge','marketLabel','volumeLabel','navHome','navBoost','navSocial',
+                'navInvite','navWithdraw','navProfile','navAi','minerLabel','statSpeed','statMined',
+                'statStatus','balanceLabel','boostTitle','machineLabel','cpuSpeedLabel','cpuPerSecLabel',
+                'cpuLevelLabel','upgradeLabel','levelsLabel','socialTitle','socialEarnLabel','connectText',
+                'socialRewardTitle','reward1','reward2','reward3','groupsTitle','createBtnText','joinText',
+                'inviteTitle','inviteTotalLabel','inviteBonusLabel','inviteCodeLabel','copyBtnText',
+                'inviteRewardTitle','inviteReward1','inviteReward2','withdrawTitle','countryLabel',
+                'paymentLabel','walletLabel','amountLabel','minNotice','submitBtnText','feeInfo',
+                'feeYou','feeBNB','availableLabel','levelLabel','xpLabel','editHint','langTitle',
+                'langLabel','themeTitle','colorLabel','statsTitle','statTotalMined','statMiningSpeed',
+                'statInvites','statBoost','statSocial','friendsTitle','yourFriendsLabel','addFriendText',
+                'aiTitle','aiStatus','sendBtnText','modalTitle','modalPlaceholder','modalCancel','modalSave',
+                'connectedText','joinedText','levelOwned','levelBuy','levelLocked'
+            ];
+            
+            keys.forEach(key => {
+                const el = $(key);
+                if (el) {
+                    if (key === 'minerLabel' || key === 'balanceLabel' || key === 'boostTitle' || 
+                        key === 'socialTitle' || key === 'inviteTitle' || key === 'withdrawTitle' ||
+                        key === 'langTitle' || key === 'themeTitle' || key === 'statsTitle' || 
+                        key === 'friendsTitle' || key === 'aiTitle') {
+                        el.textContent = t(key);
+                    } else if (key === 'minNotice') {
+                        el.innerHTML = `⚠️ ${t(key)}`;
+                    } else if (key === 'feeInfo') {
+                        el.innerHTML = `💼 <strong>${t(key).replace('💼 ', '')}</strong>
+                            <div style="display:flex; justify-content:space-around; margin-top:2px; font-size:0.45rem;">
+                                <span id="feeYou">${t('feeYou')}</span>
+                                <span id="feeBNB">${t('feeBNB')}</span>
+                            </div>
+                            <span style="font-size:0.45rem;">${t('availableLabel')}: <span id="withdrawBalance" style="color:var(--primary);">${fmt(balance)}</span> BNB</span>`;
+                    } else if (key === 'modalPlaceholder') {
+                        el.placeholder = t(key);
+                    } else if (key === 'withdrawTitle') {
+                        el.innerHTML = `💸 ${t(key).replace('💸 ', '')} <span class="badge" id="countryBadge">🌍 Auto</span>`;
+                    } else {
+                        el.textContent = t(key);
+                    }
+                }
+            });
+
+            // Update status
+            const statusLabel = $('statusLabel');
+            if (statusLabel) statusLabel.textContent = isMining ? t('statusMining') : t('statusLabel');
+            const startBtnText = $('startBtnText');
+            if (startBtnText) startBtnText.textContent = isMining ? t('stopBtnText') : t('startBtnText');
+            const toggleBtn = $('toggleMineBtn');
+            if (toggleBtn) toggleBtn.className = isMining ? 'btn btn-success' : 'btn btn-primary';
+
+            // Update connect buttons
+            qsa('.c-text').forEach(el => el.textContent = t('connectText'));
+            // Update join buttons
+            qsa('.j-text').forEach(el => el.textContent = t('joinText'));
+
+            renderLevels();
+            renderGroups();
+            renderFriends();
+            updateUI();
         }
 
         // ==================== COUNTRY ====================
         function updateCountry() {
-            const select = document.getElementById('countrySelect');
-            const flag = document.getElementById('countryFlag');
-            const prefix = document.getElementById('countryPrefix');
-            const badge = document.getElementById('countryBadge');
-            const userCountry = document.getElementById('userCountry');
+            const select = $('countrySelect');
             if (!select) return;
-            
             const val = select.value;
             const parts = val.split('|');
             const code = parts[0];
             const pref = parts[1];
-            const fl = parts[2] || '🌍';
-            
-            if (flag) flag.textContent = fl;
-            if (prefix) prefix.textContent = pref;
-            if (badge) badge.textContent = `${fl} ${code}`;
-            if (userCountry) userCountry.textContent = `${fl} ${code}`;
+            const flag = parts[2] || '🌍';
+            const flagEl = $('countryFlag');
+            if (flagEl) flagEl.textContent = flag;
+            const prefixEl = $('countryPrefix');
+            if (prefixEl) prefixEl.textContent = pref;
+            const badgeEl = $('countryBadge');
+            if (badgeEl) badgeEl.textContent = `${flag} ${code}`;
+            const userCountry = $('userCountry');
+            if (userCountry) userCountry.textContent = `${flag} ${code}`;
         }
 
         function detectCountry() {
@@ -1831,46 +1310,378 @@
                 'Australia/Sydney': 'AU|+61|🇦🇺',
                 'Asia/Dubai': 'AE|+971|🇦🇪'
             };
-            
             let detected = 'TZ|+255|🇹🇿';
             for (const [tz, val] of Object.entries(map)) {
                 if (timezone.includes(tz)) { detected = val; break; }
             }
-            const select = document.getElementById('countrySelect');
+            const select = $('countrySelect');
             if (select) select.value = detected;
             updateCountry();
         }
 
+        // ==================== THEME ====================
+        function setTheme(color) {
+            const app = document.getElementById('app');
+            if (app) {
+                app.style.setProperty('--primary', color);
+                app.style.setProperty('--primary-dark', color);
+                app.style.setProperty('--shadow-color', color + '40');
+            }
+        }
+
         // ==================== INIT ====================
-        const lastSave = loadGame();
-        if (lastSave) calculateOfflineMining();
+        function init() {
+            // Load saved data
+            const lastSave = loadGame();
+            if (lastSave) calculateOfflineMining();
 
-        const langSelect = document.getElementById('languageSelect');
-        if (langSelect) langSelect.value = currentLang;
+            // Set language
+            const langSelect = $('languageSelect');
+            if (langSelect) langSelect.value = currentLang;
 
-        const inviteCode = document.getElementById('inviteCode');
-        if (inviteCode) inviteCode.textContent = REFERRAL_CODE;
-        const inviteLink = document.getElementById('inviteLinkInput');
-        if (inviteLink) inviteLink.value = `https://t.me/BNBMinerBot?start=${REFERRAL_CODE}`;
+            // Set invite code
+            const inviteCode = $('inviteCode');
+            if (inviteCode) inviteCode.textContent = REFERRAL_CODE;
+            const inviteLink = $('inviteLinkInput');
+            if (inviteLink) inviteLink.value = `https://t.me/BNBMinerBot?start=${REFERRAL_CODE}`;
 
-        translateAll();
-        updateCPUMachine();
-        renderLevels();
-        renderGroups();
-        renderFriends();
-        refreshUI();
-        detectCountry();
+            // Translate
+            translateAll();
 
-        setTimeout(() => {
-            showToast(t('toastWelcome'), true);
-        }, 600);
+            // Detect country
+            detectCountry();
 
-        setInterval(saveGame, 10000);
+            // Update UI
+            updateUI();
 
-        window.addEventListener('beforeunload', function() {
-            if (miningInterval) clearInterval(miningInterval);
-            if (sessionInterval) clearInterval(sessionInterval);
-            saveGame();
+            // Show welcome
+            setTimeout(() => {
+                showToast(t('toastWelcome'), true);
+            }, 600);
+
+            // Auto-save
+            setInterval(saveGame, 10000);
+
+            // Market
+            setInterval(updateMarket, 5000);
+            updateMarket();
+        }
+
+        // ==================== EVENT LISTENERS ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle mining
+            const toggleBtn = $('toggleMineBtn');
+            if (toggleBtn) toggleBtn.addEventListener('click', toggleMining);
+
+            // Navigation
+            const navBtns = qsa('.nav button');
+            const screens = {
+                home: 'screen-home', boost: 'screen-boost', social: 'screen-social',
+                invite: 'screen-invite', withdraw: 'screen-withdraw', profile: 'screen-profile', ai: 'screen-ai'
+            };
+            navBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    navBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const screen = this.dataset.screen;
+                    Object.keys(screens).forEach(key => {
+                        const el = $(screens[key]);
+                        if (el) el.classList.toggle('active', key === screen);
+                    });
+                    updateUI();
+                });
+            });
+
+            // Social connect
+            qsa('[data-platform]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const platform = this.dataset.platform;
+                    connectSocial(platform);
+                });
+            });
+
+            // Copy invite
+            const copyBtn = $('copyInviteBtn');
+            if (copyBtn) {
+                copyBtn.addEventListener('click', function() {
+                    const input = $('inviteLinkInput');
+                    if (input) {
+                        const val = input.value;
+                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                            navigator.clipboard.writeText(val).then(() => showToast(t('toastCopied'), true))
+                                .catch(() => { input.select(); document.execCommand('copy'); showToast(t('toastCopied'), true); });
+                        } else {
+                            input.select();
+                            document.execCommand('copy');
+                            showToast(t('toastCopied'), true);
+                        }
+                    }
+                });
+            }
+
+            // Invite code click
+            const inviteCodeEl = $('inviteCode');
+            if (inviteCodeEl) {
+                inviteCodeEl.addEventListener('click', function() {
+                    inviteCount++;
+                    inviteBonusSpeed = inviteCount * INVITE_BONUS;
+                    if (inviteCount % 5 === 0) { balance += 0.5; showToast(t('toast5Invites'), true); }
+                    saveGame();
+                    showToast(t('toastInvite'), true);
+                    updateUI();
+                });
+            }
+
+            // Withdraw
+            const withdrawBtn = $('withdrawBtn');
+            if (withdrawBtn) {
+                withdrawBtn.addEventListener('click', function() {
+                    const method = $('paymentMethod');
+                    const walletInput = $('walletInput');
+                    const amountInput = $('withdrawAmount');
+                    const prefixEl = $('countryPrefix');
+                    if (!method || !walletInput || !amountInput || !prefixEl) return;
+                    
+                    const methodVal = method.value;
+                    let wallet = walletInput.value.trim();
+                    const mobileMethods = ['mpesa', 'tigo', 'airtel', 'equitel', 'momo', 'gopay', 'gcash'];
+                    const prefix = prefixEl.textContent;
+                    
+                    if (mobileMethods.includes(methodVal) && !wallet.startsWith('+')) {
+                        wallet = wallet.replace(/^\+?[0-9]{1,4}/, '').replace(/\s/g, '');
+                        if (wallet.length > 0) wallet = prefix + wallet;
+                    }
+                    
+                    const amountRaw = parseFloat(amountInput.value);
+                    
+                    if (!wallet || wallet.length < 4) { showToast('❌ Enter valid phone/wallet.'); return; }
+                    if (isNaN(amountRaw) || amountRaw < MIN_WITHDRAW) { showToast(t('toastMinWithdraw')); return; }
+                    if (amountRaw > balance) { showToast(t('toastInsuff').replace('{balance}', fmt(balance))); return; }
+                    
+                    const platformFee = amountRaw * 0.05;
+                    const bnbFee = amountRaw * 0.05;
+                    const totalFee = platformFee + bnbFee;
+                    const finalAmount = amountRaw - totalFee;
+                    
+                    balance -= amountRaw;
+                    saveGame();
+                    
+                    const methodNames = { 'mpesa': 'M-Pesa', 'tigo': 'Tigo', 'airtel': 'Airtel', 'equitel': 'Equitel', 'momo': 'MTN MoMo', 'gopay': 'GoPay', 'gcash': 'GCash', 'paypal': 'PayPal', 'wise': 'Wise', 'bnb': 'BNB', 'solana': 'Solana', 'usdt_trc20': 'USDT', 'bitcoin': 'BTC', 'bank_swift': 'SWIFT' };
+                    const methodName = methodNames[methodVal] || methodVal;
+                    
+                    showToast(t('toastWithdraw').replace('{amount}', finalAmount.toFixed(4)).replace('{method}', methodName).replace('{wallet}', wallet).replace('{fee}', totalFee.toFixed(4)), true);
+                    
+                    walletInput.value = '';
+                    amountInput.value = '';
+                    updateUI();
+                });
+            }
+
+            // Groups
+            const createGroupBtn = $('createGroupBtn');
+            if (createGroupBtn) {
+                createGroupBtn.addEventListener('click', function() {
+                    const name = prompt('Enter group name:');
+                    if (name) {
+                        groups.push({ name, members: 1, bonus: 0.00000002, joined: true });
+                        saveGame();
+                        showToast(t('toastGroupCreated').replace('{name}', name), true);
+                        renderGroups();
+                        updateUI();
+                    }
+                });
+            }
+
+            // Friends
+            const addFriendBtn = $('addFriendBtn');
+            if (addFriendBtn) {
+                addFriendBtn.addEventListener('click', function() {
+                    const name = prompt('Enter friend\'s name:');
+                    if (name) {
+                        friends.push({ name, status: 'Online · Active', online: true });
+                        saveGame();
+                        showToast(t('toastFriend').replace('{name}', name), true);
+                        renderFriends();
+                        updateUI();
+                    }
+                });
+            }
+
+            // Name edit
+            const userNameEl = $('userName');
+            if (userNameEl) {
+                userNameEl.addEventListener('click', function() {
+                    const modal = $('nameEditModal');
+                    const input = $('nameInput');
+                    if (modal && input) {
+                        input.value = userName;
+                        modal.classList.add('show');
+                    }
+                });
+            }
+            const cancelBtn = $('cancelNameBtn');
+            if (cancelBtn) {
+                cancelBtn.addEventListener('click', function() {
+                    const modal = $('nameEditModal');
+                    if (modal) modal.classList.remove('show');
+                });
+            }
+            const saveBtn = $('saveNameBtn');
+            if (saveBtn) {
+                saveBtn.addEventListener('click', function() {
+                    const input = $('nameInput');
+                    const modal = $('nameEditModal');
+                    if (input && modal) {
+                        const newName = input.value.trim() || 'BNB Miner';
+                        userName = newName;
+                        const nameEl = $('userName');
+                        if (nameEl) nameEl.textContent = userName;
+                        modal.classList.remove('show');
+                        showToast(t('toastNameSaved'), true);
+                        saveGame();
+                        updateUI();
+                    }
+                });
+            }
+            const nameInput = $('nameInput');
+            if (nameInput) {
+                nameInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        const btn = $('saveNameBtn');
+                        if (btn) btn.click();
+                    }
+                });
+            }
+
+            // Profile photo
+            const avatar = $('profileAvatar');
+            if (avatar) {
+                avatar.addEventListener('click', function() {
+                    const input = $('photoInput');
+                    if (input) input.click();
+                });
+            }
+            const photoInput = $('photoInput');
+            if (photoInput) {
+                photoInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            const av = $('profileAvatar');
+                            if (av) {
+                                av.innerHTML = `<img src="${event.target.result}" alt="Profile"><span class="cam">📷</span>`;
+                                av.style.background = 'none';
+                            }
+                            showToast(t('toastPhoto'), true);
+                            saveGame();
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+
+            // Language
+            const langSelect = $('languageSelect');
+            if (langSelect) {
+                langSelect.addEventListener('change', function() {
+                    currentLang = this.value;
+                    translateAll();
+                    renderLevels();
+                    updateUI();
+                    const names = {
+                        'en': 'English', 'sw': 'Kiswahili', 'fr': 'Français',
+                        'es': 'Español', 'pt': 'Português', 'de': 'Deutsch',
+                        'it': 'Italiano', 'ru': 'Русский', 'zh': '中文',
+                        'ar': 'العربية', 'hi': 'हिन्दी', 'id': 'Indonesia'
+                    };
+                    showToast(t('toastLanguage').replace('{lang}', names[currentLang] || currentLang), true);
+                    saveGame();
+                });
+            }
+
+            // Country
+            const countrySelect = $('countrySelect');
+            if (countrySelect) {
+                countrySelect.addEventListener('change', updateCountry);
+            }
+
+            // Theme
+            qsa('.theme-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const color = this.dataset.color;
+                    setTheme(color);
+                    const picker = $('themeColorPicker');
+                    if (picker) picker.value = color;
+                });
+            });
+            const colorPicker = $('themeColorPicker');
+            if (colorPicker) {
+                colorPicker.addEventListener('input', function() {
+                    setTheme(this.value);
+                });
+            }
+
+            // AI Chat
+            const aiSendBtn = $('aiSendBtn');
+            if (aiSendBtn) {
+                aiSendBtn.addEventListener('click', function() {
+                    const input = $('aiInput');
+                    const messages = $('aiMessages');
+                    if (!input || !messages) return;
+                    const msg = input.value.trim();
+                    if (!msg) return;
+                    
+                    const userDiv = document.createElement('div');
+                    userDiv.className = 'msg user';
+                    userDiv.textContent = msg;
+                    messages.appendChild(userDiv);
+                    
+                    setTimeout(() => {
+                        const botDiv = document.createElement('div');
+                        botDiv.className = 'msg bot';
+                        let response = `BNB is at $${bnbPrice.toFixed(2)} (${bnbChange > 0 ? '+' : ''}${bnbChange.toFixed(1)}%) 💹`;
+                        const lower = msg.toLowerCase();
+                        if (lower.includes('speed') || lower.includes('mine')) {
+                            const speed = getTotalSpeed();
+                            response = `Your CPU speed: ${fmt(speed)} BNB/s. Level ${boostLevel + 1}/10 ⚡`;
+                        } else if (lower.includes('balance')) {
+                            response = `Balance: ${fmt(balance)} BNB ($${(balance * bnbPrice).toFixed(2)}) 💰`;
+                        } else if (lower.includes('social')) {
+                            const count = getSocialCount();
+                            response = `You have ${count}/6 social accounts connected. Bonus speed: ${fmt(getSocialBonus())} BNB/s 🌐`;
+                        } else {
+                            const responses = [
+                                `BNB is at $${bnbPrice.toFixed(2)} 📈`,
+                                `Your CPU is mining at ${fmt(getTotalSpeed())} BNB/s ⚡`,
+                                'Connect social accounts for bonus speed! 🌐',
+                                'Each invite gives +0.00000010 BNB/s! 👥',
+                                'Minimum withdrawal is 0.5 BNB. 💸',
+                                'CPU Level 10 gives 0.00001500 BNB/s! 🚀'
+                            ];
+                            response = responses[Math.floor(Math.random() * responses.length)];
+                        }
+                        botDiv.textContent = response;
+                        messages.appendChild(botDiv);
+                        messages.scrollTop = messages.scrollHeight;
+                    }, 500);
+                    
+                    messages.scrollTop = messages.scrollHeight;
+                    input.value = '';
+                });
+            }
+            const aiInput = $('aiInput');
+            if (aiInput) {
+                aiInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        const btn = $('aiSendBtn');
+                        if (btn) btn.click();
+                    }
+                });
+            }
+
+            // Init
+            init();
         });
 
     })();
