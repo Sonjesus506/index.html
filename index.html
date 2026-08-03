@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>🟡 BNB CPU Miner</title>
+    <title>BNB CPU Miner</title>
     <style>
         * {
             margin: 0;
@@ -23,12 +23,6 @@
             --shadow-color: rgba(247, 224, 94, 0.3);
             --green: #4ae09a;
             --red: #ff4757;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
         }
 
         body {
@@ -55,7 +49,7 @@
             transition: all 0.3s ease;
         }
 
-        /* CPU Mining Machine */
+        /* CPU Machine */
         .cpu-machine {
             background: rgba(8, 20, 32, 0.6);
             border-radius: 28px;
@@ -66,7 +60,6 @@
             overflow: hidden;
             transition: all 0.5s ease;
         }
-
         .cpu-machine.level-1 { border-color: #4a9eff; }
         .cpu-machine.level-2 { border-color: #4ae09a; }
         .cpu-machine.level-3 { border-color: #f7e05e; }
@@ -88,58 +81,13 @@
             padding: 2px 10px;
             border-radius: 30px;
         }
+        .cpu-machine .machine-label .level-badge { color: var(--primary); font-weight: 700; }
 
-        .cpu-machine .machine-label .level-badge {
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        .cpu-visual {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 0;
-        }
-
-        .cpu-chip {
-            width: 120px;
-            height: 120px;
-            background: #0d1b28;
-            border-radius: 20px;
-            border: 3px solid var(--border-color);
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.5s ease;
-            margin: 5px auto;
-        }
-
-        .cpu-chip .chip-inner {
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle at 30% 30%, #1a2f40, #0a121c);
-            border-radius: 12px;
-            border: 2px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            transition: all 0.5s ease;
-        }
-
-        .cpu-chip .chip-inner .cpu-icon {
-            font-size: 2rem;
-            transition: all 0.5s ease;
-        }
-
-        .cpu-chip .chip-inner .cpu-text {
-            font-size: 0.4rem;
-            color: var(--text-muted);
-            margin-top: 2px;
-            text-align: center;
-        }
+        .cpu-visual { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px 0; }
+        .cpu-chip { width: 120px; height: 120px; background: #0d1b28; border-radius: 20px; border: 3px solid var(--border-color); position: relative; display: flex; align-items: center; justify-content: center; transition: all 0.5s ease; margin: 5px auto; }
+        .cpu-chip .chip-inner { width: 80px; height: 80px; background: radial-gradient(circle at 30% 30%, #1a2f40, #0a121c); border-radius: 12px; border: 2px solid var(--border-color); display: flex; align-items: center; justify-content: center; flex-direction: column; transition: all 0.5s ease; }
+        .cpu-chip .chip-inner .cpu-icon { font-size: 2rem; transition: all 0.5s ease; }
+        .cpu-chip .chip-inner .cpu-text { font-size: 0.4rem; color: var(--text-muted); margin-top: 2px; text-align: center; }
 
         .cpu-fan {
             position: absolute;
@@ -148,16 +96,11 @@
             animation: spinFan 1.5s linear infinite;
             animation-play-state: paused;
         }
-
-        .cpu-fan.spinning {
-            animation-play-state: running;
-        }
-
+        .cpu-fan.spinning { animation-play-state: running; }
         @keyframes spinFan {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
         .cpu-fan .fan-blade {
             position: absolute;
             width: 8px;
@@ -170,13 +113,11 @@
             opacity: 0.7;
             box-shadow: 0 0 10px var(--shadow-color);
         }
-
         .cpu-fan .fan-blade:nth-child(1) { transform: rotate(0deg) translateX(-4px) translateY(-50%); }
         .cpu-fan .fan-blade:nth-child(2) { transform: rotate(72deg) translateX(-4px) translateY(-50%); }
         .cpu-fan .fan-blade:nth-child(3) { transform: rotate(144deg) translateX(-4px) translateY(-50%); }
         .cpu-fan .fan-blade:nth-child(4) { transform: rotate(216deg) translateX(-4px) translateY(-50%); }
         .cpu-fan .fan-blade:nth-child(5) { transform: rotate(288deg) translateX(-4px) translateY(-50%); }
-
         .cpu-fan .fan-center {
             position: absolute;
             width: 16px;
@@ -190,1372 +131,234 @@
             z-index: 2;
         }
 
-        .cpu-leds {
-            display: flex;
-            gap: 4px;
-            margin-top: 6px;
-        }
-
-        .cpu-led {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--text-muted);
-            transition: all 0.3s ease;
-        }
-
-        .cpu-led.active {
-            background: var(--green);
-            box-shadow: 0 0 10px var(--green);
-        }
-
+        .cpu-leds { display: flex; gap: 4px; margin-top: 6px; }
+        .cpu-led { width: 6px; height: 6px; border-radius: 50%; background: var(--text-muted); transition: all 0.3s ease; }
+        .cpu-led.active { background: var(--green); box-shadow: 0 0 10px var(--green); }
         .cpu-led.speed-1 { background: #4a9eff; box-shadow: 0 0 10px #4a9eff; }
         .cpu-led.speed-2 { background: #4ae09a; box-shadow: 0 0 10px #4ae09a; }
         .cpu-led.speed-3 { background: #f7e05e; box-shadow: 0 0 10px #f7e05e; }
         .cpu-led.speed-4 { background: #ff9f4a; box-shadow: 0 0 10px #ff9f4a; }
         .cpu-led.speed-5 { background: #ff6b8a; box-shadow: 0 0 10px #ff6b8a; }
 
-        .cpu-info {
-            display: flex;
-            justify-content: space-around;
-            width: 100%;
-            margin-top: 8px;
-            padding: 6px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 40px;
-        }
+        .cpu-info { display: flex; justify-content: space-around; width: 100%; margin-top: 8px; padding: 6px; background: rgba(0,0,0,0.3); border-radius: 40px; }
+        .cpu-info-item { text-align: center; }
+        .cpu-info-item .label { font-size: 0.4rem; color: var(--text-muted); text-transform: uppercase; }
+        .cpu-info-item .value { font-size: 0.75rem; font-weight: 700; color: var(--text-light); }
+        .cpu-info-item .value.gold { color: var(--primary); }
 
-        .cpu-info-item {
-            text-align: center;
-        }
+        .boost-levels { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; }
+        .level-item { background: rgba(8, 20, 32, 0.4); border-radius: 16px; padding: 8px 10px; border: 1px solid var(--border-color); text-align: center; transition: all 0.3s ease; cursor: pointer; }
+        .level-item:hover { border-color: var(--primary); }
+        .level-item.active { border-color: var(--primary); background: rgba(247, 224, 94, 0.1); }
+        .level-item .level-num { font-size: 0.65rem; font-weight: 700; color: var(--text-light); }
+        .level-item .level-speed { font-size: 0.5rem; color: var(--primary); }
+        .level-item .level-price { font-size: 0.5rem; color: var(--text-muted); }
+        .level-item .level-buy { margin-top: 4px; padding: 3px 12px; border-radius: 30px; border: none; font-weight: 600; font-size: 0.5rem; background: linear-gradient(145deg, var(--primary), var(--primary-dark)); color: #0a121c; cursor: pointer; width: 100%; }
+        .level-item .level-buy:active { transform: scale(0.95); }
+        .level-item .level-buy.owned { background: rgba(74, 224, 154, 0.2); color: var(--green); }
 
-        .cpu-info-item .label {
-            font-size: 0.4rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
+        .nav-tabs { display: flex; background: #0d1822; border-radius: 60px; padding: 4px; margin-bottom: 10px; border: 1px solid var(--border-color); overflow-x: auto; gap: 2px; flex-wrap: nowrap; }
+        .nav-tab { flex: 1; text-align: center; padding: 8px 4px; border-radius: 60px; font-weight: 700; font-size: 0.5rem; color: var(--text-muted); cursor: pointer; transition: all 0.2s; border: none; background: transparent; letter-spacing: 0.3px; white-space: nowrap; min-width: 35px; }
+        .nav-tab.active { background: linear-gradient(145deg, var(--primary), var(--primary-dark)); color: #0a121c; box-shadow: 0 4px 20px var(--shadow-color); }
+        .nav-tab:active { transform: scale(0.96); }
 
-        .cpu-info-item .value {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--text-light);
-        }
+        .screen { display: none; animation: fadeSlide 0.3s ease; }
+        .screen.active { display: block; }
+        @keyframes fadeSlide { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
 
-        .cpu-info-item .value.gold {
-            color: var(--primary);
-        }
+        .market-price { background: rgba(8, 20, 32, 0.5); border-radius: 40px; padding: 6px 14px; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+        .market-price .price { font-size: 1.1rem; font-weight: 700; color: var(--text-light); }
+        .market-price .change { font-size: 0.7rem; font-weight: 600; padding: 2px 10px; border-radius: 20px; }
+        .market-price .change.up { color: var(--green); background: rgba(74, 224, 154, 0.15); }
+        .market-price .change.down { color: var(--red); background: rgba(255, 71, 87, 0.15); }
+        .market-price .label { font-size: 0.45rem; color: var(--text-muted); text-transform: uppercase; }
 
-        /* Boost Levels */
-        .boost-levels {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6px;
-            margin-top: 8px;
-        }
-
-        .level-item {
-            background: rgba(8, 20, 32, 0.4);
-            border-radius: 16px;
-            padding: 8px 10px;
-            border: 1px solid var(--border-color);
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .level-item:hover {
-            border-color: var(--primary);
-        }
-
-        .level-item.active {
-            border-color: var(--primary);
-            background: rgba(247, 224, 94, 0.1);
-        }
-
-        .level-item .level-num {
-            font-size: 0.65rem;
-            font-weight: 700;
-            color: var(--text-light);
-        }
-
-        .level-item .level-speed {
-            font-size: 0.5rem;
-            color: var(--primary);
-        }
-
-        .level-item .level-price {
-            font-size: 0.5rem;
-            color: var(--text-muted);
-        }
-
-        .level-item .level-buy {
-            margin-top: 4px;
-            padding: 3px 12px;
-            border-radius: 30px;
-            border: none;
-            font-weight: 600;
-            font-size: 0.5rem;
-            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
-            color: #0a121c;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        .level-item .level-buy:active {
-            transform: scale(0.95);
-        }
-
-        .level-item .level-buy.owned {
-            background: rgba(74, 224, 154, 0.2);
-            color: var(--green);
-        }
-
-        /* Navigation */
-        .nav-tabs {
-            display: flex;
-            background: #0d1822;
-            border-radius: 60px;
-            padding: 4px;
-            margin-bottom: 10px;
-            border: 1px solid var(--border-color);
-            overflow-x: auto;
-            gap: 2px;
-            flex-wrap: nowrap;
-        }
-
-        .nav-tab {
-            flex: 1;
-            text-align: center;
-            padding: 8px 4px;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 0.5rem;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: all 0.2s;
-            border: none;
-            background: transparent;
-            letter-spacing: 0.3px;
-            white-space: nowrap;
-            min-width: 35px;
-        }
-
-        .nav-tab.active {
-            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
-            color: #0a121c;
-            box-shadow: 0 4px 20px var(--shadow-color);
-        }
-
-        .nav-tab:active {
-            transform: scale(0.96);
-        }
-
-        .screen {
-            display: none;
-            animation: fadeSlide 0.3s ease;
-        }
-
-        .screen.active {
-            display: block;
-        }
-
-        @keyframes fadeSlide {
-            0% { opacity: 0; transform: translateY(10px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Market Price */
-        .market-price {
-            background: rgba(8, 20, 32, 0.5);
-            border-radius: 40px;
-            padding: 6px 14px;
-            border: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-
-        .market-price .price {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--text-light);
-        }
-
-        .market-price .change {
-            font-size: 0.7rem;
-            font-weight: 600;
-            padding: 2px 10px;
-            border-radius: 20px;
-        }
-
-        .market-price .change.up {
-            color: var(--green);
-            background: rgba(74, 224, 154, 0.15);
-        }
-
-        .market-price .change.down {
-            color: var(--red);
-            background: rgba(255, 71, 87, 0.15);
-        }
-
-        .market-price .label {
-            font-size: 0.45rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-
-        /* Home */
-        .miner-visual {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 4px 0 8px;
-            position: relative;
-        }
-
-        .bnb-logo {
-            font-size: 2.8rem;
-            margin-bottom: 2px;
-            text-shadow: 0 0 40px var(--shadow-color);
-        }
-
-        .fan-container {
-            position: relative;
-            width: 110px;
-            height: 110px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .fan-ring {
-            position: absolute;
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            border: 4px solid var(--primary);
-            box-shadow: 0 0 30px var(--shadow-color), inset 0 0 30px var(--shadow-color);
-            background: rgba(8, 24, 40, 0.4);
-        }
-
-        .fan-blades {
-            position: relative;
-            width: 90px;
-            height: 90px;
-            animation: spinFan 2s linear infinite;
-            animation-play-state: paused;
-        }
-
-        .fan-blades.spinning {
-            animation-play-state: running;
-        }
-
-        .blade {
-            position: absolute;
-            width: 28px;
-            height: 9px;
-            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
-            border-radius: 20px;
-            top: 50%;
-            left: 50%;
-            transform-origin: 0 50%;
-            box-shadow: 0 0 15px var(--shadow-color);
-        }
-
+        .miner-visual { display: flex; flex-direction: column; align-items: center; margin: 4px 0 8px; position: relative; }
+        .bnb-logo { font-size: 2.8rem; margin-bottom: 2px; text-shadow: 0 0 40px var(--shadow-color); }
+        .fan-container { position: relative; width: 110px; height: 110px; display: flex; align-items: center; justify-content: center; }
+        .fan-ring { position: absolute; width: 110px; height: 110px; border-radius: 50%; border: 4px solid var(--primary); box-shadow: 0 0 30px var(--shadow-color), inset 0 0 30px var(--shadow-color); background: rgba(8, 24, 40, 0.4); }
+        .fan-blades { position: relative; width: 90px; height: 90px; animation: spinFan 2s linear infinite; animation-play-state: paused; }
+        .fan-blades.spinning { animation-play-state: running; }
+        .blade { position: absolute; width: 28px; height: 9px; background: linear-gradient(90deg, var(--primary), var(--primary-dark)); border-radius: 20px; top: 50%; left: 50%; transform-origin: 0 50%; box-shadow: 0 0 15px var(--shadow-color); }
         .blade:nth-child(1) { transform: rotate(0deg) translateX(14px); }
         .blade:nth-child(2) { transform: rotate(72deg) translateX(14px); }
         .blade:nth-child(3) { transform: rotate(144deg) translateX(14px); }
         .blade:nth-child(4) { transform: rotate(216deg) translateX(14px); }
         .blade:nth-child(5) { transform: rotate(288deg) translateX(14px); }
+        .fan-center { position: absolute; width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle, var(--primary), var(--primary-dark)); box-shadow: 0 0 30px var(--shadow-color); border: 2px solid var(--primary); z-index: 2; }
+        .miner-label { color: var(--primary); font-size: 0.55rem; margin-top: 3px; letter-spacing: 0.1em; font-weight: 700; }
 
-        .fan-center {
-            position: absolute;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--primary), var(--primary-dark));
-            box-shadow: 0 0 30px var(--shadow-color);
-            border: 2px solid var(--primary);
-            z-index: 2;
-        }
+        .stats-row { display: flex; justify-content: space-around; background: rgba(8, 20, 32, 0.5); backdrop-filter: blur(6px); border-radius: 40px; padding: 6px 4px; border: 1px solid var(--border-color); margin: 3px 0 6px; }
+        .stat-item { text-align: center; }
+        .stat-item .label { font-size: 0.45rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        .stat-item .value { font-weight: 700; font-size: 0.85rem; color: var(--text-light); }
+        .stat-item .value.bnb-gold { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
-        .miner-label {
-            color: var(--primary);
-            font-size: 0.55rem;
-            margin-top: 3px;
-            letter-spacing: 0.1em;
-            font-weight: 700;
-        }
+        .balance-big { text-align: center; margin: 4px 0 8px; }
+        .balance-big .coin { font-size: 2.2rem; font-weight: 800; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -1px; }
+        .balance-big .label { font-size: 0.5rem; color: var(--text-muted); letter-spacing: 0.1em; }
+        .balance-big .sub-label { font-size: 0.45rem; color: var(--text-muted); margin-top: 2px; }
 
-        .stats-row {
-            display: flex;
-            justify-content: space-around;
-            background: rgba(8, 20, 32, 0.5);
-            backdrop-filter: blur(6px);
-            border-radius: 40px;
-            padding: 6px 4px;
-            border: 1px solid var(--border-color);
-            margin: 3px 0 6px;
-        }
+        .status-pill { display: flex; align-items: center; justify-content: center; gap: 6px; background: #0e1a24; padding: 5px 12px; border-radius: 60px; margin: 3px 0 8px; border: 1px solid var(--border-color); }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: #3d5a6e; transition: 0.2s; }
+        .dot.active { background: #3fe07a; box-shadow: 0 0 20px #3fe07a; }
+        .status-label { font-weight: 600; color: var(--text-light); font-size: 0.7rem; }
+        .session-time { color: var(--text-muted); font-size: 0.65rem; }
 
-        .stat-item {
-            text-align: center;
-        }
+        .btn { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 10px 8px; border: none; border-radius: 60px; font-weight: 700; font-size: 0.8rem; background: #1d2f3f; color: var(--text-light); box-shadow: 0 4px 0 #0a141e, 0 8px 24px rgba(0, 0, 0, 0.5); transition: all 0.06s ease; cursor: pointer; border: 1px solid var(--border-color); }
+        .btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #0a141e; }
+        .btn-primary { background: linear-gradient(145deg, var(--primary), var(--primary-dark)); color: #0a121c; border: 1px solid var(--primary); text-shadow: none; }
+        .btn-success { background: linear-gradient(145deg, #2fb86a, #167a42); color: white; border: 1px solid #6ae09a; }
 
-        .stat-item .label {
-            font-size: 0.45rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
+        .social-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .social-header h2 { color: var(--primary); font-size: 0.95rem; }
+        .social-header .earnings { color: var(--text-muted); font-size: 0.6rem; }
+        .social-header .earnings span { color: var(--primary); font-weight: 700; }
 
-        .stat-item .value {
-            font-weight: 700;
-            font-size: 0.85rem;
-            color: var(--text-light);
-        }
-
-        .stat-item .value.bnb-gold {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .balance-big {
-            text-align: center;
-            margin: 4px 0 8px;
-        }
-
-        .balance-big .coin {
-            font-size: 2.2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -1px;
-        }
-
-        .balance-big .label {
-            font-size: 0.5rem;
-            color: var(--text-muted);
-            letter-spacing: 0.1em;
-        }
-
-        .balance-big .sub-label {
-            font-size: 0.45rem;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        .status-pill {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            background: #0e1a24;
-            padding: 5px 12px;
-            border-radius: 60px;
-            margin: 3px 0 8px;
-            border: 1px solid var(--border-color);
-        }
-
-        .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #3d5a6e;
-            transition: 0.2s;
-        }
-
-        .dot.active {
-            background: #3fe07a;
-            box-shadow: 0 0 20px #3fe07a;
-        }
-
-        .status-label {
-            font-weight: 600;
-            color: var(--text-light);
-            font-size: 0.7rem;
-        }
-
-        .session-time {
-            color: var(--text-muted);
-            font-size: 0.65rem;
-        }
-
-        .btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            width: 100%;
-            padding: 10px 8px;
-            border: none;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 0.8rem;
-            background: #1d2f3f;
-            color: var(--text-light);
-            box-shadow: 0 4px 0 #0a141e, 0 8px 24px rgba(0, 0, 0, 0.5);
-            transition: all 0.06s ease;
-            cursor: pointer;
-            border: 1px solid var(--border-color);
-        }
-
-        .btn:active {
-            transform: translateY(3px);
-            box-shadow: 0 1px 0 #0a141e;
-        }
-
-        .btn-primary {
-            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
-            color: #0a121c;
-            border: 1px solid var(--primary);
-            text-shadow: none;
-        }
-
-        .btn-success {
-            background: linear-gradient(145deg, #2fb86a, #167a42);
-            color: white;
-            border: 1px solid #6ae09a;
-        }
-
-        /* Social */
-        .social-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .social-header h2 {
-            color: var(--primary);
-            font-size: 0.95rem;
-        }
-
-        .social-header .earnings {
-            color: var(--text-muted);
-            font-size: 0.6rem;
-        }
-
-        .social-header .earnings span {
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        .social-connect {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-
-        .social-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(8, 20, 32, 0.5);
-            border-radius: 40px;
-            padding: 10px 14px;
-            border: 1px solid var(--border-color);
-            transition: all 0.2s;
-        }
-
-        .social-item .icon {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
+        .social-connect { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+        .social-item { display: flex; align-items: center; gap: 10px; background: rgba(8, 20, 32, 0.5); border-radius: 40px; padding: 10px 14px; border: 1px solid var(--border-color); transition: all 0.2s; }
+        .social-item .icon { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border-radius: 50%; flex-shrink: 0; }
         .social-item .icon.tiktok { background: #000; color: #00f2ea; }
         .social-item .icon.instagram { background: radial-gradient(circle at 30% 110%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%); color: white; }
         .social-item .icon.facebook { background: #1877f2; color: white; }
         .social-item .icon.youtube { background: #ff0000; color: white; }
         .social-item .icon.twitter { background: #000; color: white; }
         .social-item .icon.telegram { background: #0088cc; color: white; }
-
-        .social-item .info {
-            flex: 1;
-        }
-
-        .social-item .info .name {
-            color: var(--text-light);
-            font-weight: 600;
-            font-size: 0.75rem;
-        }
-
-        .social-item .info .username {
-            color: var(--text-muted);
-            font-size: 0.55rem;
-        }
-
-        .social-item .connect-btn {
-            padding: 4px 12px;
-            border-radius: 30px;
-            border: none;
-            font-weight: 600;
-            font-size: 0.6rem;
-            cursor: pointer;
-            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
-            color: #0a121c;
-            transition: 0.15s;
-        }
-
-        .social-item .connect-btn:active {
-            transform: scale(0.95);
-        }
-
-        .social-item .connect-btn.connected-btn {
-            background: rgba(74, 224, 154, 0.2);
-            color: var(--green);
-        }
-
-        .social-rewards {
-            background: rgba(8, 20, 32, 0.3);
-            border-radius: 28px;
-            padding: 12px 14px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 10px;
-        }
-
-        .social-rewards .title {
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 0.7rem;
-            margin-bottom: 6px;
-        }
-
-        .reward-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 4px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            color: var(--text-muted);
-            font-size: 0.65rem;
-        }
-
-        .reward-row:last-child {
-            border-bottom: none;
-        }
-
-        .reward-row .highlight {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .reward-progress {
-            width: 100%;
-            height: 4px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
-            margin-top: 4px;
-            overflow: hidden;
-        }
-
-        .reward-progress .fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
-            border-radius: 10px;
-            transition: width 0.5s ease;
-        }
-
-        /* Groups */
-        .groups-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .groups-header h3 {
-            color: var(--text-light);
-            font-size: 0.8rem;
-        }
-
-        .groups-header .create-btn {
-            padding: 4px 14px;
-            border-radius: 30px;
-            border: none;
-            font-weight: 600;
-            font-size: 0.6rem;
-            cursor: pointer;
-            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
-            color: #0a121c;
-        }
-
-        .groups-header .create-btn:active {
-            transform: scale(0.95);
-        }
-
-        .group-card {
-            background: rgba(8, 20, 32, 0.3);
-            border-radius: 28px;
-            padding: 12px 14px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 8px;
-        }
-
-        .group-card .group-name {
-            color: var(--text-light);
-            font-weight: 700;
-            font-size: 0.8rem;
-        }
-
-        .group-card .group-info {
-            color: var(--text-muted);
-            font-size: 0.6rem;
-            display: flex;
-            gap: 12px;
-            margin-top: 4px;
-        }
-
-        .group-card .group-info span {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .group-card .join-btn {
-            padding: 4px 16px;
-            border-radius: 30px;
-            border: none;
-            font-weight: 600;
-            font-size: 0.6rem;
-            cursor: pointer;
-            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
-            color: #0a121c;
-            margin-top: 6px;
-        }
-
-        .group-card .join-btn:active {
-            transform: scale(0.95);
-        }
-
-        .group-card .join-btn.joined {
-            background: rgba(74, 224, 154, 0.2);
-            color: var(--green);
-        }
-
-        /* Withdraw */
-        .withdraw-card {
-            background: rgba(8, 22, 34, 0.6);
-            backdrop-filter: blur(4px);
-            border-radius: 28px;
-            padding: 12px 12px 16px;
-            border: 1px solid var(--primary);
-        }
-
-        .withdraw-card .title {
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 0.75rem;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .country-badge {
-            background: #0d1b28;
-            border-radius: 40px;
-            padding: 2px 10px;
-            font-size: 0.5rem;
-            color: var(--primary);
-            border: 1px solid var(--primary);
-            display: inline-flex;
-            align-items: center;
-            gap: 3px;
-        }
-
-        .form-group {
-            margin-bottom: 8px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.55rem;
-            color: var(--text-muted);
-            margin-bottom: 3px;
-            letter-spacing: 0.04em;
-        }
-
-        .form-group select,
-        .form-group input {
-            width: 100%;
-            padding: 8px 12px;
-            background: #0d1b28;
-            border: 1px solid var(--border-color);
-            border-radius: 40px;
-            color: var(--text-light);
-            font-size: 0.75rem;
-            outline: none;
-            transition: 0.15s;
-        }
-
-        .form-group select:focus,
-        .form-group input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 12px var(--shadow-color);
-        }
-
-        .form-group select option {
-            background: #0d1b28;
-        }
-
-        .form-group .phone-prefix {
-            display: flex;
-            align-items: center;
-            background: #0d1b28;
-            border: 1px solid var(--border-color);
-            border-radius: 40px;
-            overflow: hidden;
-        }
-
-        .form-group .phone-prefix span {
-            padding: 8px 12px;
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 0.75rem;
-            background: #0a1620;
-            border-right: 1px solid var(--border-color);
-            white-space: nowrap;
-        }
-
-        .form-group .phone-prefix input {
-            border: none;
-            border-radius: 0 40px 40px 0;
-            padding-left: 6px;
-        }
-
-        .country-selector {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-        }
-
-        .country-selector .flag {
-            font-size: 1.3rem;
-        }
-
-        .country-selector select {
-            flex: 1;
-            background: #0d1b28;
-            border: 1px solid var(--border-color);
-            border-radius: 30px;
-            padding: 6px 10px;
-            color: var(--text-light);
-            font-size: 0.7rem;
-            outline: none;
-        }
-
-        .btn-withdraw {
-            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
-            border: 1px solid var(--primary);
-            color: #0a121c;
-            margin-top: 4px;
-            text-shadow: none;
-        }
-
-        .btn-withdraw:active {
-            background: var(--primary-dark);
-        }
-
-        .fee-info {
-            font-size: 0.5rem;
-            color: var(--text-muted);
-            text-align: center;
-            margin-top: 6px;
-            padding: 6px;
-            background: rgba(0, 20, 35, 0.3);
-            border-radius: 30px;
-        }
-
-        .fee-info .highlight {
-            color: var(--primary);
-        }
-
-        .min-withdraw-notice {
-            background: rgba(var(--primary), 0.08);
-            border: 1px solid var(--primary);
-            border-radius: 30px;
-            padding: 4px 10px;
-            text-align: center;
-            color: var(--primary);
-            font-size: 0.55rem;
-            margin-top: 4px;
-        }
-
-        /* Profile */
-        .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(8, 20, 32, 0.5);
-            border-radius: 28px;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 10px;
-        }
-
-        .profile-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            color: #0a121c;
-            font-weight: 700;
-            flex-shrink: 0;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-        }
-
-        .profile-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .profile-avatar .camera-icon {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            background: var(--primary);
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.6rem;
-            color: #0a121c;
-            border: 2px solid #0a121c;
-        }
-
-        .profile-info {
-            flex: 1;
-        }
-
-        .profile-info .name {
-            color: var(--text-light);
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
-
-        .profile-info .name:hover {
-            color: var(--primary);
-        }
-
-        .profile-info .level {
-            color: var(--text-muted);
-            font-size: 0.6rem;
-        }
-
-        .profile-info .level span {
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        .profile-info .edit-hint {
-            color: var(--text-muted);
-            font-size: 0.5rem;
-            opacity: 0.6;
-        }
-
-        /* Name Edit Modal */
-        .name-edit-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.8);
-            z-index: 999;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .name-edit-modal.show {
-            display: flex;
-        }
-
-        .name-edit-modal .modal-content {
-            background: #0d1b28;
-            border-radius: 32px;
-            padding: 24px;
-            max-width: 340px;
-            width: 100%;
-            border: 1px solid var(--border-color);
-        }
-
-        .name-edit-modal .modal-title {
-            color: var(--text-light);
-            font-weight: 700;
-            font-size: 1rem;
-            margin-bottom: 12px;
-            text-align: center;
-        }
-
-        .name-edit-modal input {
-            width: 100%;
-            padding: 12px 16px;
-            background: #0a1620;
-            border: 1px solid var(--border-color);
-            border-radius: 40px;
-            color: var(--text-light);
-            font-size: 0.9rem;
-            outline: none;
-            margin-bottom: 12px;
-        }
-
-        .name-edit-modal input:focus {
-            border-color: var(--primary);
-        }
-
-        .name-edit-modal .modal-buttons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .name-edit-modal .modal-buttons button {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 40px;
-            font-weight: 700;
-            font-size: 0.8rem;
-            cursor: pointer;
-        }
-
-        .name-edit-modal .modal-buttons .save-btn {
-            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
-            color: #0a121c;
-        }
-
-        .name-edit-modal .modal-buttons .cancel-btn {
-            background: #1d2f3f;
-            color: var(--text-light);
-        }
-
-        .name-edit-modal .modal-buttons button:active {
-            transform: scale(0.95);
-        }
-
-        .settings-group {
-            background: rgba(8, 20, 32, 0.3);
-            border-radius: 24px;
-            padding: 10px 12px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 8px;
-        }
-
-        .settings-group .title {
-            color: var(--text-muted);
-            font-size: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 4px;
-        }
-
-        .settings-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 4px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .settings-row:last-child {
-            border-bottom: none;
-        }
-
-        .settings-row label {
-            color: var(--text-light);
-            font-size: 0.7rem;
-        }
-
-        .settings-row select,
-        .settings-row input[type="color"] {
-            background: #0d1b28;
-            border: 1px solid var(--border-color);
-            border-radius: 30px;
-            padding: 4px 10px;
-            color: var(--text-light);
-            font-size: 0.65rem;
-            outline: none;
-            cursor: pointer;
-        }
-
-        .settings-row input[type="color"] {
-            width: 32px;
-            height: 32px;
-            padding: 2px;
-            border-radius: 50%;
-            border: 2px solid var(--border-color);
-        }
-
-        .settings-row select option {
-            background: #0d1b28;
-        }
-
-        .theme-row {
-            display: flex;
-            gap: 4px;
-            flex-wrap: wrap;
-            padding-top: 4px;
-        }
-
-        .theme-btn {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            border: 2px solid #fff;
-            cursor: pointer;
-        }
-
-        .theme-btn:active {
-            transform: scale(0.9);
-        }
-
-        /* Friends */
-        .friends-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .friends-header h3 {
-            color: var(--text-light);
-            font-size: 0.8rem;
-        }
-
-        .friends-header .add-btn {
-            padding: 4px 14px;
-            border-radius: 30px;
-            border: none;
-            font-weight: 600;
-            font-size: 0.6rem;
-            cursor: pointer;
-            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
-            color: #0a121c;
-        }
-
-        .friends-header .add-btn:active {
-            transform: scale(0.95);
-        }
-
-        .friend-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(8, 20, 32, 0.3);
-            border-radius: 40px;
-            padding: 8px 12px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 6px;
-        }
-
-        .friend-item .avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            color: #0a121c;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        .friend-item .info {
-            flex: 1;
-        }
-
-        .friend-item .info .name {
-            color: var(--text-light);
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .friend-item .info .status {
-            color: var(--text-muted);
-            font-size: 0.5rem;
-        }
-
-        .friend-item .online-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--green);
-        }
-
-        .friend-item .offline-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--text-muted);
-        }
-
-        /* AI Chat */
-        .ai-chat {
-            background: rgba(8, 20, 32, 0.5);
-            border-radius: 28px;
-            border: 1px solid var(--primary);
-            overflow: hidden;
-            margin-top: 4px;
-        }
-
-        .ai-chat-header {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 6px 12px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .ai-chat-header .icon {
-            font-size: 1rem;
-        }
-
-        .ai-chat-header .title {
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 0.7rem;
-        }
-
-        .ai-chat-header .status {
-            margin-left: auto;
-            font-size: 0.45rem;
-            color: var(--green);
-        }
-
-        .ai-messages {
-            padding: 8px 12px;
-            max-height: 130px;
-            overflow-y: auto;
-            min-height: 70px;
-        }
-
-        .ai-message {
-            margin-bottom: 4px;
-            padding: 5px 10px;
-            border-radius: 16px;
-            font-size: 0.7rem;
-            max-width: 85%;
-            word-wrap: break-word;
-        }
-
-        .ai-message.bot {
-            background: rgba(247, 224, 94, 0.1);
-            border: 1px solid rgba(247, 224, 94, 0.2);
-            color: var(--text-light);
-            margin-right: auto;
-        }
-
-        .ai-message.user {
-            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
-            color: #0a121c;
-            margin-left: auto;
-        }
-
-        .ai-input {
-            display: flex;
-            gap: 4px;
-            padding: 4px 10px 8px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .ai-input input {
-            flex: 1;
-            padding: 6px 12px;
-            background: #0d1b28;
-            border: 1px solid var(--border-color);
-            border-radius: 40px;
-            color: var(--text-light);
-            font-size: 0.7rem;
-            outline: none;
-        }
-
-        .ai-input input:focus {
-            border-color: var(--primary);
-        }
-
-        .ai-input button {
-            padding: 6px 14px;
-            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
-            border: none;
-            border-radius: 40px;
-            color: #0a121c;
-            font-weight: 700;
-            font-size: 0.65rem;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        .ai-input button:active {
-            transform: scale(0.95);
-        }
-
-        /* Invite */
-        .invite-header h2 {
-            color: var(--primary);
-            font-size: 0.95rem;
-            text-align: center;
-            margin-bottom: 8px;
-        }
-
-        .invite-stats {
-            display: flex;
-            justify-content: space-around;
-            background: rgba(8, 20, 32, 0.5);
-            border-radius: 28px;
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 10px;
-        }
-
-        .invite-stat .num {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .invite-stat .lbl {
-            font-size: 0.5rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-
-        .invite-code-box {
-            background: #0d1b28;
-            border: 2px dashed var(--primary);
-            border-radius: 40px;
-            padding: 10px;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .invite-code {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--primary);
-            letter-spacing: 4px;
-            font-family: 'Courier New', monospace;
-            word-break: break-all;
-        }
-
-        .invite-code-label {
-            font-size: 0.5rem;
-            color: var(--text-muted);
-            margin-bottom: 2px;
-        }
-
-        .invite-link-box {
-            display: flex;
-            gap: 4px;
-            background: #0a1620;
-            border-radius: 40px;
-            padding: 4px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 8px;
-        }
-
-        .invite-link-box input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            padding: 6px 10px;
-            color: var(--text-light);
-            font-size: 0.6rem;
-            outline: none;
-            min-width: 0;
-        }
-
-        .invite-link-box button {
-            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
-            border: none;
-            border-radius: 40px;
-            padding: 6px 12px;
-            color: #0a121c;
-            font-weight: 700;
-            font-size: 0.65rem;
-            cursor: pointer;
-            transition: 0.15s;
-            white-space: nowrap;
-        }
-
-        .invite-link-box button:active {
-            transform: scale(0.95);
-        }
-
-        .invite-rewards {
-            background: rgba(0, 20, 35, 0.3);
-            border-radius: 28px;
-            padding: 10px 12px;
-            border: 1px solid var(--primary);
-        }
-
-        .invite-rewards .title {
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 0.7rem;
-            margin-bottom: 4px;
-        }
-
-        .reward-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 3px 0;
-            border-bottom: 1px solid #1a2f40;
-            color: var(--text-muted);
-            font-size: 0.65rem;
-        }
-
-        .reward-item:last-child {
-            border-bottom: none;
-        }
-
-        .reward-item .highlight {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .toast-message {
-            background: #1f2c3a;
-            border-left: 5px solid var(--primary);
-            color: var(--text-light);
-            padding: 8px 14px;
-            border-radius: 40px;
-            font-weight: 500;
-            margin: 6px 0 4px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
-            border: 1px solid var(--border-color);
-            text-align: center;
-            font-size: 0.7rem;
-        }
-
-        .toast-success {
-            border-left-color: #4ae09a;
-        }
+        .social-item .info { flex: 1; }
+        .social-item .info .name { color: var(--text-light); font-weight: 600; font-size: 0.75rem; }
+        .social-item .info .username { color: var(--text-muted); font-size: 0.55rem; }
+        .social-item .connect-btn { padding: 4px 12px; border-radius: 30px; border: none; font-weight: 600; font-size: 0.6rem; cursor: pointer; background: linear-gradient(145deg, var(--primary), var(--primary-dark)); color: #0a121c; transition: 0.15s; }
+        .social-item .connect-btn:active { transform: scale(0.95); }
+        .social-item .connect-btn.connected-btn { background: rgba(74, 224, 154, 0.2); color: var(--green); }
+
+        .social-rewards { background: rgba(8, 20, 32, 0.3); border-radius: 28px; padding: 12px 14px; border: 1px solid var(--border-color); margin-bottom: 10px; }
+        .social-rewards .title { color: var(--primary); font-weight: 700; font-size: 0.7rem; margin-bottom: 6px; }
+        .reward-row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-muted); font-size: 0.65rem; }
+        .reward-row:last-child { border-bottom: none; }
+        .reward-row .highlight { color: var(--primary); font-weight: 600; }
+        .reward-progress { width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-top: 4px; overflow: hidden; }
+        .reward-progress .fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--primary-dark)); border-radius: 10px; transition: width 0.5s ease; }
+
+        .groups-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .groups-header h3 { color: var(--text-light); font-size: 0.8rem; }
+        .groups-header .create-btn { padding: 4px 14px; border-radius: 30px; border: none; font-weight: 600; font-size: 0.6rem; cursor: pointer; background: linear-gradient(145deg, var(--primary), var(--primary-dark)); color: #0a121c; }
+        .groups-header .create-btn:active { transform: scale(0.95); }
+
+        .group-card { background: rgba(8, 20, 32, 0.3); border-radius: 28px; padding: 12px 14px; border: 1px solid var(--border-color); margin-bottom: 8px; }
+        .group-card .group-name { color: var(--text-light); font-weight: 700; font-size: 0.8rem; }
+        .group-card .group-info { color: var(--text-muted); font-size: 0.6rem; display: flex; gap: 12px; margin-top: 4px; }
+        .group-card .group-info span { display: flex; align-items: center; gap: 4px; }
+        .group-card .join-btn { padding: 4px 16px; border-radius: 30px; border: none; font-weight: 600; font-size: 0.6rem; cursor: pointer; background: linear-gradient(145deg, var(--primary), var(--primary-dark)); color: #0a121c; margin-top: 6px; }
+        .group-card .join-btn:active { transform: scale(0.95); }
+        .group-card .join-btn.joined { background: rgba(74, 224, 154, 0.2); color: var(--green); }
+
+        .withdraw-card { background: rgba(8, 22, 34, 0.6); backdrop-filter: blur(4px); border-radius: 28px; padding: 12px 12px 16px; border: 1px solid var(--primary); }
+        .withdraw-card .title { color: var(--primary); font-weight: 600; font-size: 0.75rem; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+        .country-badge { background: #0d1b28; border-radius: 40px; padding: 2px 10px; font-size: 0.5rem; color: var(--primary); border: 1px solid var(--primary); display: inline-flex; align-items: center; gap: 3px; }
+
+        .form-group { margin-bottom: 8px; }
+        .form-group label { display: block; font-size: 0.55rem; color: var(--text-muted); margin-bottom: 3px; letter-spacing: 0.04em; }
+        .form-group select, .form-group input { width: 100%; padding: 8px 12px; background: #0d1b28; border: 1px solid var(--border-color); border-radius: 40px; color: var(--text-light); font-size: 0.75rem; outline: none; transition: 0.15s; }
+        .form-group select:focus, .form-group input:focus { border-color: var(--primary); box-shadow: 0 0 12px var(--shadow-color); }
+        .form-group select option { background: #0d1b28; }
+        .form-group .phone-prefix { display: flex; align-items: center; background: #0d1b28; border: 1px solid var(--border-color); border-radius: 40px; overflow: hidden; }
+        .form-group .phone-prefix span { padding: 8px 12px; color: var(--primary); font-weight: 600; font-size: 0.75rem; background: #0a1620; border-right: 1px solid var(--border-color); white-space: nowrap; }
+        .form-group .phone-prefix input { border: none; border-radius: 0 40px 40px 0; padding-left: 6px; }
+
+        .country-selector { display: flex; gap: 6px; align-items: center; }
+        .country-selector .flag { font-size: 1.3rem; }
+        .country-selector select { flex: 1; background: #0d1b28; border: 1px solid var(--border-color); border-radius: 30px; padding: 6px 10px; color: var(--text-light); font-size: 0.7rem; outline: none; }
+
+        .btn-withdraw { background: linear-gradient(145deg, var(--primary), var(--primary-dark)); border: 1px solid var(--primary); color: #0a121c; margin-top: 4px; text-shadow: none; }
+        .btn-withdraw:active { background: var(--primary-dark); }
+
+        .fee-info { font-size: 0.5rem; color: var(--text-muted); text-align: center; margin-top: 6px; padding: 6px; background: rgba(0, 20, 35, 0.3); border-radius: 30px; }
+        .fee-info .highlight { color: var(--primary); }
+        .min-withdraw-notice { background: rgba(var(--primary), 0.08); border: 1px solid var(--primary); border-radius: 30px; padding: 4px 10px; text-align: center; color: var(--primary); font-size: 0.55rem; margin-top: 4px; }
+
+        .profile-header { display: flex; align-items: center; gap: 12px; background: rgba(8, 20, 32, 0.5); border-radius: 28px; padding: 12px; border: 1px solid var(--border-color); margin-bottom: 10px; }
+        .profile-avatar { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: #0a121c; font-weight: 700; flex-shrink: 0; overflow: hidden; position: relative; cursor: pointer; }
+        .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .profile-avatar .camera-icon { position: absolute; bottom: 0; right: 0; background: var(--primary); border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; color: #0a121c; border: 2px solid #0a121c; }
+        .profile-info { flex: 1; }
+        .profile-info .name { color: var(--text-light); font-weight: 700; font-size: 0.9rem; cursor: pointer; }
+        .profile-info .name:hover { color: var(--primary); }
+        .profile-info .level { color: var(--text-muted); font-size: 0.6rem; }
+        .profile-info .level span { color: var(--primary); font-weight: 700; }
+        .profile-info .edit-hint { color: var(--text-muted); font-size: 0.5rem; opacity: 0.6; }
+
+        .settings-group { background: rgba(8, 20, 32, 0.3); border-radius: 24px; padding: 10px 12px; border: 1px solid var(--border-color); margin-bottom: 8px; }
+        .settings-group .title { color: var(--text-muted); font-size: 0.5rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+        .settings-row { display: flex; align-items: center; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .settings-row:last-child { border-bottom: none; }
+        .settings-row label { color: var(--text-light); font-size: 0.7rem; }
+        .settings-row select, .settings-row input[type="color"] { background: #0d1b28; border: 1px solid var(--border-color); border-radius: 30px; padding: 4px 10px; color: var(--text-light); font-size: 0.65rem; outline: none; cursor: pointer; }
+        .settings-row input[type="color"] { width: 32px; height: 32px; padding: 2px; border-radius: 50%; border: 2px solid var(--border-color); }
+        .settings-row select option { background: #0d1b28; }
+
+        .theme-row { display: flex; gap: 4px; flex-wrap: wrap; padding-top: 4px; }
+        .theme-btn { width: 28px; height: 28px; border-radius: 50%; border: 2px solid #fff; cursor: pointer; }
+        .theme-btn:active { transform: scale(0.9); }
+
+        .name-edit-modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 999; align-items: center; justify-content: center; padding: 20px; }
+        .name-edit-modal.show { display: flex; }
+        .name-edit-modal .modal-content { background: #0d1b28; border-radius: 32px; padding: 24px; max-width: 340px; width: 100%; border: 1px solid var(--border-color); }
+        .name-edit-modal .modal-title { color: var(--text-light); font-weight: 700; font-size: 1rem; margin-bottom: 12px; text-align: center; }
+        .name-edit-modal input { width: 100%; padding: 12px 16px; background: #0a1620; border: 1px solid var(--border-color); border-radius: 40px; color: var(--text-light); font-size: 0.9rem; outline: none; margin-bottom: 12px; }
+        .name-edit-modal input:focus { border-color: var(--primary); }
+        .name-edit-modal .modal-buttons { display: flex; gap: 8px; }
+        .name-edit-modal .modal-buttons button { flex: 1; padding: 10px; border: none; border-radius: 40px; font-weight: 700; font-size: 0.8rem; cursor: pointer; }
+        .name-edit-modal .modal-buttons .save-btn { background: linear-gradient(145deg, var(--primary), var(--primary-dark)); color: #0a121c; }
+        .name-edit-modal .modal-buttons .cancel-btn { background: #1d2f3f; color: var(--text-light); }
+        .name-edit-modal .modal-buttons button:active { transform: scale(0.95); }
+
+        .friends-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .friends-header h3 { color: var(--text-light); font-size: 0.8rem; }
+        .friends-header .add-btn { padding: 4px 14px; border-radius: 30px; border: none; font-weight: 600; font-size: 0.6rem; cursor: pointer; background: linear-gradient(145deg, var(--primary), var(--primary-dark)); color: #0a121c; }
+        .friends-header .add-btn:active { transform: scale(0.95); }
+
+        .friend-item { display: flex; align-items: center; gap: 10px; background: rgba(8, 20, 32, 0.3); border-radius: 40px; padding: 8px 12px; border: 1px solid var(--border-color); margin-bottom: 6px; }
+        .friend-item .avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #0a121c; font-weight: 700; flex-shrink: 0; }
+        .friend-item .info { flex: 1; }
+        .friend-item .info .name { color: var(--text-light); font-size: 0.75rem; font-weight: 600; }
+        .friend-item .info .status { color: var(--text-muted); font-size: 0.5rem; }
+        .friend-item .online-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+        .friend-item .offline-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-muted); }
+
+        .ai-chat { background: rgba(8, 20, 32, 0.5); border-radius: 28px; border: 1px solid var(--primary); overflow: hidden; margin-top: 4px; }
+        .ai-chat-header { background: rgba(0, 0, 0, 0.3); padding: 6px 12px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid var(--border-color); }
+        .ai-chat-header .icon { font-size: 1rem; }
+        .ai-chat-header .title { color: var(--primary); font-weight: 700; font-size: 0.7rem; }
+        .ai-chat-header .status { margin-left: auto; font-size: 0.45rem; color: var(--green); }
+        .ai-messages { padding: 8px 12px; max-height: 130px; overflow-y: auto; min-height: 70px; }
+        .ai-message { margin-bottom: 4px; padding: 5px 10px; border-radius: 16px; font-size: 0.7rem; max-width: 85%; word-wrap: break-word; }
+        .ai-message.bot { background: rgba(247, 224, 94, 0.1); border: 1px solid rgba(247, 224, 94, 0.2); color: var(--text-light); margin-right: auto; }
+        .ai-message.user { background: linear-gradient(145deg, var(--primary), var(--primary-dark)); color: #0a121c; margin-left: auto; }
+        .ai-input { display: flex; gap: 4px; padding: 4px 10px 8px; border-top: 1px solid var(--border-color); }
+        .ai-input input { flex: 1; padding: 6px 12px; background: #0d1b28; border: 1px solid var(--border-color); border-radius: 40px; color: var(--text-light); font-size: 0.7rem; outline: none; }
+        .ai-input input:focus { border-color: var(--primary); }
+        .ai-input button { padding: 6px 14px; background: linear-gradient(145deg, var(--primary), var(--primary-dark)); border: none; border-radius: 40px; color: #0a121c; font-weight: 700; font-size: 0.65rem; cursor: pointer; white-space: nowrap; }
+        .ai-input button:active { transform: scale(0.95); }
+
+        .invite-header h2 { color: var(--primary); font-size: 0.95rem; text-align: center; margin-bottom: 8px; }
+        .invite-stats { display: flex; justify-content: space-around; background: rgba(8, 20, 32, 0.5); border-radius: 28px; padding: 10px; border: 1px solid var(--border-color); margin-bottom: 10px; }
+        .invite-stat .num { font-size: 1.3rem; font-weight: 700; color: var(--primary); }
+        .invite-stat .lbl { font-size: 0.5rem; color: var(--text-muted); text-transform: uppercase; }
+        .invite-code-box { background: #0d1b28; border: 2px dashed var(--primary); border-radius: 40px; padding: 10px; text-align: center; margin-bottom: 10px; }
+        .invite-code { font-size: 1.3rem; font-weight: 800; color: var(--primary); letter-spacing: 4px; font-family: 'Courier New', monospace; word-break: break-all; }
+        .invite-code-label { font-size: 0.5rem; color: var(--text-muted); margin-bottom: 2px; }
+        .invite-link-box { display: flex; gap: 4px; background: #0a1620; border-radius: 40px; padding: 4px; border: 1px solid var(--border-color); margin-bottom: 8px; }
+        .invite-link-box input { flex: 1; background: transparent; border: none; padding: 6px 10px; color: var(--text-light); font-size: 0.6rem; outline: none; min-width: 0; }
+        .invite-link-box button { background: linear-gradient(145deg, var(--primary), var(--primary-dark)); border: none; border-radius: 40px; padding: 6px 12px; color: #0a121c; font-weight: 700; font-size: 0.65rem; cursor: pointer; transition: 0.15s; white-space: nowrap; }
+        .invite-link-box button:active { transform: scale(0.95); }
+        .invite-rewards { background: rgba(0, 20, 35, 0.3); border-radius: 28px; padding: 10px 12px; border: 1px solid var(--primary); }
+        .invite-rewards .title { color: var(--primary); font-weight: 600; font-size: 0.7rem; margin-bottom: 4px; }
+        .reward-item { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px solid #1a2f40; color: var(--text-muted); font-size: 0.65rem; }
+        .reward-item:last-child { border-bottom: none; }
+        .reward-item .highlight { color: var(--primary); font-weight: 600; }
+
+        .toast-message { background: #1f2c3a; border-left: 5px solid var(--primary); color: var(--text-light); padding: 8px 14px; border-radius: 40px; font-weight: 500; margin: 6px 0 4px; box-shadow: 0 8px 24px rgba(0,0,0,0.6); border: 1px solid var(--border-color); text-align: center; font-size: 0.7rem; }
+        .toast-success { border-left-color: #4ae09a; }
 
         @media (max-width: 420px) {
             .app-container { padding: 12px 8px 16px; }
@@ -1630,18 +433,14 @@
         <button class="nav-tab" data-screen="ai" id="navAi">🤖</button>
     </div>
 
-    <!-- ========== HOME ========== -->
+    <!-- HOME SCREEN -->
     <div class="screen active" id="screen-home">
         <div class="miner-visual">
             <div class="bnb-logo">🟡</div>
             <div class="fan-container">
                 <div class="fan-ring"></div>
                 <div class="fan-blades" id="fanBlades">
-                    <div class="blade"></div>
-                    <div class="blade"></div>
-                    <div class="blade"></div>
-                    <div class="blade"></div>
-                    <div class="blade"></div>
+                    <div class="blade"></div><div class="blade"></div><div class="blade"></div><div class="blade"></div><div class="blade"></div>
                 </div>
                 <div class="fan-center"></div>
             </div>
@@ -1685,24 +484,17 @@
         </div>
     </div>
 
-    <!-- ========== BOOST ========== -->
+    <!-- BOOST SCREEN -->
     <div class="screen" id="screen-boost">
         <div class="boost-header">
             <h2 id="boostTitle">⚡ CPU Mining Machine</h2>
         </div>
-
         <div class="cpu-machine level-1" id="cpuMachine">
-            <div class="machine-label" id="machineLabel">
-                Level <span class="level-badge" id="cpuLevelDisplay">1</span>
-            </div>
+            <div class="machine-label" id="machineLabel">Level <span class="level-badge" id="cpuLevelDisplay">1</span></div>
             <div class="cpu-visual">
                 <div class="cpu-chip">
                     <div class="cpu-fan" id="cpuFan">
-                        <div class="fan-blade"></div>
-                        <div class="fan-blade"></div>
-                        <div class="fan-blade"></div>
-                        <div class="fan-blade"></div>
-                        <div class="fan-blade"></div>
+                        <div class="fan-blade"></div><div class="fan-blade"></div><div class="fan-blade"></div><div class="fan-blade"></div><div class="fan-blade"></div>
                         <div class="fan-center"></div>
                     </div>
                     <div class="chip-inner">
@@ -1711,11 +503,7 @@
                     </div>
                 </div>
                 <div class="cpu-leds" id="cpuLeds">
-                    <div class="cpu-led active"></div>
-                    <div class="cpu-led"></div>
-                    <div class="cpu-led"></div>
-                    <div class="cpu-led"></div>
-                    <div class="cpu-led"></div>
+                    <div class="cpu-led active"></div><div class="cpu-led"></div><div class="cpu-led"></div><div class="cpu-led"></div><div class="cpu-led"></div>
                 </div>
                 <div class="cpu-info">
                     <div class="cpu-info-item">
@@ -1733,7 +521,6 @@
                 </div>
             </div>
         </div>
-
         <div style="margin-top: 8px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                 <span style="color:var(--text-light); font-size:0.7rem; font-weight:600;" id="upgradeLabel">⬆ Upgrade CPU</span>
@@ -1743,118 +530,43 @@
         </div>
     </div>
 
-    <!-- ========== SOCIAL ========== -->
+    <!-- SOCIAL SCREEN -->
     <div class="screen" id="screen-social">
         <div class="social-header">
             <h2 id="socialTitle">🌐 Connect Social</h2>
             <div class="earnings"><span id="socialEarnLabel">Earned</span>: <span id="socialEarnings">0.0000</span> BNB</div>
         </div>
         <div class="social-connect">
-            <div class="social-item">
-                <div class="icon tiktok">♬</div>
-                <div class="info">
-                    <div class="name">TikTok</div>
-                    <div class="username" id="tiktokUser">Not connected</div>
-                </div>
-                <button class="connect-btn" id="tiktokBtn"><span id="connectText">Connect</span></button>
-            </div>
-            <div class="social-item">
-                <div class="icon instagram">📷</div>
-                <div class="info">
-                    <div class="name">Instagram</div>
-                    <div class="username" id="instagramUser">Not connected</div>
-                </div>
-                <button class="connect-btn" id="instagramBtn"><span id="connectText2">Connect</span></button>
-            </div>
-            <div class="social-item">
-                <div class="icon facebook">f</div>
-                <div class="info">
-                    <div class="name">Facebook</div>
-                    <div class="username" id="facebookUser">Not connected</div>
-                </div>
-                <button class="connect-btn" id="facebookBtn"><span id="connectText3">Connect</span></button>
-            </div>
-            <div class="social-item">
-                <div class="icon youtube">▶</div>
-                <div class="info">
-                    <div class="name">YouTube</div>
-                    <div class="username" id="youtubeUser">Not connected</div>
-                </div>
-                <button class="connect-btn" id="youtubeBtn"><span id="connectText4">Connect</span></button>
-            </div>
-            <div class="social-item">
-                <div class="icon twitter">🐦</div>
-                <div class="info">
-                    <div class="name">Twitter/X</div>
-                    <div class="username" id="twitterUser">Not connected</div>
-                </div>
-                <button class="connect-btn" id="twitterBtn"><span id="connectText5">Connect</span></button>
-            </div>
-            <div class="social-item">
-                <div class="icon telegram">✈</div>
-                <div class="info">
-                    <div class="name">Telegram</div>
-                    <div class="username" id="telegramUser">Not connected</div>
-                </div>
-                <button class="connect-btn" id="telegramBtn"><span id="connectText6">Connect</span></button>
-            </div>
+            <div class="social-item"><div class="icon tiktok">♬</div><div class="info"><div class="name">TikTok</div><div class="username" id="tiktokUser">Not connected</div></div><button class="connect-btn" id="tiktokBtn"><span id="connectText">Connect</span></button></div>
+            <div class="social-item"><div class="icon instagram">📷</div><div class="info"><div class="name">Instagram</div><div class="username" id="instagramUser">Not connected</div></div><button class="connect-btn" id="instagramBtn"><span id="connectText2">Connect</span></button></div>
+            <div class="social-item"><div class="icon facebook">f</div><div class="info"><div class="name">Facebook</div><div class="username" id="facebookUser">Not connected</div></div><button class="connect-btn" id="facebookBtn"><span id="connectText3">Connect</span></button></div>
+            <div class="social-item"><div class="icon youtube">▶</div><div class="info"><div class="name">YouTube</div><div class="username" id="youtubeUser">Not connected</div></div><button class="connect-btn" id="youtubeBtn"><span id="connectText4">Connect</span></button></div>
+            <div class="social-item"><div class="icon twitter">🐦</div><div class="info"><div class="name">Twitter/X</div><div class="username" id="twitterUser">Not connected</div></div><button class="connect-btn" id="twitterBtn"><span id="connectText5">Connect</span></button></div>
+            <div class="social-item"><div class="icon telegram">✈</div><div class="info"><div class="name">Telegram</div><div class="username" id="telegramUser">Not connected</div></div><button class="connect-btn" id="telegramBtn"><span id="connectText6">Connect</span></button></div>
         </div>
         <div class="social-rewards">
             <div class="title" id="socialRewardTitle">🎁 Social Growth Rewards</div>
-            <div class="reward-row">
-                <span id="reward1">Connect 1 account</span>
-                <span class="highlight">+0.00000010 BNB/s</span>
-            </div>
-            <div class="reward-row">
-                <span id="reward2">Connect 3 accounts</span>
-                <span class="highlight">+0.00000030 BNB/s</span>
-            </div>
-            <div class="reward-row">
-                <span id="reward3">Connect all 6 accounts</span>
-                <span class="highlight">+0.00000100 BNB/s</span>
-            </div>
-            <div class="reward-progress">
-                <div class="fill" id="socialProgress" style="width:0%"></div>
-            </div>
+            <div class="reward-row"><span id="reward1">Connect 1 account</span><span class="highlight">+0.00000010 BNB/s</span></div>
+            <div class="reward-row"><span id="reward2">Connect 3 accounts</span><span class="highlight">+0.00000030 BNB/s</span></div>
+            <div class="reward-row"><span id="reward3">Connect all 6 accounts</span><span class="highlight">+0.00000100 BNB/s</span></div>
+            <div class="reward-progress"><div class="fill" id="socialProgress" style="width:0%"></div></div>
         </div>
         <div class="groups-header">
             <h3 id="groupsTitle">👥 Community Groups</h3>
             <button class="create-btn" id="createGroupBtn"><span id="createBtnText">+ Create</span></button>
         </div>
         <div id="groupsContainer">
-            <div class="group-card">
-                <div class="group-name">🌍 Global BNB Miners</div>
-                <div class="group-info">
-                    <span>👤 1,234 members</span>
-                    <span>⚡ +0.00000005 BNB/s</span>
-                </div>
-                <button class="join-btn"><span id="joinText">Join</span></button>
-            </div>
-            <div class="group-card">
-                <div class="group-name">🇹🇿 Tanzania Miners</div>
-                <div class="group-info">
-                    <span>👤 567 members</span>
-                    <span>⚡ +0.00000003 BNB/s</span>
-                </div>
-                <button class="join-btn"><span id="joinText2">Join</span></button>
-            </div>
+            <div class="group-card"><div class="group-name">🌍 Global BNB Miners</div><div class="group-info"><span>👤 1,234 members</span><span>⚡ +0.00000005 BNB/s</span></div><button class="join-btn"><span id="joinText">Join</span></button></div>
+            <div class="group-card"><div class="group-name">🇹🇿 Tanzania Miners</div><div class="group-info"><span>👤 567 members</span><span>⚡ +0.00000003 BNB/s</span></div><button class="join-btn"><span id="joinText2">Join</span></button></div>
         </div>
     </div>
 
-    <!-- ========== INVITE ========== -->
+    <!-- INVITE SCREEN -->
     <div class="screen" id="screen-invite">
-        <div class="invite-header">
-            <h2 id="inviteTitle">👥 Invite & Earn</h2>
-        </div>
+        <div class="invite-header"><h2 id="inviteTitle">👥 Invite & Earn</h2></div>
         <div class="invite-stats">
-            <div class="invite-stat">
-                <div class="num" id="inviteCount">0</div>
-                <div class="lbl" id="inviteTotalLabel">Total Invites</div>
-            </div>
-            <div class="invite-stat">
-                <div class="num" id="inviteBonus" style="color:#5ce0a0;">+0.00000000</div>
-                <div class="lbl" id="inviteBonusLabel">Bonus Speed</div>
-            </div>
+            <div class="invite-stat"><div class="num" id="inviteCount">0</div><div class="lbl" id="inviteTotalLabel">Total Invites</div></div>
+            <div class="invite-stat"><div class="num" id="inviteBonus" style="color:#5ce0a0;">+0.00000000</div><div class="lbl" id="inviteBonusLabel">Bonus Speed</div></div>
         </div>
         <div class="invite-code-box">
             <div class="invite-code-label" id="inviteCodeLabel">YOUR REFERRAL CODE</div>
@@ -1866,24 +578,15 @@
         </div>
         <div class="invite-rewards">
             <div class="title" id="inviteRewardTitle">🎁 Referral Rewards</div>
-            <div class="reward-item">
-                <span id="inviteReward1">Per invite</span>
-                <span class="highlight">+0.00000010 BNB/s</span>
-            </div>
-            <div class="reward-item">
-                <span id="inviteReward2">Speed bonus active</span>
-                <span class="highlight" id="inviteRewardActive">+0.00000000 BNB/s</span>
-            </div>
+            <div class="reward-item"><span id="inviteReward1">Per invite</span><span class="highlight">+0.00000010 BNB/s</span></div>
+            <div class="reward-item"><span id="inviteReward2">Speed bonus active</span><span class="highlight" id="inviteRewardActive">+0.00000000 BNB/s</span></div>
         </div>
     </div>
 
-    <!-- ========== WITHDRAW ========== -->
+    <!-- WITHDRAW SCREEN -->
     <div class="screen" id="screen-withdraw">
         <div class="withdraw-card">
-            <div class="title" id="withdrawTitle">
-                💸 Withdraw BNB
-                <span class="country-badge" id="countryBadge">🌍 Auto</span>
-            </div>
+            <div class="title" id="withdrawTitle">💸 Withdraw BNB <span class="country-badge" id="countryBadge">🌍 Auto</span></div>
             <div class="form-group">
                 <label id="countryLabel">🌍 Select Country</label>
                 <div class="country-selector">
@@ -1942,9 +645,7 @@
                 <label id="amountLabel">💰 Amount (BNB)</label>
                 <input type="number" id="withdrawAmount" placeholder="0.5" min="0.5" step="0.01">
             </div>
-            <div class="min-withdraw-notice" id="minNotice">
-                ⚠️ Minimum: <strong>0.5 BNB</strong>
-            </div>
+            <div class="min-withdraw-notice" id="minNotice">⚠️ Minimum: <strong>0.5 BNB</strong></div>
             <button class="btn btn-withdraw" id="withdrawBtn"><span id="submitBtnText">⚡ Submit</span></button>
             <div class="fee-info" id="feeInfo">
                 💼 <strong>10% Fee</strong> (5% Platform + 5% BNB Network)
@@ -1957,13 +658,10 @@
         </div>
     </div>
 
-    <!-- ========== PROFILE ========== -->
+    <!-- PROFILE SCREEN -->
     <div class="screen" id="screen-profile">
         <div class="profile-header">
-            <div class="profile-avatar" id="profileAvatar">
-                👤
-                <span class="camera-icon">📷</span>
-            </div>
+            <div class="profile-avatar" id="profileAvatar">👤<span class="camera-icon">📷</span></div>
             <div class="profile-info">
                 <div class="name" id="userName">BNB Miner</div>
                 <div class="level"><span id="levelLabel">Level</span>: <span id="userLevel">1</span> · <span id="xpLabel">XP</span>: <span id="userXP">0</span></div>
@@ -2013,26 +711,11 @@
 
         <div class="settings-group">
             <div class="title" id="statsTitle">📊 Stats</div>
-            <div class="settings-row">
-                <label id="statTotalMined">Total Mined</label>
-                <span id="profileMined" style="color:var(--primary);">0.00000000 BNB</span>
-            </div>
-            <div class="settings-row">
-                <label id="statMiningSpeed">Mining Speed</label>
-                <span id="profileSpeed" style="color:var(--primary);">0.00000010 BNB/s</span>
-            </div>
-            <div class="settings-row">
-                <label id="statInvites">Invites</label>
-                <span id="profileInvites" style="color:var(--primary);">0</span>
-            </div>
-            <div class="settings-row">
-                <label id="statBoost">Boost Level</label>
-                <span id="profileBoost" style="color:var(--primary);">0</span>
-            </div>
-            <div class="settings-row">
-                <label id="statSocial">Social Connected</label>
-                <span id="profileSocial" style="color:var(--primary);">0/6</span>
-            </div>
+            <div class="settings-row"><label id="statTotalMined">Total Mined</label><span id="profileMined" style="color:var(--primary);">0.00000000 BNB</span></div>
+            <div class="settings-row"><label id="statMiningSpeed">Mining Speed</label><span id="profileSpeed" style="color:var(--primary);">0.00000010 BNB/s</span></div>
+            <div class="settings-row"><label id="statInvites">Invites</label><span id="profileInvites" style="color:var(--primary);">0</span></div>
+            <div class="settings-row"><label id="statBoost">Boost Level</label><span id="profileBoost" style="color:var(--primary);">0</span></div>
+            <div class="settings-row"><label id="statSocial">Social Connected</label><span id="profileSocial" style="color:var(--primary);">0/6</span></div>
         </div>
 
         <div class="settings-group">
@@ -2042,27 +725,13 @@
                 <button class="add-btn" id="addFriendBtn"><span id="addFriendText">+ Add</span></button>
             </div>
             <div id="friendsList">
-                <div class="friend-item">
-                    <div class="avatar">👤</div>
-                    <div class="info">
-                        <div class="name">Alex B.</div>
-                        <div class="status">Online · Mining</div>
-                    </div>
-                    <span class="online-dot"></span>
-                </div>
-                <div class="friend-item">
-                    <div class="avatar">👤</div>
-                    <div class="info">
-                        <div class="name">Sarah K.</div>
-                        <div class="status">Last seen 2h ago</div>
-                    </div>
-                    <span class="offline-dot"></span>
-                </div>
+                <div class="friend-item"><div class="avatar">👤</div><div class="info"><div class="name">Alex B.</div><div class="status">Online · Mining</div></div><span class="online-dot"></span></div>
+                <div class="friend-item"><div class="avatar">👤</div><div class="info"><div class="name">Sarah K.</div><div class="status">Last seen 2h ago</div></div><span class="offline-dot"></span></div>
             </div>
         </div>
     </div>
 
-    <!-- ========== AI CHAT ========== -->
+    <!-- AI CHAT SCREEN -->
     <div class="screen" id="screen-ai">
         <div class="ai-chat">
             <div class="ai-chat-header">
@@ -2071,10 +740,7 @@
                 <span class="status" id="aiStatus">● Online</span>
             </div>
             <div class="ai-messages" id="aiMessages">
-                <div class="ai-message bot" id="aiWelcome">
-                    👋 Hello! I'm your DeepSeek AI assistant.<br>
-                    Ask me about BNB, CPU mining, or anything!
-                </div>
+                <div class="ai-message bot" id="aiWelcome">👋 Hello! I'm your DeepSeek AI assistant.<br>Ask me about BNB, CPU mining, or anything!</div>
             </div>
             <div class="ai-input">
                 <input type="text" id="aiInput" placeholder="Ask me anything...">
@@ -2092,8 +758,8 @@
     (function() {
         "use strict";
 
-        // ==================== TRANSLATIONS ====================
-        const translations = {
+        // ==================== COMPLETE TRANSLATIONS FOR ALL LANGUAGES ====================
+        const LANGUAGES = {
             en: {
                 appTitle: 'BNB CPU', appBadge: '⚡ PERSISTENT',
                 marketLabel: 'BNB / USD', volumeLabel: 'Vol:',
@@ -2139,6 +805,8 @@
                 friendsTitle: '👥 Friends', yourFriendsLabel: 'Your Friends', addFriendText: '+ Add',
                 aiTitle: 'DeepSeek AI', aiStatus: '● Online',
                 sendBtnText: 'Send',
+                modalTitle: '✏️ Edit Name', modalPlaceholder: 'Enter your name...',
+                modalCancel: 'Cancel', modalSave: 'Save',
                 toastMined: '⛏️ Mined {amount} BNB while you were away! ({seconds}s)',
                 toastStart: '⛏️ CPU Mining started!',
                 toastStop: '⏸️ Mining stopped!',
@@ -2157,12 +825,13 @@
                 toastGroupCreated: '✅ Group "{name}" created!',
                 toastPhoto: '📸 Profile photo updated!',
                 toastNameSaved: '✅ Name saved!',
-                toastLanguage: '🌍 {lang}',
+                toastLanguage: '🌍 Language changed to {lang}',
                 toastLocked: '🔒 Buy previous level first!',
                 toastOwned: '✅ You already have this level!',
                 toastOffline: '⛏️ Your mining continues even when offline!',
                 toastWelcome: '🖥️ Welcome! Start mining with your CPU!',
-                toastNameEdit: '✏️ Edit your name'
+                toastNameEdit: '✏️ Edit your name',
+                toastEnterName: 'Please enter a name'
             },
             sw: {
                 appTitle: 'BNB CPU', appBadge: '⚡ DAIMA',
@@ -2209,6 +878,8 @@
                 friendsTitle: '👥 Marafiki', yourFriendsLabel: 'Marafiki Zako', addFriendText: '+ Ongeza',
                 aiTitle: 'DeepSeek AI', aiStatus: '● Mtandaoni',
                 sendBtnText: 'Tuma',
+                modalTitle: '✏️ Badilisha Jina', modalPlaceholder: 'Weka jina lako...',
+                modalCancel: 'Ghairi', modalSave: 'Hifadhi',
                 toastMined: '⛏️ Umechimba {amount} BNB ulipokuwa mbali! ({seconds}s)',
                 toastStart: '⛏️ Uchimbaji wa CPU umeanza!',
                 toastStop: '⏸️ Uchimbaji umezimwa!',
@@ -2227,12 +898,232 @@
                 toastGroupCreated: '✅ Kikundi "{name}" kimeundwa!',
                 toastPhoto: '📸 Picha ya profaili imebadilishwa!',
                 toastNameSaved: '✅ Jina limehifadhiwa!',
-                toastLanguage: '🌍 {lang}',
+                toastLanguage: '🌍 Lugha imebadilishwa hadi {lang}',
                 toastLocked: '🔒 Nunua ngazi ya awali kwanza!',
                 toastOwned: '✅ Tayari unayo ngazi hii!',
                 toastOffline: '⛏️ Uchimbaji wako unaendelea hata offline!',
                 toastWelcome: '🖥️ Karibu! Anza kuchimba na CPU yako!',
-                toastNameEdit: '✏️ Badilisha jina lako'
+                toastNameEdit: '✏️ Badilisha jina lako',
+                toastEnterName: 'Tafadhali weka jina'
+            },
+            fr: {
+                appTitle: 'BNB CPU', appBadge: '⚡ PERSISTANT',
+                marketLabel: 'BNB / USD', volumeLabel: 'Vol:',
+                navHome: '🏠', navBoost: '⚡', navSocial: '🌐', navInvite: '👥', navWithdraw: '💸', navProfile: '⚙️', navAi: '🤖',
+                minerLabel: '⚡ MINEUR CPU BNB',
+                statSpeed: '⚡ Vitesse', statMined: '⏳ Extrait', statStatus: 'Statut',
+                balanceLabel: '💰 SOLDE BNB',
+                statusLabel: '⏸️ Arrêté', statusMining: '⛏️ Minage...',
+                startBtnText: 'COMMENCER MINAGE', stopBtnText: 'ARRÊTER MINAGE',
+                offlineText: '⛏️ Minage permanent · Même hors ligne',
+                boostTitle: '⚡ Machine CPU',
+                machineLabel: 'Niveau', cpuSpeedLabel: 'Vitesse', cpuPerSecLabel: 'BNB/s', cpuLevelLabel: 'Niveau',
+                upgradeLabel: '⬆ Améliorer CPU', levelsLabel: '10 Niveaux',
+                levelOwned: '✅ Possédé', levelBuy: '⬆ Acheter', levelLocked: '🔒 Verrouillé',
+                socialTitle: '🌐 Connecter Social', socialEarnLabel: 'Gagné',
+                connectText: 'Connecter', connectedText: '✅ Connecté',
+                socialRewardTitle: '🎁 Récompenses Sociales',
+                reward1: 'Connecter 1 compte', reward2: 'Connecter 3 comptes', reward3: 'Connecter 6 comptes',
+                groupsTitle: '👥 Groupes Communautaires', createBtnText: '+ Créer',
+                joinText: 'Rejoindre', joinedText: '✅ Rejoint',
+                inviteTitle: '👥 Inviter & Gagner',
+                inviteTotalLabel: 'Total Invitations', inviteBonusLabel: 'Bonus Vitesse',
+                inviteCodeLabel: 'VOTRE CODE DE PARRAINAGE',
+                copyBtnText: '📋 Copier',
+                inviteRewardTitle: '🎁 Récompenses de Parrainage',
+                inviteReward1: 'Par invitation', inviteReward2: 'Bonus vitesse actif',
+                withdrawTitle: '💸 Retirer BNB',
+                countryLabel: '🌍 Sélectionner Pays',
+                paymentLabel: '📱 Méthode de Paiement',
+                walletLabel: '📱 Téléphone / Adresse Wallet',
+                amountLabel: '💰 Montant (BNB)',
+                minNotice: '⚠️ Minimum: 0.5 BNB',
+                submitBtnText: '⚡ Soumettre',
+                feeInfo: '💼 Frais 10% (5% Plateforme + 5% Réseau BNB)',
+                feeYou: 'Vous: 5%', feeBNB: 'BNB: 5%',
+                availableLabel: 'Disponible',
+                levelLabel: 'Niveau', xpLabel: 'XP', editHint: '👆 Appuyez pour modifier',
+                langTitle: '🌍 Langue', langLabel: 'Choisir Langue',
+                themeTitle: '🎨 Thème', colorLabel: 'Choisir Couleur',
+                statsTitle: '📊 Statistiques',
+                statTotalMined: 'Total Extrait', statMiningSpeed: 'Vitesse Minage',
+                statInvites: 'Invitations', statBoost: 'Niveau Boost', statSocial: 'Connecté Social',
+                friendsTitle: '👥 Amis', yourFriendsLabel: 'Vos Amis', addFriendText: '+ Ajouter',
+                aiTitle: 'DeepSeek AI', aiStatus: '● En ligne',
+                sendBtnText: 'Envoyer',
+                modalTitle: '✏️ Modifier Nom', modalPlaceholder: 'Entrez votre nom...',
+                modalCancel: 'Annuler', modalSave: 'Enregistrer',
+                toastMined: '⛏️ Extrait {amount} BNB pendant votre absence! ({seconds}s)',
+                toastStart: '⛏️ Minage CPU démarré!',
+                toastStop: '⏸️ Minage arrêté!',
+                toastBoost: '🚀 Amélioré à {name}! Vitesse: {speed} BNB/s',
+                toastConnect: '🎉 Connecté {name}! +0.00000010 BNB bonus!',
+                toastGroup: '🎉 Rejoint {name}!',
+                toastFriend: '✅ {name} ajouté comme ami!',
+                toastInvite: '🎉 Invitation acceptée! +0.00000010 BNB/s!',
+                toast5Invites: '🎉 5 invitations! +0.5 BNB bonus!',
+                toastCopied: '📋 Copié!',
+                toastNeedBNB: '❌ Besoin de {price} BNB! Vous avez {balance} BNB',
+                toastMinWithdraw: '❌ Min 0.5 BNB.',
+                toastInsuff: '❌ Vous avez {balance} BNB.',
+                toastWithdraw: '✅ {amount} BNB → {method}\n📱 {wallet}\n💼 Frais: {fee} BNB',
+                toastAlreadyConnected: '✅ {name} déjà connecté!',
+                toastGroupCreated: '✅ Groupe "{name}" créé!',
+                toastPhoto: '📸 Photo de profil mise à jour!',
+                toastNameSaved: '✅ Nom enregistré!',
+                toastLanguage: '🌍 Langue changée en {lang}',
+                toastLocked: '🔒 Achetez le niveau précédent d\'abord!',
+                toastOwned: '✅ Vous avez déjà ce niveau!',
+                toastOffline: '⛏️ Votre minage continue même hors ligne!',
+                toastWelcome: '🖥️ Bienvenue! Commencez à miner avec votre CPU!',
+                toastNameEdit: '✏️ Modifier votre nom',
+                toastEnterName: 'Veuillez entrer un nom'
+            },
+            es: {
+                appTitle: 'BNB CPU', appBadge: '⚡ PERSISTENTE',
+                marketLabel: 'BNB / USD', volumeLabel: 'Vol:',
+                navHome: '🏠', navBoost: '⚡', navSocial: '🌐', navInvite: '👥', navWithdraw: '💸', navProfile: '⚙️', navAi: '🤖',
+                minerLabel: '⚡ MINERO CPU BNB',
+                statSpeed: '⚡ Velocidad', statMined: '⏳ Minado', statStatus: 'Estado',
+                balanceLabel: '💰 SALDO BNB',
+                statusLabel: '⏸️ Detenido', statusMining: '⛏️ Minando...',
+                startBtnText: 'INICIAR MINADO', stopBtnText: 'DETENER MINADO',
+                offlineText: '⛏️ Minando siempre · Incluso sin conexión',
+                boostTitle: '⚡ Máquina CPU',
+                machineLabel: 'Nivel', cpuSpeedLabel: 'Velocidad', cpuPerSecLabel: 'BNB/s', cpuLevelLabel: 'Nivel',
+                upgradeLabel: '⬆ Mejorar CPU', levelsLabel: '10 Niveles',
+                levelOwned: '✅ Poseído', levelBuy: '⬆ Comprar', levelLocked: '🔒 Bloqueado',
+                socialTitle: '🌐 Conectar Social', socialEarnLabel: 'Ganado',
+                connectText: 'Conectar', connectedText: '✅ Conectado',
+                socialRewardTitle: '🎁 Recompensas Sociales',
+                reward1: 'Conectar 1 cuenta', reward2: 'Conectar 3 cuentas', reward3: 'Conectar 6 cuentas',
+                groupsTitle: '👥 Grupos Comunitarios', createBtnText: '+ Crear',
+                joinText: 'Unirse', joinedText: '✅ Unido',
+                inviteTitle: '👥 Invitar & Ganar',
+                inviteTotalLabel: 'Total Invitados', inviteBonusLabel: 'Bonus Velocidad',
+                inviteCodeLabel: 'TU CÓDIGO DE REFERIDO',
+                copyBtnText: '📋 Copiar',
+                inviteRewardTitle: '🎁 Recompensas por Referidos',
+                inviteReward1: 'Por invitación', inviteReward2: 'Bonus velocidad activo',
+                withdrawTitle: '💸 Retirar BNB',
+                countryLabel: '🌍 Seleccionar País',
+                paymentLabel: '📱 Método de Pago',
+                walletLabel: '📱 Teléfono / Dirección Wallet',
+                amountLabel: '💰 Cantidad (BNB)',
+                minNotice: '⚠️ Mínimo: 0.5 BNB',
+                submitBtnText: '⚡ Enviar',
+                feeInfo: '💼 10% Comisión (5% Plataforma + 5% Red BNB)',
+                feeYou: 'Tú: 5%', feeBNB: 'BNB: 5%',
+                availableLabel: 'Disponible',
+                levelLabel: 'Nivel', xpLabel: 'XP', editHint: '👆 Toca para editar',
+                langTitle: '🌍 Idioma', langLabel: 'Seleccionar Idioma',
+                themeTitle: '🎨 Tema', colorLabel: 'Elegir Color',
+                statsTitle: '📊 Estadísticas',
+                statTotalMined: 'Total Minado', statMiningSpeed: 'Velocidad Minado',
+                statInvites: 'Invitados', statBoost: 'Nivel Boost', statSocial: 'Conectado Social',
+                friendsTitle: '👥 Amigos', yourFriendsLabel: 'Tus Amigos', addFriendText: '+ Agregar',
+                aiTitle: 'DeepSeek AI', aiStatus: '● En línea',
+                sendBtnText: 'Enviar',
+                modalTitle: '✏️ Editar Nombre', modalPlaceholder: 'Ingresa tu nombre...',
+                modalCancel: 'Cancelar', modalSave: 'Guardar',
+                toastMined: '⛏️ Minado {amount} BNB mientras estabas fuera! ({seconds}s)',
+                toastStart: '⛏️ Minado CPU iniciado!',
+                toastStop: '⏸️ Minado detenido!',
+                toastBoost: '🚀 Mejorado a {name}! Velocidad: {speed} BNB/s',
+                toastConnect: '🎉 Conectado {name}! +0.00000010 BNB bonus!',
+                toastGroup: '🎉 Unido a {name}!',
+                toastFriend: '✅ {name} agregado como amigo!',
+                toastInvite: '🎉 Invitación aceptada! +0.00000010 BNB/s!',
+                toast5Invites: '🎉 5 invitaciones! +0.5 BNB bonus!',
+                toastCopied: '📋 Copiado!',
+                toastNeedBNB: '❌ Necesitas {price} BNB! Tienes {balance} BNB',
+                toastMinWithdraw: '❌ Mínimo 0.5 BNB.',
+                toastInsuff: '❌ Tienes {balance} BNB.',
+                toastWithdraw: '✅ {amount} BNB → {method}\n📱 {wallet}\n💼 Comisión: {fee} BNB',
+                toastAlreadyConnected: '✅ {name} ya conectado!',
+                toastGroupCreated: '✅ Grupo "{name}" creado!',
+                toastPhoto: '📸 Foto de perfil actualizada!',
+                toastNameSaved: '✅ Nombre guardado!',
+                toastLanguage: '🌍 Idioma cambiado a {lang}',
+                toastLocked: '🔒 Compra el nivel anterior primero!',
+                toastOwned: '✅ Ya tienes este nivel!',
+                toastOffline: '⛏️ Tu minado continúa incluso sin conexión!',
+                toastWelcome: '🖥️ Bienvenido! Comienza a minar con tu CPU!',
+                toastNameEdit: '✏️ Edita tu nombre',
+                toastEnterName: 'Por favor ingresa un nombre'
+            },
+            pt: {
+                appTitle: 'BNB CPU', appBadge: '⚡ PERSISTENTE',
+                marketLabel: 'BNB / USD', volumeLabel: 'Vol:',
+                navHome: '🏠', navBoost: '⚡', navSocial: '🌐', navInvite: '👥', navWithdraw: '💸', navProfile: '⚙️', navAi: '🤖',
+                minerLabel: '⚡ MINERADOR CPU BNB',
+                statSpeed: '⚡ Velocidade', statMined: '⏳ Minerado', statStatus: 'Status',
+                balanceLabel: '💰 SALDO BNB',
+                statusLabel: '⏸️ Parado', statusMining: '⛏️ Minerando...',
+                startBtnText: 'INICIAR MINERAÇÃO', stopBtnText: 'PARAR MINERAÇÃO',
+                offlineText: '⛏️ Minerando sempre · Mesmo offline',
+                boostTitle: '⚡ Máquina CPU',
+                machineLabel: 'Nível', cpuSpeedLabel: 'Velocidade', cpuPerSecLabel: 'BNB/s', cpuLevelLabel: 'Nível',
+                upgradeLabel: '⬆ Melhorar CPU', levelsLabel: '10 Níveis',
+                levelOwned: '✅ Possuído', levelBuy: '⬆ Comprar', levelLocked: '🔒 Bloqueado',
+                socialTitle: '🌐 Conectar Social', socialEarnLabel: 'Ganho',
+                connectText: 'Conectar', connectedText: '✅ Conectado',
+                socialRewardTitle: '🎁 Recompensas Sociais',
+                reward1: 'Conectar 1 conta', reward2: 'Conectar 3 contas', reward3: 'Conectar 6 contas',
+                groupsTitle: '👥 Grupos Comunitários', createBtnText: '+ Criar',
+                joinText: 'Entrar', joinedText: '✅ Entrou',
+                inviteTitle: '👥 Convidar & Ganhar',
+                inviteTotalLabel: 'Total Convites', inviteBonusLabel: 'Bonus Velocidade',
+                inviteCodeLabel: 'SEU CÓDIGO DE REFERÊNCIA',
+                copyBtnText: '📋 Copiar',
+                inviteRewardTitle: '🎁 Recompensas de Indicação',
+                inviteReward1: 'Por convite', inviteReward2: 'Bonus velocidade ativo',
+                withdrawTitle: '💸 Sacar BNB',
+                countryLabel: '🌍 Selecionar País',
+                paymentLabel: '📱 Método de Pagamento',
+                walletLabel: '📱 Telefone / Endereço Wallet',
+                amountLabel: '💰 Quantia (BNB)',
+                minNotice: '⚠️ Mínimo: 0.5 BNB',
+                submitBtnText: '⚡ Enviar',
+                feeInfo: '💼 Taxa 10% (5% Plataforma + 5% Rede BNB)',
+                feeYou: 'Você: 5%', feeBNB: 'BNB: 5%',
+                availableLabel: 'Disponível',
+                levelLabel: 'Nível', xpLabel: 'XP', editHint: '👆 Toque para editar',
+                langTitle: '🌍 Idioma', langLabel: 'Selecionar Idioma',
+                themeTitle: '🎨 Tema', colorLabel: 'Escolher Cor',
+                statsTitle: '📊 Estatísticas',
+                statTotalMined: 'Total Minerado', statMiningSpeed: 'Velocidade Mineração',
+                statInvites: 'Convites', statBoost: 'Nível Boost', statSocial: 'Social Conectado',
+                friendsTitle: '👥 Amigos', yourFriendsLabel: 'Seus Amigos', addFriendText: '+ Adicionar',
+                aiTitle: 'DeepSeek AI', aiStatus: '● Online',
+                sendBtnText: 'Enviar',
+                modalTitle: '✏️ Editar Nome', modalPlaceholder: 'Digite seu nome...',
+                modalCancel: 'Cancelar', modalSave: 'Salvar',
+                toastMined: '⛏️ Minerado {amount} BNB enquanto você estava fora! ({seconds}s)',
+                toastStart: '⛏️ Mineração CPU iniciada!',
+                toastStop: '⏸️ Mineração parada!',
+                toastBoost: '🚀 Melhorado para {name}! Velocidade: {speed} BNB/s',
+                toastConnect: '🎉 Conectado {name}! +0.00000010 BNB bonus!',
+                toastGroup: '🎉 Entrou em {name}!',
+                toastFriend: '✅ {name} adicionado como amigo!',
+                toastInvite: '🎉 Convite aceito! +0.00000010 BNB/s!',
+                toast5Invites: '🎉 5 convites! +0.5 BNB bonus!',
+                toastCopied: '📋 Copiado!',
+                toastNeedBNB: '❌ Precisa de {price} BNB! Você tem {balance} BNB',
+                toastMinWithdraw: '❌ Mínimo 0.5 BNB.',
+                toastInsuff: '❌ Você tem {balance} BNB.',
+                toastWithdraw: '✅ {amount} BNB → {method}\n📱 {wallet}\n💼 Taxa: {fee} BNB',
+                toastAlreadyConnected: '✅ {name} já conectado!',
+                toastGroupCreated: '✅ Grupo "{name}" criado!',
+                toastPhoto: '📸 Foto de perfil atualizada!',
+                toastNameSaved: '✅ Nome salvo!',
+                toastLanguage: '🌍 Idioma alterado para {lang}',
+                toastLocked: '🔒 Compre o nível anterior primeiro!',
+                toastOwned: '✅ Você já tem este nível!',
+                toastOffline: '⛏️ Sua mineração continua mesmo offline!',
+                toastWelcome: '🖥️ Bem-vindo! Comece a minerar com sua CPU!',
+                toastNameEdit: '✏️ Edite seu nome',
+                toastEnterName: 'Por favor digite um nome'
             },
             zh: {
                 appTitle: 'BNB CPU', appBadge: '⚡ 持久',
@@ -2251,7 +1142,7 @@
                 socialTitle: '🌐 连接社交', socialEarnLabel: '已赚取',
                 connectText: '连接', connectedText: '✅ 已连接',
                 socialRewardTitle: '🎁 社交增长奖励',
-                reward1: '连接1个账户', reward2: '连接3个账户', reward3: '连接全部6个账户',
+                reward1: '连接 1 个账户', reward2: '连接 3 个账户', reward3: '连接全部 6 个账户',
                 groupsTitle: '👥 社区群组', createBtnText: '+ 创建',
                 joinText: '加入', joinedText: '✅ 已加入',
                 inviteTitle: '👥 邀请 & 赚取',
@@ -2263,7 +1154,7 @@
                 withdrawTitle: '💸 提取 BNB',
                 countryLabel: '🌍 选择国家',
                 paymentLabel: '📱 支付方式',
-                walletLabel: '📱 电话/钱包地址',
+                walletLabel: '📱 电话 / 钱包地址',
                 amountLabel: '💰 金额 (BNB)',
                 minNotice: '⚠️ 最低: 0.5 BNB',
                 submitBtnText: '⚡ 提交',
@@ -2279,6 +1170,8 @@
                 friendsTitle: '👥 朋友', yourFriendsLabel: '您的朋友', addFriendText: '+ 添加',
                 aiTitle: 'DeepSeek AI', aiStatus: '● 在线',
                 sendBtnText: '发送',
+                modalTitle: '✏️ 编辑名称', modalPlaceholder: '输入您的名字...',
+                modalCancel: '取消', modalSave: '保存',
                 toastMined: '⛏️ 您离开时挖了 {amount} BNB！({seconds}秒)',
                 toastStart: '⛏️ CPU 挖矿已启动！',
                 toastStop: '⏸️ 挖矿已停止！',
@@ -2297,12 +1190,451 @@
                 toastGroupCreated: '✅ 群组 "{name}" 已创建！',
                 toastPhoto: '📸 个人资料照片已更新！',
                 toastNameSaved: '✅ 名字已保存！',
-                toastLanguage: '🌍 {lang}',
+                toastLanguage: '🌍 语言已更改为 {lang}',
                 toastLocked: '🔒 请先购买上一级！',
                 toastOwned: '✅ 您已拥有此等级！',
                 toastOffline: '⛏️ 即使离线挖矿仍在继续！',
                 toastWelcome: '🖥️ 欢迎！开始使用您的 CPU 挖矿！',
-                toastNameEdit: '✏️ 编辑您的名字'
+                toastNameEdit: '✏️ 编辑您的名字',
+                toastEnterName: '请输入名字'
+            },
+            de: {
+                appTitle: 'BNB CPU', appBadge: '⚡ PERSISTENT',
+                marketLabel: 'BNB / USD', volumeLabel: 'Vol:',
+                navHome: '🏠', navBoost: '⚡', navSocial: '🌐', navInvite: '👥', navWithdraw: '💸', navProfile: '⚙️', navAi: '🤖',
+                minerLabel: '⚡ BNB CPU MINER',
+                statSpeed: '⚡ Geschwindigkeit', statMined: '⏳ Abgebaut', statStatus: 'Status',
+                balanceLabel: '💰 BNB GUTHABEN',
+                statusLabel: '⏸️ Gestoppt', statusMining: '⛏️ Schürft...',
+                startBtnText: 'SCHÜRFEN STARTEN', stopBtnText: 'SCHÜRFEN STOPPEN',
+                offlineText: '⛏️ Immer am schürfen · Auch offline',
+                boostTitle: '⚡ CPU Mining Maschine',
+                machineLabel: 'Level', cpuSpeedLabel: 'Geschwindigkeit', cpuPerSecLabel: 'BNB/s', cpuLevelLabel: 'Level',
+                upgradeLabel: '⬆ CPU Upgraden', levelsLabel: '10 Level',
+                levelOwned: '✅ Besessen', levelBuy: '⬆ Kaufen', levelLocked: '🔒 Gesperrt',
+                socialTitle: '🌐 Social Verbinden', socialEarnLabel: 'Verdient',
+                connectText: 'Verbinden', connectedText: '✅ Verbunden',
+                socialRewardTitle: '🎁 Soziale Belohnungen',
+                reward1: '1 Konto verbinden', reward2: '3 Konten verbinden', reward3: 'Alle 6 Konten verbinden',
+                groupsTitle: '👥 Community Gruppen', createBtnText: '+ Erstellen',
+                joinText: 'Beitreten', joinedText: '✅ Beigetreten',
+                inviteTitle: '👥 Einladen & Verdienen',
+                inviteTotalLabel: 'Einladungen', inviteBonusLabel: 'Bonus Geschwindigkeit',
+                inviteCodeLabel: 'IHR REFERRAL CODE',
+                copyBtnText: '📋 Kopieren',
+                inviteRewardTitle: '🎁 Empfehlungsbelohnungen',
+                inviteReward1: 'Pro Einladung', inviteReward2: 'Geschwindigkeitsbonus aktiv',
+                withdrawTitle: '💸 BNB Abheben',
+                countryLabel: '🌍 Land Auswählen',
+                paymentLabel: '📱 Zahlungsmethode',
+                walletLabel: '📱 Telefon / Wallet Adresse',
+                amountLabel: '💰 Betrag (BNB)',
+                minNotice: '⚠️ Minimum: 0.5 BNB',
+                submitBtnText: '⚡ Senden',
+                feeInfo: '💼 10% Gebühr (5% Plattform + 5% BNB Netzwerk)',
+                feeYou: 'Sie: 5%', feeBNB: 'BNB: 5%',
+                availableLabel: 'Verfügbar',
+                levelLabel: 'Level', xpLabel: 'XP', editHint: '👆 Zum Bearbeiten tippen',
+                langTitle: '🌍 Sprache', langLabel: 'Sprache Auswählen',
+                themeTitle: '🎨 Thema', colorLabel: 'Farbe Auswählen',
+                statsTitle: '📊 Statistiken',
+                statTotalMined: 'Insgesamt Abgebaut', statMiningSpeed: 'Schürfgeschwindigkeit',
+                statInvites: 'Einladungen', statBoost: 'Boost Level', statSocial: 'Social Verbunden',
+                friendsTitle: '👥 Freunde', yourFriendsLabel: 'Ihre Freunde', addFriendText: '+ Hinzufügen',
+                aiTitle: 'DeepSeek AI', aiStatus: '● Online',
+                sendBtnText: 'Senden',
+                modalTitle: '✏️ Name Bearbeiten', modalPlaceholder: 'Geben Sie Ihren Namen ein...',
+                modalCancel: 'Abbrechen', modalSave: 'Speichern',
+                toastMined: '⛏️ {amount} BNB abgebaut während Sie weg waren! ({seconds}s)',
+                toastStart: '⛏️ CPU Mining gestartet!',
+                toastStop: '⏸️ Mining gestoppt!',
+                toastBoost: '🚀 Auf {name} upgegradet! Geschwindigkeit: {speed} BNB/s',
+                toastConnect: '🎉 {name} verbunden! +0.00000010 BNB Bonus!',
+                toastGroup: '🎉 {name} beigetreten!',
+                toastFriend: '✅ {name} als Freund hinzugefügt!',
+                toastInvite: '🎉 Einladung angenommen! +0.00000010 BNB/s!',
+                toast5Invites: '🎉 5 Einladungen! +0.5 BNB Bonus!',
+                toastCopied: '📋 Kopiert!',
+                toastNeedBNB: '❌ Benötigt {price} BNB! Sie haben {balance} BNB',
+                toastMinWithdraw: '❌ Min 0.5 BNB.',
+                toastInsuff: '❌ Sie haben {balance} BNB.',
+                toastWithdraw: '✅ {amount} BNB → {method}\n📱 {wallet}\n💼 Gebühr: {fee} BNB',
+                toastAlreadyConnected: '✅ {name} bereits verbunden!',
+                toastGroupCreated: '✅ Gruppe "{name}" erstellt!',
+                toastPhoto: '📸 Profilfoto aktualisiert!',
+                toastNameSaved: '✅ Name gespeichert!',
+                toastLanguage: '🌍 Sprache auf {lang} geändert',
+                toastLocked: '🔒 Vorheriges Level zuerst kaufen!',
+                toastOwned: '✅ Sie haben dieses Level bereits!',
+                toastOffline: '⛏️ Ihr Mining läuft auch offline weiter!',
+                toastWelcome: '🖥️ Willkommen! Beginnen Sie mit dem CPU Mining!',
+                toastNameEdit: '✏️ Bearbeiten Sie Ihren Namen',
+                toastEnterName: 'Bitte geben Sie einen Namen ein'
+            },
+            it: {
+                appTitle: 'BNB CPU', appBadge: '⚡ PERSISTENTE',
+                marketLabel: 'BNB / USD', volumeLabel: 'Vol:',
+                navHome: '🏠', navBoost: '⚡', navSocial: '🌐', navInvite: '👥', navWithdraw: '💸', navProfile: '⚙️', navAi: '🤖',
+                minerLabel: '⚡ MINER CPU BNB',
+                statSpeed: '⚡ Velocità', statMined: '⏳ Minato', statStatus: 'Stato',
+                balanceLabel: '💰 SALDO BNB',
+                statusLabel: '⏸️ Fermo', statusMining: '⛏️ In miniera...',
+                startBtnText: 'AVVIA MINING', stopBtnText: 'FERMA MINING',
+                offlineText: '⛏️ Sempre in miniera · Anche offline',
+                boostTitle: '⚡ Macchina CPU',
+                machineLabel: 'Livello', cpuSpeedLabel: 'Velocità', cpuPerSecLabel: 'BNB/s', cpuLevelLabel: 'Livello',
+                upgradeLabel: '⬆ Aggiorna CPU', levelsLabel: '10 Livelli',
+                levelOwned: '✅ Posseduto', levelBuy: '⬆ Acquista', levelLocked: '🔒 Bloccato',
+                socialTitle: '🌐 Connetti Social', socialEarnLabel: 'Guadagnato',
+                connectText: 'Connetti', connectedText: '✅ Connesso',
+                socialRewardTitle: '🎁 Ricompense Sociali',
+                reward1: 'Connetti 1 account', reward2: 'Connetti 3 account', reward3: 'Connetti 6 account',
+                groupsTitle: '👥 Gruppi Community', createBtnText: '+ Crea',
+                joinText: 'Unisciti', joinedText: '✅ Unito',
+                inviteTitle: '👥 Invita & Guadagna',
+                inviteTotalLabel: 'Inviti Totali', inviteBonusLabel: 'Bonus Velocità',
+                inviteCodeLabel: 'IL TUO CODICE REFERRAL',
+                copyBtnText: '📋 Copia',
+                inviteRewardTitle: '🎁 Ricompense Referral',
+                inviteReward1: 'Per invito', inviteReward2: 'Bonus velocità attivo',
+                withdrawTitle: '💸 Ritira BNB',
+                countryLabel: '🌍 Seleziona Paese',
+                paymentLabel: '📱 Metodo di Pagamento',
+                walletLabel: '📱 Telefono / Indirizzo Wallet',
+                amountLabel: '💰 Importo (BNB)',
+                minNotice: '⚠️ Minimo: 0.5 BNB',
+                submitBtnText: '⚡ Invia',
+                feeInfo: '💼 10% Commissione (5% Piattaforma + 5% Rete BNB)',
+                feeYou: 'Tu: 5%', feeBNB: 'BNB: 5%',
+                availableLabel: 'Disponibile',
+                levelLabel: 'Livello', xpLabel: 'XP', editHint: '👆 Tocca per modificare',
+                langTitle: '🌍 Lingua', langLabel: 'Seleziona Lingua',
+                themeTitle: '🎨 Tema', colorLabel: 'Scegli Colore',
+                statsTitle: '📊 Statistiche',
+                statTotalMined: 'Totale Minato', statMiningSpeed: 'Velocità Mining',
+                statInvites: 'Inviti', statBoost: 'Livello Boost', statSocial: 'Social Connesso',
+                friendsTitle: '👥 Amici', yourFriendsLabel: 'I Tuoi Amici', addFriendText: '+ Aggiungi',
+                aiTitle: 'DeepSeek AI', aiStatus: '● Online',
+                sendBtnText: 'Invia',
+                modalTitle: '✏️ Modifica Nome', modalPlaceholder: 'Inserisci il tuo nome...',
+                modalCancel: 'Annulla', modalSave: 'Salva',
+                toastMined: '⛏️ Minato {amount} BNB mentre eri via! ({seconds}s)',
+                toastStart: '⛏️ Mining CPU avviato!',
+                toastStop: '⏸️ Mining fermato!',
+                toastBoost: '🚀 Aggiornato a {name}! Velocità: {speed} BNB/s',
+                toastConnect: '🎉 Connesso {name}! +0.00000010 BNB bonus!',
+                toastGroup: '🎉 Unito a {name}!',
+                toastFriend: '✅ {name} aggiunto come amico!',
+                toastInvite: '🎉 Invito accettato! +0.00000010 BNB/s!',
+                toast5Invites: '🎉 5 inviti! +0.5 BNB bonus!',
+                toastCopied: '📋 Copiato!',
+                toastNeedBNB: '❌ Necessari {price} BNB! Hai {balance} BNB',
+                toastMinWithdraw: '❌ Min 0.5 BNB.',
+                toastInsuff: '❌ Hai {balance} BNB.',
+                toastWithdraw: '✅ {amount} BNB → {method}\n📱 {wallet}\n💼 Commissione: {fee} BNB',
+                toastAlreadyConnected: '✅ {name} già connesso!',
+                toastGroupCreated: '✅ Gruppo "{name}" creato!',
+                toastPhoto: '📸 Foto profilo aggiornata!',
+                toastNameSaved: '✅ Nome salvato!',
+                toastLanguage: '🌍 Lingua cambiata in {lang}',
+                toastLocked: '🔒 Acquista prima il livello precedente!',
+                toastOwned: '✅ Hai già questo livello!',
+                toastOffline: '⛏️ Il tuo mining continua anche offline!',
+                toastWelcome: '🖥️ Benvenuto! Inizia a minare con la tua CPU!',
+                toastNameEdit: '✏️ Modifica il tuo nome',
+                toastEnterName: 'Per favore inserisci un nome'
+            },
+            ru: {
+                appTitle: 'BNB CPU', appBadge: '⚡ ПОСТОЯННЫЙ',
+                marketLabel: 'BNB / USD', volumeLabel: 'Объем:',
+                navHome: '🏠', navBoost: '⚡', navSocial: '🌐', navInvite: '👥', navWithdraw: '💸', navProfile: '⚙️', navAi: '🤖',
+                minerLabel: '⚡ BNB CPU МАЙНЕР',
+                statSpeed: '⚡ Скорость', statMined: '⏳ Добыто', statStatus: 'Статус',
+                balanceLabel: '💰 БАЛАНС BNB',
+                statusLabel: '⏸️ Остановлен', statusMining: '⛏️ Майнинг...',
+                startBtnText: 'НАЧАТЬ МАЙНИНГ', stopBtnText: 'ОСТАНОВИТЬ МАЙНИНГ',
+                offlineText: '⛏️ Всегда майнит · Даже офлайн',
+                boostTitle: '⚡ CPU Машина',
+                machineLabel: 'Уровень', cpuSpeedLabel: 'Скорость', cpuPerSecLabel: 'BNB/с', cpuLevelLabel: 'Уровень',
+                upgradeLabel: '⬆ Улучшить CPU', levelsLabel: '10 Уровней',
+                levelOwned: '✅ Приобретен', levelBuy: '⬆ Купить', levelLocked: '🔒 Заблокирован',
+                socialTitle: '🌐 Подключить Соцсети', socialEarnLabel: 'Заработано',
+                connectText: 'Подключить', connectedText: '✅ Подключен',
+                socialRewardTitle: '🎁 Награды за Соцсети',
+                reward1: 'Подключить 1 аккаунт', reward2: 'Подключить 3 аккаунта', reward3: 'Подключить 6 аккаунтов',
+                groupsTitle: '👥 Группы', createBtnText: '+ Создать',
+                joinText: 'Присоединиться', joinedText: '✅ Присоединился',
+                inviteTitle: '👥 Приглашай & Зарабатывай',
+                inviteTotalLabel: 'Всего Приглашений', inviteBonusLabel: 'Бонус Скорости',
+                inviteCodeLabel: 'ВАШ РЕФЕРАЛЬНЫЙ КОД',
+                copyBtnText: '📋 Копировать',
+                inviteRewardTitle: '🎁 Реферальные Награды',
+                inviteReward1: 'За приглашение', inviteReward2: 'Бонус скорости активен',
+                withdrawTitle: '💸 Вывести BNB',
+                countryLabel: '🌍 Выберите Страну',
+                paymentLabel: '📱 Способ Оплаты',
+                walletLabel: '📱 Телефон / Адрес Кошелька',
+                amountLabel: '💰 Сумма (BNB)',
+                minNotice: '⚠️ Минимум: 0.5 BNB',
+                submitBtnText: '⚡ Отправить',
+                feeInfo: '💼 10% Комиссия (5% Платформа + 5% Сеть BNB)',
+                feeYou: 'Вы: 5%', feeBNB: 'BNB: 5%',
+                availableLabel: 'Доступно',
+                levelLabel: 'Уровень', xpLabel: 'XP', editHint: '👆 Нажмите чтобы изменить',
+                langTitle: '🌍 Язык', langLabel: 'Выберите Язык',
+                themeTitle: '🎨 Тема', colorLabel: 'Выберите Цвет',
+                statsTitle: '📊 Статистика',
+                statTotalMined: 'Всего Добыто', statMiningSpeed: 'Скорость Майнинга',
+                statInvites: 'Приглашения', statBoost: 'Уровень Буста', statSocial: 'Соцсети Подключены',
+                friendsTitle: '👥 Друзья', yourFriendsLabel: 'Ваши Друзья', addFriendText: '+ Добавить',
+                aiTitle: 'DeepSeek AI', aiStatus: '● Онлайн',
+                sendBtnText: 'Отправить',
+                modalTitle: '✏️ Редактировать Имя', modalPlaceholder: 'Введите ваше имя...',
+                modalCancel: 'Отмена', modalSave: 'Сохранить',
+                toastMined: '⛏️ Добыто {amount} BNB пока вас не было! ({seconds}с)',
+                toastStart: '⛏️ CPU Майнинг запущен!',
+                toastStop: '⏸️ Майнинг остановлен!',
+                toastBoost: '🚀 Улучшен до {name}! Скорость: {speed} BNB/с',
+                toastConnect: '🎉 Подключен {name}! +0.00000010 BNB бонус!',
+                toastGroup: '🎉 Присоединился к {name}!',
+                toastFriend: '✅ {name} добавлен как друг!',
+                toastInvite: '🎉 Приглашение принято! +0.00000010 BNB/с!',
+                toast5Invites: '🎉 5 приглашений! +0.5 BNB бонус!',
+                toastCopied: '📋 Скопировано!',
+                toastNeedBNB: '❌ Нужно {price} BNB! У вас {balance} BNB',
+                toastMinWithdraw: '❌ Мин 0.5 BNB.',
+                toastInsuff: '❌ У вас {balance} BNB.',
+                toastWithdraw: '✅ {amount} BNB → {method}\n📱 {wallet}\n💼 Комиссия: {fee} BNB',
+                toastAlreadyConnected: '✅ {name} уже подключен!',
+                toastGroupCreated: '✅ Группа "{name}" создана!',
+                toastPhoto: '📸 Фото профиля обновлено!',
+                toastNameSaved: '✅ Имя сохранено!',
+                toastLanguage: '🌍 Язык изменен на {lang}',
+                toastLocked: '🔒 Сначала купите предыдущий уровень!',
+                toastOwned: '✅ У вас уже есть этот уровень!',
+                toastOffline: '⛏️ Ваш майнинг продолжается даже офлайн!',
+                toastWelcome: '🖥️ Добро пожаловать! Начните майнить с вашим CPU!',
+                toastNameEdit: '✏️ Редактировать ваше имя',
+                toastEnterName: 'Пожалуйста введите имя'
+            },
+            ar: {
+                appTitle: 'BNB CPU', appBadge: '⚡ مستمر',
+                marketLabel: 'BNB / دولار', volumeLabel: 'الحجم:',
+                navHome: '🏠', navBoost: '⚡', navSocial: '🌐', navInvite: '👥', navWithdraw: '💸', navProfile: '⚙️', navAi: '🤖',
+                minerLabel: '⚡ جهاز تعدين BNB CPU',
+                statSpeed: '⚡ السرعة', statMined: '⏳ تم التعدين', statStatus: 'الحالة',
+                balanceLabel: '💰 رصيد BNB',
+                statusLabel: '⏸️ متوقف', statusMining: '⛏️ يعمل...',
+                startBtnText: 'بدء التعدين', stopBtnText: 'إيقاف التعدين',
+                offlineText: '⛏️ يعمل دائماً · حتى بدون اتصال',
+                boostTitle: '⚡ جهاز CPU',
+                machineLabel: 'المستوى', cpuSpeedLabel: 'السرعة', cpuPerSecLabel: 'BNB/ث', cpuLevelLabel: 'المستوى',
+                upgradeLabel: '⬆ تطوير CPU', levelsLabel: '10 مستويات',
+                levelOwned: '✅ مملوك', levelBuy: '⬆ شراء', levelLocked: '🔒 مغلق',
+                socialTitle: '🌐 ربط وسائل التواصل', socialEarnLabel: 'المكتسب',
+                connectText: 'ربط', connectedText: '✅ متصل',
+                socialRewardTitle: '🎁 مكافآت التواصل الاجتماعي',
+                reward1: 'ربط حساب واحد', reward2: 'ربط 3 حسابات', reward3: 'ربط جميع الحسابات الستة',
+                groupsTitle: '👥 مجموعات المجتمع', createBtnText: '+ إنشاء',
+                joinText: 'انضم', joinedText: '✅ انضممت',
+                inviteTitle: '👥 دعوة وكسب',
+                inviteTotalLabel: 'إجمالي الدعوات', inviteBonusLabel: 'مكافأة السرعة',
+                inviteCodeLabel: 'رمز الإحالة الخاص بك',
+                copyBtnText: '📋 نسخ',
+                inviteRewardTitle: '🎁 مكافآت الإحالة',
+                inviteReward1: 'لكل دعوة', inviteReward2: 'مكافأة السرعة نشطة',
+                withdrawTitle: '💸 سحب BNB',
+                countryLabel: '🌍 اختر الدولة',
+                paymentLabel: '📱 طريقة الدفع',
+                walletLabel: '📱 الهاتف / عنوان المحفظة',
+                amountLabel: '💰 المبلغ (BNB)',
+                minNotice: '⚠️ الحد الأدنى: 0.5 BNB',
+                submitBtnText: '⚡ إرسال',
+                feeInfo: '💼 رسوم 10% (5% المنصة + 5% شبكة BNB)',
+                feeYou: 'أنت: 5%', feeBNB: 'BNB: 5%',
+                availableLabel: 'المتاح',
+                levelLabel: 'المستوى', xpLabel: 'الخبرة', editHint: '👆 اضغط لتعديل الاسم',
+                langTitle: '🌍 اللغة', langLabel: 'اختر اللغة',
+                themeTitle: '🎨 السمة', colorLabel: 'اختر اللون',
+                statsTitle: '📊 الإحصائيات',
+                statTotalMined: 'إجمالي التعدين', statMiningSpeed: 'سرعة التعدين',
+                statInvites: 'الدعوات', statBoost: 'مستوى التحسين', statSocial: 'وسائل التواصل المتصلة',
+                friendsTitle: '👥 الأصدقاء', yourFriendsLabel: 'أصدقاؤك', addFriendText: '+ إضافة',
+                aiTitle: 'DeepSeek AI', aiStatus: '● متصل',
+                sendBtnText: 'إرسال',
+                modalTitle: '✏️ تعديل الاسم', modalPlaceholder: 'أدخل اسمك...',
+                modalCancel: 'إلغاء', modalSave: 'حفظ',
+                toastMined: '⛏️ تم تعدين {amount} BNB أثناء غيابك! ({seconds}ث)',
+                toastStart: '⛏️ بدأ تعدين CPU!',
+                toastStop: '⏸️ تم إيقاف التعدين!',
+                toastBoost: '🚀 تم الترقية إلى {name}! السرعة: {speed} BNB/ث',
+                toastConnect: '🎉 تم ربط {name}! +0.00000010 BNB مكافأة!',
+                toastGroup: '🎉 انضممت إلى {name}!',
+                toastFriend: '✅ تمت إضافة {name} كصديق!',
+                toastInvite: '🎉 تم قبول الدعوة! +0.00000010 BNB/ث!',
+                toast5Invites: '🎉 5 دعوات! +0.5 BNB مكافأة!',
+                toastCopied: '📋 تم النسخ!',
+                toastNeedBNB: '❌ تحتاج {price} BNB! لديك {balance} BNB',
+                toastMinWithdraw: '❌ الحد الأدنى 0.5 BNB.',
+                toastInsuff: '❌ لديك {balance} BNB.',
+                toastWithdraw: '✅ {amount} BNB → {method}\n📱 {wallet}\n💼 الرسوم: {fee} BNB',
+                toastAlreadyConnected: '✅ {name} متصل بالفعل!',
+                toastGroupCreated: '✅ تم إنشاء المجموعة "{name}"!',
+                toastPhoto: '📸 تم تحديث صورة الملف الشخصي!',
+                toastNameSaved: '✅ تم حفظ الاسم!',
+                toastLanguage: '🌍 تم تغيير اللغة إلى {lang}',
+                toastLocked: '🔒 اشتر المستوى السابق أولاً!',
+                toastOwned: '✅ لديك هذا المستوى بالفعل!',
+                toastOffline: '⛏️ يستمر التعدين حتى بدون اتصال!',
+                toastWelcome: '🖥️ مرحباً! ابدأ التعدين باستخدام CPU الخاص بك!',
+                toastNameEdit: '✏️ تعديل اسمك',
+                toastEnterName: 'الرجاء إدخال اسم'
+            },
+            hi: {
+                appTitle: 'BNB CPU', appBadge: '⚡ स्थायी',
+                marketLabel: 'BNB / USD', volumeLabel: 'वॉल्यूम:',
+                navHome: '🏠', navBoost: '⚡', navSocial: '🌐', navInvite: '👥', navWithdraw: '💸', navProfile: '⚙️', navAi: '🤖',
+                minerLabel: '⚡ BNB CPU माइनर',
+                statSpeed: '⚡ गति', statMined: '⏳ खनन किया', statStatus: 'स्थिति',
+                balanceLabel: '💰 BNB शेष',
+                statusLabel: '⏸️ रोका गया', statusMining: '⛏️ खनन...',
+                startBtnText: 'खनन शुरू करें', stopBtnText: 'खनन रोकें',
+                offlineText: '⛏️ हमेशा खनन · ऑफलाइन भी',
+                boostTitle: '⚡ CPU मशीन',
+                machineLabel: 'स्तर', cpuSpeedLabel: 'गति', cpuPerSecLabel: 'BNB/से', cpuLevelLabel: 'स्तर',
+                upgradeLabel: '⬆ CPU अपग्रेड करें', levelsLabel: '10 स्तर',
+                levelOwned: '✅ स्वामित्व', levelBuy: '⬆ खरीदें', levelLocked: '🔒 बंद',
+                socialTitle: '🌐 सोशल कनेक्ट करें', socialEarnLabel: 'कमाया',
+                connectText: 'कनेक्ट करें', connectedText: '✅ कनेक्टेड',
+                socialRewardTitle: '🎁 सोशल ग्रोथ पुरस्कार',
+                reward1: '1 खाता कनेक्ट करें', reward2: '3 खाते कनेक्ट करें', reward3: 'सभी 6 खाते कनेक्ट करें',
+                groupsTitle: '👥 समुदाय समूह', createBtnText: '+ बनाएं',
+                joinText: 'शामिल हों', joinedText: '✅ शामिल',
+                inviteTitle: '👥 आमंत्रित करें और कमाएं',
+                inviteTotalLabel: 'कुल आमंत्रण', inviteBonusLabel: 'बोनस गति',
+                inviteCodeLabel: 'आपका रेफरल कोड',
+                copyBtnText: '📋 कॉपी करें',
+                inviteRewardTitle: '🎁 रेफरल पुरस्कार',
+                inviteReward1: 'प्रति आमंत्रण', inviteReward2: 'बोनस गति सक्रिय',
+                withdrawTitle: '💸 BNB निकालें',
+                countryLabel: '🌍 देश चुनें',
+                paymentLabel: '📱 भुगतान विधि',
+                walletLabel: '📱 फोन / वॉलेट पता',
+                amountLabel: '💰 राशि (BNB)',
+                minNotice: '⚠️ न्यूनतम: 0.5 BNB',
+                submitBtnText: '⚡ जमा करें',
+                feeInfo: '💼 10% शुल्क (5% प्लेटफॉर्म + 5% BNB नेटवर्क)',
+                feeYou: 'आप: 5%', feeBNB: 'BNB: 5%',
+                availableLabel: 'उपलब्ध',
+                levelLabel: 'स्तर', xpLabel: 'अनुभव', editHint: '👆 नाम संपादित करें',
+                langTitle: '🌍 भाषा', langLabel: 'भाषा चुनें',
+                themeTitle: '🎨 थीम', colorLabel: 'रंग चुनें',
+                statsTitle: '📊 आँकड़े',
+                statTotalMined: 'कुल खनन', statMiningSpeed: 'खनन गति',
+                statInvites: 'आमंत्रण', statBoost: 'बूस्ट स्तर', statSocial: 'सोशल कनेक्टेड',
+                friendsTitle: '👥 मित्र', yourFriendsLabel: 'आपके मित्र', addFriendText: '+ जोड़ें',
+                aiTitle: 'DeepSeek AI', aiStatus: '● ऑनलाइन',
+                sendBtnText: 'भेजें',
+                modalTitle: '✏️ नाम संपादित करें', modalPlaceholder: 'अपना नाम दर्ज करें...',
+                modalCancel: 'रद्द करें', modalSave: 'सहेजें',
+                toastMined: '⛏️ जब आप दूर थे तब {amount} BNB खनन किया! ({seconds}से)',
+                toastStart: '⛏️ CPU खनन शुरू हुआ!',
+                toastStop: '⏸️ खनन रोका गया!',
+                toastBoost: '🚀 {name} में अपग्रेड किया! गति: {speed} BNB/से',
+                toastConnect: '🎉 {name} कनेक्ट किया! +0.00000010 BNB बोनस!',
+                toastGroup: '🎉 {name} में शामिल हुए!',
+                toastFriend: '✅ {name} मित्र के रूप में जोड़ा गया!',
+                toastInvite: '🎉 आमंत्रण स्वीकार किया! +0.00000010 BNB/से!',
+                toast5Invites: '🎉 5 आमंत्रण! +0.5 BNB बोनस!',
+                toastCopied: '📋 कॉपी किया!',
+                toastNeedBNB: '❌ {price} BNB चाहिए! आपके पास {balance} BNB है',
+                toastMinWithdraw: '❌ न्यूनतम 0.5 BNB।',
+                toastInsuff: '❌ आपके पास {balance} BNB है।',
+                toastWithdraw: '✅ {amount} BNB → {method}\n📱 {wallet}\n💼 शुल्क: {fee} BNB',
+                toastAlreadyConnected: '✅ {name} पहले से कनेक्टेड!',
+                toastGroupCreated: '✅ समूह "{name}" बनाया गया!',
+                toastPhoto: '📸 प्रोफ़ाइल फोटो अपडेट की गई!',
+                toastNameSaved: '✅ नाम सहेजा गया!',
+                toastLanguage: '🌍 भाषा बदलकर {lang} की गई',
+                toastLocked: '🔒 पहले पिछला स्तर खरीदें!',
+                toastOwned: '✅ आपके पास यह स्तर पहले से है!',
+                toastOffline: '⛏️ आपका खनन ऑफलाइन भी जारी है!',
+                toastWelcome: '🖥️ स्वागत है! अपने CPU से खनन शुरू करें!',
+                toastNameEdit: '✏️ अपना नाम संपादित करें',
+                toastEnterName: 'कृपया नाम दर्ज करें'
+            },
+            id: {
+                appTitle: 'BNB CPU', appBadge: '⚡ PERSISTEN',
+                marketLabel: 'BNB / USD', volumeLabel: 'Vol:',
+                navHome: '🏠', navBoost: '⚡', navSocial: '🌐', navInvite: '👥', navWithdraw: '💸', navProfile: '⚙️', navAi: '🤖',
+                minerLabel: '⚡ PENAMBANG CPU BNB',
+                statSpeed: '⚡ Kecepatan', statMined: '⏳ Ditambang', statStatus: 'Status',
+                balanceLabel: '💰 SALDO BNB',
+                statusLabel: '⏸️ Berhenti', statusMining: '⛏️ Menambang...',
+                startBtnText: 'MULAI MENAMBANG', stopBtnText: 'BERHENTI MENAMBANG',
+                offlineText: '⛏️ Selalu menambang · Bahkan offline',
+                boostTitle: '⚡ Mesin CPU',
+                machineLabel: 'Level', cpuSpeedLabel: 'Kecepatan', cpuPerSecLabel: 'BNB/s', cpuLevelLabel: 'Level',
+                upgradeLabel: '⬆ Upgrade CPU', levelsLabel: '10 Level',
+                levelOwned: '✅ Dimiliki', levelBuy: '⬆ Beli', levelLocked: '🔒 Terkunci',
+                socialTitle: '🌐 Hubungkan Sosial', socialEarnLabel: 'Didapat',
+                connectText: 'Hubungkan', connectedText: '✅ Terhubung',
+                socialRewardTitle: '🎁 Hadiah Pertumbuhan Sosial',
+                reward1: 'Hubungkan 1 akun', reward2: 'Hubungkan 3 akun', reward3: 'Hubungkan 6 akun',
+                groupsTitle: '👥 Grup Komunitas', createBtnText: '+ Buat',
+                joinText: 'Gabung', joinedText: '✅ Bergabung',
+                inviteTitle: '👥 Undang & Dapatkan',
+                inviteTotalLabel: 'Total Undangan', inviteBonusLabel: 'Bonus Kecepatan',
+                inviteCodeLabel: 'KODE REFERRAL ANDA',
+                copyBtnText: '📋 Salin',
+                inviteRewardTitle: '🎁 Hadiah Referral',
+                inviteReward1: 'Per undangan', inviteReward2: 'Bonus kecepatan aktif',
+                withdrawTitle: '💸 Tarik BNB',
+                countryLabel: '🌍 Pilih Negara',
+                paymentLabel: '📱 Metode Pembayaran',
+                walletLabel: '📱 Telepon / Alamat Wallet',
+                amountLabel: '💰 Jumlah (BNB)',
+                minNotice: '⚠️ Minimum: 0.5 BNB',
+                submitBtnText: '⚡ Kirim',
+                feeInfo: '💼 10% Biaya (5% Platform + 5% Jaringan BNB)',
+                feeYou: 'Anda: 5%', feeBNB: 'BNB: 5%',
+                availableLabel: 'Tersedia',
+                levelLabel: 'Level', xpLabel: 'XP', editHint: '👆 Ketuk untuk mengedit',
+                langTitle: '🌍 Bahasa', langLabel: 'Pilih Bahasa',
+                themeTitle: '🎨 Tema', colorLabel: 'Pilih Warna',
+                statsTitle: '📊 Statistik',
+                statTotalMined: 'Total Ditambang', statMiningSpeed: 'Kecepatan Menambang',
+                statInvites: 'Undangan', statBoost: 'Level Boost', statSocial: 'Sosial Terhubung',
+                friendsTitle: '👥 Teman', yourFriendsLabel: 'Teman Anda', addFriendText: '+ Tambah',
+                aiTitle: 'DeepSeek AI', aiStatus: '● Online',
+                sendBtnText: 'Kirim',
+                modalTitle: '✏️ Edit Nama', modalPlaceholder: 'Masukkan nama Anda...',
+                modalCancel: 'Batal', modalSave: 'Simpan',
+                toastMined: '⛏️ Menambang {amount} BNB saat Anda pergi! ({seconds}s)',
+                toastStart: '⛏️ Penambangan CPU dimulai!',
+                toastStop: '⏸️ Penambangan berhenti!',
+                toastBoost: '🚀 Ditingkatkan ke {name}! Kecepatan: {speed} BNB/s',
+                toastConnect: '🎉 Terhubung {name}! +0.00000010 BNB bonus!',
+                toastGroup: '🎉 Bergabung dengan {name}!',
+                toastFriend: '✅ {name} ditambahkan sebagai teman!',
+                toastInvite: '🎉 Undangan diterima! +0.00000010 BNB/s!',
+                toast5Invites: '🎉 5 undangan! +0.5 BNB bonus!',
+                toastCopied: '📋 Disalin!',
+                toastNeedBNB: '❌ Butuh {price} BNB! Anda memiliki {balance} BNB',
+                toastMinWithdraw: '❌ Min 0.5 BNB.',
+                toastInsuff: '❌ Anda memiliki {balance} BNB.',
+                toastWithdraw: '✅ {amount} BNB → {method}\n📱 {wallet}\n💼 Biaya: {fee} BNB',
+                toastAlreadyConnected: '✅ {name} sudah terhubung!',
+                toastGroupCreated: '✅ Grup "{name}" dibuat!',
+                toastPhoto: '📸 Foto profil diperbarui!',
+                toastNameSaved: '✅ Nama disimpan!',
+                toastLanguage: '🌍 Bahasa diubah ke {lang}',
+                toastLocked: '🔒 Beli level sebelumnya dulu!',
+                toastOwned: '✅ Anda sudah memiliki level ini!',
+                toastOffline: '⛏️ Penambangan Anda terus berjalan bahkan offline!',
+                toastWelcome: '🖥️ Selamat datang! Mulai menambang dengan CPU Anda!',
+                toastNameEdit: '✏️ Edit nama Anda',
+                toastEnterName: 'Silakan masukkan nama'
             }
         };
 
@@ -2310,7 +1642,6 @@
         const SAVE_KEY = 'bnb_cpu_miner_save';
         let currentLang = 'en';
         let userName = 'BNB Miner';
-
         const BASE_SPEED = 0.00000010;
         let balance = 0.0;
         let totalMined = 0.0;
@@ -2326,49 +1657,41 @@
         const MIN_WITHDRAW = 0.5;
 
         const LEVELS = [
-            { level: 1, name: 'Intel Core i3', speed: 0.00000010, price: 10, icon: '🖥️', color: '#4a9eff' },
-            { level: 2, name: 'Intel Core i5', speed: 0.00000025, price: 25, icon: '🖥️', color: '#4ae09a' },
-            { level: 3, name: 'Intel Core i7', speed: 0.00000050, price: 50, icon: '🖥️', color: '#f7e05e' },
-            { level: 4, name: 'Intel Core i9', speed: 0.00000100, price: 100, icon: '🖥️', color: '#ff9f4a' },
-            { level: 5, name: 'AMD Ryzen 5', speed: 0.00000150, price: 150, icon: '🖥️', color: '#ff6b8a' },
-            { level: 6, name: 'AMD Ryzen 7', speed: 0.00000250, price: 250, icon: '🖥️', color: '#b47aff' },
-            { level: 7, name: 'AMD Ryzen 9', speed: 0.00000400, price: 400, icon: '🖥️', color: '#00f2ea' },
-            { level: 8, name: 'NVIDIA RTX 3060', speed: 0.00000600, price: 600, icon: '💻', color: '#ff4757' },
-            { level: 9, name: 'NVIDIA RTX 4080', speed: 0.00000900, price: 900, icon: '💻', color: '#ffd700' },
-            { level: 10, name: 'NVIDIA RTX 4090', speed: 0.00001500, price: 1500, icon: '💻', color: '#ff6b6b' }
+            { level: 1, name: 'Intel Core i3', speed: 0.00000010, price: 10, icon: '🖥️' },
+            { level: 2, name: 'Intel Core i5', speed: 0.00000025, price: 25, icon: '🖥️' },
+            { level: 3, name: 'Intel Core i7', speed: 0.00000050, price: 50, icon: '🖥️' },
+            { level: 4, name: 'Intel Core i9', speed: 0.00000100, price: 100, icon: '🖥️' },
+            { level: 5, name: 'AMD Ryzen 5', speed: 0.00000150, price: 150, icon: '🖥️' },
+            { level: 6, name: 'AMD Ryzen 7', speed: 0.00000250, price: 250, icon: '🖥️' },
+            { level: 7, name: 'AMD Ryzen 9', speed: 0.00000400, price: 400, icon: '🖥️' },
+            { level: 8, name: 'NVIDIA RTX 3060', speed: 0.00000600, price: 600, icon: '💻' },
+            { level: 9, name: 'NVIDIA RTX 4080', speed: 0.00000900, price: 900, icon: '💻' },
+            { level: 10, name: 'NVIDIA RTX 4090', speed: 0.00001500, price: 1500, icon: '💻' }
         ];
 
-        let socialConnected = {
-            tiktok: false, instagram: false, facebook: false,
-            youtube: false, twitter: false, telegram: false
-        };
+        let socialConnected = { tiktok: false, instagram: false, facebook: false, youtube: false, twitter: false, telegram: false };
         let socialEarnings = 0;
         let socialBonusSpeed = 0;
-
         let groups = [
             { name: '🌍 Global BNB Miners', members: 1234, bonus: 0.00000005, joined: false },
             { name: '🇹🇿 Tanzania Miners', members: 567, bonus: 0.00000003, joined: false }
         ];
-
         let friends = [
             { name: 'Alex B.', status: 'Online · Mining', online: true },
             { name: 'Sarah K.', status: 'Last seen 2h ago', online: false }
         ];
+        let bnbPrice = 580.00, bnbChange = 2.5, bnbVolume = 2.4;
 
-        let bnbPrice = 580.00;
-        let bnbChange = 2.5;
-        let bnbVolume = 2.4;
-
-        // ==================== DOM REFS ====================
+        // ==================== DOM HELPERS ====================
         const $ = id => document.getElementById(id);
-        const qs = (sel, ctx) => (ctx || document).querySelector(sel);
 
         // ==================== TRANSLATION SYSTEM ====================
         function t(key) {
-            return translations[currentLang]?.[key] || translations.en[key] || key;
+            const lang = LANGUAGES[currentLang] || LANGUAGES.en;
+            return lang[key] || LANGUAGES.en[key] || key;
         }
 
-        function translateTexts() {
+        function translateAll() {
             // Header
             $('appTitle').textContent = t('appTitle');
             $('appBadge').textContent = t('appBadge');
@@ -2390,9 +1713,8 @@
             $('statMined').textContent = t('statMined');
             $('statStatus').textContent = t('statStatus');
             $('balanceLabel').textContent = t('balanceLabel');
-            $('offlineText').innerHTML = `⛏️ <span style="color:var(--green);">${t('offlineText').replace('⛏️ ', '').split('·')[0]}</span> · ${t('offlineText').split('·')[1] || ''}`;
+            $('offlineText').innerHTML = `⛏️ <span style="color:var(--green);">${t('offlineText').split('·')[0].trim()}</span> · ${t('offlineText').split('·')[1]?.trim() || ''}`;
 
-            // Status
             if (!isMining) {
                 $('statusLabel').textContent = t('statusLabel');
                 $('startBtnText').textContent = t('startBtnText');
@@ -2472,7 +1794,16 @@
             $('sendBtnText').textContent = t('sendBtnText');
 
             // Modal
-            $('modalTitle').textContent = t('toastNameEdit');
+            $('modalTitle').textContent = t('modalTitle');
+            $('nameInput').placeholder = t('modalPlaceholder');
+            $('cancelNameBtn').textContent = t('modalCancel');
+            $('saveNameBtn').textContent = t('modalSave');
+
+            // Re-render dynamic content
+            renderLevels();
+            renderGroups();
+            renderFriends();
+            refreshUI();
         }
 
         // ==================== SAVE/LOAD ====================
@@ -2549,9 +1880,7 @@
 
         function getSocialBonus() {
             let count = 0;
-            for (const key in socialConnected) {
-                if (socialConnected[key]) count++;
-            }
+            for (const key in socialConnected) if (socialConnected[key]) count++;
             if (count >= 6) return 0.00000100;
             if (count >= 3) return 0.00000030;
             if (count >= 1) return 0.00000010;
@@ -2562,18 +1891,14 @@
         function renderLevels() {
             const container = $('boostLevels');
             container.innerHTML = '';
-            
-            LEVELS.forEach((level, index) => {
-                const div = document.createElement('div');
-                div.className = `level-item ${boostLevel >= level.level ? 'active' : ''}`;
-                
+            LEVELS.forEach((level) => {
                 const isOwned = boostLevel >= level.level;
                 const isCurrent = boostLevel === level.level - 1;
-                
                 let btnText = t('levelLocked');
                 if (isOwned) btnText = t('levelOwned');
                 else if (isCurrent) btnText = t('levelBuy');
-                
+                const div = document.createElement('div');
+                div.className = `level-item ${isOwned ? 'active' : ''}`;
                 div.innerHTML = `
                     <div class="level-num">${t('machineLabel')} ${level.level}</div>
                     <div style="font-size:0.8rem; margin:2px 0;">${level.icon}</div>
@@ -2585,55 +1910,34 @@
                 `;
                 container.appendChild(div);
             });
-
             document.querySelectorAll('.level-buy:not([disabled])').forEach(btn => {
                 btn.addEventListener('click', function() {
-                    const levelNum = parseInt(this.dataset.level);
-                    buyLevel(levelNum);
+                    buyLevel(parseInt(this.dataset.level));
                 });
             });
         }
 
-        // ==================== BUY LEVEL ====================
         function buyLevel(levelNum) {
-            if (levelNum <= boostLevel) {
-                showToast(t('toastOwned'));
-                return;
-            }
-            if (levelNum > boostLevel + 1) {
-                showToast(t('toastLocked'));
-                return;
-            }
-
+            if (levelNum <= boostLevel) { showToast(t('toastOwned')); return; }
+            if (levelNum > boostLevel + 1) { showToast(t('toastLocked')); return; }
             const level = LEVELS[levelNum - 1];
             if (!level) return;
-
             if (balance < level.price) {
-                const msg = t('toastNeedBNB')
-                    .replace('{price}', level.price)
-                    .replace('{balance}', fmt(balance));
-                showToast(msg);
+                showToast(t('toastNeedBNB').replace('{price}', level.price).replace('{balance}', fmt(balance)));
                 return;
             }
-
             balance -= level.price;
             boostLevel = levelNum;
-            
             updateCPUMachine();
             refreshUI();
             renderLevels();
             saveGame();
-            const msg = t('toastBoost')
-                .replace('{name}', level.name)
-                .replace('{speed}', fmt(level.speed));
-            showToast(msg, true);
+            showToast(t('toastBoost').replace('{name}', level.name).replace('{speed}', fmt(level.speed)), true);
         }
 
-        // ==================== UPDATE CPU MACHINE ====================
         function updateCPUMachine() {
             const level = boostLevel > 0 ? LEVELS[boostLevel - 1] : LEVELS[0];
             const speed = getCurrentSpeed();
-            
             const machine = $('cpuMachine');
             machine.className = `cpu-machine level-${boostLevel + 1}`;
             $('cpuLevelDisplay').textContent = boostLevel + 1;
@@ -2641,20 +1945,13 @@
             $('cpuName').textContent = level.name;
             $('cpuSpeedDisplay').textContent = fmt(speed);
             $('cpuLevelNum').textContent = `${boostLevel + 1}/10`;
-            
             const ledCount = Math.min(boostLevel + 1, 5);
             const leds = $('cpuLeds').querySelectorAll('.cpu-led');
             leds.forEach((led, i) => {
-                if (i < ledCount) {
-                    led.className = `cpu-led speed-${i + 1}`;
-                } else {
-                    led.className = 'cpu-led';
-                }
+                led.className = i < ledCount ? `cpu-led speed-${i + 1}` : 'cpu-led';
             });
-
             const fanSpeed = 1.5 - (boostLevel * 0.1);
             $('cpuFan').style.animationDuration = `${Math.max(0.5, fanSpeed)}s`;
-            
             const colors = ['#4a9eff', '#4ae09a', '#f7e05e', '#ff9f4a', '#ff6b8a', '#b47aff', '#00f2ea', '#ff4757', '#ffd700', '#ff6b6b'];
             machine.style.borderColor = colors[boostLevel] || '#f7e05e';
         }
@@ -2665,16 +1962,13 @@
             bnbChange = parseFloat((bnbChange + change * 0.1).toFixed(1));
             if (bnbChange > 15) bnbChange = 15;
             if (bnbChange < -15) bnbChange = -15;
-            
             const priceChange = (bnbChange / 100) * bnbPrice * (Math.random() * 0.5 + 0.5);
             bnbPrice = parseFloat((bnbPrice + priceChange).toFixed(2));
             if (bnbPrice < 300) bnbPrice = 300;
             if (bnbPrice > 900) bnbPrice = 900;
-
             bnbVolume = parseFloat((bnbVolume + (Math.random() - 0.5) * 0.3).toFixed(1));
             if (bnbVolume < 0.5) bnbVolume = 0.5;
             if (bnbVolume > 8) bnbVolume = 8;
-
             $('bnbPrice').textContent = `$${bnbPrice.toFixed(2)}`;
             const changeEl = $('bnbChange');
             changeEl.textContent = `${bnbChange > 0 ? '+' : ''}${bnbChange.toFixed(1)}%`;
@@ -2689,12 +1983,10 @@
         function refreshUI() {
             const totalSpeed = getCurrentSpeed();
             const usdBalance = balance * bnbPrice;
-            
             $('homeBalance').textContent = fmt(balance);
             $('homeSpeed').textContent = fmt(totalSpeed);
             $('homeMined').textContent = fmt(totalMined);
             $('usdValue').textContent = usdBalance.toFixed(2);
-            
             $('homeStatus').textContent = isMining ? 'Active' : 'Idle';
             if (isMining) {
                 $('statusDot').classList.add('active');
@@ -2711,37 +2003,24 @@
                 $('cpuFan').classList.remove('spinning');
                 $('fanBlades').classList.remove('spinning');
             }
-
-            // Profile
             $('userName').textContent = userName;
             $('profileMined').textContent = `${fmt(totalMined)} BNB`;
             $('profileSpeed').textContent = `${fmt(totalSpeed)} BNB/s`;
             $('profileInvites').textContent = inviteCount;
             $('profileBoost').textContent = boostLevel;
-
             const levelNum = Math.floor(totalMined / 1);
             $('userLevel').textContent = levelNum + 1;
             $('userXP').textContent = Math.floor((totalMined % 1) * 100);
-
-            // Social
             let count = 0;
-            for (const key in socialConnected) {
-                if (socialConnected[key]) count++;
-            }
+            for (const key in socialConnected) if (socialConnected[key]) count++;
             socialBonusSpeed = getSocialBonus();
             $('socialEarnings').textContent = fmtShort(socialEarnings);
             $('socialProgress').style.width = `${(count / 6) * 100}%`;
             $('profileSocial').textContent = `${count}/6`;
-
-            // Invite
             $('inviteCount').textContent = inviteCount;
             $('inviteBonus').textContent = `+${fmt(inviteBonusSpeed)}`;
             $('inviteRewardActive').textContent = `+${fmt(inviteBonusSpeed)} BNB/s`;
-
-            // Withdraw
             $('withdrawBalance').textContent = fmt(balance);
-
-            // CPU
             updateCPUMachine();
         }
 
@@ -2751,11 +2030,7 @@
             const totalSpeed = getCurrentSpeed();
             balance += totalSpeed;
             totalMined += totalSpeed;
-            
-            if (socialBonusSpeed > 0) {
-                socialEarnings += socialBonusSpeed;
-            }
-            
+            if (socialBonusSpeed > 0) socialEarnings += socialBonusSpeed;
             refreshUI();
             saveGame();
         }
@@ -2796,28 +2071,19 @@
 
         function connectSocial(platform) {
             if (socialConnected[platform]) {
-                const msg = t('toastAlreadyConnected').replace('{name}', socialPlatforms[platform].name);
-                showToast(msg, true);
+                showToast(t('toastAlreadyConnected').replace('{name}', socialPlatforms[platform].name), true);
                 return;
             }
-
             const username = `${socialPlatforms[platform].name}_user_${Math.floor(Math.random() * 10000)}`;
             socialConnected[platform] = true;
-            
-            const element = $(socialPlatforms[platform].element);
-            element.textContent = `@${username}`;
-            
+            $(socialPlatforms[platform].element).textContent = `@${username}`;
             const btn = $(socialPlatforms[platform].btn);
             btn.innerHTML = `<span>${t('connectedText')}</span>`;
             btn.className = 'connect-btn connected-btn';
-            
             socialBonusSpeed = getSocialBonus();
-            
             const bonus = 0.00000010;
             balance += bonus;
-            const msg = t('toastConnect').replace('{name}', socialPlatforms[platform].name);
-            showToast(msg, true);
-            
+            showToast(t('toastConnect').replace('{name}', socialPlatforms[platform].name), true);
             refreshUI();
             saveGame();
         }
@@ -2842,150 +2108,7 @@
             refreshUI();
         }
 
-        // ==================== EVENT LISTENERS ====================
-        // Mining
-        $('toggleMineBtn').addEventListener('click', toggleMining);
-
-        // Name edit
-        $('userName').addEventListener('click', showNameEdit);
-        $('cancelNameBtn').addEventListener('click', hideNameEdit);
-        $('saveNameBtn').addEventListener('click', saveName);
-        $('nameInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') saveName();
-        });
-
-        // Photo
-        $('profileAvatar').addEventListener('click', function() {
-            $('photoInput').click();
-        });
-
-        $('photoInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const avatar = $('profileAvatar');
-                    avatar.innerHTML = `<img src="${event.target.result}" alt="Profile"><span class="camera-icon">📷</span>`;
-                    avatar.style.background = 'none';
-                    showToast(t('toastPhoto'), true);
-                    saveGame();
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        // Social connect
-        $('tiktokBtn').addEventListener('click', () => connectSocial('tiktok'));
-        $('instagramBtn').addEventListener('click', () => connectSocial('instagram'));
-        $('facebookBtn').addEventListener('click', () => connectSocial('facebook'));
-        $('youtubeBtn').addEventListener('click', () => connectSocial('youtube'));
-        $('twitterBtn').addEventListener('click', () => connectSocial('twitter'));
-        $('telegramBtn').addEventListener('click', () => connectSocial('telegram'));
-
-        // Copy invite
-        $('copyInviteBtn').addEventListener('click', function() {
-            const text = $('inviteLinkInput').value;
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(() => {
-                    showToast(t('toastCopied'), true);
-                }).catch(() => {
-                    $('inviteLinkInput').select();
-                    document.execCommand('copy');
-                    showToast(t('toastCopied'), true);
-                });
-            } else {
-                $('inviteLinkInput').select();
-                document.execCommand('copy');
-                showToast(t('toastCopied'), true);
-            }
-        });
-
-        // Simulate invite
-        $('inviteCode').addEventListener('click', function() {
-            inviteCount++;
-            inviteBonusSpeed = inviteCount * INVITE_BONUS_PER;
-            if (inviteCount % 5 === 0) {
-                balance += 0.5;
-                showToast(t('toast5Invites'), true);
-            }
-            refreshUI();
-            saveGame();
-            showToast(t('toastInvite'), true);
-        });
-
-        // Withdraw
-        $('withdrawBtn').addEventListener('click', function() {
-            const method = $('paymentMethod').value;
-            let wallet = $('walletInput').value.trim();
-
-            const mobileMethods = ['mpesa', 'tigo', 'airtel', 'equitel', 'momo', 'gopay', 'gcash'];
-            const prefix = $('countryPrefix').textContent;
-
-            if (mobileMethods.includes(method) && !wallet.startsWith('+')) {
-                wallet = wallet.replace(/^\+?[0-9]{1,4}/, '');
-                wallet = wallet.replace(/\s/g, '');
-                if (wallet.length > 0) {
-                    wallet = prefix + wallet;
-                }
-            }
-
-            const amountRaw = parseFloat($('withdrawAmount').value);
-
-            if (!wallet || wallet.length < 4) {
-                showToast('❌ Enter valid phone/wallet.');
-                return;
-            }
-            if (isNaN(amountRaw) || amountRaw < MIN_WITHDRAW) {
-                showToast(t('toastMinWithdraw'));
-                return;
-            }
-            if (amountRaw > balance) {
-                const msg = t('toastInsuff').replace('{balance}', fmt(balance));
-                showToast(msg);
-                return;
-            }
-
-            const platformFee = amountRaw * 0.05;
-            const bnbFee = amountRaw * 0.05;
-            const totalFee = platformFee + bnbFee;
-            const finalAmount = amountRaw - totalFee;
-
-            balance -= amountRaw;
-            refreshUI();
-            saveGame();
-
-            const methodNames = {
-                'mpesa': 'M-Pesa', 'tigo': 'Tigo', 'airtel': 'Airtel',
-                'equitel': 'Equitel', 'momo': 'MTN MoMo', 'gopay': 'GoPay',
-                'gcash': 'GCash', 'paypal': 'PayPal', 'wise': 'Wise',
-                'bnb': 'BNB', 'solana': 'Solana', 'usdt_trc20': 'USDT',
-                'bitcoin': 'BTC', 'bank_swift': 'SWIFT'
-            };
-            const methodName = methodNames[method] || method;
-
-            const msg = t('toastWithdraw')
-                .replace('{amount}', finalAmount.toFixed(4))
-                .replace('{method}', methodName)
-                .replace('{wallet}', wallet)
-                .replace('{fee}', totalFee.toFixed(4));
-            showToast(msg, true);
-
-            $('walletInput').value = '';
-            $('withdrawAmount').value = '';
-        });
-
-        // Groups
-        $('createGroupBtn').addEventListener('click', function() {
-            const name = prompt('Enter group name:');
-            if (name) {
-                groups.push({ name, members: 1, bonus: 0.00000002, joined: true });
-                renderGroups();
-                saveGame();
-                const msg = t('toastGroupCreated').replace('{name}', name);
-                showToast(msg, true);
-            }
-        });
-
+        // ==================== GROUPS ====================
         function renderGroups() {
             const container = $('groupsContainer');
             container.innerHTML = '';
@@ -3004,7 +2127,6 @@
                 `;
                 container.appendChild(div);
             });
-
             document.querySelectorAll('.join-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const index = parseInt(this.dataset.index);
@@ -3012,8 +2134,7 @@
                         groups[index].joined = true;
                         groups[index].members++;
                         balance += 0.00000010;
-                        const msg = t('toastGroup').replace('{name}', groups[index].name);
-                        showToast(msg, true);
+                        showToast(t('toastGroup').replace('{name}', groups[index].name), true);
                         renderGroups();
                         refreshUI();
                         saveGame();
@@ -3021,20 +2142,8 @@
                 });
             });
         }
-        renderGroups();
 
-        // Friends
-        $('addFriendBtn').addEventListener('click', function() {
-            const name = prompt('Enter friend\'s name:');
-            if (name) {
-                friends.push({ name, status: 'Online · Active', online: true });
-                renderFriends();
-                saveGame();
-                const msg = t('toastFriend').replace('{name}', name);
-                showToast(msg, true);
-            }
-        });
-
+        // ==================== FRIENDS ====================
         function renderFriends() {
             const container = $('friendsList');
             container.innerHTML = '';
@@ -3052,22 +2161,120 @@
                 container.appendChild(div);
             });
         }
-        renderFriends();
+
+        // ==================== EVENT LISTENERS ====================
+        $('toggleMineBtn').addEventListener('click', toggleMining);
+        $('userName').addEventListener('click', showNameEdit);
+        $('cancelNameBtn').addEventListener('click', hideNameEdit);
+        $('saveNameBtn').addEventListener('click', saveName);
+        $('nameInput').addEventListener('keypress', function(e) { if (e.key === 'Enter') saveName(); });
+
+        $('profileAvatar').addEventListener('click', function() { $('photoInput').click(); });
+        $('photoInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const avatar = $('profileAvatar');
+                    avatar.innerHTML = `<img src="${event.target.result}" alt="Profile"><span class="camera-icon">📷</span>`;
+                    avatar.style.background = 'none';
+                    showToast(t('toastPhoto'), true);
+                    saveGame();
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Social connect buttons
+        ['tiktok', 'instagram', 'facebook', 'youtube', 'twitter', 'telegram'].forEach(p => {
+            $(`${p}Btn`).addEventListener('click', () => connectSocial(p));
+        });
+
+        // Copy invite
+        $('copyInviteBtn').addEventListener('click', function() {
+            const text = $('inviteLinkInput').value;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => showToast(t('toastCopied'), true))
+                    .catch(() => { $('inviteLinkInput').select(); document.execCommand('copy'); showToast(t('toastCopied'), true); });
+            } else {
+                $('inviteLinkInput').select();
+                document.execCommand('copy');
+                showToast(t('toastCopied'), true);
+            }
+        });
+
+        // Simulate invite
+        $('inviteCode').addEventListener('click', function() {
+            inviteCount++;
+            inviteBonusSpeed = inviteCount * INVITE_BONUS_PER;
+            if (inviteCount % 5 === 0) { balance += 0.5; showToast(t('toast5Invites'), true); }
+            refreshUI();
+            saveGame();
+            showToast(t('toastInvite'), true);
+        });
+
+        // Withdraw
+        $('withdrawBtn').addEventListener('click', function() {
+            const method = $('paymentMethod').value;
+            let wallet = $('walletInput').value.trim();
+            const mobileMethods = ['mpesa', 'tigo', 'airtel', 'equitel', 'momo', 'gopay', 'gcash'];
+            const prefix = $('countryPrefix').textContent;
+            if (mobileMethods.includes(method) && !wallet.startsWith('+')) {
+                wallet = wallet.replace(/^\+?[0-9]{1,4}/, '').replace(/\s/g, '');
+                if (wallet.length > 0) wallet = prefix + wallet;
+            }
+            const amountRaw = parseFloat($('withdrawAmount').value);
+            if (!wallet || wallet.length < 4) { showToast('❌ Enter valid phone/wallet.'); return; }
+            if (isNaN(amountRaw) || amountRaw < MIN_WITHDRAW) { showToast(t('toastMinWithdraw')); return; }
+            if (amountRaw > balance) { showToast(t('toastInsuff').replace('{balance}', fmt(balance))); return; }
+            const platformFee = amountRaw * 0.05;
+            const bnbFee = amountRaw * 0.05;
+            const totalFee = platformFee + bnbFee;
+            const finalAmount = amountRaw - totalFee;
+            balance -= amountRaw;
+            refreshUI();
+            saveGame();
+            const methodNames = { 'mpesa': 'M-Pesa', 'tigo': 'Tigo', 'airtel': 'Airtel', 'equitel': 'Equitel', 'momo': 'MTN MoMo', 'gopay': 'GoPay', 'gcash': 'GCash', 'paypal': 'PayPal', 'wise': 'Wise', 'bnb': 'BNB', 'solana': 'Solana', 'usdt_trc20': 'USDT', 'bitcoin': 'BTC', 'bank_swift': 'SWIFT' };
+            const methodName = methodNames[method] || method;
+            showToast(t('toastWithdraw').replace('{amount}', finalAmount.toFixed(4)).replace('{method}', methodName).replace('{wallet}', wallet).replace('{fee}', totalFee.toFixed(4)), true);
+            $('walletInput').value = '';
+            $('withdrawAmount').value = '';
+        });
+
+        // Groups
+        $('createGroupBtn').addEventListener('click', function() {
+            const name = prompt('Enter group name:');
+            if (name) {
+                groups.push({ name, members: 1, bonus: 0.00000002, joined: true });
+                renderGroups();
+                saveGame();
+                showToast(t('toastGroupCreated').replace('{name}', name), true);
+            }
+        });
+
+        // Friends
+        $('addFriendBtn').addEventListener('click', function() {
+            const name = prompt('Enter friend\'s name:');
+            if (name) {
+                friends.push({ name, status: 'Online · Active', online: true });
+                renderFriends();
+                saveGame();
+                showToast(t('toastFriend').replace('{name}', name), true);
+            }
+        });
 
         // AI Chat
         $('aiSendBtn').addEventListener('click', function() {
             const msg = $('aiInput').value.trim();
             if (!msg) return;
-            
             const userDiv = document.createElement('div');
             userDiv.className = 'ai-message user';
             userDiv.textContent = msg;
             $('aiMessages').appendChild(userDiv);
-
             setTimeout(() => {
                 const botDiv = document.createElement('div');
                 botDiv.className = 'ai-message bot';
-                let response = "BNB is at $" + bnbPrice.toFixed(2) + " (" + (bnbChange > 0 ? '+' : '') + bnbChange.toFixed(1) + "%) 💹";
+                let response = `BNB is at $${bnbPrice.toFixed(2)} (${bnbChange > 0 ? '+' : ''}${bnbChange.toFixed(1)}%) 💹`;
                 if (msg.toLowerCase().includes('speed') || msg.toLowerCase().includes('mine')) {
                     const totalSpeed = getCurrentSpeed();
                     response = `Your CPU speed: ${fmt(totalSpeed)} BNB/s. Level ${boostLevel + 1}/10 ⚡`;
@@ -3077,12 +2284,12 @@
                     response = t('toastOffline');
                 } else {
                     const responses = [
-                        "BNB is at $" + bnbPrice.toFixed(2) + " 📈",
-                        "Your CPU is mining at " + fmt(getCurrentSpeed()) + " BNB/s ⚡",
-                        "Connect social accounts for bonus speed! 🌐",
-                        "Each invite gives +0.00000010 BNB/s! 👥",
-                        "Minimum withdrawal is 0.5 BNB. 💸",
-                        "CPU Level 10 gives 0.00001500 BNB/s! 🚀"
+                        `BNB is at $${bnbPrice.toFixed(2)} 📈`,
+                        `Your CPU is mining at ${fmt(getCurrentSpeed())} BNB/s ⚡`,
+                        'Connect social accounts for bonus speed! 🌐',
+                        'Each invite gives +0.00000010 BNB/s! 👥',
+                        'Minimum withdrawal is 0.5 BNB. 💸',
+                        'CPU Level 10 gives 0.00001500 BNB/s! 🚀'
                     ];
                     response = responses[Math.floor(Math.random() * responses.length)];
                 }
@@ -3090,14 +2297,10 @@
                 $('aiMessages').appendChild(botDiv);
                 $('aiMessages').scrollTop = $('aiMessages').scrollHeight;
             }, 500);
-
             $('aiMessages').scrollTop = $('aiMessages').scrollHeight;
             $('aiInput').value = '';
         });
-
-        $('aiInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') $('aiSendBtn').click();
-        });
+        $('aiInput').addEventListener('keypress', function(e) { if (e.key === 'Enter') $('aiSendBtn').click(); });
 
         // ==================== THEME ====================
         function setTheme(color) {
@@ -3106,33 +2309,22 @@
             app.style.setProperty('--primary-dark', color);
             app.style.setProperty('--shadow-color', color + '40');
         }
-
         document.querySelectorAll('.theme-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                const color = this.dataset.color;
-                setTheme(color);
-                $('themeColorPicker').value = color;
+                setTheme(this.dataset.color);
+                $('themeColorPicker').value = this.dataset.color;
             });
         });
-
-        $('themeColorPicker').addEventListener('input', function() {
-            setTheme(this.value);
-        });
+        $('themeColorPicker').addEventListener('input', function() { setTheme(this.value); });
 
         // ==================== LANGUAGE ====================
         $('languageSelect').addEventListener('change', function() {
             currentLang = this.value;
-            translateTexts();
+            translateAll();
             renderLevels();
             refreshUI();
-            const names = {
-                'en': 'English', 'sw': 'Kiswahili', 'fr': 'Français',
-                'es': 'Español', 'pt': 'Português', 'de': 'Deutsch',
-                'it': 'Italiano', 'ru': 'Русский', 'zh': '中文',
-                'ar': 'العربية', 'hi': 'हिन्दी', 'id': 'Indonesia'
-            };
-            const msg = t('toastLanguage').replace('{lang}', names[currentLang] || currentLang);
-            showToast(msg, true);
+            const langName = LANGUAGES[currentLang]?.name || currentLang;
+            showToast(t('toastLanguage').replace('{lang}', langName), true);
             saveGame();
         });
 
@@ -3143,13 +2335,11 @@
             const code = parts[0];
             const prefix = parts[1];
             const flag = parts[2] || '🌍';
-            
             $('countryFlag').textContent = flag;
             $('countryPrefix').textContent = prefix;
             $('countryBadge').textContent = `${flag} ${code}`;
             $('userCountry').textContent = `${flag} ${code}`;
         }
-
         $('countrySelect').addEventListener('change', updateCountry);
 
         function detectCountry() {
@@ -3176,13 +2366,9 @@
                 'Australia/Sydney': 'AU|+61|🇦🇺',
                 'Asia/Dubai': 'AE|+971|🇦🇪'
             };
-
             let detected = 'TZ|+255|🇹🇿';
             for (const [tz, val] of Object.entries(map)) {
-                if (timezone.includes(tz)) {
-                    detected = val;
-                    break;
-                }
+                if (timezone.includes(tz)) { detected = val; break; }
             }
             $('countrySelect').value = detected;
             updateCountry();
@@ -3191,16 +2377,7 @@
 
         // ==================== NAVIGATION ====================
         const navTabs = document.querySelectorAll('.nav-tab');
-        const screenMap = {
-            home: 'screen-home',
-            boost: 'screen-boost',
-            social: 'screen-social',
-            invite: 'screen-invite',
-            withdraw: 'screen-withdraw',
-            profile: 'screen-profile',
-            ai: 'screen-ai'
-        };
-
+        const screenMap = { home: 'screen-home', boost: 'screen-boost', social: 'screen-social', invite: 'screen-invite', withdraw: 'screen-withdraw', profile: 'screen-profile', ai: 'screen-ai' };
         navTabs.forEach(tab => {
             tab.addEventListener('click', function() {
                 navTabs.forEach(t => t.classList.remove('active'));
@@ -3216,11 +2393,8 @@
         });
 
         // ==================== INIT ====================
-        // Load saved data
         const lastSave = loadGame();
-        if (lastSave) {
-            calculateOfflineMining();
-        }
+        if (lastSave) calculateOfflineMining();
 
         // Set language dropdown
         $('languageSelect').value = currentLang;
@@ -3229,12 +2403,14 @@
         $('inviteCode').textContent = REFERRAL_CODE;
         $('inviteLinkInput').value = `https://t.me/BNBMinerBot?start=${REFERRAL_CODE}`;
 
-        // Translate all texts
-        translateTexts();
+        // Translate everything
+        translateAll();
 
         // Initialize
         updateCPUMachine();
         renderLevels();
+        renderGroups();
+        renderFriends();
         refreshUI();
 
         // Show welcome
@@ -3242,7 +2418,7 @@
             showToast(t('toastWelcome'), true);
         }, 600);
 
-        // Auto-save every 10 seconds
+        // Auto-save
         setInterval(saveGame, 10000);
 
         // ==================== CLEANUP ====================
